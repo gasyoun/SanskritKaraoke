@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Apte — Sanskrit Prosody</title>
+<link href="https://fonts.googleapis.com/css2?family=Gentium+Plus:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blue:#2E75B6;--red:#C00000;--text:#1f1f1f;--text2:#666;
+      --border:#e0e0e0;--bg:#f7f7f7;--h1c:#1a3558;--h2c:#2E75B6;--toc:#f0f2f5}
+body{font-family:'Gentium Plus','Georgia',serif;font-size:16px;
+     line-height:1.75;color:var(--text);background:var(--bg);display:flex;min-height:100vh}
+#toc{position:fixed;top:0;left:0;bottom:0;width:270px;background:var(--toc);
+     border-right:1px solid var(--border);overflow-y:auto;padding:20px 14px;
+     font-size:12.5px;z-index:100}
+.toc-title{font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+           color:var(--text2);margin-bottom:14px;font-family:Arial,sans-serif;font-weight:700}
+.toc-h1{margin-top:12px;margin-bottom:2px}
+.toc-h1 a{font-weight:700;font-size:12px;color:var(--h1c);text-decoration:none}
+.toc-h1 a:hover{color:var(--blue)}
+.toc-h2{margin-top:5px;padding-left:8px}
+.toc-h2 a{font-size:11px;color:var(--text2);text-decoration:none;font-style:italic}
+.toc-h2 a:hover{color:var(--blue)}
+.toc-list{list-style:decimal;padding-left:24px;margin:3px 0 6px 8px}
+.toc-list li{margin:1px 0}
+.toc-list a{color:var(--text);text-decoration:none;font-size:12px}
+.toc-list a:hover,.toc-list a.active{color:var(--blue)}
+#toc::-webkit-scrollbar{width:4px}
+#toc::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+#main{margin-left:270px;padding:44px 60px 80px;max-width:820px;width:100%}
+h1{font-size:1.4rem;font-weight:700;color:var(--h1c);
+   border-bottom:2px solid var(--blue);padding-bottom:8px;
+   margin:40px 0 18px;font-family:Arial,sans-serif}
+h1:first-child{margin-top:0}
+h2.gh{font-size:.96rem;font-weight:600;color:var(--h2c);margin:28px 0 10px;
+      padding:5px 12px;background:#eef4fb;border-left:3px solid var(--blue);
+      border-radius:2px;font-style:italic;font-family:Arial,sans-serif}
+h3.mh{font-size:.97rem;font-weight:700;color:var(--text);margin:22px 0 6px;
+      font-family:'Charis SIL','Gentium Plus','Georgia',serif}
+article.metre{padding-bottom:14px;border-bottom:1px solid var(--border);margin-bottom:2px}
+article.metre:last-child{border-bottom:none}
+p{margin:4px 0;line-height:1.8;
+  font-family:'Charis SIL','Gentium Plus','Georgia',serif;font-size:15px}
+p.intro-p{color:var(--text2)}
+p.ref-line{text-align:right;color:var(--text2);font-size:13.5px;margin-top:2px}
+p.sch-cont{padding-left:1.2em}
+.sk{color:var(--blue)}
+.num{color:var(--red)}
+.b{font-weight:bold}
+.it{font-style:italic}
+abbr.ref{text-decoration:underline dotted #aaa;cursor:help;font-style:normal}
+a.corpus-link{color:inherit;text-decoration:underline dotted #aaa;}
+a.corpus-link:hover{color:var(--blue);text-decoration:underline;}
+abbr.gana{text-decoration:underline dotted var(--blue);cursor:help}
+.prosody-table{border-collapse:collapse;margin:14px 0;font-size:14px;
+               font-family:'Charis SIL','Gentium Plus','Georgia',serif}
+.prosody-table td{padding:4px 14px;border:1px solid var(--border);line-height:1.6}
+.prosody-table tr:nth-child(even){background:#f5f9ff}
+@media(max-width:860px){#toc{display:none}#main{margin-left:0;padding:20px}}
+</style>
+</head>
+<body>
+<nav id="toc">
+<div class="toc-title">Contents</div>
+<div class="toc-h1"><a href="#sec-sectionasamavrtta">SECTION A. - samavṛtta</a></div>
+<div class="toc-h2"><a href="#grp-metreswith4syllablesinaq">Metres with 4 Syllables in a quarter (pratiṣṭhā)</a></div>
+<ol class="toc-list">
+<li><a href="#kanya">kanyā</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith5syllablesinaq">Metres with 5 Syllables in a quarter (supratiṣṭhā)</a></div>
+<ol class="toc-list">
+<li><a href="#pankti">paṅkti</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith6syllablesinaq">Metres with 6 Syllables in a quarter (gāyatrī)</a></div>
+<ol class="toc-list">
+<li><a href="#tanumadhyama">tanumadhyamā</a></li>
+<li><a href="#vidyullekha">vidyullekhā</a></li>
+<li><a href="#sasivadana">śaśivadanā</a></li>
+<li><a href="#somaraji">somarājī</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith7syllablesinaq">Metres with 7 Syllables in a quarter (uṣṇik)</a></div>
+<ol class="toc-list">
+<li><a href="#kumaralalita">kumāralalitā</a></li>
+<li><a href="#madalekha">madalekhā</a></li>
+<li><a href="#madhumati">madhumatī</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith8syllablesinaq">Metres with 8 Syllables in a quarter (anuṣṭubh)</a></div>
+<ol class="toc-list">
+<li><a href="#anustubh">anuṣṭubh</a></li>
+<li><a href="#gajagati">gajagati</a></li>
+<li><a href="#pramanika">pramāṇikā</a></li>
+<li><a href="#manavaka">māṇavaka</a></li>
+<li><a href="#vidyunmala">vidyunmālā</a></li>
+<li><a href="#samanika">samānikā</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith9syllablesinaq">Metres with 9 Syllables in a quarter (bṛhatī)</a></div>
+<ol class="toc-list">
+<li><a href="#bhujagasisubhrta">bhujagaśiśubhṛtā</a></li>
+<li><a href="#bhujangasangata">bhujaṅgasaṅgatā</a></li>
+<li><a href="#manimadhya">maṇimadhya</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith10syllablesina">Metres with 10 Syllables in a quarter (paṅkti)</a></div>
+<ol class="toc-list">
+<li><a href="#tvaritagati">tvaritagati</a></li>
+<li><a href="#matta">mattā</a></li>
+<li><a href="#rukmavati">rukmavatī</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith11syllablesina">Metres with 11 Syllables in a quarter (triṣṭubh)</a></div>
+<ol class="toc-list">
+<li><a href="#indravajra">indravajrā</a></li>
+<li><a href="#upendravajra">upendravajrā</a></li>
+<li><a href="#upajati">upajāti</a></li>
+<li><a href="#dodhaka">dodhaka</a></li>
+<li><a href="#bhramaravilasitam">bhramaravilasitaṃ</a></li>
+<li><a href="#rathoddhata">rathoddhatā</a></li>
+<li><a href="#vatormi">vātormī</a></li>
+<li><a href="#salini">śālinī</a></li>
+<li><a href="#svagata">svāgatā</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith12syllablesina">Metres with 12 Syllables in a quarter (jagatī)</a></div>
+<ol class="toc-list">
+<li><a href="#indravamsa">indravaṃśā</a></li>
+<li><a href="#candravartma">candravartma</a></li>
+<li><a href="#jaladharamala">jaladharamālā</a></li>
+<li><a href="#jaloddhatagati">jaloddhatagati</a></li>
+<li><a href="#tamarasa">tāmarasa</a></li>
+<li><a href="#totaka">toṭaka</a></li>
+<li><a href="#drutavilambita">drutavilambita</a></li>
+<li><a href="#prabha">prabhā</a></li>
+<li><a href="#pramitaksara">pramitākṣarā</a></li>
+<li><a href="#bhujangaprayata">bhujaṅgaprayāta</a></li>
+<li><a href="#manimala">maṇimālā</a></li>
+<li><a href="#malati">mālatī</a></li>
+<li><a href="#vamsasthavila">vaṃśasthavila</a></li>
+<li><a href="#vaisvadevi">vaiśvadevī</a></li>
+<li><a href="#sragvini">sragviṇī</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith13syllablesina">Metres with 13 Syllables in a quarter (atijagatī)</a></div>
+<ol class="toc-list">
+<li><a href="#kalahamsa">kalahaṃsa</a></li>
+<li><a href="#ksama">kṣamā</a></li>
+<li><a href="#praharsini">praharṣiṇī</a></li>
+<li><a href="#manjubhasini">mañjubhāṣiṇī</a></li>
+<li><a href="#mattamayuri">mattamayūrī</a></li>
+<li><a href="#rucira">rucirā</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith14syllablesina">Metres with 14 Syllables in a quarter (śakvarī)</a></div>
+<ol class="toc-list">
+<li><a href="#aparajita">aparājitā</a></li>
+<li><a href="#asambadha">asambādhā</a></li>
+<li><a href="#pathya">pathyā</a></li>
+<li><a href="#pramada">pramadā</a></li>
+<li><a href="#praharanakalika">praharaṇakalikā</a></li>
+<li><a href="#madhyaksama">madhyakṣāmā</a></li>
+<li><a href="#vasantatilaka">vasantatilakā</a></li>
+<li><a href="#vasanti">vāsantī</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith15syllablesina">Metres with 15 Syllables in a quarter (atiśakvarī)</a></div>
+<ol class="toc-list">
+<li><a href="#tunaka">tūṇaka</a></li>
+<li><a href="#malini">mālinī</a></li>
+<li><a href="#lilakhela">līlākhela</a></li>
+<li><a href="#sasikala">śaśikalā</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith16syllablesina">Metres with 16 Syllables in a quarter (aṣṭi)</a></div>
+<ol class="toc-list">
+<li><a href="#citra">citra</a></li>
+<li><a href="#pancacamara">pañcacāmara</a></li>
+<li><a href="#vanini">vāṇinī</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith17syllablesina">Metres with 17 Syllables in a quarter (atyaṣṭi)</a></div>
+<ol class="toc-list">
+<li><a href="#citralekha">citralekhā</a></li>
+<li><a href="#nardataka">nardaṭaka</a></li>
+<li><a href="#prthvi">pṛthvī</a></li>
+<li><a href="#mandakranta">mandākrāntā</a></li>
+<li><a href="#vamsapatrapatita">vaṃśapatrapatita</a></li>
+<li><a href="#sikharini">śikhariṇī</a></li>
+<li><a href="#harini">hariṇī</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith18syllablesina">Metres with 18 Syllables in a quarter (dhṛti)</a></div>
+<ol class="toc-list">
+<li><a href="#kusumitalatavellita">kusumitalatāvellitā</a></li>
+<li><a href="#citralekha">citralekhā</a></li>
+<li><a href="#nandana">nandana</a></li>
+<li><a href="#naraca">nārāca</a></li>
+<li><a href="#sardulalalita">śārdūlalalita</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith19syllablesina">Metres with 19 Syllables in a quarter (atidhṛti)</a></div>
+<ol class="toc-list">
+<li><a href="#meghavisphurjita">meghavisphūrjitā</a></li>
+<li><a href="#sardulavikridita">śārdūlavikrīḍita</a></li>
+<li><a href="#sumadhura">sumadhurā</a></li>
+<li><a href="#surasa">surasā</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith20syllablesina">Metres with 20 Syllables in a quarter (kṛti)</a></div>
+<ol class="toc-list">
+<li><a href="#gitika">gītikā</a></li>
+<li><a href="#suvadana">suvadanā</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith21syllablesina">Metres with 21 Syllables in a quarter (prakṛti)</a></div>
+<ol class="toc-list">
+<li><a href="#pancakavali">pañcakāvalī</a></li>
+<li><a href="#sragdhara">sragdharā</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith22syllablesina">Metres with 22 Syllables in a quarter (ākṛti)</a></div>
+<ol class="toc-list">
+<li><a href="#hamsi">haṃsī</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith23syllablesina">Metres with 23 Syllables in a quarter (vikṛti)</a></div>
+<ol class="toc-list">
+<li><a href="#adritanaya">adritanayā</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith24syllablesina">Metres with 24 Syllables in a quarter (saṃskṛti)</a></div>
+<ol class="toc-list">
+<li><a href="#tanvi">tanvī</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith25syllablesina">Metres with 25 Syllables in a quarter (atikṛti)</a></div>
+<ol class="toc-list">
+<li><a href="#krauncapada">krauñcapadā</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-metreswith26syllablesina">Metres with 26 Syllables in a quarter (utkṛti)</a></div>
+<ol class="toc-list">
+<li><a href="#bhujangavijrmbhita">bhujaṅgavijṛmbhita</a></li>
+<li><a href="#dandaka">daṇḍaka</a></li>
+</ol>
+<div class="toc-h1"><a href="#sec-sectionbardhasamavrttaha">SECTION B. - ardhasamavṛtta (Half-equal Metres)</a></div>
+<ol class="toc-list">
+<li><a href="#aparavaktra">aparavaktra</a></li>
+<li><a href="#upacitra">upacitra</a></li>
+<li><a href="#puspitagra">puṣpitāgrā</a></li>
+<li><a href="#viyogini">viyoginī</a></li>
+<li><a href="#vegavati">vegavatī</a></li>
+<li><a href="#harinapluta">hariṇaplutā</a></li>
+</ol>
+<div class="toc-h1"><a href="#sec-sectioncvisamavrttaunequ">SECTION C. - viṣamavṛtta (Unequal Metres). The most common metre of this class is called udgatā</a></div>
+<ol class="toc-list">
+<li><a href="#udgata">udgatā</a></li>
+</ol>
+<div class="toc-h1"><a href="#sec-sectiondjatimetresregula">SECTION D. - jāti (Metres regulated by the number of syllabic instants)</a></div>
+<div class="toc-h2"><a href="#grp-aamrya">(a) āṃryā</a></div>
+<ol class="toc-list">
+<li><a href="#arya">āryā</a></li>
+<li><a href="#giti">gīti</a></li>
+<li><a href="#upagiti">upagīti</a></li>
+<li><a href="#udgiti">udgīti</a></li>
+<li><a href="#aryagiti">āryāgīti</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-bvaitaliya">(b) vaitālīya</a></div>
+<ol class="toc-list">
+<li><a href="#vaitaliya">vaitālīya</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-caupacchandasika">(c) aupacchandasika</a></div>
+<ol class="toc-list">
+<li><a href="#aupacchandasika">aupacchandasika</a></li>
+</ol>
+<div class="toc-h2"><a href="#grp-dmatrasamaka">(d) mātrāsamaka</a></div>
+<ol class="toc-list">
+<li><a href="#matrasamaka">mātrāsamaka</a></li>
+</ol>
+</nav>
+
+<div id="main">
+<h1 style="font-size:1.7rem;border-bottom-width:3px">
+  Sanskrit Prosody
+  <span style="display:block;font-size:.8rem;font-weight:400;color:var(--text2);margin-top:3px">
+    V. S. Apte, <em>The Practical Sanskrit-English Dictionary</em>, <span class="num">1890</span> — Appendix I (pp.&nbsp;<span class="num">1179</span>–<span class="num">1192</span>)
+    &nbsp;·&nbsp;<a href="apte_prosody_ru.html" style="color:var(--blue)">Русский</a>
+  </span>
+</h1>
+<section id="introduction">
+<h1>Introduction</h1>
+<p class="intro-p">The earliest and most important work in Sanskrit prosody is the <span class="sk">Pingala-chhandas-sāstra</span>, attributed to the sage <span class="sk">Pingala</span>, which consists of <span class="sk">Sùtras</span> distributed over eight books. The <span class="sk">Agni</span> <span class="sk">Purāṇa</span> also gives a complete system of prosody founded apparently on Pingala’s. Several other original treatises have likewise been composed by various authors, such as the <span class="sk">Srutabodha</span>, <span class="sk">Vāṇībhūshaṇa</span>, <span class="sk">Vṛitta</span>-<span class="sk">darpaṇa</span>, <span class="sk">Vṛitta</span>-<span class="sk">ratnākara</span>, <span class="sk">Vṛitta</span>-<span class="sk">kaumudī</span>, <span class="sk">Chhandomanjarī</span> &amp;c. In the following pages the <span class="sk">Chhandomanjarī</span> and <span class="sk">Vṛitta</span>-<span class="sk">ratnākara</span> have been chiefly drawn upon, Vedic as well as <span class="sk">Prákṛita</span> metres have been ignored in this Appendix.</p>
+<p class="intro-p">Sanskrit composition may be in the form of <span class="sk">gadya</span> ‘prose’ or <span class="sk">padya</span> ‘verse’ or poetry expressed in the form of stanzas.</p>
+<p class="intro-p">A stanza or <span class="it">padya</span> is a combination of four <span class="sk it">pādas</span> or quarters, which are regulated either by the number of syllables (<span class="sk">akṣara</span>), or by the number of syllabic instants (<span class="sk">mātrā</span>).</p>
+<p class="intro-p">A <span class="sk">padya</span> is a <span class="sk">vṛtta</span> or <span class="sk">jāti</span>.</p>
+<p class="intro-p">A <span class="sk">vṛtta</span> is a stanza the metre of which is regulated by the number and position of syllables in each <span class="sk">Pāda</span> or quarter. A <span class="sk">jāti</span> is a stanza the metre of which is regulated by the number of syllabic instants in each <span class="sk">quarter</span>.</p>
+<p class="intro-p"><span class="sk">Vṛittas </span>are divided into three classes: –<span class="sk">samavṛtta</span> in which the <span class="sk">Pādas</span> or quarters composing the stanza are all similar; <span class="sk">ardhasamavṛtta</span> in which the alternate quarters are similar; and <span class="sk">viṣaṃmavṛtta</span> in which the quarters are all dissimilar.</p>
+<p class="intro-p">A syllable is as much of a word as can be pronounced at once, that is, a vowel with or without one or more consonants.</p>
+<p class="intro-p">A syllable is <span class="sk">laghu</span> ‘short’ or <span class="sk">guru</span> ‘long’, according as its vowel is ‘short’ or ‘long’. The vowels <span class="sk">a</span>, <span class="sk">i</span>, <span class="sk">u</span>, <span class="sk">ṛ</span>, and <span class="sk">ḷ</span> are short; and <span class="sk">ā</span>, <span class="sk">ī</span>, <span class="sk">ū</span>, <span class="sk">ṝ</span>, <span class="sk">e</span>, <span class="sk">ai</span>, <span class="sk">o</span>, and <span class="sk">au</span> are long. But a short vowel becomes long in prosody when it is followed by an <span class="sk it">Anusvàra</span> or <span class="sk it">Visarga</span><span class="it">,</span> or by a conjunct consonant; as the vowel <span class="sk">a</span> in <span class="sk">gandha</span> or <span class="sk">gaḥ.</span> (The consonants <span class="sk">pra</span> &amp; <span class="sk">tha</span>, as also <span class="sk">bra</span>, &amp; <span class="sk">kra</span>, are said to be exceptions, before which the vowel may be short by a sort of poetical license; e. g. in Ku. <span class="num">7</span>. <span class="num">11</span>. or <abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">10</span>. <span class="num">60</span>, where, however, emendations have been proposed by critics to render the metre comformable to the general laws of prosody).</p>
+<p class="intro-p">So also the last syllable of a <span class="sk it">pāda</span> is either long or short, according to the exigence of the metre, whatever be its natural length.</p>
+<p class="intro-p"><span class="sk">sānusvāraśca</span><span class="b"> </span><span class="sk">dīrgha</span><span class="b"> </span><span class="sk">śca</span><span class="b"> </span><span class="sk">visargī</span><span class="b"> </span><span class="sk">ca</span><span class="b"> </span><span class="sk">gururbhavet</span><span class="sk"> |</span></p>
+<p class="intro-p"><span class="sk">varṇaḥ</span><span class="b"> </span><span class="sk">saṃyogapūrvaśca</span><span class="b"> </span><span class="sk">tathā</span><span class="b"> </span><span class="sk">pādāntago'pi</span><span class="b"> </span><span class="sk">vā</span><span class="sk"> ||</span></p>
+<p class="intro-p">In metres regulated by the number of syllabic instants, one instant or <span class="sk">Mātrā</span> is allotted to a short vowel, and two to a long one.</p>
+<p class="intro-p">For the purpose of scanning metres regulated by the number of syllables, writers on prosody have devised eight ‘<span class="sk">Gaṇas’</span> or syllabic feet, each consisting of three syllables, and distinguished from one another by particular syllables being short or long.</p>
+<p class="intro-p">They are given in the following verse:– </p>
+<p class="intro-p"><span class="sk">mastrigurustrilaghuśca</span><span class="b"> </span><span class="sk">nakāro</span> <span class="sk">bhādiguruḥ</span><span class="b"> </span><span class="sk">punarādilaghuryaḥ</span><span class="sk"> |</span></p>
+<p class="intro-p"><span class="sk">jo</span><span class="b"> </span><span class="sk">gurumadhyagato</span><span class="b"> </span><span class="sk">ralamadhyaḥ</span> <span class="sk">soṃ'taguruḥ</span><span class="b"> </span><span class="sk">kathitoṃ'talaghustaḥ</span><span class="sk"> ||</span></p>
+<p class="intro-p"><span class="sk">ādimadhyāvasāneṣu</span><span class="b"> </span><span class="sk">yaratā</span><span class="b"> </span><span class="sk">yānti</span><span class="b"> </span><span class="sk">lāghavam</span><span class="sk"> |</span></p>
+<p class="intro-p"><span class="sk">bhajasā</span><span class="b"> </span><span class="sk">gauravaṃ</span><span class="b"> </span><span class="sk">yānti</span><span class="b"> </span><span class="sk">manau</span><span class="b"> </span><span class="sk">tu</span><span class="b"> </span><span class="sk">gurulāghavam</span><span class="sk"> ||</span></p>
+<p class="intro-p">Expressed in symbols (the symbol ᴗ denoting a short syllable, and – a long one), the different <span class="sk">Gaṇas</span> may be represented as follows: –</p>
+<table class="prosody-table">
+<tr><td><span class="sk">ya</span></td><td><span class="sk">ᴗ––</span></td><td><span class="sk">LGG</span></td><td>(Bacchius)</td></tr>
+<tr><td><span class="sk">ra</span></td><td><span class="sk">–ᴗ–</span></td><td><span class="sk">GLG</span></td><td>(Amphimacer)</td></tr>
+<tr><td><span class="sk">ta</span></td><td><span class="sk">––ᴗ</span></td><td><span class="sk">GGL</span></td><td>(Anti-bacchius)</td></tr>
+<tr><td><span class="sk">bha</span></td><td><span class="sk">–ᴗᴗ</span></td><td><span class="sk">GLL</span></td><td>(Dactylus)</td></tr>
+<tr><td><span class="sk">ja</span></td><td><span class="sk">ᴗ–ᴗ</span></td><td><span class="sk">LGL</span></td><td>(Amphibrachys)</td></tr>
+<tr><td><span class="sk">sa</span></td><td><span class="sk">ᴗᴗ–</span></td><td><span class="sk">LLG</span></td><td>(Anapæstus)</td></tr>
+<tr><td><span class="sk">ma</span></td><td><span class="sk">–––</span></td><td><span class="sk">GGG</span></td><td>(Molossus)</td></tr>
+<tr><td><span class="sk">na</span></td><td><span class="sk">ᴗᴗᴗ</span></td><td><span class="sk">LLL</span></td><td>(Tribrachys)</td></tr>
+</table>
+<p class="intro-p">Similarly <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr> (ᴗ) is used to denote a short syllable, and <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (–) a long one.</p>
+<p class="intro-p">N. B. –Sanskrit prosodists classify <span class="sk">Vṛittas</span> according to the number of syllables contained in each quarter. Thus they enumerate twenty-six classes of ‘<span class="sk">Samavṛittas’</span>, as the number of syllables in each quarter of a regular metre may vary from one to twenty-six. Each of these classes comprehends a great number of possible metres according to the different modes in which long and short syllables may be distributed. For example, in the class where each quarter contains six syllables, each of the six syllables may be either short or long, and thus the number of <span class="it">possible</span> combinations is <span class="num">2 × 2 × 2 × 2 × 2 × 2</span> or <span class="num">2</span>^<span class="num">6</span> = <span class="num">64</span>, though not even half a dozen are in general use; so in the case of the twenty-six syllabled class, the possible varieties are <span class="num">2</span><span class="num">26</span> or <span class="num">67</span>, <span class="num">108</span>, <span class="num">864</span>!</p>
+<p class="intro-p">But if we consider the cases where the alternate quarters are similar or all dissimilar, the variety of possible metres is almost infinite. <span class="sk">Pingala</span>, as also the <span class="sk">Līlāvatī</span> and the last chapter of <span class="sk">Vṛitta-ratnākara</span>, give directions for computing the number of possible varieties and for finding their places, or that of any single one, in a regular enumeration of them. The different varieties, however, which have been used by poets are few when compared with the vast multitude of possible metres. But even these are too many to be dealt with in an Appendix like this, and we shall, therefore, only give such kinds as are most frequently employed or require particular notice, in the following order:–</p>
+<table class="prosody-table">
+<tr><td><span class="it">Section</span> A</td><td><span class="sk">samavṛtta</span></td></tr>
+<tr><td><span class="it">Section</span> B</td><td><span class="sk">ardhavṛtta</span></td></tr>
+<tr><td><span class="it">Section</span> C</td><td><span class="sk">viṣamavṛtta</span></td></tr>
+<tr><td><span class="it">Section</span> D</td><td><span class="sk">jāti</span> &amp;c.</td></tr>
+</table>
+<p class="intro-p">Note–In the following definitions the letters representing the <span class="sk">Gaṇas</span> such as bha, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, &amp;c. as also <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, will often be found to have dropped their vowels for the exigence of metre. <span class="it">e. g.</span> <span class="sk">mra</span> <span class="sk">bhna</span> stands for <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <span class="sk">na</span>; so <span class="sk">mto</span>, for <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr> &amp;c. The first line gives the <span class="it">Definition</span> of a metre; the second, the with the <span class="sk">Yati</span> or <span class="sk">Cæsura</span>-the pause that may be made in reciting a quarter or verse, and which is usually indicated by the words in the Definition standing in the Instrumental case-denoted in brackets by Arabic figures, and then comes the example (many of these examples are drawn from the works of <span class="sk">Māgha</span>, <span class="sk">Bhāravi</span>, <span class="sk">Kālidàsa</span>, <span class="sk">Da</span><span class="sk it">n</span><span class="sk">din</span> &amp;c.).</p>
+</section>
+
+<section id="sec-sectionasamavrtta">
+<h1>SECTION A. - <span class="sk">samavṛtta</span></h1>
+<div id="grp-metreswith4syllablesinaq" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">4</span><span class="b it"> Syllables in a quarter </span><span class="b">(</span><span class="sk">pratiṣṭhā</span><span class="b">)</span></h2>
+<article id="kanya" class="metre">
+<h3 class="mh">(<span class="num">1</span><span class="sk">) </span><span class="sk">kanyā</span></h3>
+<p><b>Def.</b> <span class="sk">gmau</span> <span class="sk">cet</span> <span class="sk">kanyā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma.</span></abbr></p>
+<p><b>Ex.</b> <span class="sk">bhāsvatkanyā</span> <span class="sk">saikā</span> <span class="sk">dhanyā</span></p>
+<p><span class="sk">yasyāḥ</span> <span class="sk">kūle</span> <span class="sk">kṛṣṇo'khelat</span> <span class="sk">||</span></p>
+</article>
+
+</div>
+
+<div id="grp-metreswith5syllablesinaq" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">5</span><span class="b it"> Syllables in a quarter</span><span class="b"> (</span><span class="sk">supratiṣṭhā</span><span class="b">)</span></h2>
+<article id="pankti" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">paṅkti</span></h3>
+<p><b>Def.</b> <span class="sk">bhgau</span> <span class="sk">giti</span> <span class="sk">paṅktiḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga.</span></abbr></p>
+<p><b>Ex.</b> <span class="sk">kṛṣṇasanāthā</span> <span class="sk">tarṇakapaṅktiḥ</span> <span class="sk">| yāmunakacche</span> <span class="sk">cāru</span> <span class="sk">cacāra ||</span></p>
+</article>
+
+</div>
+
+<div id="grp-metreswith6syllablesinaq" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">6</span><span class="b it"> Syllables in a quarter </span><span class="b">(</span><span class="sk">gāyatrī</span><span class="b">)</span></h2>
+<article id="tanumadhyama" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">tanumadhyamā</span></h3>
+<p><b>Def.</b> <span class="sk">tyau</span> <span class="sk">cettanumadhyamā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya.</span></abbr></p>
+<p><b>Ex.</b> <span class="sk">mūrtirmuraśatroratyadbhutarūpā</span> <span class="sk">|</span></p>
+<p><span class="sk">āstāṃ</span> <span class="sk">mama</span> <span class="sk">citte</span> <span class="sk">nityaṃ</span> <span class="sk">tanumadhyā ||</span></p>
+</article>
+
+<article id="vidyullekha" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">vidyullekhā</span></h3>
+<p>(<b>also called</b> <span class="sk">vāṇī</span>)</p>
+<p><b>Def.</b> <span class="sk">vidyullekhā</span> <span class="sk">mā</span> <span class="sk">maḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma.</span></abbr> (<span class="num">3</span>. <span class="num">3</span>)</p>
+<p><b>Ex.</b> <span class="sk">śrīdīptī</span> <span class="sk">thīkīrtī</span> <span class="sk">dhīnītī</span> <span class="sk">gīḥprītī</span> <span class="sk">|</span></p>
+<p><span class="sk">edhete</span> <span class="sk">dve</span> <span class="sk">dve</span> <span class="sk">te</span> <span class="sk">ye</span> <span class="sk">neme</span> <span class="sk">deveśe ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Kāvyādarsa">Káv.</abbr> <span class="num">3</span>. <span class="num">36</span>.</p>
+</article>
+
+<article id="sasivadana" class="metre">
+<h3 class="mh">(<span class="num">3</span>) <span class="sk">śaśivadanā</span></h3>
+<p><b>Def.</b> <span class="sk">śaśivadanā</span> <span class="sk">nyau ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya.</span></abbr></p>
+<p><b>Ex.</b> <span class="sk">śaśivadanānāṃ</span> <span class="sk">vrajataruṇīnām</span> <span class="sk">|</span></p>
+<p><span class="sk">adharasudhormi</span> <span class="sk">madhuripuraicchat ||</span></p>
+</article>
+
+<article id="somaraji" class="metre">
+<h3 class="mh">(<span class="num">4</span>) <span class="sk">somarājī</span></h3>
+<p><b>Def.</b> <span class="sk">dviyā</span> <span class="sk">somarājī ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya.</span></abbr> (<span class="num">2</span>. <span class="num">4</span>).</p>
+<p><b>Ex.</b> <span class="sk">hare</span> <span class="sk">somarājī</span>-<span class="sk">samā</span> <span class="sk">te</span> <span class="sk">yaśaḥśrīḥ</span> <span class="sk">|</span></p>
+<p><span class="sk">jaganmaṇḍalasya</span> <span class="sk">chinattyandhakarām ||</span></p>
+</article>
+
+</div>
+
+<div id="grp-metreswith7syllablesinaq" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">7</span><span class="b it"> Syllables in a quarter </span>(<span class="sk">uṣṇik</span>)</h2>
+<article id="kumaralalita" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">kumāralalitā</span></h3>
+<p><b>Def.</b> <span class="sk">kumāralalitā</span> <span class="sk">j</span> <span class="sk">s</span> <span class="sk">gāḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga.</span></abbr> (<span class="num">3</span>. <span class="num">4</span>.)</p>
+<p><b>Ex.</b> <span class="sk">murāritanuvallī</span> <span class="sk">kumāralalitā</span> <span class="sk">sā</span> <span class="sk">|</span></p>
+<p><span class="sk">vrajaiṇanayanānāṃ</span> <span class="sk">tatāna</span> <span class="sk">mudamuccaiḥ ||</span></p>
+</article>
+
+<article id="madalekha" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">madalekhā</span></h3>
+<p><b>Def.</b> <span class="sk">masgau</span> <span class="sk">syānmadalekhā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga.</span></abbr> (<span class="num">3</span>. <span class="num">4</span>)</p>
+<p><b>Ex.</b> <span class="sk">raṅge</span> <span class="sk">bāhuvirugṇād</span> <span class="sk">dantīndrānmadalekhā</span> <span class="sk">|</span></p>
+<p><span class="sk">lagnābhūnpuraśatrau</span> <span class="sk">kastūrīrasacarcā ||</span></p>
+</article>
+
+<article id="madhumati" class="metre">
+<h3 class="mh">(<span class="num">3</span>) <span class="sk">madhumatī</span></h3>
+<p><b>Def.</b> <span class="sk">nanagi</span> <span class="sk">madhumatī ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">5</span>. <span class="num">2</span>)</p>
+<p><b>Ex.</b> <span class="sk">raviduhitṛtaṭe</span> <span class="sk">vanakusumatatiḥ</span> <span class="sk">|</span></p>
+<p><span class="sk">vyadhita</span> <span class="sk">madhumatī</span> <span class="sk">madhumathanamudam ||</span></p>
+</article>
+
+</div>
+
+<div id="grp-metreswith8syllablesinaq" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">8</span><span class="b it"> Syllables in a quarter </span>(<span class="sk">anuṣṭubh</span>)</h2>
+<article id="anustubh" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">anuṣṭubh</span></h3>
+<p>(<b>also called</b> <span class="sk">śloka</span>)</p>
+<p>There are several varieties of this metre, but that which is most in use has eight syllables in each quarter, but of variable quantity. <span class="b">Thus the fifth</span> <span class="b">syllable of each quarter should be short, the sixth</span> <span class="b">long, and the seventh alternately long and short.</span></p>
+<p><b>Def.</b> <span class="sk">śloke</span> <span class="sk">ṣaṣṭhaṃ</span> <span class="sk">guru</span> <span class="sk">jñeyaṃ</span> <span class="sk">sarvatra</span> <span class="sk">laghu</span> <span class="sk">pañcamam|</span></p>
+<p><span class="sk">dvicatuḥ</span> <span class="sk">pādayorhasvaṃ</span> <span class="sk">saptamaṃ</span> <span class="sk">dīrghamanyayoḥ ||</span></p>
+<p><b>Ex.</b> <span class="sk">vāgarthāviva</span> <span class="sk">sampṛktau</span> <span class="sk">vāgarthapratipattaye</span> <span class="sk">|</span></p>
+<p><span class="sk">jagataḥ</span> <span class="sk">pitarau</span> <span class="sk">vande</span> <span class="sk">pārvatīparameśvarau ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Raghuvamsa (Bombay)"><a href="https://samskrtam.ru/parallel-corpus/raghuvamsha.html" target="_blank" class="corpus-link">R.</a></abbr> <span class="num">1</span>. <span class="num">1</span>.</p>
+</article>
+
+<article id="gajagati" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">gajagati</span></h3>
+<p><b>Def.</b> <span class="sk">nabhalagā</span> <span class="sk">gajagatiḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">4</span>. <span class="num">4</span>.)</p>
+<p><b>Ex.</b> <span class="sk">ravisutāparisare</span> <span class="sk">viharato</span> <span class="sk">dṛśi</span> <span class="sk">hareḥ</span> <span class="sk">|</span></p>
+<p><span class="sk">vrajavadhūgajagatirmudamalaṃ</span> <span class="sk">vyatanuta ||</span></p>
+</article>
+
+<article id="pramanika" class="metre">
+<h3 class="mh">(<span class="num">3</span>) <span class="sk">pramāṇikā</span></h3>
+<p><b>Def.</b> <span class="sk">pramāṇikā</span> <span class="sk">jarau</span> <span class="sk">lagau ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">4</span>. <span class="num">4</span>)</p>
+<p><b>Ex.</b> <span class="sk">punātu</span> <span class="sk">bhaktiracyutā</span> <span class="sk">sadācyutāṅghripadmayoḥ</span> <span class="sk">|</span></p>
+<p><span class="sk">śrutismṛtipramāṇikā</span> <span class="sk">bhavāmburāśitārikā ||</span></p>
+</article>
+
+<article id="manavaka" class="metre">
+<h3 class="mh">(<span class="num">4</span>) <span class="sk">māṇavaka</span></h3>
+<p><b>Def.</b> <span class="sk">bhāttalagā</span> <span class="sk">māṇavakam ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, (<span class="num">4</span>. <span class="num">4</span>)</p>
+<p><b>Ex.</b> <span class="sk">cañcalacūḍaṃ</span> <span class="sk">capalairvatsakulaiḥ</span> <span class="sk">keliparam</span> <span class="sk">|</span></p>
+<p><span class="sk">dhyāya</span> <span class="sk">sakhe</span> <span class="sk">smeramukhaṃ</span> <span class="sk">nandasutaṃ</span> <span class="sk">māṇavakam ||</span></p>
+</article>
+
+<article id="vidyunmala" class="metre">
+<h3 class="mh">(<span class="num">5</span>) <span class="sk">vidyunmālā</span></h3>
+<p><b>Def.</b> <span class="sk">mo</span> <span class="sk">mo</span> <span class="sk">go</span> <span class="sk">go</span> <span class="sk">vidyunmālā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, (<span class="num">4</span>. <span class="num">4</span>)</p>
+<p><b>Ex.</b> <span class="sk">vāsovallī</span> <span class="sk">vidyunmālā</span> <span class="sk">barhaśreṇī</span> <span class="sk">śākraścāpaḥ</span> <span class="sk">|</span></p>
+<p><span class="sk">yasminnāstāṃ</span> <span class="sk">tāpocchittyai</span> <span class="sk">gomadhyasthaḥ</span> <span class="sk">kṛṣṇāmbhodaḥ ||</span></p>
+</article>
+
+<article id="samanika" class="metre">
+<h3 class="mh">(<span class="num">6</span>) <span class="sk">samānikā</span></h3>
+<p><b>Def.</b> <span class="sk">glau</span> <span class="sk">rajau</span> <span class="sk">samānikā</span> <span class="sk">tu ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr> (<span class="num">4</span>. <span class="num">4</span>.)</p>
+<p><b>Ex.</b> <span class="sk">yasya</span> <span class="sk">kṛṣṇapādapadmamasti</span> <span class="sk">hṛttaḍāgasadma</span> <span class="sk">|</span></p>
+<p><span class="sk">dhīḥ </span><span class="sk">samānikā </span><span class="sk">pareṇa</span> <span class="sk">nocitātra</span> <span class="sk">matsareṇa ||</span></p>
+</article>
+
+</div>
+
+<div id="grp-metreswith9syllablesinaq" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">9</span><span class="b it"> Syllables in a quarter </span>(<span class="sk">bṛhatī</span>)</h2>
+<article id="bhujagasisubhrta" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">bhujagaśiśubhṛtā</span></h3>
+<p><b>Def.</b> <span class="sk">bhujagaśiśubhṛtā</span> <span class="sk">nau</span> <span class="sk">maḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr> (<span class="num">7</span>. <span class="num">2</span>)</p>
+<p><b>Ex.</b> <span class="sk">hradataṭanikaṭakṣauṇī</span> <span class="sk">bhujagaśiśubhṛtā</span> <span class="sk">yā'sīt</span> <span class="sk">|</span></p>
+<p><span class="sk">muraripudalite</span> <span class="sk">nāge</span> <span class="sk">vrajajanasukhadā</span> <span class="sk">sā</span> <span class="sk">'</span> <span class="sk">bhūt ||</span></p>
+</article>
+
+<article id="bhujangasangata" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">bhujaṅgasaṅgatā</span></h3>
+<p><b>Def.</b> <span class="sk">sajarairbhujaṅgasaṅgatā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, (<span class="num">3</span>. <span class="num">6</span>)</p>
+<p><b>Ex.</b> <span class="sk">taralā</span> <span class="sk">taraṅgiriṅgitairyamunā</span> <span class="sk">bhujaṅgasaṅgatā</span> <span class="sk">|</span></p>
+<p><span class="sk">kathameti</span> <span class="sk">vatsacārakaścapalaḥ</span> <span class="sk">sadaiva</span> <span class="sk">tāṃ</span> <span class="sk">hariḥ ||</span></p>
+</article>
+
+<article id="manimadhya" class="metre">
+<h3 class="mh">(<span class="num">3</span>) <span class="sk">maṇimadhya</span></h3>
+<p><b>Def.</b> <span class="sk">syānmaṇimadhyaṃ</span> <span class="sk">cedbhamasāḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, (<span class="num">5</span>. <span class="num">4</span>)</p>
+<p><b>Ex.</b> <span class="sk">kāliyabhogābhogagatastanmaṇimadhyasphītarucā</span> <span class="sk">|</span></p>
+<p><span class="sk">citrapadābho</span> <span class="sk">nandasutaścāru</span> <span class="sk">nanarta</span> <span class="sk">smeramukhaḥ ||</span></p>
+</article>
+
+</div>
+
+<div id="grp-metreswith10syllablesina" class="group">
+<h2 class="gh"><span class="b it">Metres with</span><span class="b"> </span><span class="num b">10</span><span class="b"> </span><span class="b it">Syllables in a quarter </span>(<span class="sk">paṅkti</span>)</h2>
+<article id="tvaritagati" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">tvaritagati</span></h3>
+<p><b>Def.</b> <span class="sk">tvaritagatiśca</span> <span class="sk">najanagaiḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">5</span>. <span class="num">5</span>)</p>
+<p><b>Ex.</b> <span class="sk">tvaritagatirvrajayuvatistaraṇisutā</span> <span class="sk">vipinagatā</span> <span class="sk">|</span></p>
+<p><span class="sk">muraripuṇā</span> <span class="sk">ratiguruṇā</span> <span class="sk">pariramitā</span> <span class="sk">pramadamitā ||</span></p>
+</article>
+
+<article id="matta" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">mattā</span></h3>
+<p><b>Def.</b> <span class="sk">jñeyā</span> <span class="sk">mattā</span> <span class="sk">mabhasagasṛṣṭā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">4</span>. <span class="num">6</span>)</p>
+<p><b>Ex.</b> <span class="sk">pītvā</span> <span class="sk">mattā</span> <span class="sk">madhu</span> <span class="sk">madhupālī kālindīye taṭavanakuñje |</span></p>
+<p><span class="sk">uddīvyantīr vrajajanarāmāḥ kāmāsaktā</span> <span class="sk">madhujiti</span> <span class="sk">cakre ||</span></p>
+</article>
+
+<article id="rukmavati" class="metre">
+<h3 class="mh">(<span class="num">3</span>) <span class="sk">rukmavatī</span></h3>
+<p>(<b>also called</b> <span class="sk">campakamālā</span>)</p>
+<p><b>Def.</b> <span class="sk">rukmavatī</span> <span class="sk">sā</span> <span class="sk">yatra</span> <span class="sk">bhamasgāḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">5</span>. <span class="num">5</span>)</p>
+<p><b>Ex.</b> <span class="sk">kāyamanovākyaiḥ</span> <span class="sk">pariśuddhairyasya sadā kaṃsadviṣi bhaktiḥ |</span></p>
+<p><span class="sk">rājyapade harmyālirudārā rukmavatī</span> <span class="sk">vighnaḥ</span> <span class="sk">khalu</span> <span class="sk">tasya ||</span></p>
+</article>
+
+</div>
+
+<div id="grp-metreswith11syllablesina" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">11</span><span class="b it"> Syllables in a quarter </span>(<span class="sk">triṣṭubh</span>)</h2>
+<article id="indravajra" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">indravajrā</span></h3>
+<p><b>Def.</b> <span class="sk">syādindravajrā</span> <span class="sk">yadi</span> <span class="sk">tau</span> <span class="sk">jagau</span> <span class="sk">gaḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">5</span>. <span class="num">6</span>)</p>
+<p><b>Ex.</b> <span class="sk">goṣṭhe</span> <span class="sk">giriṃ</span> <span class="sk">savyakareṇa</span> <span class="sk">dhṛtvā ruṣṭendravajrāhatimuktavṛṣṭau|</span></p>
+<p><span class="sk">yo</span> <span class="sk">gokulaṃ</span> <span class="sk">gopakulaṃ</span> <span class="sk">ca</span> <span class="sk">susthaṃ</span> <span class="sk">cakre</span> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr> <span class="sk">no</span> <span class="sk">rakṣatu</span> <span class="sk">cakrapāṇiḥ ||</span></p>
+</article>
+
+<article id="upendravajra" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">upendravajrā</span></h3>
+<p><b>Def.</b> <span class="sk">upendravajrā</span> <span class="sk">prathame</span> <span class="sk">laghau</span> <span class="sk">sā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">5</span>. <span class="num">6</span>.)</p>
+<p><b>Ex.</b> <span class="sk">upedravajrādimaṇicchaṭābhirvibhaṣaṇānāṃ</span> <span class="sk">churitaṃ</span> <span class="sk">vapuste |</span></p>
+<p><span class="sk">smarāmi</span> <span class="sk">gopībhirupāsyamānaṃ</span> <span class="sk">surandrumūle</span> <span class="sk">maṇimaṇḍapastham ||</span></p>
+</article>
+
+<article id="upajati" class="metre">
+<h3 class="mh">(<span class="num">3</span>) <span class="sk">upajāti</span></h3>
+<p><b>Def.</b> <span class="sk">anantarodīritalakṣmabhājau pādau</span> <span class="sk">yadīyāvupajātayastāḥ|</span></p>
+<p><span class="sk">itthaṃ</span> <span class="sk">kilānyāsvapi</span> <span class="sk">miśritāsu</span> <span class="sk">vadanti</span> <span class="sk">jātiṣvidameva</span> <span class="sk">nāma ||</span></p>
+<p><b>Sch. G.</b> When <span class="sk b">indravajrā</span> and <span class="sk b">upendravajrā</span> are mixed in one stanza, the metre is called <span class="sk b">upajāti</span>. It is said to have <span class="num">14</span> varieties.</p>
+<p><b>Ex.</b> <span class="sk">astyuttarasyāṃ</span> <span class="sk">diśi</span> <span class="sk">devatātmā himālayo</span> <span class="sk">nāma</span> <span class="sk">nagādhirājaḥ|</span></p>
+<p><span class="sk">pūrvāparau</span> <span class="sk">toyanidhī</span> <span class="sk">vagāhya</span> <span class="sk">sthitaḥ</span> <span class="sk">pṛthivyā</span> <span class="sk">iva</span> <span class="sk">mānadaṇḍaḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Kumārasambhava (Bombay)"><a href="https://samskrtam.ru/parallel-corpus/kumarasambhava.html" target="_blank" class="corpus-link">Ku.</a></abbr> <span class="num">1</span>. <span class="num">1</span>.</p>
+<p class="ref-line">See <abbr class="ref" title="Raghuvamsa (Bombay)"><a href="https://samskrtam.ru/parallel-corpus/raghuvamsha.html" target="_blank" class="corpus-link">R.</a></abbr> <span class="num">2</span>, <span class="num">5</span>, <span class="num">6</span>, <span class="num">7</span>; <span class="num">13</span>, <span class="num">14</span>, <span class="num">16</span>, <span class="num">18</span>, <abbr class="ref" title="Kumārasambhava (Bombay)"><a href="https://samskrtam.ru/parallel-corpus/kumarasambhava.html" target="_blank" class="corpus-link">Ku.</a></abbr> <span class="num">3</span>; <abbr class="ref" title="Kirātārjunīya">Ki.</abbr> <span class="num">17</span>. &amp;c.</p>
+<p>When other metres also are mixed in one stanza, the metre is still called <span class="sk">upajāti</span>; <span class="it">e. g.</span> in the following verse from <span class="sk">Māgha</span> there is a combination of <span class="sk">vaṃśastha </span>and <span class="sk">indravaṃśā.</span></p>
+<p><span class="sk">itthaṃ</span> <span class="sk">rathāśvebhaniṣādināṃ</span> <span class="sk">prage</span> <span class="sk">gajo</span> <span class="sk">nṛpāṇāmatha</span> <span class="sk">toraṇādbahiḥ |</span> <span class="sk">prasthānakālakṣamaveśakalpanākṛtakṣaṇakṣepamudaikṣatācyutam ||</span></p>
+</article>
+
+<article id="dodhaka" class="metre">
+<h3 class="mh">(<span class="num">4</span>) <span class="sk">dodhaka</span></h3>
+<p><b>Def.</b> <span class="sk">dodhakamicchati</span> <span class="sk">bhatritayādgau ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">6</span>. <span class="num">5</span>)</p>
+<p><b>Ex.</b> <span class="sk">yā</span> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr> <span class="sk">yayau</span> <span class="sk">priyamanyavadhūbhyaḥ sāratarāgamanā</span> <span class="sk">yatamānam|</span></p>
+<p><span class="sk">tena</span> <span class="sk">saheha</span> <span class="sk">bibharti</span> <span class="sk">rahaḥ</span> <span class="sk">strī</span> <span class="sk">sāra</span> <span class="sk">tarāgamanāyatamānam ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">4</span>. <span class="num">45</span>.</p>
+</article>
+
+<article id="bhramaravilasitam" class="metre">
+<h3 class="mh">(<span class="num">5</span>) <span class="sk">bhramaravilasitaṃ</span></h3>
+<p>(<b>also called</b> <span class="sk">bhramaravilasitā</span>)</p>
+<p><b>Def.</b> <span class="sk">mbhau</span> <span class="sk">nlau</span> <span class="sk">gaḥ</span> <span class="sk">syād</span> <span class="sk">bhramaravilasitam</span>.</p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">4</span>, <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">prītyai</span> <span class="sk">yūnāṃ</span> <span class="sk">vyavahitatapanāḥ prauḍhadhvāntaṃ</span> <span class="sk">dinamiha</span> <span class="sk">jaladāḥ|</span></p>
+<p><span class="sk">doṣāmanyaṃ</span> <span class="sk">vidadhati</span> <span class="sk">surata</span> <span class="sk">krīḍāyāsaśramaśamapaṭavaḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">4</span>. <span class="num">62</span>.</p>
+</article>
+
+<article id="rathoddhata" class="metre">
+<h3 class="mh">(<span class="num">6</span>) <span class="sk">rathoddhatā</span></h3>
+<p><b>Def.</b> <span class="sk">rātparairnaralagai</span> <span class="sk">rathoddhatā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga.</span></abbr> (<span class="num">3</span>. <span class="num">8</span>. or <span class="num">4</span>. <span class="num">8</span>)</p>
+<p><b>Ex.</b> <span class="sk">kauśikena</span> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr> <span class="sk">kila</span> <span class="sk">kṣitīśvaro rāmamadhvaravighātaśāntaye|</span></p>
+<p><span class="sk">kākapakṣadharametya</span> <span class="sk">yācitastejasāṃ</span> <span class="sk">hi</span> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr> <span class="sk">vayaḥ</span> <span class="sk">samīkṣyate ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Raghuvamsa (Bombay)"><a href="https://samskrtam.ru/parallel-corpus/raghuvamsha.html" target="_blank" class="corpus-link">R.</a></abbr> <span class="num">11</span>. <span class="num">1</span>.</p>
+<p class="ref-line">See <abbr class="ref" title="Kumārasambhava (Bombay)"><a href="https://samskrtam.ru/parallel-corpus/kumarasambhava.html" target="_blank" class="corpus-link">Ku.</a></abbr> <span class="num">8</span> also.</p>
+</article>
+
+<article id="vatormi" class="metre">
+<h3 class="mh">(<span class="num">7</span>) <span class="sk">vātormī</span></h3>
+<p><b>Def.</b> <span class="sk">vātormīyaṃ</span> <span class="sk">gaditā</span> <span class="sk">mbhau</span> <span class="sk">tagau</span> <span class="sk">gaḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">4</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">dhyātā</span> <span class="sk">mūrtiḥ</span> <span class="sk">kṣaṇamapyacyutasya śreṇī</span> <span class="sk">nāmnāṃ</span> <span class="sk">gaditā</span> <span class="sk">helayāpi|</span> <span class="sk">saṃsāre'smin</span> <span class="sk">duritaṃ</span> <span class="sk">hanti</span> <span class="sk">puṃsāṃ</span> <span class="sk">vātormī</span> <span class="sk">potamivāmbhodhimadhye ||</span></p>
+</article>
+
+<article id="salini" class="metre">
+<h3 class="mh">(<span class="num">8</span>) <span class="sk">śālinī</span></h3>
+<p><b>Def.</b> <span class="sk">māttau</span> <span class="sk">gau</span> <span class="sk">cecchālinī</span> <span class="sk">vedalokaiḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">4</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">aṅgho</span> <span class="sk">hanti</span> <span class="sk">jñānavṛddhiṃ</span> <span class="sk">vidhatte dharmaṃ</span> <span class="sk">datte</span> <span class="sk">kāmamarthaṃ</span> <span class="sk">ca</span> <span class="sk">sūte|</span></p>
+<p><span class="sk">muktiṃ</span> <span class="sk">datte</span> <span class="sk">sarvadopāsyamānā</span> <span class="sk">puṃsāṃ</span> <span class="sk">śraddhāśālinī</span> <span class="sk">viṣṇubhaktiḥ ||</span></p>
+</article>
+
+<article id="svagata" class="metre">
+<h3 class="mh">(<span class="num">9</span>) <span class="sk">svāgatā</span></h3>
+<p><b>Def.</b> <span class="sk">svāgatā</span> <span class="sk">ranabhagairguruṇā</span> <span class="sk">ca ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga.</span></abbr> (<span class="num">3</span>. <span class="num">8</span>)</p>
+<p><b>Ex.</b> <span class="sk">yāvadāgamayate'tha</span> <span class="sk">narendrān sa</span> <span class="sk">svayaṃvaramahāya</span> <span class="sk">mahīndraḥ|</span></p>
+<p><span class="sk">tāvadeva</span> <span class="sk">ṛṣirindradidṛkṣurnāradastridaśadhāma</span> <span class="sk">jagāma ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Naishadhacharita">N.</abbr> <span class="num">5</span>. <span class="num">1</span>.</p>
+<p class="ref-line">See <abbr class="ref" title="Kirātārjunīya">Ki.</abbr> <span class="num">9</span>, <abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">10</span>.</p>
+</article>
+
+</div>
+
+<div id="grp-metreswith12syllablesina" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">12</span><span class="b it"> Syllables in a quarter </span>(<span class="sk">jagatī</span>)</h2>
+<article id="indravamsa" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">indravaṃśā</span></h3>
+<p><b>Def.</b> <span class="sk">taccendravaṃśā</span> <span class="sk">prathamākṣare</span> <span class="sk">gurau ||</span></p>
+<p><b>Sch. G.</b> <span class="sk">indravaṃśā</span> is the same as <span class="sk">vaṃśasthavila</span> or <span class="sk">vaṃśastha</span></p>
+<p>(see <span class="num">13</span> below) except that its first syllable is long:– The Ga<span class="it">n</span>as are, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra.</span></abbr></p>
+<p><b>Ex.</b> <span class="sk">daityendravaṃśāgnirudīrṇadīdhitiḥ pītāmbaro'sau</span> <span class="sk">jagatāṃ</span> <span class="sk">tamopahaḥ|</span></p>
+<p><span class="sk">yasminmamajjuḥ</span> <span class="sk">śalabhā</span> <span class="sk">iva</span> <span class="sk">svayaṃ</span> <span class="sk">te</span> <span class="sk">kaṃsacāṇūramukhā</span> <span class="sk">makhadviṣaḥ ||</span></p>
+</article>
+
+<article id="candravartma" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">candravartma</span></h3>
+<p><b>Def.</b> <span class="sk">candravartma</span> <span class="sk">nigadanti</span> <span class="sk">ranabhasaiḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr> (<span class="num">4</span>. <span class="num">8</span>.)</p>
+<p><b>Ex.</b> <span class="sk">candravartma</span> <span class="sk">vihitaṃ</span> <span class="sk">ghanatimiraiḥ rājavartma</span> <span class="sk">rahitaṃ</span> <span class="sk">janagamanaiḥ|</span></p>
+<p><span class="sk">iṣṭavartma</span> <span class="sk">tadalaṅkuru</span> <span class="sk">sarase</span> <span class="sk">kuñjavartmani</span> <span class="sk">haristava</span> <span class="sk">kutukī ||</span></p>
+</article>
+
+<article id="jaladharamala" class="metre">
+<h3 class="mh">(<span class="num">3</span>) <span class="sk">jaladharamālā</span></h3>
+<p><b>Def.</b> <span class="sk">abdhyaṅgaiḥ</span> <span class="sk">syājjaladharamālāmbhau</span> <span class="sk">smau ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr> (<span class="num">4</span>. <span class="num">8</span>)</p>
+<p><b>Ex.</b> <span class="sk">yā</span> <span class="sk">bhaktānāṃ</span> <span class="sk">kaliduritottaptānāṃ tāpacchede</span> <span class="sk">jaladharamālā</span> <span class="sk">navyā|</span></p>
+<p><span class="sk">bhavyākārā</span> <span class="sk">dinakaraputrīkūle</span> <span class="sk">kelīlolā</span> <span class="sk">haritanuravyātsā</span> <span class="sk">vaḥ ||</span></p>
+<p class="ref-line">See <abbr class="ref" title="Kirātārjunīya">Ki.</abbr> <span class="num">5</span>. <span class="num">23</span>.</p>
+</article>
+
+<article id="jaloddhatagati" class="metre">
+<h3 class="mh">(<span class="num">4</span>) <span class="sk">jaloddhatagati</span></h3>
+<p><b>Def.</b> <span class="sk">rasairjasajasā</span> <span class="sk">jaloddhatagatiḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr> (<span class="num">6</span>. <span class="num">6</span>)</p>
+<p><b>Ex.</b> <span class="sk">samīraśiśiraḥ</span> <span class="sk">śirassu</span> <span class="sk">vasatāṃ satāṃ</span> <span class="sk">javanikā</span> <span class="sk">nikāmasukhinām|</span></p>
+<p><span class="sk">bibharti</span> <span class="sk">janayannayaṃ</span> <span class="sk">mudamapāmapāyadhavalā</span> <span class="sk">balāhakatatīḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">4</span>. <span class="num">54</span>.</p>
+</article>
+
+<article id="tamarasa" class="metre">
+<h3 class="mh">(<span class="num">5</span>) <span class="sk">tāmarasa</span></h3>
+<p><b>Def.</b> <span class="sk">iha</span> <span class="sk">vada</span> <span class="sk">tāmarasaṃ</span> <span class="sk">najajā</span> <span class="sk">yaḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr> (<span class="num">5</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">sphuṭasuṣamāmakarandamanojñaṃ vrajalalanānayanālinipītam|</span></p>
+<p><span class="sk">tava</span> <span class="sk">mukhatāmarasaṃ</span> <span class="sk">muraśatro</span> <span class="sk">hṛdayataḍāgavikāśi</span> <span class="sk">mamāstu ||</span></p>
+</article>
+
+<article id="totaka" class="metre">
+<h3 class="mh">(<span class="num">6</span>) <span class="sk">toṭaka</span></h3>
+<p><b>Def.</b> <span class="sk">vada</span> <span class="sk">toṭakamabdhisakārayutam ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, (<span class="num">4</span>. <span class="num">4</span>. <span class="num">3</span>.)</p>
+<p><b>Ex.</b> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr> <span class="sk">tatheti</span> <span class="sk">vineturudāramateḥ pratigṛhya</span> <span class="sk">vaco</span> <span class="sk">visasarja</span> <span class="sk">munim|</span></p>
+<p><span class="sk">tadalabdhapadaṃ</span> <span class="sk">hṛdi</span> <span class="sk">śokaghane</span> <span class="sk">pratiyātamivāntikamasya</span> <span class="sk">guroḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Raghuvamsa (Bombay)"><a href="https://samskrtam.ru/parallel-corpus/raghuvamsha.html" target="_blank" class="corpus-link">R.</a></abbr> <span class="num">8</span>. <span class="num">91</span>.</p>
+<p class="ref-line">See <abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">6</span>. <span class="num">71</span>.</p>
+</article>
+
+<article id="drutavilambita" class="metre">
+<h3 class="mh">(<span class="num">7</span>) <span class="sk">drutavilambita</span></h3>
+<p><b>Def.</b> <span class="sk">drutavilambitamāha</span> <span class="sk">nabhau</span> <span class="sk">bharau ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr> (<span class="num">4</span>. <span class="num">8</span>, or <span class="num">4</span>. <span class="num">4</span>. <span class="num">4</span>)</p>
+<p><b>Ex.</b> <span class="sk">munisutāpraṇayasmṛtirodhinā mama</span> <span class="sk">ca</span> <span class="sk">muktamidaṃ</span> <span class="sk">tamasā</span> <span class="sk">manaḥ|</span></p>
+<p><span class="sk">manasijena</span> <span class="sk">sakhe</span> <span class="sk">prahariṣyatā</span> <span class="sk">dhanuṣi</span> <span class="sk">cūtaśaraśca</span> <span class="sk">niveśitaḥ</span><span class="sk"> ||</span></p>
+<p class="ref-line"><span class="it"><abbr class="ref" title="Śakuntalā">S.</abbr></span> <span class="num">6</span></p>
+<p>see <abbr class="ref" title="Raghuvamsa (Bombay)"><a href="https://samskrtam.ru/parallel-corpus/raghuvamsha.html" target="_blank" class="corpus-link">R.</a></abbr> <span class="num">9</span>, <abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">6</span> also.</p>
+</article>
+
+<article id="prabha" class="metre">
+<h3 class="mh">(<span class="num">8</span>) <span class="sk">prabhā</span></h3>
+<p>(<b>also called</b> <span class="sk">mandākinī </span>or<span class="sk"> pramuditavadanā</span>)</p>
+<p><b>Def.</b> <span class="sk">svaraśaraviratirnanau</span> <span class="sk">rau</span> <span class="sk">prabhā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr> (<span class="num">7</span>. <span class="num">5</span>)</p>
+<p><b>Ex.</b> <span class="sk">atisuramirabhāji</span> <span class="sk">puṣpaśriyā matanuta</span> <span class="sk">ratayeva</span> <span class="sk">santānakaḥ |</span></p>
+<p><span class="sk">taruṇaparabhṛtaḥ</span> <span class="sk">svanaṃ</span> <span class="sk">rāgiṇāmatanuta</span> <span class="sk">rataye</span> <span class="sk">vasantānakaḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">6</span>. <span class="num">67</span>; also <abbr class="ref" title="Kirātārjunīya">Ki.</abbr> <span class="num">5</span>. <span class="num">21</span>.</p>
+</article>
+
+<article id="pramitaksara" class="metre">
+<h3 class="mh">(<span class="num">9</span>) <span class="sk">pramitākṣarā</span></h3>
+<p><b>Def.</b> <span class="sk">pramitākṣarā</span> <span class="sk">sajasasaiḥ</span> <span class="sk">kathitā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, (<span class="num">5</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">vihagāḥ</span> <span class="sk">kadambasurabhāviha</span> <span class="sk">gāḥ kalayantyanukṣaṇamanekalayam|</span> <span class="sk">bhramayannapaiti</span> <span class="sk">muhurabhramayaṃ</span> <span class="sk">pavanaśca</span> <span class="sk">dhūtanavanīpavanaḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">4</span>. <span class="num">36</span>, <abbr class="ref" title="Kirātārjunīya">Ki.</abbr> <span class="num">6</span>, <abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">9</span> also.</p>
+</article>
+
+<article id="bhujangaprayata" class="metre">
+<h3 class="mh">(<span class="num">10</span>) <span class="sk">bhujaṅgaprayāta</span></h3>
+<p><b>Def.</b> <span class="sk">bhujaṅgaprayātaṃ</span> <span class="sk">caturbhiryakāraiḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr> (<span class="num">6</span>. <span class="num">6</span>)</p>
+<p><b>Ex.</b> <span class="sk">dhanairniṣkulīnāḥ kulīnā bhavanti</span></p>
+<p><span class="sk">dhanairāpadaṃ mānavā nistaranti |</span></p>
+<p><span class="sk">dhanebhyaḥ paro bāndhavo nāsti loke</span></p>
+<p><span class="sk">dhanānyarjayadhvaṃ dhanānyarjayadhvam ||</span></p>
+</article>
+
+<article id="manimala" class="metre">
+<h3 class="mh">(<span class="num">11</span>) <span class="sk">maṇimālā</span></h3>
+<p><b>Def.</b> <span class="sk">tyau</span> <span class="sk">tyau</span> <span class="sk">maṇimālā</span> <span class="sk">chinnā</span> <span class="sk">guhavaktraiḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr> (<span class="num">6</span>. <span class="num">6</span>).</p>
+<p><b>Ex.</b> <span class="sk">prahvāmaramaulau ratnopalakḷpte jātaprativimbā śoṇā maṇimālā |</span></p>
+<p><span class="sk">govindapadābje rājī nakharāṇā māstāṃ mama citte dhvāntaṃ śamayantī ||</span></p>
+</article>
+
+<article id="malati" class="metre">
+<h3 class="mh">(<span class="num">12</span>) <span class="sk">mālatī</span></h3>
+<p>(<b>also called</b> <span class="sk">yamunā</span>)</p>
+<p><b>Def.</b> <span class="sk">bhavati</span> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr> <span class="sk">jāvatha</span> <span class="sk">mālatī</span> <span class="sk">jarau ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr> (<span class="num">5</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">iha</span> <span class="sk">kalayācyutakelikānane madhurasasaurabhasāralolupaḥ</span></p>
+<p><span class="sk">|kusumakṛtasmitacāruvibhramāmalirapi</span> <span class="sk">cumbati</span> <span class="sk">mālatīṃ</span> <span class="sk">muhuḥ ||</span></p>
+</article>
+
+<article id="vamsasthavila" class="metre">
+<h3 class="mh">(<span class="num">13</span>) <span class="sk">vaṃśasthavila</span></h3>
+<p>(<b>also called</b> <span class="sk">vaṃśastha</span> or <span class="sk">vaṃśastanita</span>)</p>
+<p><b>Def.</b> <span class="sk">vadanti</span> <span class="sk">vaṃśasthavilaṃ</span> <span class="sk">jatau</span> <span class="sk">jarau ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr> (<span class="num">5</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">tathā</span> <span class="sk">samakṣaṃ</span> <span class="sk">dahatā</span> <span class="sk">ganobhavaṃ pinākinā</span> <span class="sk">bhagnamanorathā</span> <span class="sk">satī</span></p>
+<p><span class="sk">nininda</span> <span class="sk">rūpaṃ</span> <span class="sk">hṛdayena</span> <span class="sk">pārvatī</span> <span class="sk">priyeṣu</span> <span class="sk">saubhāgyaphalā</span> <span class="sk">hi</span> <span class="sk">cārutā ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Kumārasambhava (Bombay)"><a href="https://samskrtam.ru/parallel-corpus/kumarasambhava.html" target="_blank" class="corpus-link">Ku.</a></abbr> <span class="num">5</span>. <span class="num">1</span></p>
+<p class="ref-line">See <abbr class="ref" title="Raghuvamsa (Bombay)"><a href="https://samskrtam.ru/parallel-corpus/raghuvamsha.html" target="_blank" class="corpus-link">R.</a></abbr> <span class="num">3</span> also.</p>
+</article>
+
+<article id="vaisvadevi" class="metre">
+<h3 class="mh">(<span class="num">14</span>) <span class="sk">vaiśvadevī</span></h3>
+<p><b>Def.</b> <span class="sk">bāṇāśvaiśchinnā</span> <span class="sk">vaiśvadevī</span> <span class="sk">mamau</span> <span class="sk">yau ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, (<span class="num">5</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">arcāmanyeṣāṃ</span> <span class="sk">tvaṃ</span> <span class="sk">vihāyāmarāṇāmadvaitenaikaṃ</span> <span class="sk">viṣṇumabhyarcya</span> <span class="sk">bhaktyā|</span></p>
+<p><span class="sk">tatrāśeṣātmanyarcite</span> <span class="sk">bhāvinī</span> <span class="sk">te</span> <span class="sk">bhrātaḥ</span> <span class="sk">sampannārādhanā</span> <span class="sk">vaiśvadevī ||</span></p>
+</article>
+
+<article id="sragvini" class="metre">
+<h3 class="mh">(<span class="num">15</span>) <span class="sk">sragviṇī</span></h3>
+<p><b>Def.</b> <span class="sk">kīrtitaiṣā</span> <span class="sk">catūrephikā</span> <span class="sk">sragviṇī ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr> (<span class="num">6</span>. <span class="num">6</span>)</p>
+<p><b>Ex.</b> <span class="sk">indranīlopalīneva</span> <span class="sk">yā</span> <span class="sk">nirmitā śātakumbhadravālaṅkṛtā</span> <span class="sk">śobhate|</span></p>
+<p><span class="sk">navyameghacchaviḥ</span> <span class="sk">pītavāsā</span> <span class="sk">haremūrtirāstāṃ</span> <span class="sk">jayāyorasi</span> <span class="sk">sragviṇī ||</span></p>
+<p class="ref-line">See <abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">4</span>. <span class="num">42</span>.</p>
+</article>
+
+</div>
+
+<div id="grp-metreswith13syllablesina" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">13</span><span class="b it"> Syllables in a quarter </span>(<span class="sk">atijagatī</span>)</h2>
+<article id="kalahamsa" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">kalahaṃsa</span></h3>
+<p>(<b>also called</b> <span class="sk">siṃhanāda</span> or <span class="sk">kuṭajā</span>)</p>
+<p><b>Def.</b> <span class="sk">sajasāḥ</span> <span class="sk">sagau</span> <span class="sk">ca</span> <span class="sk">kathitaḥ</span> <span class="sk">kalahaṃsaḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">7</span>. <span class="num">6</span>)</p>
+<p><b>Ex.</b> <span class="sk">yamunāvihāgkutuke kalahaṃso</span></p>
+<p><span class="sk">vrajakāminīkamalinīkṛtakeliḥ |</span></p>
+<p><span class="sk">janacittahārikalakaṇṭhaninādaḥ</span></p>
+<p><span class="sk">pramadaṃ tanotu tava nandatanūjaḥ ||</span></p>
+<p class="ref-line">See <abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">6</span>. <span class="num">73</span>.</p>
+</article>
+
+<article id="ksama" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">kṣamā</span></h3>
+<p>(<b>also called</b> <span class="sk">candrikā</span> or <span class="sk">utpalinī</span>)</p>
+<p><b>Def.</b> <span class="sk">turagarasayatirnau</span> <span class="sk">tatau</span> <span class="sk">gaḥ</span> <span class="sk">kṣamā</span>.</p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">6</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">iha</span> <span class="sk">duradhigamaiḥ</span> <span class="sk">kiñcidevāgamaiḥ satatamasutaraṃ</span> <span class="sk">varṇayantyantaram|</span></p>
+<p><span class="sk">amumativipinaṃ</span> <span class="sk">veda</span> <span class="sk">digvyāpinaṃ</span> <span class="sk">puruṣamiva</span> <span class="sk">paraṃ</span> <span class="sk">padmayoniḥ</span> <span class="sk">param ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Kirātārjunīya">Ki.</abbr> <span class="num">5</span>. <span class="num">18</span>.</p>
+</article>
+
+<article id="praharsini" class="metre">
+<h3 class="mh">(<span class="num">3</span>) <span class="sk">praharṣiṇī</span></h3>
+<p><b>Def.</b> <span class="sk">tryāśābhirmanajaragāḥ</span> <span class="sk">praharṣiṇīyam ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">3</span>. <span class="num">10</span>)</p>
+<p><b>Ex.</b> <span class="sk">te</span> <span class="sk">rekhādhvajakuliśātapatracihnaṃ samrājaścaraṇayugaṃ</span> <span class="sk">prasādalabhyam|</span></p>
+<p><span class="sk">prasthānapraṇatibhiraṅgulīṣu</span> <span class="sk">cakrurmaulisrakcyutamakarandareṇugauram ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Raghuvamsa (Bombay)"><a href="https://samskrtam.ru/parallel-corpus/raghuvamsha.html" target="_blank" class="corpus-link">R.</a></abbr> <span class="num">4</span>. <span class="num">88</span>.</p>
+<p class="ref-line">See <abbr class="ref" title="Kirātārjunīya">Ki.</abbr> <span class="num">7</span>, <abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">8</span>.</p>
+</article>
+
+<article id="manjubhasini" class="metre">
+<h3 class="mh">(<span class="num">4</span>) <span class="sk">mañjubhāṣiṇī</span></h3>
+<p>(<b>also called</b> <span class="sk">sunandinī</span> or <span class="sk">prabodhitā</span>)</p>
+<p><b>Def.</b> <span class="sk">sajasā</span> <span class="sk">jagau</span> <span class="sk">ca</span> <span class="sk">yadi</span> <span class="sk">mañjubhāṣiṇī ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, (<span class="num">6</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">yamunāmatītamatha</span> <span class="sk">śuśruvānamuṃ tapasastanūja</span> <span class="sk">iti</span> <span class="sk">nādhunocyate|</span></p>
+<p><abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr> <span class="sk">yadā'calannijapurādaharniśaṃ</span> <span class="sk">nṛpatestadādi</span> <span class="sk">samacāri</span> <span class="sk">vārtayā ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">13</span>. <span class="num">1</span>.</p>
+</article>
+
+<article id="mattamayuri" class="metre">
+<h3 class="mh">(<span class="num">5</span>) <span class="sk">mattamayūrī</span></h3>
+<p><b>Def.</b> <span class="sk">vedairandhrairmtau</span> <span class="sk">yasagā</span> <span class="sk">mattamayūraḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">4</span>. <span class="num">9</span>)</p>
+<p><b>Ex.</b> <span class="sk">dṛṣṭvā</span> <span class="sk">dṛśyānyācaraṇīyāni</span> <span class="sk">vidhāya prekṣākārī</span> <span class="sk">yāti</span> <span class="sk">yadaṃ</span> <span class="sk">muktamapāyaiḥ|</span></p>
+<p><span class="sk">samyagdṛṣṭistasya</span> <span class="sk">paraṃ</span> <span class="sk">paśyati</span> <span class="sk">yastvāṃ</span> <span class="sk">yaścopāste</span> <span class="sk">sādhu</span> <span class="sk">vidheyaṃ</span> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr> <span class="sk">vidhatte ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Kirātārjunīya">Ki.</abbr> <span class="num">18</span>. <span class="num">28</span>; <abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">4</span>. <span class="num">44</span>, <span class="num">6</span>. <span class="num">76</span>, also <abbr class="ref" title="Raghuvamsa (Bombay)"><a href="https://samskrtam.ru/parallel-corpus/raghuvamsha.html" target="_blank" class="corpus-link">R.</a></abbr> <span class="num">9</span>. <span class="num">75</span>.</p>
+</article>
+
+<article id="rucira" class="metre">
+<h3 class="mh">(<span class="num">6</span>) <span class="sk">rucirā</span></h3>
+<p>(<b>also called</b> <span class="sk">prabhāvatī</span>)</p>
+<p><b>Def.</b> <span class="sk">jabhau</span> <span class="sk">sajau</span> <span class="sk">giti</span> <span class="sk">rucirā</span> <span class="sk">caturgrahaiḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr> <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">4</span>. <span class="num">9</span>)</p>
+<p><b>Ex.</b> <span class="sk">kadā</span> <span class="sk">mukhaṃ</span> <span class="sk">varatanu</span> <span class="sk">kāraṇādṛte tavāgataṃ</span> <span class="sk">kṣaṇamapi</span> <span class="sk">kopapātratām|</span></p>
+<p><span class="sk">aparvaṇi</span> <span class="sk">grahakaluṣendumaṇḍalā</span> <span class="sk">vibhāvarī</span> <span class="sk">kathaya</span> <span class="sk">kathaṃ</span> <span class="sk">bhaviṣyati ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Mālavikāgnimitra (Bombay)">M.</abbr> <span class="num">4</span>. <span class="num">13</span>.</p>
+<p class="ref-line">See <abbr class="ref" title="Bhaṭṭikāvya">Bk.</abbr> <span class="num">1</span>. <span class="num">1</span>, <abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">17</span>.</p>
+</article>
+
+</div>
+
+<div id="grp-metreswith14syllablesina" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">14</span><span class="b it"> Syllables in a quarter </span>(<span class="sk">śakvarī</span>)</h2>
+<article id="aparajita" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">aparājitā</span></h3>
+<p><b>Def.</b> <span class="sk">nanaramalaghugaiḥ</span> <span class="sk">svarairaparājitā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">7</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">yadanavadhibhujapratāpakṛtāspadā yadunicayacamūḥ</span> <span class="sk">parairaparājitā|</span></p>
+<p><span class="sk">vyajayata</span> <span class="sk">samare</span> <span class="sk">samastaripuvrajaṃ</span> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr> <span class="sk">jayati</span> <span class="sk">jagatāṃ</span> <span class="sk">gatirgaruḍadhvajaḥ ||</span></p>
+</article>
+
+<article id="asambadha" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">asambādhā</span></h3>
+<p><b>Def.</b> <span class="sk">mtau</span> <span class="sk">nsau</span> <span class="sk">gāvakṣagrahaviratirasambādhā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">5</span>. <span class="num">9</span>)</p>
+<p><b>Ex.</b> <span class="sk">vīryāgnau</span> <span class="sk">yena</span> <span class="sk">jvalati</span> <span class="sk">raṇavaśātkṣipte daityendre</span> <span class="sk">jātā</span> <span class="sk">dharaṇiriyamasambādhā|</span></p>
+<p><span class="sk">dharmasthityarthaṃ</span> <span class="sk">prakaṭitatanusambandhaḥ</span> <span class="sk">sādhūnāṃ</span> <span class="sk">bādhāṃ</span> <span class="sk">praśamayatu</span> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr> <span class="sk">kaṃsāriḥ ||</span></p>
+</article>
+
+<article id="pathya" class="metre">
+<h3 class="mh">(<span class="num">3</span>) <span class="sk">pathyā</span></h3>
+<p>(<b>also called</b> <span class="sk">mañjarī</span>)</p>
+<p><b>Def.</b> <span class="sk">sajasā</span> <span class="sk">yalau</span> <span class="sk">ca</span> <span class="sk">saha</span> <span class="sk">gena</span> <span class="sk">pathyā</span> <span class="sk">matā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">5</span>. <span class="num">9</span>)</p>
+<p><b>Ex.</b> <span class="sk">sthagayantyamūḥ</span> <span class="sk">śamitacātakārtasvarāḥ jaladāstaḍittulitakāntakārtasvarāḥ|</span></p>
+<p><span class="sk">jagatīriha</span> <span class="sk">sphuritacārucāmīkarāḥ</span> <span class="sk">savituḥ</span> <span class="sk">kvacitkapiśayanti</span> <span class="sk">cāmī</span> <span class="sk">karāḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">4</span>. <span class="num">24</span><span class="sk"> ||</span></p>
+</article>
+
+<article id="pramada" class="metre">
+<h3 class="mh">(<span class="num">4</span>) <span class="sk">pramadā</span></h3>
+<p>(<b>also called</b> <span class="sk">kurarīrutā</span>)</p>
+<p><b>Def.</b> <span class="sk">najamajalā</span> <span class="sk">guruśca</span> <span class="sk">bhavati</span> <span class="sk">pramadā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">6</span>. <span class="num">8</span>)</p>
+<p><b>Ex.</b> <span class="sk">anaticirojjhitasya</span> <span class="sk">jaladevacirasthitabahubudbudasya</span> <span class="sk">payaso'nukṛtim|</span></p>
+<p><span class="sk">viralavikīrṇavajraśakalā</span> <span class="sk">sakalāmiha</span> <span class="sk">vidadhāti</span> <span class="sk">dhautakaladhautamahī ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">4</span>. <span class="num">41</span>.</p>
+</article>
+
+<article id="praharanakalika" class="metre">
+<h3 class="mh">(<span class="num">5</span>) <span class="sk">praharaṇakalikā</span></h3>
+<p><b>Def.</b> <span class="sk">nanabhanalagiti</span> <span class="sk">praharaṇakalikā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">7</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">vyathayati</span> <span class="sk">kusumapraharaṇakalikā pramadavanabhavā</span> <span class="sk">tava</span> <span class="sk">dhanuṣi</span> <span class="sk">tatā|</span></p>
+<p><span class="sk">virahavipadi</span> <span class="sk">me</span> <span class="sk">śaraṇamiha</span> <span class="sk">tato</span> <span class="sk">madhumathanaguṇasmaraṇamaviratam ||</span></p>
+</article>
+
+<article id="madhyaksama" class="metre">
+<h3 class="mh">(<span class="num">6</span>) <span class="sk">madhyakṣāmā</span></h3>
+<p>(<b>also called</b> <span class="sk">haṃsaśyenī</span> or <span class="sk">kuṭila</span>)</p>
+<p><b>Def.</b> <span class="sk">madhyakṣāmā</span> <span class="sk">yugadaśaviramā</span> <span class="sk">mbhau</span> <span class="sk">nyau</span> <span class="sk">gau ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">4</span>. <span class="num">10</span>)</p>
+<p><b>Ex.</b> <span class="sk">nītocchrāyaṃ</span> <span class="sk">muhuraśiśiraraśmerusrairānīlābhairviracitaparabhāgā</span> <span class="sk">ratnaiḥ|</span></p>
+<p><span class="sk">jyotsnāśaṅkāmiha</span> <span class="sk">vitarati</span> <span class="sk">haṃsaśyenī</span> <span class="sk">madhyepyahnaḥ</span> <span class="sk">sphaṭikarajatabhitticchāyā ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Kirātārjunīya">Ki.</abbr> <span class="num">5</span>. <span class="num">31</span></p>
+</article>
+
+<article id="vasantatilaka" class="metre">
+<h3 class="mh">(<span class="num">7</span>) <span class="sk">vasantatilakā</span></h3>
+<p>(<b>also called</b> <span class="sk">vasantatilaka</span> or <span class="sk">uddharṣiṇī</span> or <span class="sk">siṃhonnatā</span>)</p>
+<p><b>Def.</b> <span class="sk">uktā</span> <span class="sk">vasantatilakā</span> <span class="sk">tabhajā</span> <span class="sk">jagau</span> <span class="sk">gaḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">8</span>. <span class="num">6</span>)</p>
+<p><b>Ex.</b> <span class="sk">yātyekato'staśikharaṃ</span> <span class="sk">patiroṣadhīnāmāviṣkṛtāruṇapuraḥsara</span> <span class="sk">ekato'rkaḥ|</span></p>
+<p><span class="sk">tejodvayasya</span> <span class="sk">yugapad</span> <span class="sk">vyasanodayābhyāṃ</span> <span class="sk">loko</span> <span class="sk">niyamyata</span> <span class="sk">ivātmadaśāntareṣu ||</span></p>
+<p class="ref-line"><span class="it"><abbr class="ref" title="Śakuntalā">S.</abbr></span> <span class="num">4</span>. <span class="num">1</span>.</p>
+</article>
+
+<article id="vasanti" class="metre">
+<h3 class="mh">(<span class="num">8</span>) <span class="sk">vāsantī</span></h3>
+<p><b>Def.</b> <span class="sk">mātto</span> <span class="sk">no</span> <span class="sk">mo</span> <span class="sk">gau</span> <span class="sk">yadi</span> <span class="sk">gaditā</span> <span class="sk">vāsantīyam ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">4</span>. <span class="num">6</span>. <span class="num">4</span>)</p>
+<p><b>Ex.</b> <span class="sk">bhrāmyadbhṛṅgīnirbharamadhurālāpodgītaiḥ śrīkhaṇḍādreradbhutapavanairmandāndolā</span></p>
+<p><span class="sk">līlālolā</span> <span class="sk">pallavavilasaddhastollāsaiḥ</span> <span class="sk">kaṃsārātau</span> <span class="sk">nṛtyati</span> <span class="sk">sadṛśī</span> <span class="sk">vāsantīyam ||</span></p>
+</article>
+
+</div>
+
+<div id="grp-metreswith15syllablesina" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">15</span><span class="b it"> Syllables in a quarter </span>(<span class="sk">atiśakvarī</span>)</h2>
+<article id="tunaka" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">tūṇaka</span></h3>
+<p>(<b>also called</b> <span class="sk">cārucāmara</span>)</p>
+<p><b>Def.</b> <span class="sk">tūṇakaṃ</span> <span class="sk">samānikā</span> <span class="sk">padadvayaṃ</span> <span class="sk">vināntimam ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr> (<span class="num">4</span>. <span class="num">4</span>. <span class="num">4</span>. <span class="num">3</span>, or <span class="num">7</span>. <span class="num">8</span>).</p>
+<p><b>Ex.</b> <span class="sk">sā</span> <span class="sk">suvarṇaketakaṃ</span> <span class="sk">vikāśi</span> <span class="sk">bhṛṅgapūritaṃ pañcabāṇabāṇajālapūrṇahetitūṇakam|</span></p>
+<p><span class="sk">rādhikā</span> <span class="sk">vitarkya</span> <span class="sk">mādhavādya</span> <span class="sk">māsi</span> <span class="sk">mādhave</span> <span class="sk">mohameti</span> <span class="sk">nirbharaṃ</span> <span class="sk">tvayā</span> <span class="sk">vinā</span> <span class="sk">kalānidhe ||</span></p>
+</article>
+
+<article id="malini" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">mālinī</span></h3>
+<p><b>Def.</b> <span class="sk">nanamayayuteyaṃ</span> <span class="sk">mālinī</span> <span class="sk">bhogilokaiḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr> (<span class="num">8</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">śaśinamupagateyaṃ</span> <span class="sk">kaumudī</span> <span class="sk">meghamuktaṃ jalanidhimanurūpaṃ</span> <span class="sk">jahnukanyāvatīrṇā|</span></p>
+<p><span class="sk">iti</span> <span class="sk">samaguṇayogaprītayastatra</span> <span class="sk">paurāḥ</span> <span class="sk">śravaṇakaṭu</span> <span class="sk">nṛpāṇāmekavākyaṃ</span> <span class="sk">vivavruḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Raghuvamsa (Bombay)"><a href="https://samskrtam.ru/parallel-corpus/raghuvamsha.html" target="_blank" class="corpus-link">R.</a></abbr> <span class="num">6</span>. <span class="num">85</span>.</p>
+</article>
+
+<article id="lilakhela" class="metre">
+<h3 class="mh">(<span class="num">3</span>) <span class="sk">līlākhela</span></h3>
+<p><b>Def.</b> <span class="sk">ekanyūnau</span> <span class="sk">vidyunmālāpādau</span> <span class="sk">cellīlākhelaḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma.</span></abbr></p>
+<p><b>Ex.</b> <span class="sk">mā</span> <span class="sk">kānte</span> <span class="sk">pakṣasyānte</span> <span class="sk">paryākāśe</span> <span class="sk">deśe</span> <span class="sk">svāpsīḥ kāntaṃ</span> <span class="sk">vaktraṃ</span> <span class="sk">vṛttaṃ</span> <span class="sk">pūrṇaṃ</span> <span class="sk">candraṃ</span> <span class="sk">matvā</span> <span class="sk">rātrau</span> <span class="sk">cet|</span></p>
+<p><span class="sk">kṣutkṣāmaḥ</span> <span class="sk">prāṭaṃścetaśceto</span> <span class="sk">rāhuḥ</span> <span class="sk">krūraḥ</span> <span class="sk">prādyāt</span> <span class="sk">tasmād</span> <span class="sk">dhvānte</span> <span class="sk">harmyasyānte</span> <span class="sk">śayyaikānte</span> <span class="sk">kartavyā ||</span></p>
+<p><abbr class="ref" title="Sarasvatīkaṇṭhābharaṇa">Sar. <abbr class="ref" title="Kādambarī (Bombay)">K.</abbr></abbr></p>
+</article>
+
+<article id="sasikala" class="metre">
+<h3 class="mh">(<span class="num">4</span>) <span class="sk">śaśikalā</span></h3>
+<p><b>Def.</b> <span class="sk">gurunidhanamanulaghuriha</span> <span class="sk">śaśikalā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr> (all short syllables except the last).</p>
+<p><b>Ex.</b> <span class="sk">malayajatilakasabhuditaśaśikalā vrajayuvatilasadalikagamanatā|</span></p>
+<p><span class="sk">sarasijanayanahṛdayasalilanidhiṃ</span> <span class="sk">vyatanuta</span> <span class="sk">vitatarabhasaparitaralam ||</span></p>
+</article>
+
+</div>
+
+<div id="grp-metreswith16syllablesina" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">16</span><span class="b it"> Syllables in a quarter </span>(<span class="sk">aṣṭi</span>)</h2>
+<article id="citra" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">citra</span></h3>
+<p><b>Def.</b> <span class="sk">vitrasañjñamīritaṃ</span> <span class="sk">rajau</span> <span class="sk">rajau</span> <span class="sk">ragau</span> <span class="sk">ca</span> <span class="sk">vṛttam ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">8</span>. <span class="num">8</span>. or <span class="num">4</span>. <span class="num">4</span>. <span class="num">4</span>. <span class="num">4</span>.)</p>
+<p><b>Ex.</b> <span class="sk">vidrumāruṇādharauṣṭhaśobhiveṇuvādyahṛṣṭa vallavījanāṅgasaṅgajātamugdhakaṇṭhakāṅga |</span></p>
+<p><span class="sk">tvāṃ sadaiva vāsudeva puṇyalabhyapāda deva vanyapuṣpacitrakeśa</span> <span class="sk">saṃsmarāmi</span> <span class="sk">gopaveśa ||</span></p>
+</article>
+
+<article id="pancacamara" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">pañcacāmara</span></h3>
+<p><b>Def.</b> <span class="sk">pramāṇikāpadadvayaṃ</span> <span class="sk">vadanti</span> <span class="sk">pañcacāmaram || </span>or <span class="sk">jarau</span> <span class="sk">jarau</span> <span class="sk">tato</span> <span class="sk">jagau</span> <span class="sk">ca</span> <span class="sk">pañcacāmaraṃ</span> <span class="sk">vadet ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">8</span>. <span class="num">8</span>. or <span class="num">4</span>. <span class="num">4</span>. <span class="num">4</span>. <span class="num">4</span>)</p>
+<p><b>Ex.</b> <span class="sk">suradrumūlamaṇḍape</span> <span class="sk">vicitraratnanirmite lasadvitānabhūṣite</span> <span class="sk">salīlavibhramālasam |</span></p>
+<p><span class="sk">surāṅganābhavallavīkaraprapañcacāmarasphuratsamīravījitaṃ</span> <span class="sk">sadācyutaṃ</span> <span class="sk">bhajāmi</span> <span class="sk">tam ||</span></p>
+</article>
+
+<article id="vanini" class="metre">
+<h3 class="mh">(<span class="num">3</span>) <span class="sk">vāṇinī</span></h3>
+<p><b>Def.</b> <span class="sk">najabhajarairyadā</span> <span class="sk">bhavati</span> <span class="sk">vāṇinī</span> <span class="sk">gayuktaiḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga.</span></abbr></p>
+<p><b>Ex.</b> <span class="sk">sphuratu</span> <span class="sk">mamānane'dya</span> <span class="sk">nanu</span> <span class="sk">vāṇi</span> <span class="sk">nītiramyaṃ tavacaraṇaprasādaparipākataḥ</span> <span class="sk">kavitvam|</span></p>
+<p><span class="sk">bhavajalarāśipārakaraṇakṣamaṃ</span> <span class="sk">mukundaṃ</span> <span class="sk">satatamahaṃ</span> <span class="sk">stavaiḥ</span> <span class="sk">svacaritaiḥ</span> <span class="sk">stavāmi</span> <span class="sk">nityam ||</span></p>
+</article>
+
+</div>
+
+<div id="grp-metreswith17syllablesina" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">17</span><span class="b it"> Syllables in a quarter </span>(<span class="sk">atyaṣṭi</span>)</h2>
+<article id="citralekha" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">citralekhā</span></h3>
+<p>(<b>also called</b> <span class="sk">atiśāyinī</span>)</p>
+<p><b>Def.</b> <span class="sk">sasajā</span> <span class="sk">bhajagā</span> <span class="sk">gu</span> <span class="sk">diksvarairbhavati</span> <span class="sk">citralekhrā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">10</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">iti</span> <span class="sk">dhautapurandhrimatsarān</span> <span class="sk">sarasi</span> <span class="sk">majjanena śriyamāptavato'tiśāyinīmapamalāṅgabhāsaḥ|</span></p>
+<p><span class="sk">avalokya</span> <span class="sk">tadaiva</span> <span class="sk">yādavānaparavārirāśeḥ</span> <span class="sk">śiśiretararociṣāpyapāṃ</span> <span class="sk">tatiṣu</span> <span class="sk">maktuṃmīṣe ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">8</span>. <span class="num">71</span></p>
+</article>
+
+<article id="nardataka" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">nardaṭaka</span></h3>
+<p>(<b>also called</b> <span class="sk">narkuṭaka</span>)</p>
+<p><b>Def.</b> <span class="sk">yadi</span> <span class="sk">bhavato</span> <span class="sk">najau</span> <span class="sk">bhajajalā</span> <span class="sk">guru</span> <span class="sk">nardaṭakam ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">8</span>. <span class="num">9</span>)</p>
+<p><b>Ex.</b> <span class="sk">taruṇatamālanīlabahulonnamadambudharāḥ śiśirasamīraṇāvadhūtanūtanavārikaṇāḥ|</span></p>
+<p><span class="sk">kathamavalokayeyamadhunā</span> <span class="sk">harihetimatī</span> <span class="sk">rmadakalanīlakaṇṭhakalahairmukharāḥ</span> <span class="sk">kukubhaḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Mālatīmādhava">Māl.</abbr> <span class="num">9</span>. <span class="num">18</span>, see <span class="num">5</span>. <span class="num">31</span>.</p>
+</article>
+
+<article id="prthvi" class="metre">
+<h3 class="mh">(<span class="num">3</span>) <span class="sk">pṛthvī</span></h3>
+<p><b>Def.</b> <span class="sk">jasau</span> <span class="sk">jasayalā</span> <span class="sk">vasugrahayatiśca</span> <span class="sk">pṛthvī</span> <span class="sk">guruḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">8</span>. <span class="num">9</span>)</p>
+<p><b>Ex.</b> <span class="sk">itaḥ</span> <span class="sk">svapiti</span> <span class="sk">keśavaḥ</span> <span class="sk">kulamitastadīyadviṣāmitaśca</span> <span class="sk">śaraṇārthiṃnaḥ</span> <span class="sk">śikhariṇāṃ</span> <span class="sk">gaṇāḥ</span> <span class="sk">śerate|</span></p>
+<p><span class="sk">itopi</span> <span class="sk">vaḍavānalaḥ</span> <span class="sk">saha</span> <span class="sk">samastasaṃvartakairaho</span> <span class="sk">vitatamūrjitaṃ</span> <span class="sk">narasahaṃ</span> <span class="sk">ca</span> <span class="sk">sindhorvapuḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Bhartrhari\'s three Śatakas (the figures 1., 2.,"><a href="https://samskrtam.ru/parallel-corpus/shatakatrayam.html" target="_blank" class="corpus-link">Bh.</a></abbr> <span class="num">2</span>. <span class="num">76</span></p>
+</article>
+
+<article id="mandakranta" class="metre">
+<h3 class="mh">(<span class="num">4</span>) <span class="sk">mandākrāntā</span></h3>
+<p><b>Def.</b> <span class="sk">mandākrāntāmbudhirasanagairmo</span> <span class="sk">bhanau</span> <span class="sk">tau</span> <span class="sk">gayugmam ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">4</span>. <span class="num">6</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">gopī</span> <span class="sk">bharturviharavidhurā</span> <span class="sk">kācidindīvarākṣī unmatteva</span> <span class="sk">skhalitakavarī</span> <span class="sk">niḥśvasantī</span> <span class="sk">viśālam|</span></p>
+<p><span class="sk">atraivāste</span> <span class="sk">muraripuriti</span> <span class="sk">bhrāntidūtīsaḍāyā</span> <span class="sk">tyaktvā</span> <span class="sk">gehaṃ</span> <span class="sk">jhaṭiti</span> <span class="sk">yamunāmañjukuñjaṃ</span> <span class="sk">jagāma ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Padānkadūta">Pad. D.</abbr> <span class="num">1</span>.</p>
+<p>(The whole of the “<span class="sk">Meghadūta</span> is written in this metre).</p>
+</article>
+
+<article id="vamsapatrapatita" class="metre">
+<h3 class="mh">(<span class="num">5</span>) <span class="sk">vaṃśapatrapatita</span></h3>
+<p><b>Def.</b> <span class="sk">diṅmunivaṃśapatrapatitaṃ</span> <span class="sk">bharanabhanalagaiḥ ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">10</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">darpaṇanirmalāsu</span> <span class="sk">patite</span> <span class="sk">ghanatimiramuṣi jyotiṣi</span> <span class="sk">raupyabhittiṣu</span> <span class="sk">puraḥ</span> <span class="sk">pratiphalati</span> <span class="sk">muhuḥ|</span></p>
+<p><span class="sk">vrīḍamasaṃmukhopi</span> <span class="sk">ramaṇairapahṛtavasanāḥ</span> <span class="sk">kāñcanakandarāsu</span> <span class="sk">taruṇīriha</span> <span class="sk">nayati</span> <span class="sk">raviḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">4</span>. <span class="num">67</span>.</p>
+</article>
+
+<article id="sikharini" class="metre">
+<h3 class="mh">(<span class="num">6</span>) <span class="sk">śikhariṇī</span></h3>
+<p><b>Def.</b> <span class="sk">rasairudrauśchinnā</span> <span class="sk">yamanasabhalāgaḥ</span> <span class="sk">śikhariṇī ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">6</span>. <span class="num">11</span>)</p>
+<p><b>Ex.</b> <span class="sk">digante</span> <span class="sk">śrūyante</span> <span class="sk">madamalitagaṇḍāḥ</span> <span class="sk">karaṭinaḥ kariṇyaḥ</span> <span class="sk">kāruṇyāspadamasamaśīlāḥ</span> <span class="sk">khalu</span> <span class="sk">mṛgāḥ|</span></p>
+<p><span class="sk">idānīṃ</span> <span class="sk">lokesminnanupamaśikhānāṃ</span> <span class="sk">punarayaṃ</span> <span class="sk">nakhānāṃ</span> <span class="sk">pāṇḍityaṃ</span> <span class="sk">prakaṭayatu</span> <span class="sk">kasmin</span> <span class="sk">mṛgapatiḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Bhāminīvilāsa">Bv.</abbr> <span class="num">1</span>. <span class="num">2</span>.</p>
+</article>
+
+<article id="harini" class="metre">
+<h3 class="mh">(<span class="num">7</span>) <span class="sk">hariṇī</span></h3>
+<p><b>Def.</b> <span class="sk">nasamarasalāgaḥ</span> <span class="sk">ṣaḍvedairhayairhariṇī</span> <span class="sk">matā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">6</span>. <span class="num">4</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">sutanu</span> <span class="sk">hṛdayātpratyādeśavyalīkamapaitu</span> <span class="sk">te kimapi</span> <span class="sk">manasaḥ</span> <span class="sk">saṃmoho</span> <span class="sk">me</span> <span class="sk">tadā</span> <span class="sk">balavānabhūt|</span></p>
+<p><span class="sk">prabalatamasāmevamprāyāḥ</span> <span class="sk">śubheṣu</span> <span class="sk">hi</span> <span class="sk">vṛttayaḥ</span> <span class="sk">srajamapi</span> <span class="sk">śirasyandhaḥ</span> <span class="sk">kṣiptāṃ</span> <span class="sk">dhunotyahiśaṅkayā ||</span></p>
+<p class="ref-line"><span class="it"><abbr class="ref" title="Śakuntalā">S.</abbr></span> <span class="num">7</span>. <span class="num">24</span>.</p>
+</article>
+
+</div>
+
+<div id="grp-metreswith18syllablesina" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">18</span><span class="b it"> Syllables in a quarter </span>(<span class="sk">dhṛti</span>)</h2>
+<article id="kusumitalatavellita" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">kusumitalatāvellitā</span></h3>
+<p><b>Def.</b> <span class="sk">syādbhūtartvaśvaiḥ</span> <span class="sk">kusumitalatāvellitā</span> <span class="sk">mtau</span> <span class="sk">nayau</span> <span class="sk">yau ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr> (<span class="num">5</span>. <span class="num">6</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">krīḍatkālindīlalitalaharīvāribhirdākṣiṇātyairvātaiḥ</span> <span class="sk">kheladbhiḥ</span> <span class="sk">kusumitalatāvellitā</span> <span class="sk">mandamandam|</span></p>
+<p><span class="sk">bhṛṅgālīgītaiḥ</span> <span class="sk">kisalayakarollāsitairlāsyalakṣmīṃ</span> <span class="sk">tanvānā</span> <span class="sk">ceto</span> <span class="sk">rabhasataralaṃ</span> <span class="sk">cakrapāṇeścakāra ||</span></p>
+</article>
+
+<article id="citralekha" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">citralekhā</span></h3>
+<p><b>Def.</b> <span class="sk">mandākrāntā</span> <span class="sk">naparalaghuyutā</span> <span class="sk">kīrtitā</span> <span class="sk">citralekhrā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr> (<span class="num">4</span>. <span class="num">7</span>. <span class="num">7</span>.)</p>
+<p><b>Ex.</b> <span class="sk">śaṅke'muṣmiñ</span> <span class="sk">jagati</span> <span class="sk">mṛgadṛśāṃ</span> <span class="sk">sārarūpaṃ</span> <span class="sk">yadāsīdākṛṣyedaṃ</span> <span class="sk">vrajayuvatisabhā</span> <span class="sk">vedhasā</span> <span class="sk">sā</span> <span class="sk">vyadhāyi|</span></p>
+<p><span class="sk">naitādṛk</span> <span class="sk">cet</span> <span class="sk">kathamudadhisutāmantareṇācyutasya</span> <span class="sk">prītaṃ</span> <span class="sk">tasyā</span> <span class="sk">nayanayugamabhūccitralekhādbhutāyām ||</span></p>
+</article>
+
+<article id="nandana" class="metre">
+<h3 class="mh">(<span class="num">3</span>) <span class="sk">nandana</span></h3>
+<p><b>Def.</b> <span class="sk">najabhajaraistu</span> <span class="sk">rephasahitaiḥ</span> <span class="sk">śivairhayairnandanam ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr> (<span class="num">11</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">taraṇisutātaraṅgapavanaiḥ</span> <span class="sk">salīlamāndolitaṃ madhuripupādapaṅkajarajaḥsupūtapṛthvītalam|</span></p>
+<p><span class="sk">muraharacitraceṣṭitakalākalāpasaṃsmārakaṃ</span> <span class="sk">kṣititalanandanaṃ</span> <span class="sk">vraja</span> <span class="sk">sakhe</span> <span class="sk">sukhāya</span> <span class="sk">vṛndāvanam ||</span></p>
+</article>
+
+<article id="naraca" class="metre">
+<h3 class="mh">(<span class="num">4</span>) <span class="sk">nārāca</span></h3>
+<p><b>Def.</b> <span class="sk">iha</span> <span class="sk">nanaracatuṣkasṛṣṭaṃ</span> <span class="sk">tu</span> <span class="sk">nārācamācakṣate ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr> (<span class="num">8</span>. <span class="num">5</span>, <span class="num">5</span>)</p>
+<p><b>Ex.</b> <span class="sk">raghupatirapi</span> <span class="sk">jātavedoviśuddhāṃ</span> <span class="sk">pragṛhya</span> <span class="sk">priyāṃ priyasuhṛdi</span> <span class="sk">bibhīṣaṇe</span> <span class="sk">saṅkramayya</span> <span class="sk">śriyaṃ</span> <span class="sk">vairiṇaḥ|</span></p>
+<p><span class="sk">ravisutasahitena</span> <span class="sk">tenānuyātaḥ</span> <span class="sk">sasaumitriṇā</span> <span class="sk">bhujavijitavimānaratnādhirūḍhaḥ</span> <span class="sk">pratasthe</span> <span class="sk">purīm ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Raghuvamsa (Bombay)"><a href="https://samskrtam.ru/parallel-corpus/raghuvamsha.html" target="_blank" class="corpus-link">R.</a></abbr> <span class="num">12</span>. <span class="num">104</span></p>
+</article>
+
+<article id="sardulalalita" class="metre">
+<h3 class="mh">(<span class="num">5</span>) <span class="sk">śārdūlalalita</span></h3>
+<p><b>Def.</b> <span class="sk">maḥ</span> <span class="sk">so</span> <span class="sk">jaḥ</span> <span class="sk">satasā</span> <span class="sk">dineśaṛtubhiḥ</span> <span class="sk">śārdūlalalitam ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr> (<span class="num">12</span>. <span class="num">6</span>.)</p>
+<p><b>Ex.</b> <span class="sk">kṛtvā</span> <span class="sk">kaṃsamṛge</span> <span class="sk">parākramavidhiṃ</span> <span class="sk">śārdūlalalitaṃ yaścakre</span> <span class="sk">kṣitibhārakāriṣu</span> <span class="sk">daraṃ</span> <span class="sk">caidyaprabhṛtiṣu|</span></p>
+<p><span class="sk">santoṣaṃ</span> <span class="sk">paramaṃ</span> <span class="sk">tu</span> <span class="sk">devanivahe</span> <span class="sk">trailokyaśaraṇaṃ</span> <span class="sk">śreyo</span> <span class="sk">naḥ</span> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr> <span class="sk">tanotvapāramahimā</span> <span class="sk">lakṣmīpriyatamaḥ ||</span></p>
+</article>
+
+</div>
+
+<div id="grp-metreswith19syllablesina" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">19</span><span class="b it"> Syllables in a quarter </span>(<span class="sk">atidhṛti</span>)</h2>
+<article id="meghavisphurjita" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">meghavisphūrjitā</span></h3>
+<p><b>Def.</b> <span class="sk">rasartvaśvairymau</span> <span class="sk">nsau</span> <span class="sk">raraguruyutau</span> <span class="sk">meghavisphūrjitā</span> <span class="sk">syāt ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, (<span class="num">6</span>. <span class="num">6</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">kadambāmodāḍhyā</span> <span class="sk">vipinapavanaḥ</span> <span class="sk">kekinaḥ</span> <span class="sk">kāntakekāḥ vinidrāḥ</span> <span class="sk">kandalyo</span> <span class="sk">diśi</span> <span class="sk">diśi</span> <span class="sk">mudā</span> <span class="sk">dardurā</span> <span class="sk">dṛptanādāḥ|</span></p>
+<p><span class="sk">niśā</span> <span class="sk">nṛtyadvidyudvilasitalasanmeghavisphūrjitā</span> <span class="sk">cet</span> <span class="sk">priyaḥ</span> <span class="sk">svādhīno'sau</span> <span class="sk">danujadalano</span> <span class="sk">rājyamasmātkimanyat ||</span></p>
+</article>
+
+<article id="sardulavikridita" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">śārdūlavikrīḍita</span></h3>
+<p><b>Def.</b> <span class="sk">sūryāśvairyadi</span> <span class="sk">maḥ</span> <span class="sk">sajau</span> <span class="sk">satatagāḥ</span> <span class="sk">śārdūlavikrīḍitam ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">12</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">vedānteṣu</span> <span class="sk">yamāhurekapuruṣaṃ</span> <span class="sk">vyāpya</span> <span class="sk">sthitaṃ</span> <span class="sk">rodasī yasminnīśvara</span> <span class="sk">ityananyaviṣayaḥ</span> <span class="sk">śabdo</span> <span class="sk">yathārthākṣaraḥ|</span></p>
+<p><span class="sk">antaryaśca</span> <span class="sk">mumukṣubhirniyamitaprāṇādibhirmṛgyate</span> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr> <span class="sk">sthāṇuḥ</span> <span class="sk">sthirabhaktiyogasulabho</span> <span class="sk">niḥśreyasāyāstu</span> <span class="sk">vaḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Vikramorvasīyam (Bombay)">V.</abbr> <span class="num">1</span>. <span class="num">1</span>.</p>
+</article>
+
+<article id="sumadhura" class="metre">
+<h3 class="mh">(<span class="num">3</span>) <span class="sk">sumadhurā</span></h3>
+<p><b>Def.</b> <span class="sk">mrau</span> <span class="sk">bhnau</span> <span class="sk">mo</span> <span class="sk">no</span> <span class="sk">guruśced</span> <span class="sk">hayaṛturasairuktā</span> <span class="sk">sumadhurā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">7</span>. <span class="num">6</span>. <span class="num">6</span>)</p>
+<p><b>Ex.</b> <span class="sk">vedārthān</span> <span class="sk">prākṛtastvaṃ</span> <span class="sk">vadasi</span> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr> <span class="sk">ca</span> <span class="sk">te</span> <span class="sk">jihvā</span> <span class="sk">nipatitā madhyāhne</span> <span class="sk">vīkṣase'rkaṃ</span> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr> <span class="sk">tava</span> <span class="sk">sahasā</span> <span class="sk">dṛṣṭirvicalitā|</span></p>
+<p><span class="sk">dīptāgnau</span> <span class="sk">pāṇimantaḥ</span> <span class="sk">kṣipasi</span> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr> <span class="sk">ca</span> <span class="sk">te</span> <span class="sk">dagdho</span> <span class="sk">bhavati</span> <span class="sk">no</span> <span class="sk">cāritryāccārudattaṃ</span> <span class="sk">calayasi</span> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr> <span class="sk">te</span> <span class="sk">dehaṃ</span> <span class="sk">harati</span> <span class="sk">bhūḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Mṛichchhakaṭika">Mk.</abbr> <span class="num">9</span>. <span class="num">21</span>.</p>
+</article>
+
+<article id="surasa" class="metre">
+<h3 class="mh">(<span class="num">4</span>) <span class="sk">surasā</span></h3>
+<p><b>Def.</b> <span class="sk">mrau</span> <span class="sk">bhnau</span> <span class="sk">yo</span> <span class="sk">no</span> <span class="sk">guruścet</span> <span class="sk">svaramunikaraṇairāha</span> <span class="sk">surasām ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">7</span>. <span class="num">7</span>. <span class="num">5</span>)</p>
+<p><b>Ex.</b> <span class="sk">kāmakrīḍāsatṛṣṇo</span> <span class="sk">madhusamayasamārambharabhasāt kālindīkūlakuñje</span> <span class="sk">viharaṇakutukākṛṣṭahṛdayaḥ|</span></p>
+<p><span class="sk">govindo</span> <span class="sk">ballavīnāmadhararasasudhāṃ</span> <span class="sk">prāpya</span> <span class="sk">surasāṃ</span> <span class="sk">śaṅke</span> <span class="sk">pīyūṣapānaiḥ</span> <span class="sk">pracayakṛtasukhaṃ</span> <span class="sk">vyasmaradasau ||</span></p>
+</article>
+
+</div>
+
+<div id="grp-metreswith20syllablesina" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">20</span><span class="b it"> Syllables in a quarter </span>(<span class="sk">kṛti</span>)</h2>
+<article id="gitika" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">gītikā</span></h3>
+<p><b>Def.</b> <span class="sk">sajasā</span> <span class="sk">bharau</span> <span class="sk">salagā</span> <span class="sk">yadā</span> <span class="sk">kathitā</span> <span class="sk">tadā</span> <span class="sk">khalu</span> <span class="sk">gītikā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">5</span>. <span class="num">7</span>. <span class="num">8</span>)</p>
+<p><b>Ex.</b> <span class="sk">karatālacañcalakaṅkaṇasvanamiśraṇena</span> <span class="sk">manoramā ramaṇīyaveṇuninādaraṅgimasaṅgamena</span> <span class="sk">sukhāvahā|</span></p>
+<p><span class="sk">bahalānurāganivāsarāsasamudbhavā</span> <span class="sk">tava</span> <span class="sk">rāgiṇaṃ</span> <span class="sk">vidadhau</span> <span class="sk">hariṃ</span> <span class="sk">khalu</span> <span class="sk">vallavījanacārucāmaragītikā ||</span></p>
+</article>
+
+<article id="suvadana" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">su</span><span class="sk">v</span><span class="sk">adanā</span></h3>
+<p><b>Def.</b> <span class="sk">jñeyā</span> <span class="sk">saptaśvaṣaḍbhirmarabhanayayutā</span> <span class="sk">mlau</span> <span class="sk">gaḥ</span> <span class="sk">suvadanā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">7</span>. <span class="num">7</span>. <span class="num">6</span>)</p>
+<p><b>Ex.</b> <span class="sk">uttuṅgāstuṅgakūlaṃ</span> <span class="sk">srutamadasalilāḥ</span> <span class="sk">prasyandi</span> <span class="sk">salilaṃ śyāmāḥ</span> <span class="sk">śyāmopakaṇṭhadrumamatimukharāḥ</span> <span class="sk">kallolamukharam|</span></p>
+<p><span class="sk">srotaḥkhātāvasīdattaṭamurudaśanairutsāditataṭāḥ</span> <span class="sk">śoṇaṃ</span> <span class="sk">sindūraśoṇā</span> <span class="sk">mama</span> <span class="sk">gajapatayaḥ</span> <span class="sk">pāsyanti</span> <span class="sk">śataśaḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Mudrārākshasa (Bombay)">Mu.</abbr> <span class="num">4</span>. <span class="num">16</span>.</p>
+</article>
+
+</div>
+
+<div id="grp-metreswith21syllablesina" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">21</span><span class="b it"> Syllables in a quarter </span>(<span class="sk">prakṛti</span>)</h2>
+<article id="pancakavali" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">pañcakāvalī</span></h3>
+<p>(<b>also called</b> <span class="sk">sarasī</span> or <span class="sk">dhṛtaśrī</span>)</p>
+<p><b>Def.</b> <span class="sk">najabhajajā</span> <span class="sk">jarau</span> <span class="sk">narapate</span> <span class="sk">kathitā</span> <span class="sk">bhuvi</span> <span class="sk">pañcakāvalī ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr> (<span class="num">7</span>. <span class="num">7</span>. <span class="num">7</span>)</p>
+<p><b>Ex.</b> <span class="sk">turagaśatākulasya</span> <span class="sk">paritaḥ</span> <span class="sk">paramekatu</span> <span class="sk">raṅgajanmanaḥ pramathitabhūbhṛtaḥ</span> <span class="sk">pratipathaṃ</span> <span class="sk">mathitasya</span> <span class="sk">bhṛśaṃ</span> <span class="sk">mahībhṛtā|</span></p>
+<p><span class="sk">paricalato</span> <span class="sk">balānujabalasya</span> <span class="sk">puraḥ</span> <span class="sk">satataṃ</span> <span class="sk">dhṛtaśriyaściragalitaśriyo</span> <span class="sk">jalanidheśca</span> <span class="sk">tadā'bhavadantaraṃ</span> <span class="sk">mahat ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">3</span>. <span class="num">82</span>.</p>
+</article>
+
+<article id="sragdhara" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">sragdharā</span></h3>
+<p><b>Def.</b> <span class="sk">mrabhnairyānāṃ</span> <span class="sk">trayeṇa</span> <span class="sk">trimuniyatiyutā</span> <span class="sk">sragdharā</span> <span class="sk">kīrtiteyam ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr> (<span class="num">7</span>. <span class="num">7</span>. <span class="num">7</span>.)</p>
+<p><b>Ex.</b> <span class="sk">yā</span> <span class="sk">sṛṣṭiḥ</span> <span class="sk">sraṣṭurādyā</span> <span class="sk">vahat</span> <span class="sk">vidhihutaṃ</span> <span class="sk">yā</span> <span class="sk">haviryā</span> <span class="sk">ca</span> <span class="sk">hotrī ya</span> <span class="sk">dve</span> <span class="sk">kālaṃ</span> <span class="sk">vidhattaḥ</span> <span class="sk">śrutiviṣayaguṇā</span> <span class="sk">yā</span> <span class="sk">sthitā</span> <span class="sk">vyāpya</span> <span class="sk">viśvam|</span></p>
+<p><span class="sk">yāmāhuḥ</span> <span class="sk">sarvabhūtaprakṛtiriti</span> <span class="sk">yayā</span> <span class="sk">prāṇinaḥ</span> <span class="sk">prāṇavantaḥ</span> <span class="sk">pratyakṣābhiḥ</span> <span class="sk">prapannastanubhiravatu</span> <span class="sk">vastābhiraṣṭābhirīśaḥ ||</span></p>
+<p class="ref-line"><span class="it"><abbr class="ref" title="Śakuntalā">S.</abbr></span> <span class="num">1</span>. <span class="num">1</span>.</p>
+</article>
+
+</div>
+
+<div id="grp-metreswith22syllablesina" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">22</span><span class="b it"> Syllables in a quarter </span><span class="b">(</span><span class="sk">ākṛti</span><span class="b">)</span></h2>
+<article id="hamsi" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">haṃsī</span></h3>
+<p><b>Def.</b> <span class="sk">mau</span> <span class="sk">gau</span> <span class="sk">nāścatvāro</span> <span class="sk">go</span> <span class="sk">go</span> <span class="sk">vasubhuvanayatiriti</span> <span class="sk">bhavati</span> <span class="sk">haṃsī ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">8</span>. <span class="num">14</span>)</p>
+<p><b>Ex.</b> <span class="sk">sārdhaṃ</span> <span class="sk">kāntenaikānte'sau</span> <span class="sk">vikacakamalamadhusurami</span> <span class="sk">pibantī kāmakrīḍākūtasphītapramadasarasataramalaghu</span> <span class="sk">rasantī|</span></p>
+<p><span class="sk">kālindīye</span> <span class="sk">padmāraṇye</span> <span class="sk">pavanapatanaparitaralaparāge</span> <span class="sk">kaṃsārāte</span> <span class="sk">paśya</span> <span class="sk">svecchaṃ</span> <span class="sk">sarabhasagatiriha</span> <span class="sk">vilasati</span> <span class="sk">haṃsī ||</span></p>
+</article>
+
+</div>
+
+<div id="grp-metreswith23syllablesina" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">23</span><span class="b it"> Syllables in a quarter </span><span class="b">(</span><span class="sk">vikṛti</span><span class="b">)</span></h2>
+<article id="adritanaya" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">adritanayā</span></h3>
+<p><b>Def.</b> <span class="sk">najabhajabhā</span> <span class="sk">jabhau</span> <span class="sk">laghugurū</span> <span class="sk">budhaistu</span> <span class="sk">gaditeyamadritanayā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">11</span>. <span class="num">12</span>)</p>
+<p><b>Ex.</b> <span class="sk">kharataraśauryapāvakaśikhāpataṅganibhamagnadṛptadanujo jaladhisutāvilāsavasatiḥ satāṃ gatiraśeṣamānyamahimā |</span></p>
+<p><span class="sk">bhuvanahitāvatāracaturaścarācaradharo'vatīrṇa iha hi</span></p>
+<p><span class="sk">kṣitivalaye'sti kaṃsaśamanastaveti tamavocadadritanayā ||</span></p>
+</article>
+
+</div>
+
+<div id="grp-metreswith24syllablesina" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">24</span><span class="b it"> Syllables in a quarter </span><span class="b">(</span><span class="sk">saṃskṛti</span><span class="b">)</span></h2>
+<article id="tanvi" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">tanvī</span></h3>
+<p><b>Def.</b> <span class="sk">bhūtamunīnairyatiriha</span> <span class="sk">bhatanāḥ</span> <span class="sk">sbhau</span> <span class="sk">bhanayāśca</span> <span class="sk">yati</span> <span class="sk">bhavati</span> <span class="sk">tanvī</span>.</p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr> (<span class="num">5</span>. <span class="num">7</span>. <span class="num">11</span>)</p>
+</article>
+
+</div>
+
+<div id="grp-metreswith25syllablesina" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">25</span><span class="b it"> Syllables in a quarter </span><span class="b">(</span><span class="sk">atikṛti</span><span class="b">)</span></h2>
+<article id="krauncapada" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">krauñcapadā</span></h3>
+<p><b>Def.</b> <span class="sk">krauñcapadā</span> <span class="sk">bhmau</span> <span class="sk">sbhau</span> <span class="sk">nananā</span> <span class="sk">gāviṣuśaravasumuniviratiriha</span> <span class="sk">bhavet ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">5</span>. <span class="num">5</span>. <span class="num">8</span>. <span class="num">7</span>)</p>
+</article>
+
+</div>
+
+<div id="grp-metreswith26syllablesina" class="group">
+<h2 class="gh"><span class="b it">Metres with </span><span class="num b it">26</span><span class="b it"> Syllables in a quarter </span><span class="sk">(utkṛti)</span></h2>
+<article id="bhujangavijrmbhita" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">bhujaṅgavijṛmbhita</span></h3>
+<p><b>Def.</b> <span class="sk">vasvīśāśvaiśchedopetaṃ</span> <span class="sk">mamatanayuganarasalagairbhujaṅgavijṛmbhitam</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GGG (Molossus)"><span class="sk">ma</span></abbr>, <abbr class="gana" title="GGL (Anti-bacchius)"><span class="sk">ta</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (<span class="num">8</span>. <span class="num">11</span>. <span class="num">7</span>)</p>
+</article>
+
+<article id="dandaka" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">daṇḍaka</span></h3>
+<p>Metres with <span class="num">27</span> or more letters in each quarter are designated by the general name <span class="sk">daṇḍaka.</span> The highest number of syllables in a quarter of this species of metre is said to be <span class="num">999</span>. In each quarter there must be first two <span class="it">naganas</span> or six short syllables, and the remaining may be either <span class="it">raga</span>n<span class="it">as</span> or <span class="it">yaga</span>n<span class="it">as,</span> or all the feet may be <span class="it">saga</span>n<span class="it">as.</span> The classes of <span class="sk">daṇḍaka</span> usually mentioned are <span class="sk">caṇḍavṛṣṭiprayāta</span><span class="b">, </span><span class="sk">pracitaka</span><span class="b">, </span><span class="sk">mattamātaṅgalīlākara</span><span class="b">, </span><span class="sk">siṃhavikrānta</span><span class="b">, </span><span class="sk">kusumastavaka</span><span class="b">, </span><span class="sk">anaṅgaśekhara</span><span class="b">, </span><span class="sk">saṅgrāma</span><span class="sk"> </span>&amp;c.<span class="sk"> </span>Mál<span class="sk">. </span><span class="num">5</span>. <span class="num">23</span> is an instance of this last species of <span class="sk">Daṇḍaka.</span></p>
+</article>
+
+</div>
+
+</section>
+
+<section id="sec-sectionbardhasamavrttaha">
+<h1>SECTION B. - <span class="sk">ardhasamavṛtta</span><span class="sk"> </span>(Half-equal Metres)</h1>
+<article id="aparavaktra" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">aparavaktra</span></h3>
+<p>(Sometimes called <span class="sk">vaitālīya</span>)</p>
+<p><b>Def.</b> <span class="sk">ayuji</span> <span class="sk">nanaralā</span> <span class="sk">guruḥ</span> <span class="sk">same |</span></p>
+<p><span class="sk">tadaparavaktramidaṃ</span> <span class="sk">najau</span> <span class="sk">jarau ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, (odd quarter)</p>
+<p class="sch-cont"><abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr> (even quarter)</p>
+<p><b>Ex.</b> <span class="sk">sphuṭasumadhuraveṇugītimistamaparavaktramavetya</span> <span class="sk">mādhavam|</span></p>
+<p><span class="sk">mṛgayuvatigaṇaiḥ</span> <span class="sk">samaṃ</span> <span class="sk">sthitā</span> <span class="sk">vrajavanitā</span> <span class="sk">dhṛtacittavibhramā ||</span></p>
+</article>
+
+<article id="upacitra" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">upacitra</span></h3>
+<p><b>Def.</b> <span class="sk">viṣame</span> <span class="sk">yadi</span> <span class="sk">sau</span> <span class="sk">salagā</span> <span class="sk">dale |</span></p>
+<p><span class="sk">bhau</span> <span class="sk">yuji</span> <span class="sk">bhādgurukāvupacitram ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (odd quarter)</p>
+<p class="sch-cont"><abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (even quarter)</p>
+<p><b>Ex.</b> <span class="sk">muravairivapustanutāṃ</span> <span class="sk">mudaṃ hemanibhāṃśukacandanaliptam|</span></p>
+<p><span class="sk">gaganaṃ</span> <span class="sk">capalāmilitaṃ</span> <span class="sk">yathā</span> <span class="sk">śāradanīradharairupacitram ||</span></p>
+</article>
+
+<article id="puspitagra" class="metre">
+<h3 class="mh">(<span class="num">3</span>) <span class="sk">puṣpitāgrā</span></h3>
+<p>(<b>also called</b> <span class="sk">aupacchandasika</span>)</p>
+<p><b>Def.</b> <span class="sk">ayuji</span> <span class="sk">nayugarephato</span> <span class="sk">yakāro |</span></p>
+<p><span class="sk">yuji</span> <span class="sk">tu</span> <span class="sk">najau</span> <span class="sk">jaragāśca</span> <span class="sk">puṣpitāgrā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="LGG (Bacchius)"><span class="sk">ya</span></abbr> (odd quarter)</p>
+<p class="sch-cont"><abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (even quarter)</p>
+<p><b>Ex.</b> <span class="sk">atha</span> <span class="sk">madanavadhūrupaplavāntaṃ vyasanakṛśā</span> <span class="sk">paripālayāmbabhūva|</span></p>
+<p><span class="sk">śaśina</span> <span class="sk">iva</span> <span class="sk">divātanasya</span> <span class="sk">lekhā</span> <span class="sk">kiraṇaparikṣayadhūsarā</span> <span class="sk">pradoṣam ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Kumārasambhava (Bombay)"><a href="https://samskrtam.ru/parallel-corpus/kumarasambhava.html" target="_blank" class="corpus-link">Ku.</a></abbr> <span class="num">4</span>. <span class="num">46</span>.</p>
+</article>
+
+<article id="viyogini" class="metre">
+<h3 class="mh">(<span class="num">4</span>) <span class="sk">viyoginī</span></h3>
+<p>(<b>also called</b> <span class="sk">vaitālīya</span> or <span class="sk">sundarī</span>)</p>
+<p><b>Def.</b> <span class="sk">viṣame</span> <span class="sk">samajā</span> <span class="sk">guruḥ</span> <span class="sk">same |</span></p>
+<p><span class="sk">sabharā</span> <span class="sk">lo'tha</span> <span class="sk">guruviṃyoginī ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (odd quarter)</p>
+<p class="sch-cont"><abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (even quarter)</p>
+<p><b>Ex.</b> <span class="sk">sahasā</span> <span class="sk">vidadhīta</span> <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr> <span class="sk">kriyāmavivekaḥ</span> <span class="sk">paramāpadāṃ</span> <span class="sk">padam|</span></p>
+<p><span class="sk">vṛṇate</span> <span class="sk">hi</span> <span class="sk">vimṛśyakāriṇaṃ</span> <span class="sk">guṇalubdhāḥ</span> <span class="sk">svayameva</span> <span class="sk">sampadaḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Kirātārjunīya">Ki.</abbr> <span class="num">2</span>. <span class="num">30</span>.</p>
+</article>
+
+<article id="vegavati" class="metre">
+<h3 class="mh">(<span class="num">5</span>) <span class="sk">vegavatī</span></h3>
+<p><b>Def.</b> <span class="sk">sayugātsagurū</span> <span class="sk">viṣame</span> <span class="sk">ced |</span></p>
+<p><span class="sk">bhāviha</span> <span class="sk">vegavatī</span> <span class="sk">yuji</span> <span class="sk">bhādgau ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (odd quarter)</p>
+<p class="sch-cont"><abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (even quarter)</p>
+<p><b>Ex.</b> <span class="sk">smaravegavatī</span> <span class="sk">vrajarāmā keśavavaṃśaravairatimugdhā|</span></p>
+<p><span class="sk">rabhasānna</span> <span class="sk">gurūn</span> <span class="sk">gaṇayantī</span> <span class="sk">kelinikuñjagṛhāya</span> <span class="sk">jagāma ||</span></p>
+</article>
+
+<article id="harinapluta" class="metre">
+<h3 class="mh">(<span class="num">6</span>) <span class="sk">hariṇaplutā</span></h3>
+<p><b>Def.</b> <span class="sk">sayugātsalaghū</span> <span class="sk">viṣame</span> <span class="sk">guru</span>-</p>
+<p><span class="sk">ryuji</span> <span class="sk">nabhau</span> <span class="sk">bharakau</span> <span class="sk">hariṇaplutā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (odd quarter).</p>
+<p class="sch-cont"><abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="GLG (Amphimacer)"><span class="sk">ra</span></abbr> (even quarter).</p><p><b>Ex.</b> <span class="sk">sphuṭaphenacayā</span> <span class="sk">hariṇaplutā balimanojñataṭā</span> <span class="sk">taraṇeḥ</span> <span class="sk">sutā|</span></p>
+<p><span class="sk">kalahaṃsakulāravaśālinī</span> <span class="sk">viharato</span> <span class="sk">harati</span> <span class="sk">sma</span> <span class="sk">harermanaḥ ||</span></p>
+<p><span class="it"><abbr class="ref" title="Naishadhacharita">N.</abbr> B.</span> Metres like <span class="sk">aparavaktra</span> or <span class="sk">aupacchandasika</span> and <span class="sk">vaitālayi</span> or <span class="sk">viyoginī</span> are usually treated as <span class="sk it">jātis</span><span class="it">;</span> (see Section D). But they are sometimes defined in the <span class="sk">Gaṇa</span> scheme, and are, therefore, given under the class of <span class="sk">Vṛittas</span>.</p>
+</article>
+
+</section>
+
+<section id="sec-sectioncvisamavrttaunequ">
+<h1>SECTION C. - <span class="sk">viṣamavṛtta </span>(Unequal Metres). The most common metre of this class is called <span class="sk">udgatā</span></h1>
+<article id="udgata" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">udgatā</span></h3>
+<p><b>Def.</b> <span class="sk">prathame</span> <span class="sk">sajau</span> <span class="sk">yadi</span> <span class="sk">salau</span> <span class="sk">ca</span></p>
+<p><span class="sk">nasajagurukāṇyanantaram |</span></p>
+<p><span class="sk">yadyatha bhanajalagāḥ syuratho</span></p>
+<p><span class="sk">sajasā</span> <span class="sk">jagau</span> <span class="sk">ca</span> <span class="sk">bhavatīyamudgatā ||</span></p>
+<p><b>Sch. G.</b> <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr> (first quarter)</p>
+<p class="sch-cont"><abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> (second)</p><p class="sch-cont"><abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, (third)</p><p class="sch-cont"><abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="LLG (Anapæstus)"><span class="sk">sa</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr>, (fourth)</p><p><b>Ex.</b> <span class="sk">atha</span> <span class="sk">vāsavasya</span> <span class="sk">vacanena</span></p>
+<p><span class="sk">ruciravadanastrilocanam|</span></p>
+<p><span class="sk">klāntirahitamabhirādhayituṃ</span></p>
+<p><span class="sk">vidhivattapāṃsi</span> <span class="sk">vidadhe</span> <span class="sk">dhanañjayaḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Kirātārjunīya">Ki.</abbr> <span class="num">12</span>. <span class="num">1</span>.</p>
+<p class="ref-line">See <abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">15</span> also.</p>
+<p>Another variety of <span class="sk">udgatā</span> is mentioned wherein the third quarter has <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> instead of <abbr class="gana" title="GLL (Dactylus)"><span class="sk">bha</span></abbr>, <abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr>, <abbr class="gana" title="LGL (Amphibrachys)"><span class="sk">ja</span></abbr>, <abbr class="gana" title="L (laghu — short)"><span class="sk">la</span></abbr>, <abbr class="gana" title="G (guru — long)"><span class="sk">ga.</span></abbr> Other kinds of metre in which every quarter of the stanza differs in the number of syllables, are included under the general name <span class="sk">‘Gāthā’</span>. The same name is applicable to stanzas consisting of any number of quarters other than four. As in the case of <span class="sk">upajāti</span>, any two or more quarters of a regular metre may be combined to form <span class="sk">ardhasamavṛtta</span> or <span class="sk">viṣamavṛtta.</span></p>
+</article>
+
+</section>
+
+<section id="sec-sectiondjatimetresregula">
+<h1>SECTION D. - <span class="sk">jāti</span> (Metres regulated by the number of syllabic instants)</h1>
+<p>The most common variety of such metres is <span class="sk">āṃryā</span></p>
+<p>It is said to have nine sub-divisions:–</p>
+<p><span class="sk">pathyā</span> <span class="sk">vipulā</span> <span class="sk">capalā</span> <span class="sk">mukhacapalā</span> <span class="sk">jaghanacapalā</span> <span class="sk">ca |</span></p>
+<p><span class="sk">gītyupagītyudgītaya</span> <span class="sk">āryāgītirnavaiva</span> <span class="sk">vāryāyāḥ ||</span></p>
+<p>Of these nine kinds the last four are generally used and deserve mention.</p>
+<div id="grp-aamrya" class="group">
+<h2 class="gh">(<span class="it">a</span>) <span class="sk">āṃryā</span></h2>
+<article id="arya" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">āryā</span></h3>
+<p><b>Def.</b> <span class="sk">yasyāḥ</span> <span class="sk">pāde</span> <span class="sk">prathame</span> <span class="sk">dvādaśamātrāstathā</span> <span class="sk">tṛtīyepi |</span></p>
+<p><span class="sk">aṣṭādaśa</span> <span class="sk">dvitīye</span> <span class="sk">caturthake</span> <span class="sk">pañcadaśa</span> <span class="sk">sāryā ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Śrutabodha">Srut.</abbr> <span class="num">4</span>.</p>
+<p>The first and third quarters must each contain <span class="num">12</span> <span class="sk">mātrās </span>or syllabic instants (one being allotted to a short vowel, and two to a long one), the second <span class="num">18</span>, and the fourth <span class="num">15</span>.</p>
+<p><b>Ex.</b> <span class="sk">pratipakṣeṇāpi</span> <span class="sk">patiṃ</span> <span class="sk">sevante</span> <span class="sk">bhartṛvatsalāḥ</span> <span class="sk">sādhvyaḥ</span> <span class="sk">|</span></p>
+<p><span class="sk">anyasaritāṃ</span> <span class="sk">śatāni</span> <span class="sk">hi</span> <span class="sk">samudragāḥ</span> <span class="sk">prāpayantyabdhim ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Mālavikāgnimitra (Bombay)">M.</abbr> <span class="num">5</span>. <span class="num">19</span>.</p>
+<p>The whole of Govardhana’s <span class="sk">āryāsaptaśatī</span> is written in this metre.</p>
+</article>
+
+<article id="giti" class="metre">
+<h3 class="mh">(<span class="num">2</span>) <span class="sk">gīti</span></h3>
+<p><b>Def.</b> <span class="sk">āryāpūrvārdhasamaṃ</span> <span class="sk">dvitīyamapi</span> <span class="sk">bhavati</span> <span class="sk">yatra</span> <span class="sk">haṃsagate |</span></p>
+<p><span class="sk">chandovidastadānīṃ</span> <span class="sk">gītiṃ</span> <span class="sk">tāmamṛtavāṇi</span> <span class="sk">bhāṣate ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Śrutabodha">Srut.</abbr> <span class="num">5</span>.</p>
+<p>The first and third quarters of this metre must contain <span class="num">12</span> syllabic instants each, and the second and fourth <span class="num">18</span> each.</p>
+<p><b>Ex.</b> <span class="sk">pāṭīra</span> <span class="sk">tava</span> <span class="sk">paṭīyānkaḥ</span> <span class="sk">paripāṭīmimāmurīkartum</span> <span class="sk">|</span></p>
+<p><span class="sk">yatpiṃṣatāmapi</span> <span class="sk">nṛṇāṃ</span> <span class="sk">piṣṭo'pi</span> <span class="sk">tanoṣi</span> <span class="sk">parimalaiḥ</span> <span class="sk">puṣṭim ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Bhāminīvilāsa">Bv.</abbr> <span class="num">1</span>. <span class="num">12</span>.</p>
+</article>
+
+<article id="upagiti" class="metre">
+<h3 class="mh">(<span class="num">3</span>) <span class="sk">upagīti</span></h3>
+<p><b>Def.</b> <span class="sk">āryottarārdhatulyaṃ</span> <span class="sk">prathamārdhamapi</span> <span class="sk">prayuktaṃ</span> <span class="sk">cet</span>.</p>
+<p><span class="sk">kāmini</span> <span class="sk">tāmupagīti</span> <span class="sk">pratibhāṣante</span> <span class="sk">mahākavayaḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Śrutabodha">Srut.</abbr> <span class="num">6</span>.</p>
+<p>The first and third quarters of this metre must contain <span class="num">12</span> syllabic instants each, and the second and fourth <span class="num">15</span> each.</p>
+<p><b>Ex.</b> <span class="sk">natagopasundarīṇāṃ</span> <span class="sk">rāsollāse</span> <span class="sk">murārātim</span> <span class="sk">|</span></p>
+<p><span class="sk">asmārayadupagītiḥ</span> <span class="sk">svargakuraṅgadṛśāṃ</span> <span class="sk">gīteḥ ||</span></p>
+</article>
+
+<article id="udgiti" class="metre">
+<h3 class="mh">(<span class="num">4</span>) <span class="sk">udgīti</span></h3>
+<p><b>Def.</b> <span class="sk">āryāśakaladvitaye</span> <span class="sk">viparīte</span> <span class="sk">punarihodgītiḥ ||</span></p>
+<p>The first and third quarters of this metre must contain <span class="num">12</span> syllabic instants each, the second <span class="num">15</span>, and the fourth <span class="num">18</span>.</p>
+<p><b>Ex.</b> <span class="sk">nārāyaṇasya</span> <span class="sk">santatamudgītiḥ</span> <span class="sk">saṃsmṛtirbhaktyā</span> <span class="sk">|</span></p>
+<p><span class="sk">arcāyāmāsaktirdustarasaṃsārasāgare</span> <span class="sk">taraṇiḥ ||</span></p>
+</article>
+
+<article id="aryagiti" class="metre">
+<h3 class="mh">(<span class="num">5</span>) <span class="sk">āryāgīti</span></h3>
+<p><b>Def.</b> <span class="sk">āryāprāgdalamante'dhikaguru</span> <span class="sk">tādṛk</span> <span class="sk">parārdhamāryāgītiḥ ||</span></p>
+<p>The first and third quarters of this metre must contain <span class="num">12</span> syllabic instants each, and the third and fourth <span class="num">20</span> each.</p>
+<p><b>Ex.</b> <span class="sk">savadhūkāḥ</span> <span class="sk">sukhino'sminnavaratamamandarāgatāmarasadṛśaḥ</span> <span class="sk">|</span></p>
+<p><span class="sk">nāsevante</span> <span class="sk">rasavannavaratamamandarāgatāmarasadṛśaḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">4</span>. <span class="num">51</span>.</p>
+<p><span class="it">Note.</span> All these five sorts are sometimes defined in the <span class="sk">Gaṇa </span>scheme<span class="sk">.</span></p>
+</article>
+
+</div>
+
+<div id="grp-bvaitaliya" class="group">
+<h2 class="gh">(<span class="it">b</span>) <span class="sk">vaitālīya</span></h2>
+<article id="vaitaliya" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">vaitālīya</span></h3>
+<p><b>Def.</b> <span class="sk">ṣaḍviṣame'ṣṭau</span> <span class="sk">same</span> <span class="sk">kalāstāśca</span> <span class="sk">same</span> <span class="sk">syurnirantarāḥ |</span></p>
+<p><abbr class="gana" title="LLL (Tribrachys)"><span class="sk">na</span></abbr> <span class="sk">samātra</span> <span class="sk">parāśritā</span> <span class="sk">kalā</span> <span class="sk">vaitālīyeṃ'te</span> <span class="sk">ralau</span> <span class="sk">guruḥ ||</span></p>
+<p>This is a stanza of four quarters, the first and third of which contain the time of fourteen short syllables, and the second and fourth sixteen. Again, the first and third quarters of this metre must contain <span class="num">6</span> syllabic instants, and the second and fourth <span class="num">8</span> each, followed by a <span class="sk">ragaṇa</span> (ᴗ – ᴗ) and a short and a long vowel,  (ᴗ –). The rules further require that the syllabic instants in the even quarter should not be all composed of short syllables or long syllables, and that the even syllabic instant in each quarter (<span class="it">i. e.</span> the <span class="num">2</span>nd, <span class="num">4</span>th and <span class="num">6</span>th) should not be formed conjointly with the next (<span class="it">i. e.</span> <span class="num">3</span>rd, <span class="num">5</span>th, and <span class="num">7</span>th).</p>
+<p><b>Ex.</b> <span class="sk">kuśalaṃ</span> <span class="sk">khalu</span> <span class="sk">tubhyameva</span> <span class="sk">tadvacanaṃ</span> <span class="sk">kṛṣṇa</span> <span class="sk">yadabhyadhāmaham|</span></p>
+<p><span class="sk">upadeśaparāḥ pareṣvapi svavināśābhimukheṣu sādhavaḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">16</span>. <span class="num">14</span>.</p>
+</article>
+
+</div>
+
+<div id="grp-caupacchandasika" class="group">
+<h2 class="gh">(<span class="it">c</span>) <span class="sk">aupacchandasika</span></h2>
+<article id="aupacchandasika" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">aupacchandasika</span></h3>
+<p><b>Def.</b> <span class="sk">paryante</span> <span class="sk">ryau</span> <span class="sk">tathaiva</span> <span class="sk">śeṣamaupacchandasikaṃ</span> <span class="sk">sudhībhiruktam ||</span></p>
+<p>This is the same as <span class="sk">vaitālīya</span> except that at the end of each quarter there must be a <span class="sk">ragaṇa</span> and <span class="sk">yagaṇa</span> instead of <span class="sk">ragaṇa</span> and <span class="sk">la</span><span class="b">, </span><abbr class="gana" title="G (guru — long)"><span class="sk">ga</span></abbr> only; in other words, it is the same as <span class="sk">vaitālīya</span> with only a long syllable added at the end of each quarter.</p>
+<p><b>Ex.</b> <span class="sk">vapuṣā</span> <span class="sk">parameṇa</span> <span class="sk">bhūdharāṇākmatha</span> <span class="sk">sambhāvya</span> <span class="sk">parākramaṃ</span> <span class="sk">bibhede|</span></p>
+<p><span class="sk">mṛgamāśu</span> <span class="sk">vilokayāñcakāra</span> <span class="sk">sthiradaṃṣṭrogramukhaṃ</span> <span class="sk">mahendrasūnuḥ ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Kirātārjunīya">Ki.</abbr> <span class="num">13</span>. <span class="num">1</span>.</p>
+<p>So in the next <span class="num">52</span> verses of the same canto.</p>
+<p class="ref-line">See <abbr class="ref" title="Śiśupālavadha">Si.</abbr> <span class="num">20</span> also.</p>
+<p>It will be noticed that <span class="sk">viyoginī</span> or <span class="sk">sundarī</span> and <span class="sk">aparavaktra</span> are only particular cases of <span class="sk">vaitālīya</span>, and <span class="sk">puṣpitāgrāṃ</span> and <span class="sk">mālabhāriṇī</span>, of <span class="sk">aupacchandasika. </span>Prosodists treat both these classes of metres in the <span class="sk">Gaṇa</span> scheme as well as in the <span class="sk">Mātrā</span> scheme; hence they have been noticed here as well as in Section C.</p>
+</article>
+
+</div>
+
+<div id="grp-dmatrasamaka" class="group">
+<h2 class="gh">(<span class="it">d</span>) <span class="sk">mātrāsamaka</span></h2>
+<article id="matrasamaka" class="metre">
+<h3 class="mh">(<span class="num">1</span>) <span class="sk">mātrāsamaka</span></h3>
+<p>The metre called <span class="sk">mātrāsamaka</span> consists of four quarters each of which contains <span class="num">16</span> syllabic instants. The most general variety is that in which the ninth syllabic instant is composed of a short syllable, and the last is a long syllable. It is defined as <span class="sk">mātrāsamakaṃ</span><span class="b"> </span><span class="sk">navamo lgāntyaḥ</span>.</p>
+<p>But there are several varieties of this metre arising from particular syllabic instants being short or long. For example, if the <span class="num">9</span>th and <span class="num">12</span>th moments are formed by short syllables, and the <span class="num">15</span>th and <span class="num">16</span>th by a long one, and the rest are optional, it is called <span class="sk">vānavāsikā.</span> If the <span class="num">5</span>th, <span class="num">8</span>th, and <span class="num">9</span>th are formed by short syllables, and the <span class="num">15</span>th and <span class="num">16</span>th by a long one, it is called <span class="sk">citrā.</span> If the <span class="num">5</span>th and <span class="num">8</span>th are short, as also the <span class="num">9</span>th and <span class="num">10</span>th, and <span class="num">15</span>th and <span class="num">16</span>th are long’ it is called <span class="sk">upacitrā.</span> And if the <span class="num">5</span>th, <span class="num">8</span>th, and <span class="num">12</span>th are short, <span class="num">15</span>th and <span class="num">16</span>th long, and the rest indeterminate, it is called <span class="sk">viśloka.</span> Sometimes two or more of these varieties are combined in the same stanza, and in that case the measure is called <span class="sk">pādākulaka</span><span class="b">,</span> in which there is no other restriction than that each quarter should have sixteen syllabic instants.</p>
+<p><b>Ex.</b> <span class="sk">mūḍha</span> <span class="sk">jahīhi</span> <span class="sk">dhanāgamatṛṣṇāṃ</span> <span class="sk">kuru</span> <span class="sk">tanubuddhe</span> <span class="sk">manasi</span> <span class="sk">vitṛṣṇām|</span></p>
+<p><span class="sk">yallabhase</span> <span class="sk">nijakarmopāttaṃ</span> <span class="sk">vittaṃ</span> <span class="sk">tena</span> <span class="sk">vinodaya</span> <span class="sk">cittam ||</span></p>
+<p class="ref-line"><abbr class="ref" title="Mohamudgara">Moha M.</abbr></p>
+</article>
+
+</div>
+
+</section>
+
+
+
+
+</div>
+
+
+<script>
+const items=document.querySelectorAll('article.metre[id],section[id]');
+const links=document.querySelectorAll('#toc a');
+const obs=new IntersectionObserver(ee=>{
+  ee.forEach(e=>{if(e.isIntersecting){
+    links.forEach(l=>l.classList.remove('active'));
+    const l=document.querySelector('#toc a[href="#'+e.target.id+'"]');
+    if(l){l.classList.add('active');l.scrollIntoView({block:'nearest'})}
+  }});
+},{rootMargin:'-5% 0px -80% 0px'});
+items.forEach(i=>obs.observe(i));
+</script>
+</body>
+</html>

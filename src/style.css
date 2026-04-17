@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Gentium+Plus&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=JetBrains+Mono:wght@300;400&display=swap');
+@font-face {
+  font-family: 'Charter Indologique';
+  font-weight: 400;
+  src: local('Charter Indologique'), local('CharterIndologique'),
+       url('src/fonts/CharterIndologique-Regular.woff2') format('woff2'),
+       url('src/fonts/CharterIndologique-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Charter Indologique';
+  font-weight: 700;
+  src: local('Charter Indologique Bold'), local('CharterIndologique-Bold'),
+       url('src/fonts/CharterIndologique-Bold.woff2') format('woff2'),
+       url('src/fonts/CharterIndologique-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Sanskrit 2003';
+  font-weight: 400 700;
+  src: local('Sanskrit 2003'), local('Sanskrit2003'),
+       url('src/fonts/Sanskrit2003.woff2') format('woff2'),
+       url('src/fonts/Sanskrit2003.ttf') format('truetype'),
+       url('https://cdn.jsdelivr.net/gh/googlefonts/noto-fonts@main/unhinted/ttf/NotoSerifDevanagari/NotoSerifDevanagari-Regular.ttf') format('truetype');
+}
+
+:root {
+  --bg: #f7f3ec;
+  --bg2: #ede7db;
+  --ink: #18120c;
+  --ink2: #6b5c4e;
+  --card: #fff;
+  --border: #cfc5b2;
+  --accent: #7a1515;
+  --guru: #8B0000;
+  --laghu: #2C4A1E;
+  --gold: #b07c18;
+  --row-h: 36px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Cormorant Garamond', Georgia, serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+.page-wrap { max-width: 1200px; margin: 0 auto; box-shadow: 0 0 40px rgba(0,0,0,.15); min-height: 100vh; }
+
+/* ── HEADER ── */
+header {
+  background: #18120c; color: #f7f3ec;
+  padding: 13px 28px; display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 100;
+}
+header h1 { font-size: 1rem; font-weight: 300; letter-spacing: .18em; text-transform: uppercase; }
+.om { font-family: 'Sanskrit 2003'; font-size: 1.4rem; color: var(--gold); }
+
+/* ── LAYOUT ── */
+.app { display: grid; grid-template-columns: 320px 1fr; min-height: calc(100vh - 46px); }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  background: var(--bg2); border-right: 1px solid var(--border);
+  padding: 16px 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;
+}
+.sec { font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: var(--ink2); font-family: 'JetBrains Mono'; margin-bottom: 5px; }
+label { display: block; font-size: .7rem; color: var(--ink2); margin-bottom: 3px; font-family: 'JetBrains Mono'; }
+textarea, input[type=text] {
+  width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 3px;
+  padding: 6px 8px; font-family: 'JetBrains Mono'; font-size: .75rem; color: var(--ink);
+  resize: vertical; outline: none; transition: border-color .15s;
+}
+textarea:focus, input:focus { border-color: var(--accent); }
+textarea { min-height: 50px; }
+hr { border: none; border-top: 1px solid var(--border); }
+
+.drop-zone {
+  border: 2px dashed var(--border); border-radius: 4px; padding: 8px 10px;
+  text-align: center; cursor: pointer; font-size: .78rem; color: var(--ink2);
+  transition: all .2s; line-height: 1.4;
+}
+.drop-zone:hover, .drop-zone.over { border-color: var(--accent); color: var(--accent); background: #fdf6f6; }
+.drop-zone.loaded { border-color: var(--laghu); color: var(--laghu); background: #f2faf5; }
+.drop-zone small { display: block; font-family: 'JetBrains Mono'; font-size: .65rem; margin-top: 3px; opacity: .7; }
+
+.btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 12px; border-radius: 3px; border: none; cursor: pointer;
+  font-family: 'JetBrains Mono'; font-size: .72rem; letter-spacing: .05em;
+  text-transform: uppercase; transition: all .15s; width: 100%;
+}
+.btn-p { background: var(--accent); color: white; }
+.btn-p:hover { background: #5e1010; }
+.btn-s { background: transparent; border: 1px solid var(--border); color: var(--ink2); }
+.btn-s:hover { border-color: var(--ink); color: var(--ink); }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.spin { width: 11px; height: 11px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: sp .6s linear infinite; }
+@keyframes sp { to { transform: rotate(360deg); } }
+
+.msg { font-size: .68rem; font-family: 'JetBrains Mono'; padding: 6px 8px; border-radius: 3px; line-height: 1.5; display: none; }
+.msg.info { display: block; background: #e6edfb; color: #1a3480; border-left: 3px solid #1a3480; }
+.msg.ok   { display: block; background: #e8f7ee; color: #1a5c2a; border-left: 3px solid #235c35; }
+.msg.err  { display: block; background: #fceaea; color: #7a1515; border-left: 3px solid #7a1515; }
+
+/* ── MAIN ── */
+.main { padding: 20px 28px; overflow-y: auto; }
+
+/* ── SHLOKA BLOCK ── */
+.shloka-block { margin-bottom: 28px; }
+.shloka-label {
+  font-size: .62rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink2); font-family: 'JetBrains Mono'; margin-bottom: 8px;
+}
+
+/* ── WAVE TABLE ── */
+.wave-svg-wrap { overflow-x: auto; overflow-y: visible; margin-bottom: 0; padding-bottom: 0; }
+.wave-svg-wrap svg { display: block; }
+
+/* Guide lines */
+.guide      { stroke: var(--border); stroke-width: 1.5; stroke-dasharray: none; opacity: .85; }
+.guide-main { stroke-width: 1.5; stroke-dasharray: none; opacity: .85; }
+.row-lbl    { font-size: 9px; font-family: 'JetBrains Mono',monospace; fill: var(--ink2); opacity: .35; text-anchor: middle; }
+.preview-only { /* shown in preview, removed before PNG/MP4 export */ }
+
+/* Wave line */
+.wave-line  { stroke: var(--guru); stroke-width: 1.6; stroke-opacity: .28; stroke-linejoin: round; }
+
+/* Syllable nodes */
+.syl-node         { cursor: grab; user-select: none; }
+.syl-node.dragging{ cursor: grabbing; opacity: .85; }
+.syl-node circle  { transition: r .1s; }
+.syl-node:hover circle { r: 10; }
+/* fill/stroke set inline per hollow mode, not via CSS */
+.syl-node.guru  text   { fill: var(--guru); }
+.syl-node.laghu text   { fill: var(--laghu); }
+
+/* ── DEVA LINE ── */
+.dev-line {
+  font-family: 'Sanskrit 2003', serif; font-weight: 700;
+  color: var(--ink); white-space: nowrap; overflow: visible;
+  font-size: 2rem; /* default — autoFitFonts will adjust */
+  display: block; margin: 0; padding: 0;
+}
+
+/* ── TRANSLIT LINE ── */
+.trl-line {
+  color: #888; letter-spacing: .05em; white-space: nowrap;
+  font-family: 'Charter Indologique', 'Cormorant Garamond', serif;
+  font-size: 1rem; /* default — autoFitFonts will adjust */
+  display: block; margin: 0; padding: 0;
+}
+.trl-line .tg { font-weight: 700; color: var(--guru); }
+.trl-line .tl { font-weight: 400; color: var(--laghu); }
+.trl-line.grey-mode .tg { color: #888; }
+.trl-line.grey-mode .tl { color: #888; }
+
+/* ── CONTEXT MENU ── */
+.ctx-menu {
+  position: fixed; background: var(--card); border: 1px solid var(--border);
+  border-radius: 4px; box-shadow: 0 4px 16px rgba(0,0,0,.15);
+  padding: 4px 0; z-index: 999; min-width: 160px; display: none;
+}
+.ctx-menu.show { display: block; }
+.ctx-item {
+  padding: 7px 14px; font-size: .75rem; font-family: 'JetBrains Mono';
+  cursor: pointer; color: var(--ink); transition: background .1s;
+}
+.ctx-item:hover { background: var(--bg2); }
+.ctx-item.sep { border-top: 1px solid var(--border); margin-top: 2px; padding-top: 6px; }
+.ctx-item.guru-opt  { color: var(--guru); }
+.ctx-item.laghu-opt { color: var(--laghu); }
+
+/* ── EMPTY STATE ── */
+.empty { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px; gap: 10px; opacity: .3; }
+.empty .e-om { font-family: 'Sanskrit 2003'; font-size: 5rem; }
+.empty p { font-style: italic; font-size: .9rem; }
+
+/* ── A4 preview note ── */
+.a4-note { font-size: .68rem; font-family: 'JetBrains Mono'; color: var(--ink2); margin-bottom: 12px; text-align: right; }
+
+/* ── HELP MODAL STYLES ── */
+    /* Точно как .sec в боковой панели */
+    #help-overlay .help-sec { font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink) !important;margin:20px 0 5px;font-weight:700 }
+    .help-body { font-size:.7rem;line-height:1.6;color:var(--ink);margin:0 0 6px;font-family:'JetBrains Mono',monospace }
+    #help-overlay b { font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.68rem;color:#8B0000;background:rgba(139,0,0,.07);border:1px solid rgba(139,0,0,.18);border-radius:3px;padding:1px 5px;white-space:nowrap }
+    .help-body ul { margin:4px 0 6px 0;padding-left:20px;font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--ink) }
+    .help-body li { margin-bottom:3px;font-size:.7rem;color:var(--ink);font-family:'JetBrains Mono',monospace }
+    .help-tip { background:var(--bg2);border-left:3px solid var(--gold);padding:7px 12px;border-radius:0 4px 4px 0;font-size:.7rem;color:var(--ink);font-family:'JetBrains Mono',monospace;margin:6px 0 }
