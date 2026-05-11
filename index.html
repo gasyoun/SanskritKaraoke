@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ॐ Волновая нотация санскрита v1.133</title>
+<title>ॐ Волновая нотация санскрита v1.196</title>
 <link rel="stylesheet" href="src/style.css">
 <script src="https://cdn.jsdelivr.net/npm/mp4-muxer/build/mp4-muxer.js"></script>
 <script src="https://apis.google.com/js/api.js"></script>
@@ -14,7 +14,7 @@
 <header>
   <div style="display:flex;align-items:baseline;gap:2ch">
     <h1>Волновая нотация санскрита</h1>
-    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.133</span>
+    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.266</span>
   </div>
   <div id="msg-header" style="display:none;font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:3px;margin-left:16px;align-self:center"></div>
   <div style="display:flex;align-items:center;gap:14px">
@@ -116,41 +116,14 @@
       <small id="audio-name">файл не выбран</small>
     </div>
     <input type="file" id="audio-file" accept="audio/*" style="display:none" onchange="onAudioFile(this)">
-    <audio id="audio-preview" controls style="display:none;width:100%;margin-top:6px"></audio>
+    <audio id="audio-preview" controls style="display:none;width:100%;margin-top:6px" onplay="_mainHighlightStart()" onpause="_mainHighlightStop()" onended="_mainHighlightStop()"></audio>
   </div>
 
   <div id="tap-block" style="display:none;margin-bottom:8px">
-    <div class="sec" style="margin-bottom:4px">Тэппинг и воспроизведение</div>
-    <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
-      <span style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);white-space:nowrap">Скорость:</span>
-      <select id="tap-rate" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;border:1px solid var(--border);border-radius:3px;padding:2px 6px;background:var(--card);color:var(--ink);cursor:pointer;flex:1" onchange="TAP.playRate=parseFloat(this.value)">
-        <option value="0.5">0.5×</option>
-        <option value="0.75" selected>0.75×</option>
-        <option value="1.0">1.0×</option>
-      </select>
-    </div>
-    <div style="display:flex;gap:6px;margin-bottom:4px">
-      <button class="btn btn-p" style="flex:1;font-size:.75rem" onclick="startTapping()">⏺ Тэппинг</button>
-      <button class="btn btn-s" style="flex:1;font-size:.75rem" onclick="resetTapping()">↺ Сброс</button>
-    </div>
-    <div style="display:flex;gap:6px;margin-bottom:4px">
-      <button class="btn btn-s" style="flex:1;font-size:.75rem" onclick="detectPadaBounds()">⟁ Найти пады</button>
-      <button class="btn btn-s" style="flex:1;font-size:.75rem" id="btn-auto-timing" onclick="calcAutoTiming()">⟳ Авторазбивка</button>
-    </div>
-    <div style="display:flex;gap:6px;margin-bottom:4px">
-      <button class="btn btn-s" style="flex:1;font-size:.75rem" onclick="copyPadaBounds()">⎘ Скопировать границы пад</button>
-    </div>
-    <div style="display:flex;gap:6px;margin-bottom:4px">
-      <button class="btn btn-s" style="flex:1;font-size:.75rem" id="btn-karaoke-play" onclick="karaokePlay()" disabled>▶ Воспроизвести</button>
-      <button class="btn btn-s" style="flex:1;font-size:.75rem" id="btn-karaoke-stop" onclick="karaokeStop()" disabled>■ Стоп</button>
-    </div>
-    <div id="tap-status" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);margin-bottom:4px;min-height:1.2em"></div>
-    <!-- Waveform + markers -->
+    <button class="btn btn-p" style="width:100%;font-size:.75rem" onclick="openTimingEditor()">✎ Указать пады / Редактор тайминга</button>
+    <div id="te-padas-info" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);margin-top:3px;min-height:1em"></div>
+    <div id="tap-status" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);margin-top:2px;min-height:1.2em"></div>
     <canvas id="waveform-canvas" height="48" style="display:none;width:100%;border-radius:3px;cursor:default;margin-top:2px;border:1px solid var(--border);pointer-events:none"></canvas>
-  </div>
-
-  <div id="edit-timing-block" style="display:none;margin-bottom:8px">
-    <button class="btn btn-s" style="width:100%;font-size:.75rem" id="btn-edit-timing" onclick="openTimingEditor()">✎ Редактировать тайминг</button>
   </div>
 
 
@@ -183,11 +156,11 @@
     </div>
     <div class="sec" style="margin-bottom:4px;margin-top:8px">Google Drive</div>
     <div style="display:flex;gap:6px">
-      <button class="btn btn-s" style="flex:1" onclick="gdriveLoad()" title="Загрузить сессию с Google Drive">
-        <span style="font-size:.8em">▲</span> Drive загрузить
-      </button>
       <button class="btn btn-s" style="flex:1" onclick="gdriveSave()" title="Сохранить сессию на Google Drive">
-        <span style="font-size:.8em">▼</span> Drive сохранить
+        <span style="font-size:.8em">↓</span> Drive сохранить
+      </button>
+      <button class="btn btn-s" style="flex:1" onclick="gdriveLoad()" title="Загрузить сессию с Google Drive">
+        <span style="font-size:.8em">↑</span> Drive загрузить
       </button>
     </div>
   </div>
@@ -365,8 +338,33 @@
   <p class="help-sec">Определение метра</p>
   <p class="help-body">Метр определяется автоматически при построении диаграммы и отображается в строке уведомлений. Алгоритм определяет стихотворный размер (ануштубх, самавртта, джати и др.) по паттерну гуру/лагху.</p>
 
-  <button onclick="closeHelp()" class="btn btn-p" style="margin-top:28px;width:100%;font-size:.85rem;letter-spacing:.08em">Закрыть</button>
-</div>
+  <p class="help-sec">Редактор тайминга</p>
+  <p class="help-body">Открывается кнопкой <b>✎ Указать пады / Редактор тайминга</b>. Требует загруженного аудиофайла. Два режима: <b>Разметка пад</b> и <b>Тайминг слогов</b>.</p>
+
+  <p class="help-sec" style="font-size:.8rem">Разметка пад</p>
+  <p class="help-body"><b>Указать пады</b> — рисует 8 перетаскиваемых линий (начало/конец каждой из 4 пад, с зазором 0.5с). Сплошные линии — начало, пунктирные — конец. Начало пады не может быть раньше конца предыдущей; при ручной настройке зазор может быть нулевым.</p>
+  <p class="help-body"><b>Клик внутри пады</b> (не рядом с линией) — выделяет паду и ставит красный курсор воспроизведения в точку клика. Красный курсор виден всегда.</p>
+  <p class="help-body"><b>▶▶</b> — вся шлока от начала до конца. <b>▶|</b> — пада от начала до конца (повторное нажатие — пауза; следующее — снова с начала). <b>▶…</b> — от текущей позиции курсора до конца пады. Масштаб — выпадающий список справа.</p>
+  <p class="help-body"><b>Сдвиг линии пады</b> — сбрасывает тайминг слогов только этой пады (остальные не затрагиваются).</p>
+  <p class="help-body"><b>Авторазбивка</b> — равномерно распределяет тайминг слогов по падам пропорционально морам (гуру=2, лагху=1). Опции: <b>посл. лагху = гуру</b>; <b>только неразмеченные</b>. После авторазбивки — переход в Тайминг слогов.</p>
+  <p class="help-body"><b>Сброс тайминга</b> — очищает весь тайминг слогов.</p>
+
+  <p class="help-sec" style="font-size:.8rem">Тайминг слогов</p>
+  <p class="help-body"><b>Верхняя зона (шпаргалка)</b> — волновая диаграмма слогов. Перетаскивайте шарики <b>влево/вправо</b> — меняется тайминг; <b>вверх/вниз</b> — строка мелодии. Клик — выделение слога.</p>
+  <p class="help-body"><b>Кнопки воспроизведения:</b> <b>▶▶</b> до конца (Ctrl+Space), <b>▶|</b> до конца пады (Ctrl+Enter), <b>▶N</b> N слогов, <b>▶•</b> текущий слог (Enter), <b>▶›</b> слог + переход к следующему (Space).</p>
+  <p class="help-body"><b>◀ ▶</b> — выбрать предыдущий/следующий слог (← →). Выбранный слог всегда виден на экране, позиция воспроизведения переносится на его начало.</p>
+  <p class="help-body"><b>◂ ⟵ Выровнять к началу ▸</b> — сдвиг слога на 0.01с (Ctrl+←/→) и авторазбивка от начала пады до текущего слога (Home). Сдвиг останавливает воспроизведение и запускает заново.</p>
+  <p class="help-body"><b>Масштаб</b> — выпадающий список 1×–32×, синхронизируется с колёсиком мыши. <b>Статистика</b> — средняя длительность гуру и лагху. <b>Закрыть</b> — кнопка в правом нижнем углу.</p>
+  <p class="help-body">Позиции шариков шпаргалки (<b>cheatY</b>) сохраняются в сессию и восстанавливаются при загрузке.</p>
+
+  <p class="help-sec" style="font-size:.8rem">Главное окно — подсветка слога</p>
+  <p class="help-body">При воспроизведении аудио в главном окне текущий слог подсвечивается полупрозрачным кружком (если есть тайминг). Подсветка исчезает по окончании пады.</p>
+
+  <p class="help-sec" style="font-size:.8rem">Випула (anuṣṭubh)</p>
+  <p class="help-body">После нажатия <b>▶ Определить</b> — если метр содержит vipulā, слоги 5-7 нечётных пад помечаются штриховкой, вокруг них рисуется пунктирная рамка с подписью типа и паттерна (например <b>bha-vipulā (gll)</b>). Слог-виновник — оранжевая штриховка, остальные — синяя. Определение повторяется автоматически при построении диаграммы и загрузке сессии.</p>
+
+  <p class="help-sec" style="font-size:.8rem">Google Drive</p>
+  <p class="help-body"><b>☁ Загрузить</b> / <b>☁ Сохранить</b> — работа с сессиями через Google Drive. Одна кнопка <b>Открыть</b>: открывает папку если выделена папка, загружает/заменяет если выделен файл. Аудио не дублируется — если в папке уже есть аудиофайл, новый не загружается.</p></div>
 </div>
 
 <!-- ══ CROSS-CHECK MODAL ══ -->
@@ -432,47 +430,153 @@
 
 
 <!-- TIMING EDITOR MODAL -->
-<div id="timing-editor-overlay" style="display:none;position:fixed;inset:0;background:rgba(24,18,12,.8);z-index:400;overflow:hidden" onclick="if(event.target===this)closeTimingEditor()">
-  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:92vw;max-width:1200px;max-height:90vh;background:var(--card);border-radius:10px;padding:20px 24px;box-shadow:0 8px 40px rgba(0,0,0,.4);display:flex;flex-direction:column">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-      <span style="font-size:.7rem;font-family:'JetBrains Mono',monospace;letter-spacing:.15em;text-transform:uppercase;color:var(--ink2)">Редактор тайминга</span>
+<div id="timing-editor-overlay" style="display:none;position:fixed;inset:0;background:rgba(24,18,12,.8);z-index:400;overflow:hidden">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:92vw;max-width:1200px;height:85vh;max-height:90vh;background:var(--card);border-radius:10px;padding:16px 24px 20px;box-shadow:0 8px 40px rgba(0,0,0,.4);display:flex;flex-direction:column">
+
+    <!-- Заголовок -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-shrink:0">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span id="te-mode-title" style="font-size:.7rem;font-family:'JetBrains Mono',monospace;letter-spacing:.15em;text-transform:uppercase;color:var(--ink2)">Разметка пад</span>
+        <button id="btn-te-switch" onclick="teSwitchMode()" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:2px 10px;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--ink2);cursor:pointer">→ Тайминг слогов</button>
+      </div>
       <button onclick="closeTimingEditor()" style="border:none;background:none;cursor:pointer;font-size:1.2rem;color:var(--ink2)">✕</button>
     </div>
-    <canvas id="timing-editor-canvas" style="width:100%;border-radius:4px;cursor:crosshair;border:1px solid var(--border);display:block;user-select:none;flex:1;min-height:0" height="260"></canvas>
-    <div id="timing-editor-info" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);margin-top:10px;min-height:1.4em;flex-shrink:0"></div>
-    <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end;flex-shrink:0">
-      <span style="font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--ink2)">Масштаб:</span>
-      <select id="te-zoom-select" onchange="timingEditorSetZoom(+this.value)" style="font-size:.75rem;padding:2px 4px;border-radius:4px;border:1px solid var(--border);background:var(--card);color:var(--ink)">
-        <option value="1.0">1×</option>
-        <option value="1.25">1.25×</option>
-        <option value="1.5625">1.56×</option>
-        <option value="1.953125">1.95×</option>
-        <option value="2.44140625">2.44×</option>
-        <option value="3.0517578125">3.05×</option>
-        <option value="3.814697265625">3.81×</option>
-        <option value="4.76837158203125">4.77×</option>
-        <option value="5.9604644775390625">5.96×</option>
-        <option value="7.450580596923828">7.45×</option>
-        <option value="9.313225746154785">9.31×</option>
-        <option value="11.641532182693481">11.64×</option>
-        <option value="14.551915228366852">14.55×</option>
-        <option value="18.189894035458565">18.19×</option>
-        <option value="22.737367544323206">22.74×</option>
-        <option value="28.421709430404007">28.42×</option>
-        <option value="32">32×</option>
-      </select>
-      <div style="display:flex;gap:6px;align-items:center;justify-content:center;width:100%">
-        <button id="btn-te-play-end" onclick="timingEditorPlayOrPause('end')" title="До конца"
+
+    <!-- Canvas общий -->
+    <canvas id="timing-editor-canvas" style="width:100%;border-radius:4px;cursor:crosshair;border:1px solid var(--border);display:block;user-select:none;flex:1;min-height:200px" height="260"></canvas>
+    <canvas id="te-scrollbar" style="width:100%;height:16px;margin:4px 0 0;display:block;cursor:pointer;flex-shrink:0;border-radius:3px;background:var(--bg2);border:1px solid var(--border)"></canvas>
+
+    <!-- ── Режим 1: Разметка пад ── -->
+    <div id="te-panel-padas" style="flex-shrink:0;margin-top:10px">
+      <!-- Ряд 1: кнопки управления + кнопки воспроизведения + масштаб -->
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+        <button onclick="teMarkPadas()" style="font-size:.75rem;font-family:'JetBrains Mono',monospace;padding:4px 14px;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--ink);cursor:pointer">Указать пады</button>
+        <button id="btn-te-reset" onclick="teResetTiming()" style="display:none;font-size:.75rem;font-family:'JetBrains Mono',monospace;padding:4px 14px;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--ink2);cursor:pointer">Сброс тайминга</button>
+        <div style="flex:1"></div>
+        <!-- ▶▶ вся шлока -->
+        <button id="btn-r1-play-all" onclick="teR1Play('all')" title="Вся шлока от начала до конца"
           style="width:56px;height:28px;padding:0;font-size:.7rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶▶</button>
-        <button id="btn-te-play-pada" onclick="timingEditorPlayOrPause('pada')" title="До конца пады"
+        <!-- ▶| пада от начала -->
+        <button id="btn-r1-play-pada" onclick="teR1Play('pada')" title="Пада от начала до конца"
+          style="width:56px;height:28px;padding:0;font-size:.7rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶|</button>
+        <!-- ▶… от текущей позиции до конца пады -->
+        <button id="btn-r1-play-cur" onclick="teR1Play('cur')" title="От текущей позиции до конца пады"
+          style="width:56px;height:28px;padding:0;font-size:.7rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶…</button>
+        <span style="font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--ink2)">Масштаб:</span>
+        <select id="te-zoom-select-r1" onchange="timingEditorSetZoom(+this.value)" style="font-size:.75rem;padding:2px 4px;border-radius:4px;border:1px solid var(--border);background:var(--card);color:var(--ink)">
+          <option value="1.0">1×</option><option value="1.25">1.25×</option><option value="1.5625">1.56×</option>
+          <option value="1.953125">1.95×</option><option value="2.44140625">2.44×</option>
+          <option value="3.0517578125">3.05×</option><option value="3.814697265625">3.81×</option>
+          <option value="4.76837158203125">4.77×</option><option value="5.9604644775390625">5.96×</option>
+          <option value="7.450580596923828">7.45×</option><option value="9.313225746154785">9.31×</option>
+          <option value="11.641532182693481">11.64×</option><option value="14.551915228366852">14.55×</option>
+          <option value="18.189894035458565">18.19×</option><option value="22.737367544323206">22.74×</option>
+          <option value="28.421709430404007">28.42×</option><option value="32">32×</option>
+        </select>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+        <button id="btn-te-autotiming" onclick="teAutoTimingAndSwitch()" style="display:none;font-size:.75rem;font-family:'JetBrains Mono',monospace;padding:4px 14px;border:1px solid var(--gold);border-radius:3px;background:var(--bg2);color:var(--gold);cursor:pointer">Авторазбивка</button>
+        <label style="font-size:.75rem;color:var(--ink2);display:flex;align-items:center;gap:4px;cursor:pointer">
+          <input type="checkbox" id="opt-last-laghu-as-guru" checked>
+          посл. лагху = гуру
+        </label>
+        <label style="font-size:.75rem;color:var(--ink2);display:flex;align-items:center;gap:4px;cursor:pointer">
+          <input type="checkbox" id="opt-only-unmarked">
+          только неразмеченные
+        </label>
+      </div>
+    </div>
+
+    <!-- ── Режим 2: Тайминг слогов ── -->
+    <div id="te-panel-timing" style="display:none;flex-shrink:0">
+      <!-- Ряд 1: панель воспроизведения по центру + масштаб справа -->
+      <div style="display:flex;gap:6px;align-items:center;justify-content:center;width:100%;margin-top:10px">
+        <button id="btn-te-play-end" onclick="timingEditorPlayOrPause('end')" title="До конца (Ctrl+Space)"
+          style="width:56px;height:28px;padding:0;font-size:.7rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶▶</button>
+        <button id="btn-te-play-pada" onclick="timingEditorPlayOrPause('pada')" title="До конца пады (Ctrl+Enter)"
           style="width:56px;height:28px;padding:0;font-size:.7rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶|</button>
         <button id="btn-te-play-syls" onclick="timingEditorPlayOrPause('syllables')" title="N слогов"
           style="width:56px;height:28px;padding:0;font-size:.7rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶N</button>
         <input type="number" id="te-play-n" value="3" min="1" max="20"
           style="width:36px;height:28px;font-size:.75rem;padding:0 4px;border-radius:3px;border:1px solid var(--border);background:var(--card);color:var(--ink);text-align:center;flex-shrink:0">
-        <button id="btn-te-play-step" onclick="timingEditorPlayStep()" title="Проиграть слог и перейти к следующему"
+        <button id="btn-te-play-syl" onclick="timingEditorPlaySyl()" title="Проиграть текущий слог (Enter)"
+          style="width:56px;height:28px;padding:0;font-size:.7rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶•</button>
+        <button id="btn-te-play-step" onclick="timingEditorPlayStep()" title="Проиграть слог и перейти к следующему (Space)"
           style="width:56px;height:28px;padding:0;font-size:.7rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶<span style="font-size:.9rem">›</span></button>
+        <div style="flex:1"></div>
+        <span style="font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--ink2)">Масштаб:</span>
+        <select id="te-zoom-select" onchange="timingEditorSetZoom(+this.value)" style="font-size:.75rem;padding:2px 4px;border-radius:4px;border:1px solid var(--border);background:var(--card);color:var(--ink)">
+          <option value="1.0">1×</option><option value="1.25">1.25×</option><option value="1.5625">1.56×</option>
+          <option value="1.953125">1.95×</option><option value="2.44140625">2.44×</option>
+          <option value="3.0517578125">3.05×</option><option value="3.814697265625">3.81×</option>
+          <option value="4.76837158203125">4.77×</option><option value="5.9604644775390625">5.96×</option>
+          <option value="7.450580596923828">7.45×</option><option value="9.313225746154785">9.31×</option>
+          <option value="11.641532182693481">11.64×</option><option value="14.551915228366852">14.55×</option>
+          <option value="18.189894035458565">18.19×</option><option value="22.737367544323206">22.74×</option>
+          <option value="28.421709430404007">28.42×</option><option value="32">32×</option>
+        </select>
       </div>
+      <!-- Ряд 2: сдвиг влево + Выровнять к началу + сдвиг вправо -->
+      <div style="display:flex;justify-content:center;align-items:center;gap:6px;margin-top:6px">
+        <button onclick="teShiftSyl(-0.01)" title="Сдвинуть слог на 0.01с влево (Ctrl+←)"
+          style="width:28px;height:26px;padding:0;font-size:.85rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">◂</button>
+        <button onclick="teAlignToStart()" title="Выровнять к началу (Home)"
+          style="height:26px;padding:0 14px;font-size:.7rem;font-family:'JetBrains Mono',monospace;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--ink);cursor:pointer">⟵ Выровнять к началу</button>
+        <button onclick="teShiftSyl(+0.01)" title="Сдвинуть слог на 0.01с вправо (Ctrl+→)"
+          style="width:28px;height:26px;padding:0;font-size:.85rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▸</button>
+      </div>
+      <!-- Ряд 2б: выбор предыдущего/следующего слога -->
+      <div style="display:flex;justify-content:center;align-items:center;gap:6px;margin-top:4px">
+        <button onclick="teSelectAdjacentSyl(-1)" title="Выбрать предыдущий слог (←)"
+          style="width:28px;height:26px;padding:0;font-size:.85rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">◀</button>
+        <button onclick="teSelectAdjacentSyl(+1)" title="Выбрать следующий слог (→)"
+          style="width:28px;height:26px;padding:0;font-size:.85rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶</button>
+      </div>
+      <!-- Ряд 3: info + stats + кнопка Закрыть -->
+      <div style="display:flex;align-items:flex-end;gap:8px;margin-top:6px">
+        <div style="flex:1">
+          <div id="timing-editor-info" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);min-height:1.4em"></div>
+          <div id="te-stats" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);margin-top:2px;line-height:1.6"></div>
+        </div>
+        <button onclick="closeTimingEditor()" style="height:36px;padding:0 20px;font-size:.85rem;font-family:'JetBrains Mono',monospace;border:none;border-radius:4px;background:var(--accent,#357bdd);color:#fff;cursor:pointer;flex-shrink:0;letter-spacing:.04em">Закрыть</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Google Drive folder picker dialog -->
+<div id="gdrive-dialog" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;font-family:'Segoe UI',system-ui,sans-serif">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;width:460px;max-width:95vw;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(0,0,0,.4)">
+    <!-- Header -->
+    <div style="display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--border);flex-shrink:0">
+      <span id="gdrive-dialog-title" style="font-size:.88rem;font-weight:700;flex:1;color:#1a1a1a">Google Drive</span>
+      <button onclick="_gdDismiss()" style="border:none;background:none;color:#444;cursor:pointer;font-size:1.1rem;padding:0 4px">✕</button>
+    </div>
+    <!-- Breadcrumbs -->
+    <div id="gdrive-breadcrumbs" style="display:flex;align-items:center;gap:4px;padding:7px 14px;font-size:.78rem;color:#555;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;min-height:32px"></div>
+    <!-- Toolbar -->
+    <div style="display:flex;align-items:center;gap:6px;padding:6px 14px;border-bottom:1px solid var(--border);flex-shrink:0">
+      <button id="gdrive-btn-newfolder" onclick="_gdNewFolder()" style="font-size:.75rem;padding:3px 10px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:#1a1a1a;cursor:pointer;font-weight:600">+ Папка</button>
+      <div style="flex:1"></div>
+      <button id="gdrive-btn-sort" onclick="_gdToggleSort()" title="Сортировка" style="font-size:.75rem;padding:3px 8px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:#1a1a1a;cursor:pointer">А→Я</button>
+      <button id="gdrive-btn-view" onclick="_gdToggleView()" title="Вид" style="font-size:.85rem;padding:3px 8px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:#1a1a1a;cursor:pointer">☰</button>
+    </div>
+    <!-- New folder input (hidden by default) -->
+    <div id="gdrive-newfolder-row" style="display:none;padding:6px 14px;border-bottom:1px solid var(--border);flex-shrink:0;gap:6px;align-items:center">
+      <input id="gdrive-newfolder-input" type="text" placeholder="Название папки" style="flex:1;font-size:.8rem;padding:4px 8px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:#1a1a1a;width:100%;box-sizing:border-box">
+      <div style="display:flex;gap:4px;margin-top:4px">
+        <button onclick="_gdCreateFolder()" style="font-size:.75rem;padding:3px 10px;border:1px solid var(--border);border-radius:4px;background:var(--accent, #357bdd);color:#fff;cursor:pointer;font-weight:600">Создать</button>
+        <button onclick="_gdCancelNewFolder()" style="font-size:.75rem;padding:3px 10px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:#1a1a1a;cursor:pointer">Отмена</button>
+      </div>
+    </div>
+    <!-- Folder list -->
+    <div id="gdrive-list" style="overflow-y:auto;flex:1;padding:6px 8px;min-height:120px"></div>
+    <!-- Footer -->
+    <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid var(--border);flex-shrink:0">
+      <span id="gdrive-current-label" style="font-size:.78rem;color:#555;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
+      <button onclick="_gdDismiss()" style="font-size:.8rem;padding:5px 14px;border:1px solid var(--border);border-radius:5px;background:var(--card);color:#1a1a1a;cursor:pointer">Отмена</button>
+      <button id="gdrive-btn-confirm" onclick="_gdConfirm()" style="font-size:.8rem;padding:5px 14px;border:none;border-radius:5px;background:var(--accent,#357bdd);color:#fff;cursor:pointer;font-weight:700">Открыть</button>
     </div>
   </div>
 </div>
