@@ -22,7 +22,7 @@
         "verse":   { "type": "integer" }
       }
     },
-    "meter":      { "type": "string", "examples": ["anushtubh","indravajra","mandakranta"] },
+    "meter":      { "type": "string", "description": "e.g. anushtubh, indravajra, mandakranta" },
     "difficulty": { "type": "integer", "minimum": 1, "maximum": 5,
                     "description": "1=beginner … 5=advanced" },
     "language_tags": { "type": "array", "items": { "type": "string", "enum": ["ru","en"] } },

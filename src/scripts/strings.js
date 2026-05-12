@@ -1,41 +1,186 @@
 const STRINGS = {
   ru: {
-    runBtn: 'Построить диаграмму',
+    // App titles & headers
+    mainTitle: 'Волновая нотация санскрита',
+    settingsTitle: 'Настройки',
+    helpTitle: 'Инструкция',
+    shlokaInputLabel: 'Ввод шлоки',
+    shlokaInputHint: 'Две строфы · каждая с новой строки',
+    shlokaPlaceholder: 'Введите текст шлоки...',
+    encodingLabel: 'Кодировка:',
+    sylAuthor: 'Авторское',
+    sylStd: 'Стандартное',
+    emptyStateHint: 'Введите данные и нажмите «Построить диаграмму»',
+    
+    // Settings labels
+    waveHeightLabel: 'Высота волны',
+    sylColorsLabel: 'Цвета слогов',
+    displayLabel: 'Отображение',
+    notificationsLabel: 'Уведомления',
+    
+    // Google Drive dialog
+    newFolderBtn: '+ Папка',
+    openBtn: 'Открыть',
+    
+    // Buttons
+    runBtn: 'Запустить',
     resetBtn: 'Сброс',
-    downloadPng: '↓ Скачать PNG',
     settingsBtn: '⚙ Настройки',
-    helpBtn: '? Инструкция'
-    // add other strings as needed
+    helpBtn: '? Инструкция',
+    downloadBtn: 'Скачать',
+    showPngBtn: 'Показать PNG',
+    altDownloadBtn: 'Скачать PNG',
+    karaokeBtn: 'Карaoке MP4',
+    storyBtn: 'Story MP4',
+    saveSessionBtn: 'Сохранить на Drive',
+    loadSessionBtn: 'Загрузить с Drive',
+    detectMeterBtn: 'Определить метр',
+    meterInfoBtn: 'Инфо о метре',
+    timingEditorBtn: 'Редактор тайминга',
+    autoBtn: 'Авто',
+    
+    // Section labels
+    sylDivLabel: 'Разделение на слоги',
+    schemLabel: 'Схема и метр',
+    pngLabel: 'Экспорт PNG',
+    mp4Label: 'Экспорт MP4',
+    audioLabel: 'Аудио',
+    sessionLabel: 'Сессия',
+    footerLabel: 'Футер (PNG)',
+    driveLabel: 'Google Drive',
+    
+    // Audio drop zone
+    dropZoneText: 'Перетащите сюда аудиофайл или нажмите для выбора',
+    dropZoneFormats: 'Поддерживаются: MP3, WAV, M4A',
+    dropZoneNoFile: 'Файл не выбран',
+    
+    // Timing editor
+    padaModeLabel: 'Разметка пад',
+    sylModeLabel: 'Тайминг слогов',
+    
+    // Messages
+    errNoAudio: 'Сначала загрузите аудиофайл!',
+    errNoDiagram: 'Сначала постройте диаграмму (Run)!',
+    errNoTiming: 'Сначала разметьте тайминг!',
+    okKaraoke: 'Карaoке-видео готово!',
+    okPng: 'PNG-изображение готово!',
+    okStory: 'Видео для Story готово!',
+    
+    // Progress page
+    progressTitle: 'Sanskrit Karaoke — Прогресс',
+    studyTodayHeading: 'Изучать сегодня',
+    catalogHeading: 'Каталог шлок',
+    allDoneMsg: 'На сегодня всё! Отличная работа. 🔥',
+    
+    // Student page
+    srsPrompt: 'Как хорошо вы запомнили?',
+    modeFull: 'Полный',
+    modeDots: 'Кружки',
+    modeBlind: 'Вслепую'
   },
   en: {
-    runBtn: 'Build Diagram',
+    // App titles & headers
+    mainTitle: 'Sanskrit Wave Notation',
+    settingsTitle: 'Settings',
+    helpTitle: 'Instructions',
+    shlokaInputLabel: 'Verse Input',
+    shlokaInputHint: 'Two stanzas · each on a new line',
+    shlokaPlaceholder: 'Enter verse text...',
+    encodingLabel: 'Encoding:',
+    sylAuthor: 'Authorial',
+    sylStd: 'Standard',
+    emptyStateHint: 'Enter text and click "Run" to build the diagram',
+    
+    // Settings labels
+    waveHeightLabel: 'Wave Height',
+    sylColorsLabel: 'Syllable Colors',
+    displayLabel: 'Display Options',
+    notificationsLabel: 'Notifications',
+    
+    // Google Drive dialog
+    newFolderBtn: '+ Folder',
+    openBtn: 'Open',
+    
+    // Buttons
+    runBtn: 'Run',
     resetBtn: 'Reset',
-    downloadPng: '↓ Download PNG',
     settingsBtn: '⚙ Settings',
-    helpBtn: '? Help'
+    helpBtn: '? Help',
+    downloadBtn: 'Download',
+    showPngBtn: 'Show PNG',
+    altDownloadBtn: 'Download PNG',
+    karaokeBtn: 'Karaoke MP4',
+    storyBtn: 'Story MP4',
+    saveSessionBtn: 'Save to Drive',
+    loadSessionBtn: 'Load from Drive',
+    detectMeterBtn: 'Detect Meter',
+    meterInfoBtn: 'Meter Info',
+    timingEditorBtn: 'Timing Editor',
+    autoBtn: 'Auto',
+    
+    // Section labels
+    sylDivLabel: 'Syllabification',
+    schemLabel: 'Schema & Meter',
+    pngLabel: 'PNG Export',
+    mp4Label: 'MP4 Export',
+    audioLabel: 'Audio',
+    sessionLabel: 'Session',
+    footerLabel: 'Footer (PNG)',
+    driveLabel: 'Google Drive',
+    
+    // Audio drop zone
+    dropZoneText: 'Drop audio file here or click to select',
+    dropZoneFormats: 'Supported: MP3, WAV, M4A',
+    dropZoneNoFile: 'No file selected',
+    
+    // Timing editor
+    padaModeLabel: 'Pada Layout',
+    sylModeLabel: 'Syllable Timing',
+    
+    // Messages
+    errNoAudio: 'Please load an audio file first!',
+    errNoDiagram: 'Please build the diagram (Run) first!',
+    errNoTiming: 'Please mark the timing first!',
+    okKaraoke: 'Karaoke video is ready!',
+    okPng: 'PNG image is ready!',
+    okStory: 'Story video is ready!',
+    
+    // Progress page
+    progressTitle: 'Sanskrit Karaoke — Progress',
+    studyTodayHeading: 'Study Today',
+    catalogHeading: 'Verse Catalog',
+    allDoneMsg: 'All done for today! Great job. 🔥',
+    
+    // Student page
+    srsPrompt: 'How well did you remember?',
+    modeFull: 'Full',
+    modeDots: 'Dots',
+    modeBlind: 'Blind'
   }
 };
 
 let LANG = localStorage.getItem('shloka_lang') || 'ru';
 
-function t(key) { 
-  return STRINGS[LANG]?.[key] ?? STRINGS.ru[key] ?? key; 
+function t(key) {
+  return STRINGS[LANG]?.[key] ?? STRINGS.ru[key] ?? key;
 }
 
 function setLang(lang) {
   LANG = lang;
   localStorage.setItem('shloka_lang', lang);
-  if (typeof applyI18n === 'function') {
-    applyI18n();
-  }
+  applyI18n();
 }
 
 function applyI18n() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    el.textContent = t(key);
+    el.textContent = t(el.getAttribute('data-i18n'));
   });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
+  });
+  
+  const langBtn = document.getElementById('btn-lang');
+  if (langBtn) langBtn.textContent = '🌐 ' + LANG.toUpperCase();
 }
 
-// apply i18n on load
-window.addEventListener('DOMContentLoaded', applyI18n);
+document.addEventListener('DOMContentLoaded', applyI18n);

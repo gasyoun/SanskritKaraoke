@@ -13,12 +13,12 @@
 <div class="page-wrap">
 <header>
   <div style="display:flex;align-items:baseline;gap:2ch">
-    <h1>Волновая нотация санскрита</h1>
+    <h1 data-i18n="mainTitle">Волновая нотация санскрита</h1>
     <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.267</span>
   </div>
   <div id="msg-header" style="display:none;font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:3px;margin-left:16px;align-self:center"></div>
   <div style="display:flex;align-items:center;gap:14px">
-    <button onclick="setLang(LANG === 'ru' ? 'en' : 'ru')" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em">🌐 RU/EN</button>
+    <button id="btn-lang" onclick="setLang(LANG === 'ru' ? 'en' : 'ru')" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em">🌐 RU/EN</button>
     <button onclick="openSettings()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em" data-i18n="settingsBtn">⚙ Настройки</button>
     <button onclick="openHelp()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em" data-i18n="helpBtn">? Инструкция</button>
     <span class="om">ॐ</span>
@@ -32,7 +32,7 @@
 
   <div>
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-      <div class="sec" style="margin:0">Ввод шлоки</div>
+      <div class="sec" style="margin:0" data-i18n="shlokaInputLabel">Ввод шлоки</div>
       <div style="display:flex;align-items:center;gap:6px">
         <span style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2)">№</span>
         <input type="number" id="shloka-num" min="1" max="99" value="1"
@@ -40,10 +40,10 @@
           title="Номер шлоки">
       </div>
     </div>
-    <label>Две строфы · каждая с новой строки</label>
-    <textarea id="dev-input" rows="3" placeholder="व्याप्तचराचरभावविशेषं चिन्मयमेकमनन्तमनादिम् ।&#10;भैरवनाथमनाथशरण्यं त्वन्मयचित्ततया हृदि वन्दे॥१॥" oninput="scheduleSchemeDetect()"></textarea>
+    <label data-i18n="shlokaInputHint">Две строфы · каждая с новой строки</label>
+    <textarea id="dev-input" rows="3" data-i18n-placeholder="shlokaPlaceholder" placeholder="व्याप्तचраचरभावविशेषं चिन्मयमेकमनन्तमनादिम् ।&#10;भैरवनाथमनाथशरण्यं त्वन्मयचित्ततया हृदि वन्दे॥१॥" oninput="scheduleSchemeDetect()"></textarea>
     <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
-      <span style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);white-space:nowrap">Кодировка:</span>
+      <span style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);white-space:nowrap" data-i18n="encodingLabel">Кодировка:</span>
       <select id="scheme-select" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;border:1px solid var(--border);border-radius:3px;padding:2px 6px;background:var(--card);color:var(--ink);cursor:pointer;flex:1;min-width:0">
         <option value="">— не определена —</option>
         <option value="DEV">Деванагари</option>
@@ -54,7 +54,7 @@
         <option value="VH">Velthuis</option>
         <option value="WX">WX</option>
       </select>
-      <button onclick="forceSchemeDetect()" title="Определить автоматически" style="font-size:.7rem;padding:2px 7px;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--ink2);cursor:pointer;font-family:'JetBrains Mono',monospace;white-space:nowrap">авто</button>
+      <button onclick="forceSchemeDetect()" data-i18n="autoBtn" title="Определить автоматически" style="font-size:.7rem;padding:2px 7px;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--ink2);cursor:pointer;font-family:'JetBrains Mono',monospace;white-space:nowrap">авто</button>
     </div>
     <textarea id="s1dev" style="display:none"></textarea>
     <textarea id="s2dev" style="display:none"></textarea>
@@ -64,12 +64,12 @@
 
   <div style="margin-bottom:6px">
     <div style="display:flex;align-items:center;gap:12px;margin-top:4px">
-    <div class="sec" style="margin:0">Слогоделение</div>
+    <div class="sec" style="margin:0" data-i18n="sylDivLabel">Слогоделение</div>
     <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:.75rem">
-      <input type="radio" name="sylmode" id="syl-mode-user" checked> Авторское
+      <input type="radio" name="sylmode" id="syl-mode-user" checked> <span data-i18n="sylAuthor">Авторское</span>
     </label>
     <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:.75rem">
-      <input type="radio" name="sylmode" id="syl-mode-std"> Стандартное
+      <input type="radio" name="sylmode" id="syl-mode-std"> <span data-i18n="sylStd">Стандартное</span>
     </label>
   </div>
 
@@ -84,21 +84,21 @@
 
   <div id="dl-wrap" style="display:none">
     <div style="margin-bottom:4px">
-      <div class="sec" style="margin-bottom:4px">PNG</div>
+      <div class="sec" style="margin-bottom:4px" data-i18n="pngLabel">PNG</div>
       <div style="display:flex;gap:6px">
-        <button class="btn btn-s" style="flex:1" onclick="downloadPng()">↓ Скачать</button>
-        <button class="btn btn-s" style="flex:1" onclick="showPng()">◻ Показать</button>
+        <button class="btn btn-s" style="flex:1" onclick="downloadPng()" data-i18n="altDownloadBtn">↓ Скачать</button>
+        <button class="btn btn-s" style="flex:1" onclick="showPng()" data-i18n="showPngBtn">◻ Показать</button>
       </div>
     </div>
 
   <div id="mp4-block" style="margin-bottom:4px">
-    <div class="sec" style="margin-bottom:4px">MP4</div>
+    <div class="sec" style="margin-bottom:4px" data-i18n="mp4Label">MP4</div>
     <div style="display:flex;gap:6px;margin-bottom:4px">
-      <button class="btn btn-s" style="flex:1" id="btn-mp4-muxer" onclick="downloadMp4Muxer()">↓ Скачать</button>
-      <button class="btn btn-s" style="flex:1" id="btn-mp4" onclick="downloadMp4()">↓ Скачать (альт.)</button>
+      <button class="btn btn-s" style="flex:1" id="btn-mp4-muxer" onclick="downloadMp4Muxer()" data-i18n="downloadBtn">↓ Скачать</button>
+      <button class="btn btn-s" style="flex:1" id="btn-mp4" onclick="downloadMp4()" data-i18n="altDownloadBtn">↓ Скачать (альт.)</button>
     </div>
     <div style="display:flex;gap:6px">
-      <button class="btn btn-p" style="flex:1;font-size:.75rem" id="btn-karaoke-mp4" onclick="downloadKaraokeMp4()">↓ Сохранить караоке</button>
+      <button class="btn btn-p" style="flex:1;font-size:.75rem" id="btn-karaoke-mp4" onclick="downloadKaraokeMp4()" data-i18n="karaokeBtn">↓ Сохранить караоке</button>
     </div>
     <div style="display:flex;gap:6px;margin-top:4px;align-items:center">
       <select id="story-format-sel" style="font-size:.72rem;padding:2px 4px;border-radius:3px;border:1px solid var(--border);background:var(--bg);color:var(--ink)">
@@ -110,7 +110,7 @@
         <option value="3" selected>3 слога</option>
         <option value="4">4 слога</option>
       </select>
-      <button class="btn btn-p" style="flex:1;font-size:.75rem" id="btn-story-mp4" onclick="downloadTelegramStoryMp4()">↓ Story</button>
+      <button class="btn btn-p" style="flex:1;font-size:.75rem" id="btn-story-mp4" onclick="downloadTelegramStoryMp4()" data-i18n="storyBtn">↓ Story</button>
     </div>
   </div>
 
@@ -118,22 +118,22 @@
 
 
   <div>
-    <div class="sec">Загрузить аудио</div>
+    <div class="sec" data-i18n="audioLabel">Загрузить аудио</div>
     <div class="drop-zone" id="audio-drop"
          ondragover="event.preventDefault();this.classList.add('over')"
          ondragleave="this.classList.remove('over')"
          ondrop="onAudioDrop(event)"
          onclick="document.getElementById('audio-file').click()">
-      Перетащите аудио или нажмите для выбора
+      <span data-i18n="dropZoneText">Перетащите аудио или нажмите для выбора</span>
       <small style="opacity:.7">M4A · MP3 · WAV · OGG · FLAC</small>
-      <small id="audio-name">файл не выбран</small>
+      <small id="audio-name" data-i18n="dropZoneNoFile">файл не выбран</small>
     </div>
     <input type="file" id="audio-file" accept="audio/*" style="display:none" onchange="onAudioFile(this)">
     <audio id="audio-preview" controls style="display:none;width:100%;margin-top:6px" onplay="_mainHighlightStart()" onpause="_mainHighlightStop()" onended="_mainHighlightStop()"></audio>
   </div>
 
   <div id="tap-block" style="display:none;margin-bottom:8px">
-    <button class="btn btn-p" style="width:100%;font-size:.75rem" onclick="openTimingEditor()">✎ Указать пады / Редактор тайминга</button>
+    <button class="btn btn-p" style="width:100%;font-size:.75rem" onclick="openTimingEditor()" data-i18n="timingEditorBtn">✎ Указать пады / Редактор тайминга</button>
     <div id="te-padas-info" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);margin-top:3px;min-height:1em"></div>
     <div id="tap-status" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);margin-top:2px;min-height:1.2em"></div>
     <canvas id="waveform-canvas" height="48" style="display:none;width:100%;border-radius:3px;cursor:default;margin-top:2px;border:1px solid var(--border);pointer-events:none"></canvas>
@@ -141,7 +141,7 @@
 
 
   <div style="margin-bottom:8px">
-    <div class="sec" style="margin-bottom:4px">Колонтитул</div>
+    <div class="sec" style="margin-bottom:4px" data-i18n="footerLabel">Колонтитул</div>
     <div style="display:grid;grid-template-columns:60px 1fr;gap:4px;margin-top:4px">
       <input type="text" id="ft-year" value="2026" placeholder="Год" title="Год">
       <input type="text" id="ft-url" value="samskrtam.ru/usha-sanka" placeholder="Ссылка" title="Ссылка">
@@ -150,29 +150,29 @@
     <input type="text" id="ft-source" value="«Прославление Бхайравы» изречённое Абхинавагуптой" placeholder="Источник" title="Источник" style="width:100%;box-sizing:border-box;margin-top:4px">
     <div style="font-size:.65rem;color:var(--ink2);margin-top:6px;margin-bottom:2px">Размер</div>
     <div style="display:flex;gap:4px;align-items:center;margin-bottom:4px">
-      <input type="text" id="ft-meter" placeholder="авто" title="Стихотворный размер" style="width:50%;box-sizing:border-box">
-      <button class="btn btn-s" style="white-space:nowrap;flex:1" onclick="ftDetectMeter()">▶ Определить</button>
+      <input type="text" id="ft-meter" data-i18n-placeholder="autoBtn" placeholder="авто" title="Стихотворный размер" style="width:50%;box-sizing:border-box">
+      <button class="btn btn-s" style="white-space:nowrap;flex:1" onclick="ftDetectMeter()" data-i18n="detectMeterBtn">▶ Определить</button>
     </div>
-    <button class="btn btn-s" id="btn-meter-info-ft" style="width:100%;font-size:.72rem" onclick="showMeterInfo()">📖 Информация о размере</button>
+    <button class="btn btn-s" id="btn-meter-info-ft" style="width:100%;font-size:.72rem" onclick="showMeterInfo()" data-i18n="meterInfoBtn">📖 Информация о размере</button>
   </div>
 
   <hr style="margin:8px 0">
 
   <div style="margin-bottom:4px">
-    <div class="sec" style="margin-bottom:4px">Сессия</div>
+    <div class="sec" style="margin-bottom:4px" data-i18n="sessionLabel">Сессия</div>
     <div style="display:flex;gap:6px;margin-bottom:4px">
-      <button class="btn btn-s" style="flex:1" onclick="saveSession()">↓ Сохранить</button>
+      <button class="btn btn-s" style="flex:1" onclick="saveSession()" data-i18n="altDownloadBtn">↓ Сохранить</button>
       <label class="btn btn-s" style="flex:1;text-align:center;cursor:pointer;margin:0">
-        ↑ Загрузить
+        <span data-i18n="loadSessionBtn">↑ Загрузить</span>
         <input type="file" accept=".json" style="display:none" onchange="loadSession(this)">
       </label>
     </div>
-    <div class="sec" style="margin-bottom:4px;margin-top:8px">Google Drive</div>
+    <div class="sec" style="margin-bottom:4px;margin-top:8px" data-i18n="driveLabel">Google Drive</div>
     <div style="display:flex;gap:6px">
-      <button class="btn btn-s" style="flex:1" onclick="gdriveSave()" title="Сохранить сессию на Google Drive">
+      <button class="btn btn-s" style="flex:1" onclick="gdriveSave()" title="Сохранить сессию на Google Drive" data-i18n="saveSessionBtn">
         <span style="font-size:.8em">↓</span> Drive сохранить
       </button>
-      <button class="btn btn-s" style="flex:1" onclick="gdriveLoad()" title="Загрузить сессию с Google Drive">
+      <button class="btn btn-s" style="flex:1" onclick="gdriveLoad()" title="Загрузить сессию с Google Drive" data-i18n="loadSessionBtn">
         <span style="font-size:.8em">↑</span> Drive загрузить
       </button>
     </div>
@@ -185,7 +185,7 @@
 <main class="main" id="main-area">
   <div class="empty">
     <div class="e-om">ॐ</div>
-    <p>Введите данные и нажмите «Построить диаграмму»</p>
+    <p data-i18n="emptyStateHint">Введите данные и нажмите «Построить диаграмму»</p>
   </div>
 </main>
 
@@ -210,18 +210,18 @@
 <div id="settings-overlay" onclick="closeSettings()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200"></div>
 <div id="settings-modal" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:201;background:var(--card);border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.25);width:380px;max-width:95vw;max-height:95vh;overflow-y:auto;overflow-x:hidden;padding:20px 24px 24px">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-    <span style="font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink2);font-family:'JetBrains Mono',monospace">Настройки</span>
+    <span style="font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink2);font-family:'JetBrains Mono',monospace" data-i18n="settingsTitle">Настройки</span>
     <button onclick="closeSettings()" style="background:none;border:none;cursor:pointer;font-size:1.2rem;color:var(--ink2);padding:0 2px;line-height:1">✕</button>
   </div>
 
-  <div class="sec">Высота волны</div>
+  <div class="sec" data-i18n="waveHeightLabel">Высота волны</div>
   <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
     <input type="range" id="opt-wave-scale" min="0.3" max="1.5" step="0.05" value="0.5"
       style="flex:1" oninput="waveScaleChanged(this.value)">
     <span id="opt-wave-scale-val" style="font-family:'JetBrains Mono',monospace;font-size:.78rem;min-width:28px">0.5</span>
   </div>
 
-  <div class="sec">Цвета слогов</div>
+  <div class="sec" data-i18n="sylColorsLabel">Цвета слогов</div>
   <div style="display:flex;gap:12px;margin-top:6px;align-items:stretch">
     <div style="display:flex;flex-direction:column;gap:5px">
       <label style="font-size:.7rem;color:var(--ink2);display:flex;align-items:center;gap:6px">
@@ -251,7 +251,7 @@
     </div>
   </div>
 
-  <div class="sec" style="margin-top:14px">Отображение</div>
+  <div class="sec" style="margin-top:14px" data-i18n="displayLabel">Отображение</div>
   <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.78rem;margin-top:6px">
     <input type="checkbox" id="opt-grey-iast" checked onchange="rebuildAll()"> IAST серый (жирность = гуру)
   </label>
@@ -277,7 +277,7 @@
       <option value="monotone">Монотонный сплайн</option>
     </select>
   </div>
-  <div class="sec" style="margin-top:14px">Уведомления</div>
+  <div class="sec" style="margin-top:14px" data-i18n="notificationsLabel">Уведомления</div>
   <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.78rem;margin-top:6px">
     <input type="radio" name="msg-pos" id="msg-pos-sidebar" checked onchange="applyMsgPosSetting()"> В сайдбаре
   </label>
@@ -307,7 +307,7 @@
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;border-bottom:2px solid var(--gold);padding-bottom:16px">
     <div>
       <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Волновая нотация санскрита</div>
-      <h2 style="font-size:1.5rem;font-weight:700;margin:0;color:var(--ink);letter-spacing:.03em">Инструкция</h2>
+      <h2 style="font-size:1.5rem;font-weight:700;margin:0;color:var(--ink);letter-spacing:.03em" data-i18n="helpBtn">Инструкция</h2>
     </div>
     <button onclick="closeHelp()" style="font-size:1.3rem;border:none;background:none;cursor:pointer;color:var(--ink2);line-height:1;padding:4px 8px;border-radius:4px">✕</button>
   </div>
@@ -450,7 +450,7 @@
     <!-- Заголовок -->
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-shrink:0">
       <div style="display:flex;align-items:center;gap:10px">
-        <span id="te-mode-title" style="font-size:.7rem;font-family:'JetBrains Mono',monospace;letter-spacing:.15em;text-transform:uppercase;color:var(--ink2)">Разметка пад</span>
+        <span id="te-mode-title" style="font-size:.7rem;font-family:'JetBrains Mono',monospace;letter-spacing:.15em;text-transform:uppercase;color:var(--ink2)" data-i18n="padaModeLabel">Разметка пад</span>
         <button id="btn-te-switch" onclick="teSwitchMode()" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:2px 10px;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--ink2);cursor:pointer">→ Тайминг слогов</button>
       </div>
       <button onclick="closeTimingEditor()" style="border:none;background:none;cursor:pointer;font-size:1.2rem;color:var(--ink2)">✕</button>
@@ -571,7 +571,7 @@
     <div id="gdrive-breadcrumbs" style="display:flex;align-items:center;gap:4px;padding:7px 14px;font-size:.78rem;color:#555;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;min-height:32px"></div>
     <!-- Toolbar -->
     <div style="display:flex;align-items:center;gap:6px;padding:6px 14px;border-bottom:1px solid var(--border);flex-shrink:0">
-      <button id="gdrive-btn-newfolder" onclick="_gdNewFolder()" style="font-size:.75rem;padding:3px 10px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:#1a1a1a;cursor:pointer;font-weight:600">+ Папка</button>
+      <button id="gdrive-btn-newfolder" onclick="_gdNewFolder()" style="font-size:.75rem;padding:3px 10px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:#1a1a1a;cursor:pointer;font-weight:600" data-i18n="newFolderBtn">+ Папка</button>
       <div style="flex:1"></div>
       <button id="gdrive-btn-sort" onclick="_gdToggleSort()" title="Сортировка" style="font-size:.75rem;padding:3px 8px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:#1a1a1a;cursor:pointer">А→Я</button>
       <button id="gdrive-btn-view" onclick="_gdToggleView()" title="Вид" style="font-size:.85rem;padding:3px 8px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:#1a1a1a;cursor:pointer">☰</button>
@@ -590,7 +590,7 @@
     <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid var(--border);flex-shrink:0">
       <span id="gdrive-current-label" style="font-size:.78rem;color:#555;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
       <button onclick="_gdDismiss()" style="font-size:.8rem;padding:5px 14px;border:1px solid var(--border);border-radius:5px;background:var(--card);color:#1a1a1a;cursor:pointer">Отмена</button>
-      <button id="gdrive-btn-confirm" onclick="_gdConfirm()" style="font-size:.8rem;padding:5px 14px;border:none;border-radius:5px;background:var(--accent,#357bdd);color:#fff;cursor:pointer;font-weight:700">Открыть</button>
+      <button id="gdrive-btn-confirm" onclick="_gdConfirm()" style="font-size:.8rem;padding:5px 14px;border:none;border-radius:5px;background:var(--accent,#357bdd);color:#fff;cursor:pointer;font-weight:700" data-i18n="openBtn">Открыть</button>
     </div>
   </div>
 </div>

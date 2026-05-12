@@ -80,6 +80,7 @@ function startFillInQuiz() {
   const audio = document.getElementById('audio-preview');
   audio.currentTime = 0;
   audio.play();
+  if (typeof _mainHighlightStart === 'function') _mainHighlightStart();
   
   window._fillinNode = targetNode;
 }
@@ -122,6 +123,7 @@ function startBeatTapQuiz() {
   audio.currentTime = 0;
   audio.muted = true;
   audio.play();
+  if (typeof _mainHighlightStart === 'function') _mainHighlightStart();
 }
 
 function recordTap(type) {
@@ -158,6 +160,7 @@ function onQuizAudioEnd() {
   if (activeQuiz === 'beattap') {
     const audio = document.getElementById('audio-preview');
     audio.muted = false;
+    if (typeof _mainHighlightStop === 'function') _mainHighlightStop();
     const qBox = document.getElementById('quiz-content');
     qBox.innerHTML = `<p style="font-weight:bold; font-size:1.2rem; color:var(--ink);">Тест завершен! Результат: ${window._tapScore} / ${window._tapTotal}</p>`;
     setTimeout(() => { activeQuiz = null; endQuiz(); }, 3000);

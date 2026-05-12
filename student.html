@@ -9,10 +9,17 @@
 <script src="https://apis.google.com/js/api.js"></script>
 
 <style>
-  .sidebar { display: none !important; }
   .main { margin-left: 0 !important; width: 100% !important; }
   .mode-dots .syl-label { display: none !important; }
-  .mode-blind .wave-layer, .mode-blind .svg-wrap { display: none !important; }
+  .mode-blind .wave-layer, .mode-blind .wave-svg-wrap { display: none !important; }
+  #quiz-panel, #srs-panel { 
+    background: var(--card); 
+    border: 1px solid var(--border); 
+    border-radius: 8px; 
+    padding: 20px; 
+    margin: 20px auto; 
+    max-width: 600px;
+  }
 </style>
 </head>
 
@@ -21,15 +28,13 @@
 <div class="page-wrap">
 <header>
   <div style="display:flex;align-items:baseline;gap:2ch">
-    <h1>Волновая нотация санскрита</h1>
+    <h1 data-i18n="mainTitle">Волновая нотация санскрита</h1>
     <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.267</span>
   </div>
   <div id="msg-header" style="display:none;font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:3px;margin-left:16px;align-self:center"></div>
-  <div style="display:flex;align-items:center;gap:14px"><button id="btn-mode" onclick="cycleMode()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em">Mode: Full</button>
+  <div style="display:flex;align-items:center;gap:14px">
+    <button id="btn-mode" onclick="cycleMode()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em" data-i18n="modeFull">Mode: Full</button>
     <button id="btn-lang" onclick="toggleLang()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em">🌐 RU</button>
-    
-    <button onclick="openSettings()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em">⚙ Настройки</button>
-    <button onclick="openHelp()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em">? Инструкция</button>
     <span class="om">ॐ</span>
   </div>
 </header>
@@ -37,180 +42,32 @@
 <div class="app">
 
 <!-- ══ SIDEBAR ══ -->
-<aside class="sidebar" style="display:none">
-
-  <div>
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-      <div class="sec" style="margin:0">Ввод шлоки</div>
-      <div style="display:flex;align-items:center;gap:6px">
-        <span style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2)">№</span>
-        <input type="number" id="shloka-num" min="1" max="99" value="1"
-          style="width:44px;font-size:.75rem;padding:2px 4px;border-radius:4px;border:1px solid var(--border);background:var(--card);color:var(--ink);text-align:center"
-          title="Номер шлоки">
-      </div>
-    </div>
-    <label>Две строфы · каждая с новой строки</label>
-    <textarea id="dev-input" rows="3" placeholder="व्याप्तचराचरभावविशेषं चिन्मयमेकमनन्तमनादिम् ।&#10;भैरवनाथमनाथशरण्यं त्वन्मयचित्ततया हृदि वन्दे॥१॥" oninput="scheduleSchemeDetect()"></textarea>
-    <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
-      <span style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);white-space:nowrap">Кодировка:</span>
-      <select id="scheme-select" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;border:1px solid var(--border);border-radius:3px;padding:2px 6px;background:var(--card);color:var(--ink);cursor:pointer;flex:1;min-width:0">
-        <option value="">— не определена —</option>
-        <option value="DEV">Деванагари</option>
-        <option value="IAST">IAST</option>
-        <option value="SLP">SLP1</option>
-        <option value="HK">Harvard-Kyoto</option>
-        <option value="ITRANS">ITRANS</option>
-        <option value="VH">Velthuis</option>
-        <option value="WX">WX</option>
-      </select>
-      <button onclick="forceSchemeDetect()" title="Определить автоматически" style="font-size:.7rem;padding:2px 7px;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--ink2);cursor:pointer;font-family:'JetBrains Mono',monospace;white-space:nowrap">авто</button>
-    </div>
-    <textarea id="s1dev" style="display:none"></textarea>
-    <textarea id="s2dev" style="display:none"></textarea>
-    <textarea id="s1iast" style="display:none"></textarea>
-    <textarea id="s2iast" style="display:none"></textarea>
-  </div>
-
-  <div style="margin-bottom:6px">
-    <div style="display:flex;align-items:center;gap:12px;margin-top:4px">
-    <div class="sec" style="margin:0">Слогоделение</div>
-    <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:.75rem">
-      <input type="radio" name="sylmode" id="syl-mode-user" checked> Авторское
-    </label>
-    <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:.75rem">
-      <input type="radio" name="sylmode" id="syl-mode-std"> Стандартное
-    </label>
-  </div>
-
-  <button class="btn btn-p" id="btn-go" style="margin-top:2px" onclick="runPipeline()">
-    Построить диаграмму
-  </button>
-  <div class="msg" id="msg"></div>
-
-  <hr>
-
-  <hr>
-
-  <div id="dl-wrap" style="display:none">
-    <div style="margin-bottom:4px">
-      <div class="sec" style="margin-bottom:4px">PNG</div>
-      <div style="display:flex;gap:6px">
-        <button class="btn btn-s" style="flex:1" onclick="downloadPng()">↓ Скачать</button>
-        <button class="btn btn-s" style="flex:1" onclick="showPng()">◻ Показать</button>
-      </div>
-    </div>
-
-  <div id="mp4-block" style="margin-bottom:4px">
-    <div class="sec" style="margin-bottom:4px">MP4</div>
-    <div style="display:flex;gap:6px;margin-bottom:4px">
-      <button class="btn btn-s" style="flex:1" id="btn-mp4-muxer" onclick="downloadMp4Muxer()">↓ Скачать</button>
-      <button class="btn btn-s" style="flex:1" id="btn-mp4" onclick="downloadMp4()">↓ Скачать (альт.)</button>
-    </div>
-    <div style="display:flex;gap:6px">
-      <button class="btn btn-p" style="flex:1;font-size:.75rem" id="btn-karaoke-mp4" onclick="downloadKaraokeMp4()">↓ Сохранить караоке</button>
-    </div>
-    <div style="display:flex;gap:6px;margin-top:4px;align-items:center">
-      <select id="story-format-sel" style="font-size:.72rem;padding:2px 4px;border-radius:3px;border:1px solid var(--border);background:var(--bg);color:var(--ink)">
-        <option value="9:16">9:16</option>
-        <option value="1:1">1:1</option>
-      </select>
-      <select id="story-zoom-sel" style="font-size:.72rem;padding:2px 4px;border-radius:3px;border:1px solid var(--border);background:var(--bg);color:var(--ink)">
-        <option value="2">2 слога</option>
-        <option value="3" selected>3 слога</option>
-        <option value="4">4 слога</option>
-      </select>
-      <button class="btn btn-p" style="flex:1;font-size:.75rem" id="btn-story-mp4" onclick="downloadTelegramStoryMp4()">↓ Story</button>
-    </div>
-  </div>
-
-  </div>
-
-
-  <div>
-    <div class="sec">Загрузить аудио</div>
-    <div class="drop-zone" id="audio-drop"
-         ondragover="event.preventDefault();this.classList.add('over')"
-         ondragleave="this.classList.remove('over')"
-         ondrop="onAudioDrop(event)"
-         onclick="document.getElementById('audio-file').click()">
-      Перетащите аудио или нажмите для выбора
-      <small style="opacity:.7">M4A · MP3 · WAV · OGG · FLAC</small>
-      <small id="audio-name">файл не выбран</small>
-    </div>
-    <input type="file" id="audio-file" accept="audio/*" style="display:none" onchange="onAudioFile(this)">
-    
-  </div>
-
-  <div id="tap-block" style="display:none;margin-bottom:8px">
-    <button class="btn btn-p" style="width:100%;font-size:.75rem" onclick="openTimingEditor()">✎ Указать пады / Редактор тайминга</button>
-    <div id="te-padas-info" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);margin-top:3px;min-height:1em"></div>
-    <div id="tap-status" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);margin-top:2px;min-height:1.2em"></div>
-    <canvas id="waveform-canvas" height="48" style="display:none;width:100%;border-radius:3px;cursor:default;margin-top:2px;border:1px solid var(--border);pointer-events:none"></canvas>
-  </div>
-
-
-  <div style="margin-bottom:8px">
-    <div class="sec" style="margin-bottom:4px">Колонтитул</div>
-    <div style="display:grid;grid-template-columns:60px 1fr;gap:4px;margin-top:4px">
-      <input type="text" id="ft-year" value="2026" placeholder="Год" title="Год">
-      <input type="text" id="ft-url" value="samskrtam.ru/usha-sanka" placeholder="Ссылка" title="Ссылка">
-    </div>
-    <input type="text" id="ft-author" value="Напевный санскрит с Ушей Санкой" placeholder="Автор напева" title="Автор напева" style="width:100%;box-sizing:border-box;margin-top:4px">
-    <input type="text" id="ft-source" value="«Прославление Бхайравы» изречённое Абхинавагуптой" placeholder="Источник" title="Источник" style="width:100%;box-sizing:border-box;margin-top:4px">
-    <div style="font-size:.65rem;color:var(--ink2);margin-top:6px;margin-bottom:2px">Размер</div>
-    <div style="display:flex;gap:4px;align-items:center;margin-bottom:4px">
-      <input type="text" id="ft-meter" placeholder="авто" title="Стихотворный размер" style="width:50%;box-sizing:border-box">
-      <button class="btn btn-s" style="white-space:nowrap;flex:1" onclick="ftDetectMeter()">▶ Определить</button>
-    </div>
-    <button class="btn btn-s" id="btn-meter-info-ft" style="width:100%;font-size:.72rem" onclick="showMeterInfo()">📖 Информация о размере</button>
-  </div>
-
-  <hr style="margin:8px 0">
-
-  <div style="margin-bottom:4px">
-    <div class="sec" style="margin-bottom:4px">Сессия</div>
-    <div style="display:flex;gap:6px;margin-bottom:4px">
-      <button class="btn btn-s" style="flex:1" onclick="saveSession()">↓ Сохранить</button>
-      <label class="btn btn-s" style="flex:1;text-align:center;cursor:pointer;margin:0">
-        ↑ Загрузить
-        <input type="file" accept=".json" style="display:none" onchange="loadSession(this)">
-      </label>
-    </div>
-    <div class="sec" style="margin-bottom:4px;margin-top:8px">Google Drive</div>
-    <div style="display:flex;gap:6px">
-      <button class="btn btn-s" style="flex:1" onclick="gdriveSave()" title="Сохранить сессию на Google Drive">
-        <span style="font-size:.8em">↓</span> Drive сохранить
-      </button>
-      <button class="btn btn-s" style="flex:1" onclick="gdriveLoad()" title="Загрузить сессию с Google Drive">
-        <span style="font-size:.8em">↑</span> Drive загрузить
-      </button>
-    </div>
-  </div>
-
-
-</aside>
+<div id="student-hidden-bridge" style="display:none !important;"><input type="text" id="dev-input"><div id="s1dev"></div><div id="s2dev"></div><div id="s1iast"></div><div id="s2iast"></div><input type="radio" id="syl-mode-user"><input type="radio" id="syl-mode-std"><button id="btn-go"></button><div id="msg"></div><select id="scheme-select"></select><input type="text" id="shloka-num"><input type="text" id="ft-year"><input type="text" id="ft-url"><input type="text" id="ft-author"><input type="text" id="ft-source"><input type="text" id="ft-meter"><div id="dl-wrap"></div><div id="mp4-block"></div><div id="audio-drop"></div><input type="file" id="audio-file"><div id="audio-name"></div><div id="tap-block"></div><div id="te-padas-info"></div><div id="tap-status"></div><div id="waveform-canvas"></div><button id="btn-mp4-muxer"></button><button id="btn-mp4"></button><button id="btn-karaoke-mp4"></button><button id="btn-story-mp4"></button></div>
 
 <!-- ══ MAIN ══ -->
 <main class="main" id="main-area">
   <div class="empty">
     <div class="e-om">ॐ</div>
-    <p>Введите данные и нажмите «Построить диаграмму»</p>
+    <p data-i18n="emptyStateHint">Введите данные и нажмите «Построить диаграмму»</p>
   </div>
 
   <div style="max-width: 800px; margin: 40px auto 0; text-align: center; padding: 20px;">
     <audio id="audio-preview" controls onplay="_mainHighlightStart()" onpause="_mainHighlightStop()" onended="onVerseEnded()" style="width:100%; max-width:600px; margin-bottom:15px; display:none;"></audio>
     <div id="translation-box" style="font-size:1.1rem; line-height:1.5; padding:15px; background:var(--card); border-radius:8px; border:1px solid var(--border); display:none;"></div>
     
-    <div id="quiz-panel" style="display:none; text-align:center; margin:20px auto; max-width:600px; padding:20px; background:var(--card); border:1px solid var(--border); border-radius:8px;">
+    <div id="quiz-panel" style="display:none;">
       <div id="quiz-content"></div>
     </div>
     
-    <div id="srs-panel" style="display:none; text-align:center; margin:20px auto; max-width:400px; padding:20px; background:var(--card); border:1px solid var(--border); border-radius:8px;">
-      <p style="margin-bottom:15px; font-size:1.1rem; color:var(--ink); font-weight:bold;">Как хорошо вы запомнили?</p>
+    <div id="srs-panel" style="display:none;">
+      <p style="margin-bottom:15px; font-size:1.1rem; color:var(--ink); font-weight:bold;" data-i18n="srsPrompt">Как хорошо вы запомнили?</p>
       <div style="display:flex; justify-content:center; gap:20px;">
-        <button onclick="submitSrs(1)" style="font-size:2rem; padding:10px; cursor:pointer; background:var(--bg2); border:1px solid var(--border); border-radius:8px;">😕<br><span style="font-size:0.7rem; color:var(--ink2)">Плохо</span></button>
-        <button onclick="submitSrs(3)" style="font-size:2rem; padding:10px; cursor:pointer; background:var(--bg2); border:1px solid var(--border); border-radius:8px;">😐<br><span style="font-size:0.7rem; color:var(--ink2)">Нормально</span></button>
-        <button onclick="submitSrs(5)" style="font-size:2rem; padding:10px; cursor:pointer; background:var(--bg2); border:1px solid var(--border); border-radius:8px;">😊<br><span style="font-size:0.7rem; color:var(--ink2)">Легко</span></button>
+        <button onclick="submitSrs(1)" style="font-size:2rem; cursor:pointer; background:none; border:none;">😕</button>
+        <button onclick="submitSrs(3)" style="font-size:2rem; cursor:pointer; background:none; border:none;">😐</button>
+        <button onclick="submitSrs(5)" style="font-size:2rem; cursor:pointer; background:none; border:none;">😊</button>
+      </div>
+      <div style="margin-top:20px;">
+        <a href="progress.html" style="color:var(--accent); text-decoration:none; font-size:0.9rem;" data-i18n="catalogHeading">Посмотреть прогресс</a>
       </div>
     </div>
   </div>
@@ -230,24 +87,25 @@
   <div class="ctx-item sep"       onclick="ctxDelete()">✕ Убрать из ячейки</div>
 </div>
 
+<script src="src/scripts/strings.js"></script>
 <script src="src/scripts/app.js"></script>
 
 <!-- ══ SETTINGS MODAL ══ -->
 <div id="settings-overlay" onclick="closeSettings()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200"></div>
 <div id="settings-modal" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:201;background:var(--card);border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.25);width:380px;max-width:95vw;max-height:95vh;overflow-y:auto;overflow-x:hidden;padding:20px 24px 24px">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-    <span style="font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink2);font-family:'JetBrains Mono',monospace">Настройки</span>
+    <span style="font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink2);font-family:'JetBrains Mono',monospace" data-i18n="settingsTitle">Настройки</span>
     <button onclick="closeSettings()" style="background:none;border:none;cursor:pointer;font-size:1.2rem;color:var(--ink2);padding:0 2px;line-height:1">✕</button>
   </div>
 
-  <div class="sec">Высота волны</div>
+  <div class="sec" data-i18n="waveHeightLabel">Высота волны</div>
   <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
     <input type="range" id="opt-wave-scale" min="0.3" max="1.5" step="0.05" value="0.5"
       style="flex:1" oninput="waveScaleChanged(this.value)">
     <span id="opt-wave-scale-val" style="font-family:'JetBrains Mono',monospace;font-size:.78rem;min-width:28px">0.5</span>
   </div>
 
-  <div class="sec">Цвета слогов</div>
+  <div class="sec" data-i18n="sylColorsLabel">Цвета слогов</div>
   <div style="display:flex;gap:12px;margin-top:6px;align-items:stretch">
     <div style="display:flex;flex-direction:column;gap:5px">
       <label style="font-size:.7rem;color:var(--ink2);display:flex;align-items:center;gap:6px">
@@ -277,7 +135,7 @@
     </div>
   </div>
 
-  <div class="sec" style="margin-top:14px">Отображение</div>
+  <div class="sec" style="margin-top:14px" data-i18n="displayLabel">Отображение</div>
   <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.78rem;margin-top:6px">
     <input type="checkbox" id="opt-grey-iast" checked onchange="rebuildAll()"> IAST серый (жирность = гуру)
   </label>
@@ -303,7 +161,7 @@
       <option value="monotone">Монотонный сплайн</option>
     </select>
   </div>
-  <div class="sec" style="margin-top:14px">Уведомления</div>
+  <div class="sec" style="margin-top:14px" data-i18n="notificationsLabel">Уведомления</div>
   <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.78rem;margin-top:6px">
     <input type="radio" name="msg-pos" id="msg-pos-sidebar" checked onchange="applyMsgPosSetting()"> В сайдбаре
   </label>
@@ -333,7 +191,7 @@
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;border-bottom:2px solid var(--gold);padding-bottom:16px">
     <div>
       <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Волновая нотация санскрита</div>
-      <h2 style="font-size:1.5rem;font-weight:700;margin:0;color:var(--ink);letter-spacing:.03em">Инструкция</h2>
+      <h2 style="font-size:1.5rem;font-weight:700;margin:0;color:var(--ink);letter-spacing:.03em" data-i18n="helpBtn">Инструкция</h2>
     </div>
     <button onclick="closeHelp()" style="font-size:1.3rem;border:none;background:none;cursor:pointer;color:var(--ink2);line-height:1;padding:4px 8px;border-radius:4px">✕</button>
   </div>
@@ -476,7 +334,7 @@
     <!-- Заголовок -->
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-shrink:0">
       <div style="display:flex;align-items:center;gap:10px">
-        <span id="te-mode-title" style="font-size:.7rem;font-family:'JetBrains Mono',monospace;letter-spacing:.15em;text-transform:uppercase;color:var(--ink2)">Разметка пад</span>
+        <span id="te-mode-title" style="font-size:.7rem;font-family:'JetBrains Mono',monospace;letter-spacing:.15em;text-transform:uppercase;color:var(--ink2)" data-i18n="padaModeLabel">Разметка пад</span>
         <button id="btn-te-switch" onclick="teSwitchMode()" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:2px 10px;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--ink2);cursor:pointer">→ Тайминг слогов</button>
       </div>
       <button onclick="closeTimingEditor()" style="border:none;background:none;cursor:pointer;font-size:1.2rem;color:var(--ink2)">✕</button>
@@ -597,7 +455,7 @@
     <div id="gdrive-breadcrumbs" style="display:flex;align-items:center;gap:4px;padding:7px 14px;font-size:.78rem;color:#555;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;min-height:32px"></div>
     <!-- Toolbar -->
     <div style="display:flex;align-items:center;gap:6px;padding:6px 14px;border-bottom:1px solid var(--border);flex-shrink:0">
-      <button id="gdrive-btn-newfolder" onclick="_gdNewFolder()" style="font-size:.75rem;padding:3px 10px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:#1a1a1a;cursor:pointer;font-weight:600">+ Папка</button>
+      <button id="gdrive-btn-newfolder" onclick="_gdNewFolder()" style="font-size:.75rem;padding:3px 10px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:#1a1a1a;cursor:pointer;font-weight:600" data-i18n="newFolderBtn">+ Папка</button>
       <div style="flex:1"></div>
       <button id="gdrive-btn-sort" onclick="_gdToggleSort()" title="Сортировка" style="font-size:.75rem;padding:3px 8px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:#1a1a1a;cursor:pointer">А→Я</button>
       <button id="gdrive-btn-view" onclick="_gdToggleView()" title="Вид" style="font-size:.85rem;padding:3px 8px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:#1a1a1a;cursor:pointer">☰</button>
@@ -616,7 +474,7 @@
     <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid var(--border);flex-shrink:0">
       <span id="gdrive-current-label" style="font-size:.78rem;color:#555;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
       <button onclick="_gdDismiss()" style="font-size:.8rem;padding:5px 14px;border:1px solid var(--border);border-radius:5px;background:var(--card);color:#1a1a1a;cursor:pointer">Отмена</button>
-      <button id="gdrive-btn-confirm" onclick="_gdConfirm()" style="font-size:.8rem;padding:5px 14px;border:none;border-radius:5px;background:var(--accent,#357bdd);color:#fff;cursor:pointer;font-weight:700">Открыть</button>
+      <button id="gdrive-btn-confirm" onclick="_gdConfirm()" style="font-size:.8rem;padding:5px 14px;border:none;border-radius:5px;background:var(--accent,#357bdd);color:#fff;cursor:pointer;font-weight:700" data-i18n="openBtn">Открыть</button>
     </div>
   </div>
 </div>
@@ -633,6 +491,7 @@ document.addEventListener('contextmenu', e => {
 
 let currentVerse = null;
 let currentMode = 1; 
+let versePlayedCount = 0;
 
 async function loadStudentData() {
   const params = new URLSearchParams(window.location.search);
@@ -659,7 +518,6 @@ async function loadStudentData() {
         if (empty) empty.style.display = 'none';
       }
     } else {
-      // Create empty state if no session
       document.getElementById('dev-input').value = currentVerse.s1 + '\n' + currentVerse.s2;
       document.getElementById('btn-go').click();
     }
@@ -691,10 +549,12 @@ function updateTranslation() {
 
 function cycleMode() {
   currentMode = (currentMode % 3) + 1;
-  const labels = {1: 'Mode: Full', 2: 'Mode: Dots', 3: 'Mode: Blind'};
+  const labels = {1: 'modeFull', 2: 'modeDots', 3: 'modeBlind'};
   const classes = {1: '', 2: 'mode-dots', 3: 'mode-blind'};
   
-  document.getElementById('btn-mode').textContent = labels[currentMode];
+  const btn = document.getElementById('btn-mode');
+  btn.setAttribute('data-i18n', labels[currentMode]);
+  if (typeof t === 'function') btn.textContent = 'Mode: ' + t(labels[currentMode]);
   
   const mainArea = document.getElementById('main-area');
   mainArea.className = 'main ' + classes[currentMode];
@@ -703,12 +563,10 @@ function cycleMode() {
 function toggleLang() {
   if (typeof setLang === 'function') {
     setLang(typeof LANG !== 'undefined' && LANG === 'ru' ? 'en' : 'ru');
-    document.getElementById('btn-lang').textContent = '🌐 ' + LANG.toUpperCase();
     updateTranslation();
   }
 }
 
-let versePlayedCount = 0;
 function onVerseEnded() {
   if (typeof _mainHighlightStop === 'function') _mainHighlightStop();
   versePlayedCount++;
@@ -727,16 +585,18 @@ function onVerseEnded() {
 }
 
 function submitSrs(quality) {
-  if (currentVerse && currentVerse.id) {
-    updateSrs(currentVerse.id, quality);
-    document.getElementById('srs-panel').innerHTML = "<p style='color:var(--laghu);font-weight:bold;font-size:1.1rem'>✨ Прогресс сохранен!</p><a href='progress.html' style='display:inline-block;margin-top:10px;color:var(--accent);text-decoration:none;'>Вернуться к каталогу</a>";
+  if (!currentVerse) return;
+  if (typeof updateSrsRecord === 'function') {
+    updateSrsRecord(currentVerse.id, quality);
+    updateStreak();
+    window.location.href = 'progress.html';
   }
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  setTimeout(loadStudentData, 300); // Give app.js time to init
+  setTimeout(loadStudentData, 300);
 });
 </script>
-
 </body>
+
 </html>
