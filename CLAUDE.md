@@ -1,0 +1,101 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project
+
+**Sanskrit Karaoke** (Волновая нотация санскрита) — a single-page web application for visualising the metrical structure of Sanskrit ślokas as interactive wave diagrams, with audio timing and karaoke MP4 export.
+
+## Running locally
+
+```sh
+cd C:\Users\user\Documents\GitHub\SanskritKaraoke
+python -m http.server 8000
+# open http://localhost:8000
+```
+
+## Syntax check
+
+```sh
+node --check src/scripts/app.js
+```
+
+No build step, no bundler, no test suite — QA is manual in-browser.
+
+## Versioning workflow
+
+1. Update `<title>` and `>v1.NNN<` in `index.html` (two places).
+2. Append a line to `ver_info.txt`.
+3. Run syntax check above.
+
+## File structure
+
+| File | Role |
+|---|---|
+| `index.html` | Entire UI: main view, settings modal, help modal, timing editor modal, Drive picker modal |
+| `src/scripts/app.js` | All application logic (~480 KB, single monolith) |
+| `src/style.css` | Styles (light neutral palette, Devanagari + Latin fonts) |
+| `apte_prosody.html` / `apte_prosody_ru.html` | Apte prosody reference database |
+| `ver_info.txt` | Version history (one line per version) |
+
+## Architecture
+
+`app.js` is a single monolithic file. Key function groups:
+
+- **Pipeline** — `runPipeline()` builds the wave diagram from text input; calls syllabification, meter detection, and SVG construction.
+- **Meter analysis** — `ftDetectMeter()` identifies meter type and vipulā; `detectAndMarkVipula(label)` marks syllables with `vipula:'culprit'|'group'`.
+- **SVG rendering** — `buildWaveSVG(key)` draws the wave canvas including vipulā frames.
+- **Timing editor** — `openTimingEditorInMode('padas'|'timing')` / `closeTimingEditor()` / `teSwitchMode()`. Two modes: pada-boundary marking (8 draggable lines) and per-syllable fine timing.
+- **Playback** — `timingEditorPlay(mode)`, `timingEditorPlayOrPause(mode)`, `_mainHighlightLoop()` (rAF loop for syllable highlight).
+- **Export** — `downloadPng()` (1920×1080 PNG), `downloadKaraokeMp4()` (mp4-muxer).
+- **Google Drive** — `gdriveSave()` / `gdriveLoad()`, `_gdOpen()`, `_gdLoadFolder()`, `_gdConfirm()`.
+
+## Core data structures
+
+```javascript
+DATA = { s1: [...], s2: [...] }
+// Each syllable: { syl, type:'guru'|'laghu', row, col, devSyl, arrow,
+//                  vipula:'culprit'|'group'|undefined, vipulaType:string }
+
+TAP = {
+  times: { s1: [t0,t1,...], s2: [...] },
+  cheatY: { s1: [], s2: [] },
+  zoom, offset, drag, pan, hover, selected,
+  _playStartT, _playStopT, _playMode, _userPaused, _stepCallback,
+}
+
+_padaBounds = [[t0,t1],[t0,t1],[t0,t1],[t0,t1]]  // 4 padas
+TE_MODE = 'padas' | 'timing'
+```
+
+Pada mapping: s1 pada 0 = indices `0..ceil(len/2)-1`; s1 pada 1 = rest; s2 padas 2–3 analogously.
+
+## Reading / writing app.js
+
+`app.js` is UTF-8 binary. Always use explicit encoding:
+
+```python
+with open('src/scripts/app.js', 'rb') as f:
+    text = f.read().decode('utf-8')
+# after changes:
+with open('src/scripts/app.js', 'wb') as f:
+    f.write(text.encode('utf-8'))
+```
+
+## Google Drive config (in app.js)
+
+```javascript
+const GDRIVE = {
+  clientId: '66648692430-60h3g4a5qa5j8iehjdojak436ph5h6n1.apps.googleusercontent.com',
+  apiKey:   'AIzaSyDVK1eD272C7qHa-cmMokWFqfqfbsW8VVk',
+  folderId: '1L4m_UG4XMOcswDRWZUk--2xxrcasHFrs',
+  scopes:   'https://www.googleapis.com/auth/drive',
+}
+```
+
+Scope is `drive` (not `drive.file`) so users can see the shared folder. Token is cached in localStorage.
+
+## Known incomplete features
+
+- Tapping mode temporarily disabled (button hidden).
+- Drive file replacement: old file may not be deleted due to scope limitations.
