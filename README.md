@@ -87,8 +87,8 @@ The application has no dependencies beyond the browser and `mp4-muxer` (bundled)
 
 ## Roadmap
 
-### Telegram Story export *(next)*
-A new export mode optimised for the 9:16 Telegram / Instagram Story format. Instead of showing the full diagram, the camera zooms in and **follows the highlighted syllable**, keeping 2–4 syllables in frame at all times with a smooth pan. Audio is embedded. Resolution and aspect ratio will be user-settable in the export dialog.
+### ~~Telegram Story export~~ ✓ shipped in v1.267
+Zoomed portrait video (9:16 or 1:1) where the camera follows the active syllable dot, keeping 2–4 syllables in frame with a smooth pan. Format and syllable-count selectors in the sidebar. Audio embedded, 24 fps.
 
 ### Re-enable tapping mode
 Real-time tap-along for rough timing capture — the button is present but hidden while the feature is being refined.
