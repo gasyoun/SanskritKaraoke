@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "generated_at": "2026-05-12",
+  "verses": [
+    {
+      "id": "bhg_2_47",
+      "title": {
+        "ru": "Бхагавад-гита 2.47",
+        "en": "Bhagavad Gita 2.47"
+      },
+      "meter": "anushtubh",
+      "difficulty": 1,
+      "language_tags": [
+        "ru",
+        "en"
+      ],
+      "tags": [
+        "bhagavad-gita",
+        "beginner"
+      ],
+      "has_audio": false,
+      "has_session": false,
+      "created_at": "2026-05-12"
+    },
+    {
+      "id": "bhg_2_48",
+      "title": {
+        "ru": "Бхагавад-гита 2.48",
+        "en": "Bhagavad Gita 2.48"
+      },
+      "meter": "anushtubh",
+      "difficulty": 1,
+      "language_tags": [
+        "ru",
+        "en"
+      ],
+      "tags": [
+        "bhagavad-gita",
+        "beginner"
+      ],
+      "has_audio": false,
+      "has_session": false,
+      "created_at": "2026-05-12"
+    },
+    {
+      "id": "bhg_2_49",
+      "title": {
+        "ru": "Бхагавад-гита 2.49",
+        "en": "Bhagavad Gita 2.49"
+      },
+      "meter": "anushtubh",
+      "difficulty": 2,
+      "language_tags": [
+        "ru",
+        "en"
+      ],
+      "tags": [
+        "bhagavad-gita",
+        "intermediate"
+      ],
+      "has_audio": false,
+      "has_session": false,
+      "created_at": "2026-05-12"
+    }
+  ]
+}

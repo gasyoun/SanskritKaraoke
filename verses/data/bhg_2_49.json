@@ -1,0 +1,46 @@
+{
+  "id": "bhg_2_49",
+  "version": 1,
+  "title": {
+    "ru": "Бхагавад-гита 2.49",
+    "en": "Bhagavad Gita 2.49"
+  },
+  "source": {
+    "text": "Bhagavad Gita",
+    "chapter": 2,
+    "verse": 49
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "ru",
+    "en"
+  ],
+  "author": {
+    "melody": "Traditional",
+    "transcription": "Mārcis Gasūns"
+  },
+  "encoding": "DEV",
+  "s1": "दूरेण ह्यवरं कर्म बुद्धियोगाद्धनञ्जय।",
+  "s2": "बुद्धौ शरणमन्विच्छ कृपणाः फलहेतवः॥",
+  "s1dev": "दूरेण ह्यवरं कर्म बुद्धियोगाद्धनञ्जय।",
+  "s2dev": "बुद्धौ शरणमन्विच्छ कृपणाः फलहेतवः॥",
+  "translation": {
+    "ru": "Воистину, действие намного ниже йоги разума, о Дхананджая.",
+    "en": "O Dhananjaya, keep all abominable activities far distant by buddhi-yoga."
+  },
+  "audio": {
+    "drive_file_id": "TODO",
+    "duration_s": 15.5
+  },
+  "session": {
+    "drive_file_id": "TODO",
+    "created_at": "2026-05-12"
+  },
+  "tags": [
+    "bhagavad-gita",
+    "intermediate"
+  ],
+  "created_at": "2026-05-12",
+  "updated_at": "2026-05-12"
+}

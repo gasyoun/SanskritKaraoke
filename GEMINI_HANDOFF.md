@@ -64,13 +64,13 @@ Target audience: Russian-speaking and English-speaking students of Sanskrit, lea
 
 | Phase | ID | Feature | Status |
 |---|---|---|---|
-| 1 | F1 | Verse library JSON schema + catalogue | **implement now** |
-| 2 | F2 | Student player page (`student.html`) | next |
-| 2 | F3 | Progressive reveal mode | next |
-| 2 | F4 | RU / EN i18n toggle | next |
-| 3 | F5 | Spaced repetition (SM-2) | future |
-| 3 | F6 | Self-assessment quizzes | future |
-| 3 | F7 | Streak & progress tracking | future |
+| 1 | F1 | Verse library JSON schema + catalogue | **Done** |
+| 2 | F2 | Student player page (`student.html`) | **Done** |
+| 2 | F3 | Progressive reveal mode | **Done** |
+| 2 | F4 | RU / EN i18n toggle | **Done** |
+| 3 | F5 | Spaced repetition (SM-2) | **Done** |
+| 3 | F6 | Self-assessment quizzes | **Done** |
+| 3 | F7 | Streak & progress tracking | **Done** |
 
 ---
 

@@ -33,7 +33,12 @@ No build step, no bundler, no test suite — QA is manual in-browser.
 | File | Role |
 |---|---|
 | `index.html` | Entire UI: main view, settings modal, help modal, timing editor modal, Drive picker modal |
+| `student.html` | Student read-only player page (fetched from JSON library) |
+| `progress.html` | Student progress dashboard (SRS queue + verse catalogue) |
 | `src/scripts/app.js` | All application logic (~480 KB, single monolith) |
+| `src/scripts/strings.js` | i18n translation state and logic |
+| `src/scripts/srs.js` | SRS (SM-2) scheduling and streak logic |
+| `src/scripts/quizzes.js` | Interactive self-assessment quizzes |
 | `src/style.css` | Styles (light neutral palette, Devanagari + Latin fonts) |
 | `apte_prosody.html` / `apte_prosody_ru.html` | Apte prosody reference database |
 | `ver_info.txt` | Version history (one line per version) |
@@ -49,6 +54,7 @@ No build step, no bundler, no test suite — QA is manual in-browser.
 - **Playback** — `timingEditorPlay(mode)`, `timingEditorPlayOrPause(mode)`, `_mainHighlightLoop()` (rAF loop for syllable highlight).
 - **Export** — `downloadPng()` (1920×1080 PNG), `downloadKaraokeMp4()` (mp4-muxer).
 - **Google Drive** — `gdriveSave()` / `gdriveLoad()`, `_gdOpen()`, `_gdLoadFolder()`, `_gdConfirm()`.
+- **Student Platform** — `src/scripts/srs.js` (SM-2 implementation), `src/scripts/quizzes.js` (Meter ID, Fill-in, Beat Tap quizzes), `src/scripts/strings.js` (RU/EN i18n).
 
 ## Core data structures
 

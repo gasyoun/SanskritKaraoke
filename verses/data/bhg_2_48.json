@@ -1,0 +1,46 @@
+{
+  "id": "bhg_2_48",
+  "version": 1,
+  "title": {
+    "ru": "Бхагавад-гита 2.48",
+    "en": "Bhagavad Gita 2.48"
+  },
+  "source": {
+    "text": "Bhagavad Gita",
+    "chapter": 2,
+    "verse": 48
+  },
+  "meter": "anushtubh",
+  "difficulty": 1,
+  "language_tags": [
+    "ru",
+    "en"
+  ],
+  "author": {
+    "melody": "Traditional",
+    "transcription": "Mārcis Gasūns"
+  },
+  "encoding": "DEV",
+  "s1": "योगस्थः कुरु कर्माणि सङ्गं त्यक्त्वा धनञ्जय।",
+  "s2": "सिद्ध्यसिद्ध्योः समो भूत्वा समत्वं योग उच्यते॥",
+  "s1dev": "योगस्थः कुरु कर्माणि सङ्गं त्यक्त्वा धनञ्जय।",
+  "s2dev": "सिद्ध्यसिद्ध्योः समो भूत्वा समत्वं योग उच्यते॥",
+  "translation": {
+    "ru": "Пребывая в йоге, совершай действия, оставив привязанность, о Дхананджая.",
+    "en": "Perform your duty equipoised, O Arjuna, abandoning all attachment to success or failure."
+  },
+  "audio": {
+    "drive_file_id": "TODO",
+    "duration_s": 15.5
+  },
+  "session": {
+    "drive_file_id": "TODO",
+    "created_at": "2026-05-12"
+  },
+  "tags": [
+    "bhagavad-gita",
+    "beginner"
+  ],
+  "created_at": "2026-05-12",
+  "updated_at": "2026-05-12"
+}

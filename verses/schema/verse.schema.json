@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["id","version","title","meter","difficulty","encoding","s1","s2","created_at"],
+  "properties": {
+    "id":         { "type": "string", "pattern": "^[a-z0-9_]+$",
+                    "description": "Slug, e.g. bhg_2_47" },
+    "version":    { "type": "integer", "minimum": 1 },
+    "title": {
+      "type": "object",
+      "properties": {
+        "ru": { "type": "string" },
+        "en": { "type": "string" }
+      },
+      "required": ["ru"]
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "text":    { "type": "string", "description": "Scripture name" },
+        "chapter": { "type": "integer" },
+        "verse":   { "type": "integer" }
+      }
+    },
+    "meter":      { "type": "string", "examples": ["anushtubh","indravajra","mandakranta"] },
+    "difficulty": { "type": "integer", "minimum": 1, "maximum": 5,
+                    "description": "1=beginner … 5=advanced" },
+    "language_tags": { "type": "array", "items": { "type": "string", "enum": ["ru","en"] } },
+    "author": {
+      "type": "object",
+      "properties": {
+        "melody":         { "type": "string" },
+        "transcription":  { "type": "string" }
+      }
+    },
+    "encoding": { "type": "string", "enum": ["DEV","IAST","SLP1","HK","ITRANS","VH","WX"] },
+    "s1":    { "type": "string", "description": "First half-verse input text" },
+    "s2":    { "type": "string", "description": "Second half-verse input text" },
+    "s1dev": { "type": "string", "description": "Devanagari for s1 (optional if encoding=DEV)" },
+    "s2dev": { "type": "string", "description": "Devanagari for s2" },
+    "translation": {
+      "type": "object",
+      "properties": {
+        "ru": { "type": "string" },
+        "en": { "type": "string" }
+      }
+    },
+    "audio": {
+      "type": "object",
+      "properties": {
+        "drive_file_id": { "type": "string" },
+        "duration_s":    { "type": "number" }
+      }
+    },
+    "session": {
+      "type": "object",
+      "description": "Saved app session (timing, positions) hosted on Drive",
+      "properties": {
+        "drive_file_id": { "type": "string" },
+        "created_at":    { "type": "string", "format": "date" }
+      }
+    },
+    "tags":       { "type": "array", "items": { "type": "string" } },
+    "created_at": { "type": "string", "format": "date" },
+    "updated_at": { "type": "string", "format": "date" }
+  }
+}

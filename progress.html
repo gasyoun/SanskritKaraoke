@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanskrit Karaoke - Progress & SRS</title>
+<link rel="stylesheet" href="src/style.css">
+<style>
+  body { padding: 40px; }
+  .container { max-width: 900px; margin: 0 auto; background: var(--card); padding: 30px; border-radius: 8px; border: 1px solid var(--border); }
+  .header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
+  .streak-badge { background: var(--gold); color: #fff; padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 1rem; }
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); color: var(--ink); }
+  th { font-family: 'JetBrains Mono', monospace; font-size: .8rem; text-transform: uppercase; color: var(--ink2); }
+  .status-chip { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: .75rem; font-weight: bold; }
+  .status-new { background: var(--bg2); color: var(--ink2); }
+  .status-learning { background: rgba(53, 123, 221, 0.15); color: #357bdd; }
+  .status-mastered { background: rgba(44, 74, 30, 0.15); color: var(--laghu); }
+  .btn-study { display: inline-block; padding: 6px 14px; background: var(--accent, #357bdd); color: #fff; text-decoration: none; border-radius: 4px; font-size: .8rem; font-weight: bold; }
+  .btn-study:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Обучение и Прогресс</h1>
+    <div class="streak-badge">🔥 <span id="streak-count">0</span> дней подряд</div>
+  </div>
+  
+  <h2>Изучать сегодня</h2>
+  <div id="due-list" style="margin-bottom:40px; display:flex; gap:10px; flex-wrap:wrap;"></div>
+
+  <h2>Каталог Шлок</h2>
+  <table id="progress-table">
+    <thead>
+      <tr>
+        <th>Шлока</th>
+        <th>Метр</th>
+        <th>Сложность</th>
+        <th>Статус</th>
+        <th>Следующее повт.</th>
+        <th>Действие</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script src="src/scripts/srs.js"></script>
+<script>
+async function loadProgress() {
+  document.getElementById('streak-count').textContent = getStreak();
+  
+  const res = await fetch('verses/index.json');
+  if (!res.ok) return;
+  const indexData = await res.json();
+  const srsData = getSrsData();
+  const today = getTodayStr();
+
+  const tbody = document.querySelector('#progress-table tbody');
+  const dueList = document.getElementById('due-list');
+
+  let dueCount = 0;
+
+  indexData.verses.forEach(verse => {
+    const srs = srsData.find(r => r.id === verse.id);
+    
+    let statusClass = 'status-new';
+    let statusText = 'New';
+    let dueText = '-';
+    let isDue = false;
+
+    if (srs) {
+      if (srs.interval >= 21) {
+        statusClass = 'status-mastered';
+        statusText = 'Mastered';
+      } else {
+        statusClass = 'status-learning';
+        statusText = 'Learning';
+      }
+      dueText = srs.due;
+      if (srs.due <= today) {
+        isDue = true;
+      }
+    }
+
+    // Build Table Row
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><strong>${verse.title.ru}</strong><br><small style="color:var(--ink2)">${verse.id}</small></td>
+      <td>${verse.meter}</td>
+      <td>${verse.difficulty}</td>
+      <td><span class="status-chip ${statusClass}">${statusText}</span></td>
+      <td>${dueText}</td>
+      <td><a href="student.html?id=${verse.id}" class="btn-study" style="background:var(--bg2);color:var(--ink)">Открыть</a></td>
+    `;
+    tbody.appendChild(tr);
+
+    // Build Due Card
+    if (isDue || !srs) {
+      dueCount++;
+      const card = document.createElement('a');
+      card.href = `student.html?id=${verse.id}`;
+      card.className = 'btn-study';
+      card.innerHTML = `▶ ${verse.title.ru}`;
+      dueList.appendChild(card);
+    }
+  });
+
+  if (dueCount === 0) {
+    dueList.innerHTML = '<p style="color:var(--laghu);font-weight:bold;">✨ На сегодня всё! Вы молодец.</p>';
+  }
+}
+
+window.addEventListener('DOMContentLoaded', loadProgress);
+</script>
+</body>
+</html>
