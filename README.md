@@ -2,13 +2,16 @@
 
 **Wave-notation visualiser and karaoke exporter for Sanskrit verse**
 
-[**Live app →**](https://gasyoun.github.io/SanskritKaraoke)
+[**Live app →**](https://samskrtam.ru/shloka-wave) · [v1.266](https://samskrtam.ru/shloka-wave/1.266)
+
+> **If the app doesn't reflect the latest version after an update, do a hard refresh to clear the cache:**
+> Edge, Firefox, Opera — `Ctrl+F5` · Chrome — `Ctrl+Shift+R` · Safari (Mac) — `Cmd+Shift+R` or `Cmd+Option+R`
 
 ---
 
 Sanskrit Karaoke turns a Sanskrit śloka into an interactive wave diagram that shows the metrical weight of each syllable (guru / laghu), lets you mark audio timing, and exports karaoke videos or high-resolution images.
 
-![screenshot placeholder](docs/screenshot.png)
+<video src="src/bhg_2_3-shloka-sample.mp4" controls width="100%"></video>
 
 ---
 
