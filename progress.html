@@ -98,7 +98,7 @@ async function loadProgress() {
     tbody.appendChild(tr);
 
     // Build Due Card
-    if (isDue || !srs) {
+    if (isDue) {
       dueCount++;
       const card = document.createElement('a');
       card.href = `student.html?id=${verse.id}`;

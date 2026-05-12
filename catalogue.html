@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanskrit Karaoke — Каталог</title>
+<link rel="stylesheet" href="src/style.css">
+<style>
+  body { padding: 0; margin: 0; background: var(--bg); color: var(--ink); font-family: 'Segoe UI', system-ui, sans-serif; }
+  header { 
+    background: var(--ink); 
+    color: #f7f3ec; 
+    padding: 15px 20px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  header h1 { margin: 0; font-size: 1.2rem; }
+  .header-actions { display: flex; align-items: center; gap: 15px; }
+  
+  .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+  
+  /* Filter Bar */
+  .filter-bar { 
+    background: var(--card); 
+    padding: 20px; 
+    border-radius: 8px; 
+    border: 1px solid var(--border); 
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-end;
+  }
+  .filter-group { display: flex; flex-direction: column; gap: 5px; }
+  .filter-group label { font-size: 0.75rem; text-transform: uppercase; color: var(--ink2); font-family: 'JetBrains Mono', monospace; }
+  .filter-group select, .filter-group input { 
+    padding: 8px 12px; 
+    border-radius: 4px; 
+    border: 1px solid var(--border); 
+    background: var(--bg); 
+    color: var(--ink);
+    font-size: 0.9rem;
+  }
+  
+  /* Grid */
+  .verse-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 20px; 
+  }
+  .verse-card { 
+    background: var(--card); 
+    border: 1px solid var(--border); 
+    border-radius: 10px; 
+    padding: 20px; 
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .verse-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); border-color: var(--gold); }
+  .verse-card h3 { margin: 0 0 10px 0; font-size: 1.1rem; color: var(--ink); }
+  .verse-card .meta { font-size: 0.85rem; color: var(--ink2); margin-bottom: 15px; display: flex; gap: 10px; align-items: center; }
+  .verse-card .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+  .verse-card .tag { font-size: 0.7rem; padding: 2px 8px; background: var(--bg2); border-radius: 10px; color: var(--ink2); }
+  
+  .status-badge { position: absolute; top: 15px; right: 15px; font-size: 0.65rem; font-weight: bold; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; }
+  .status-new { background: var(--bg2); color: var(--ink2); }
+  .status-learning { background: rgba(53, 123, 221, 0.15); color: #357bdd; }
+  .status-mastered { background: rgba(44, 74, 30, 0.15); color: var(--laghu); }
+  
+  .stars { color: var(--gold); font-size: 0.9rem; }
+  
+  .study-badge { 
+    background: var(--gold); 
+    color: #fff; 
+    padding: 2px 8px; 
+    border-radius: 10px; 
+    font-size: 0.75rem; 
+    font-weight: bold;
+    margin-left: 5px;
+  }
+
+  @media (max-width: 600px) {
+    .verse-grid { grid-template-columns: 1fr; }
+    .filter-bar { flex-direction: column; align-items: stretch; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1 data-i18n="catalogHeading">Каталог Шлок</h1>
+  <div class="header-actions">
+    <a href="progress.html" style="color:#f7f3ec; text-decoration:none; font-size:0.9rem;" data-i18n="progressTitle">Прогресс</a>
+    <span id="due-badge-wrap" style="display:none;">
+      <span class="study-badge" id="due-count">0</span>
+    </span>
+    <button id="btn-lang" onclick="toggleLang()" style="font-size:.72rem; font-family:'JetBrains Mono',monospace; padding:4px 12px; border:1px solid rgba(247,243,236,.3); border-radius:4px; background:transparent; color:#f7f3ec; cursor:pointer;">🌐 RU</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="filter-bar">
+    <div class="filter-group" style="flex: 1; min-width: 200px;">
+      <label data-i18n="searchLabel">Поиск</label>
+      <input type="text" id="search-input" data-i18n-placeholder="shlokaPlaceholder" placeholder="Название, текст или тег..." oninput="filterVerses()">
+    </div>
+    <div class="filter-group">
+      <label data-i18n="schemLabel">Размер</label>
+      <select id="filter-meter" onchange="filterVerses()">
+        <option value="">Все размеры</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label data-i18n="difficultyLabel">Сложность</label>
+      <select id="filter-difficulty" onchange="filterVerses()">
+        <option value="">Любая</option>
+        <option value="1">1 ⭐</option>
+        <option value="2">2 ⭐⭐</option>
+        <option value="3">3 ⭐⭐⭐</option>
+        <option value="4">4 ⭐⭐⭐⭐</option>
+        <option value="5">5 ⭐⭐⭐⭐⭐</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Сортировка</label>
+      <select id="sort-select" onchange="filterVerses()">
+        <option value="difficulty">По сложности</option>
+        <option value="title">По названию</option>
+        <option value="due">По дате повторения</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="catalog-grid" class="verse-grid">
+    <!-- Cards will be injected here -->
+  </div>
+</div>
+
+<script src="src/scripts/strings.js"></script>
+<script src="src/scripts/srs.js"></script>
+<script>
+let allVerses = [];
+let srsData = [];
+
+async function init() {
+  srsData = getSrsData();
+  const today = getTodayStr();
+  
+  try {
+    const res = await fetch('verses/index.json');
+    if (!res.ok) throw new Error('Failed to load catalog');
+    const data = await res.json();
+    allVerses = data.verses;
+    
+    // Populate meters dropdown
+    const meters = [...new Set(allVerses.map(v => v.meter))].sort();
+    const meterSelect = document.getElementById('filter-meter');
+    meters.forEach(m => {
+      const opt = document.createElement('option');
+      opt.value = m;
+      opt.textContent = m;
+      meterSelect.appendChild(opt);
+    });
+    
+    // Update due badge
+    const dueCount = allVerses.filter(v => {
+      const srs = srsData.find(r => r.id === v.id);
+      return srs && srs.due <= today;
+    }).length;
+    
+    if (dueCount > 0) {
+      document.getElementById('due-badge-wrap').style.display = 'inline';
+      document.getElementById('due-count').textContent = dueCount;
+    }
+    
+    renderVerses(allVerses);
+  } catch (err) {
+    console.error(err);
+    document.getElementById('catalog-grid').innerHTML = '<p>Ошибка загрузки каталога. Проверьте verses/index.json</p>';
+  }
+}
+
+function renderVerses(verses) {
+  const grid = document.getElementById('catalog-grid');
+  grid.innerHTML = '';
+  
+  const lang = (typeof LANG !== 'undefined') ? LANG : 'ru';
+  
+  verses.forEach(v => {
+    const srs = srsData.find(r => r.id === v.id);
+    let statusClass = 'status-new';
+    let statusText = 'New';
+    if (srs) {
+      if (srs.interval >= 21) { statusClass = 'status-mastered'; statusText = 'Mastered'; }
+      else { statusClass = 'status-learning'; statusText = 'Learning'; }
+    }
+    
+    const title = v.title[lang] || v.title['ru'] || v.id;
+    const stars = '⭐'.repeat(v.difficulty);
+    
+    const card = document.createElement('a');
+    card.href = `student.html?id=${v.id}`;
+    card.className = 'verse-card';
+    card.innerHTML = `
+      <div class="status-badge ${statusClass}">${statusText}</div>
+      <h3>${title}</h3>
+      <div class="meta">
+        <span class="stars">${stars}</span>
+        <span>${v.meter}</span>
+      </div>
+      <div class="tags">
+        ${(v.tags || []).map(t => `<span class="tag">${t}</span>`).join('')}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  
+  if (verses.length === 0) {
+    grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--ink2); padding: 40px;">Ничего не найдено по вашему запросу</p>';
+  }
+}
+
+function filterVerses() {
+  const search = document.getElementById('search-input').value.toLowerCase();
+  const meter = document.getElementById('filter-meter').value;
+  const difficulty = document.getElementById('filter-difficulty').value;
+  const sort = document.getElementById('sort-select').value;
+  
+  let filtered = allVerses.filter(v => {
+    const title = (v.title.ru + ' ' + v.title.en + ' ' + v.id).toLowerCase();
+    const tags = (v.tags || []).join(' ').toLowerCase();
+    const matchSearch = title.includes(search) || tags.includes(search);
+    const matchMeter = meter === '' || v.meter === meter;
+    const matchDiff = difficulty === '' || v.difficulty === parseInt(difficulty);
+    return matchSearch && matchMeter && matchDiff;
+  });
+  
+  // Sorting
+  filtered.sort((a, b) => {
+    if (sort === 'title') {
+      const ta = (a.title.ru || a.id).toLowerCase();
+      const tb = (b.title.ru || b.id).toLowerCase();
+      return ta.localeCompare(tb);
+    } else if (sort === 'due') {
+      const sa = srsData.find(r => r.id === a.id);
+      const sb = srsData.find(r => r.id === b.id);
+      const da = sa ? sa.due : '9999-99-99';
+      const db = sb ? sb.due : '9999-99-99';
+      return da.localeCompare(db);
+    } else {
+      return a.difficulty - b.difficulty;
+    }
+  });
+  
+  renderVerses(filtered);
+}
+
+function toggleLang() {
+  if (typeof setLang === 'function') {
+    setLang(typeof LANG !== 'undefined' && LANG === 'ru' ? 'en' : 'ru');
+    renderVerses(allVerses); // Re-render to update titles
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

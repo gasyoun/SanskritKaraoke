@@ -18,6 +18,7 @@
   </div>
   <div id="msg-header" style="display:none;font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:3px;margin-left:16px;align-self:center"></div>
   <div style="display:flex;align-items:center;gap:14px">
+    <a href="catalogue.html" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;text-decoration:none;cursor:pointer;letter-spacing:.08em" data-i18n="catalogHeading">📚 Каталог</a>
     <button id="btn-lang" onclick="setLang(LANG === 'ru' ? 'en' : 'ru')" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em">🌐 RU/EN</button>
     <button onclick="openSettings()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em" data-i18n="settingsBtn">⚙ Настройки</button>
     <button onclick="openHelp()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em" data-i18n="helpBtn">? Инструкция</button>
@@ -176,7 +177,56 @@
         <span style="font-size:.8em">↑</span> Drive загрузить
       </button>
     </div>
+  <div id="lib-export-panel" style="display:none; margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">
+    <div class="sec" style="margin-bottom:8px" data-i18n="libExportTitle">Экспорт в библиотеку</div>
+    
+    <div class="filter-group" style="margin-bottom:6px">
+      <label data-i18n="libIdLabel">ID шлоки</label>
+      <input type="text" id="lib-id" placeholder="bhg_2_47" style="width:100%; box-sizing:border-box;">
+    </div>
+    
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:6px">
+      <div class="filter-group">
+        <label data-i18n="libTitleRuLabel">Название (RU)</label>
+        <input type="text" id="lib-title-ru" style="width:100%; box-sizing:border-box;">
+      </div>
+      <div class="filter-group">
+        <label data-i18n="libTitleEnLabel">Название (EN)</label>
+        <input type="text" id="lib-title-en" style="width:100%; box-sizing:border-box;">
+      </div>
+    </div>
+    
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:6px">
+      <div class="filter-group">
+        <label data-i18n="libTransRuLabel">Перевод (RU)</label>
+        <textarea id="lib-trans-ru" rows="2" style="width:100%; box-sizing:border-box; font-size:0.75rem;"></textarea>
+      </div>
+      <div class="filter-group">
+        <label data-i18n="libTransEnLabel">Перевод (EN)</label>
+        <textarea id="lib-trans-en" rows="2" style="width:100%; box-sizing:border-box; font-size:0.75rem;"></textarea>
+      </div>
+    </div>
+    
+    <div style="display:grid; grid-template-columns: 80px 1fr; gap:8px; margin-bottom:10px; align-items: flex-end;">
+      <div class="filter-group">
+        <label data-i18n="libDiffLabel">Сложность</label>
+        <select id="lib-diff" style="width:100%;">
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label data-i18n="libTagsLabel">Теги</label>
+        <input type="text" id="lib-tags" placeholder="bhagavad-gita, beginner" style="width:100%; box-sizing:border-box;">
+      </div>
+    </div>
+    
+    <button class="btn btn-p" style="width:100%; font-size:0.75rem;" onclick="exportToLibrary()" data-i18n="libExportBtn">↓ Скачать JSON</button>
   </div>
+</div>
 
 
 </aside>
@@ -187,6 +237,7 @@
     <div class="e-om">ॐ</div>
     <p data-i18n="emptyStateHint">Введите данные и нажмите «Построить диаграмму»</p>
   </div>
+  <!-- END MAIN CONTENT -->
 </main>
 
 </div>

@@ -1,5 +1,11 @@
 let activeQuiz = null;
 
+function _beatTapKeyHandler(e) {
+  if (activeQuiz !== 'beattap') return;
+  if (e.key === 'g' || e.key === 'G') recordTap('guru');
+  if (e.key === 'l' || e.key === 'L') recordTap('laghu');
+}
+
 async function startMeterQuiz() {
   activeQuiz = 'meter';
   const qBox = document.getElementById('quiz-content');
@@ -108,12 +114,13 @@ function startBeatTapQuiz() {
   const qBox = document.getElementById('quiz-content');
   
   qBox.innerHTML = `
-    <p style="font-weight:bold; margin-bottom:15px; font-size:1.1rem; color:var(--ink);">Квиз (Beat Tap): Звук отключен. Нажимайте G или L синхронно с подсветкой.</p>
-    <div style="font-size:2rem; margin:15px 0;">
-      <button onclick="recordTap('guru')" style="padding:15px 30px; margin:0 10px; cursor:pointer; background:var(--bg2); color:var(--ink); border:1px solid var(--border); border-radius:8px; font-weight:bold;">G (Гуру)</button>
-      <button onclick="recordTap('laghu')" style="padding:15px 30px; margin:0 10px; cursor:pointer; background:var(--bg2); color:var(--ink); border:1px solid var(--border); border-radius:8px; font-weight:bold;">L (Лагху)</button>
+    <p style="font-weight:bold; margin-bottom:20px; font-size:1.1rem; color:var(--ink);" data-i18n="beatTapIntro">Нажимайте G или L синхронно с подсветкой.</p>
+    <div style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap; margin:20px 0;">
+      <button onclick="recordTap('guru')" style="flex:1; min-width:120px; height:64px; font-size:1.5rem; font-weight:bold; background:var(--gold); color:#fff; border:none; border-radius:10px; cursor:pointer; box-shadow:0 4px 0 #b38f00;" onmousedown="this.style.transform='translateY(2px)'; this.style.boxShadow='0 2px 0 #b38f00'" onmouseup="this.style.transform=''; this.style.boxShadow='0 4px 0 #b38f00'">GURU</button>
+      <button onclick="recordTap('laghu')" style="flex:1; min-width:120px; height:64px; font-size:1.5rem; font-weight:bold; background:var(--laghu); color:#fff; border:none; border-radius:10px; cursor:pointer; box-shadow:0 4px 0 #2c4a1e;" onmousedown="this.style.transform='translateY(2px)'; this.style.boxShadow='0 2px 0 #2c4a1e'" onmouseup="this.style.transform=''; this.style.boxShadow='0 4px 0 #2c4a1e'">LAGHU</button>
     </div>
     <p id="beattap-res" style="font-size:1.1rem; height:1.5em;"></p>
+    <p style="margin-top:15px; font-size:0.8rem; color:var(--ink2);" class="mobile-hide">Можно использовать клавиши G и L на клавиатуре</p>
   `;
   
   window._tapScore = 0;
@@ -124,6 +131,7 @@ function startBeatTapQuiz() {
   audio.muted = true;
   audio.play();
   if (typeof _mainHighlightStart === 'function') _mainHighlightStart();
+  document.addEventListener('keydown', _beatTapKeyHandler);
 }
 
 function recordTap(type) {
@@ -161,6 +169,7 @@ function onQuizAudioEnd() {
     const audio = document.getElementById('audio-preview');
     audio.muted = false;
     if (typeof _mainHighlightStop === 'function') _mainHighlightStop();
+    document.removeEventListener('keydown', _beatTapKeyHandler);
     const qBox = document.getElementById('quiz-content');
     qBox.innerHTML = `<p style="font-weight:bold; font-size:1.2rem; color:var(--ink);">Тест завершен! Результат: ${window._tapScore} / ${window._tapTotal}</p>`;
     setTimeout(() => { activeQuiz = null; endQuiz(); }, 3000);

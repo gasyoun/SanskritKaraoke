@@ -168,7 +168,7 @@ Also fix bugs 12–16 in the same pass.
 
 ---
 
-### Phase 1 — `catalogue.html` *(highest priority feature)*
+### Phase 1 — `catalogue.html` [Done]
 
 A student-facing verse browser. Students land here from Telegram or course links.
 
@@ -192,7 +192,7 @@ A student-facing verse browser. Students land here from Telegram or course links
 
 ---
 
-### Phase 2 — GitHub Actions CI
+### Phase 2 — GitHub Actions CI [Done]
 
 Automatically validate verse files and rebuild the index on every push.
 
@@ -233,7 +233,7 @@ jobs:
 
 ---
 
-### Phase 3 — Teacher add-verse form
+### Phase 3 — Teacher add-verse form [Done]
 
 A page or modal that lets the teacher save the current app state as a new verse
 JSON file into the `verses/data/` catalogue.
@@ -256,7 +256,7 @@ On submit: generates the verse JSON, triggers browser download as
 
 ---
 
-### Phase 4 — Mobile-optimised student view
+### Phase 4 — Mobile-optimised student view [Done]
 
 Currently `student.html` uses the desktop app layout. On phones the wave diagram
 is tiny and the quiz buttons are hard to tap.
