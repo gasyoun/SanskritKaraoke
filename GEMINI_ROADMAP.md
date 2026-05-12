@@ -271,7 +271,7 @@ is tiny and the quiz buttons are hard to tap.
 
 ---
 
-### Phase 5 — Telegram Mini App
+### Phase 5 — Telegram Mini App [Done]
 
 Wrap `catalogue.html` and `student.html` as a Telegram Mini App so students can
 open karaoke directly inside Telegram without leaving the app.

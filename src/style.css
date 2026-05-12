@@ -37,6 +37,19 @@
   --row-h: 36px;
 }
 
+body.tg-dark {
+  --bg: #18120c;
+  --bg2: #241c14;
+  --ink: #f7f3ec;
+  --ink2: #cfc5b2;
+  --card: #2c241c;
+  --border: #4a3f35;
+  --accent: #e65c5c;
+  --guru: #ff6666;
+  --laghu: #a3cc99;
+  --gold: #ffcc66;
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Cormorant Garamond', Georgia, serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
 .page-wrap { max-width: 1200px; margin: 0 auto; box-shadow: 0 0 40px rgba(0,0,0,.15); min-height: 100vh; }

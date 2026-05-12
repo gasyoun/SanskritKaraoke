@@ -3,11 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ॐ Волновая нотация санскрита v1.267</title>
+<title>Sanskrit Karaoke — v1.2.2</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link rel="stylesheet" href="src/style.css">
 <script src="https://cdn.jsdelivr.net/npm/mp4-muxer/build/mp4-muxer.js"></script>
 <script src="https://apis.google.com/js/api.js"></script>
+<script>
+// ── Initialization ─────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  // Telegram Web App Support
+  if (window.Telegram && window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+    
+    // Sync theme
+    if (tg.colorScheme === 'dark') {
+      document.body.classList.add('tg-dark');
+    }
+  }
+  
+  if (typeof initStrings === 'function') initStrings();
+});
+</script>
 
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
   .main { margin-left: 0 !important; width: 100% !important; }
   .mode-dots .syl-label { display: none !important; }
@@ -568,6 +588,19 @@ function submitSrs(quality) {
     updateStreak();
     window.location.href = 'progress.html';
   }
+}
+
+// Telegram Back Button
+if (window.Telegram && window.Telegram.WebApp) {
+  const tg = window.Telegram.WebApp;
+  tg.ready();
+  tg.expand();
+  if (tg.colorScheme === 'dark') document.body.classList.add('tg-dark');
+  
+  tg.BackButton.show();
+  tg.BackButton.onClick(() => {
+    window.location.href = 'catalogue.html';
+  });
 }
 
 window.addEventListener('DOMContentLoaded', () => waitForApp(loadStudentData));

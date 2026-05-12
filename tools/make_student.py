@@ -42,6 +42,7 @@ html = re.sub(r'<aside class="sidebar">.*?</aside>', hidden_elements, html, flag
 
 # Fix CSS (Bug 1: mode-blind class)
 html = html.replace('</head>', """
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
   .main { margin-left: 0 !important; width: 100% !important; }
   .mode-dots .syl-label { display: none !important; }
@@ -257,6 +258,19 @@ function submitSrs(quality) {
     updateStreak();
     window.location.href = 'progress.html';
   }
+}
+
+// Telegram Back Button
+if (window.Telegram && window.Telegram.WebApp) {
+  const tg = window.Telegram.WebApp;
+  tg.ready();
+  tg.expand();
+  if (tg.colorScheme === 'dark') document.body.classList.add('tg-dark');
+  
+  tg.BackButton.show();
+  tg.BackButton.onClick(() => {
+    window.location.href = 'catalogue.html';
+  });
 }
 
 window.addEventListener('DOMContentLoaded', () => waitForApp(loadStudentData));

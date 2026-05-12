@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sanskrit Karaoke — Прогресс и повторение</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link rel="stylesheet" href="src/style.css">
 <style>
   body { padding: 40px; }
@@ -50,6 +51,16 @@
 <script src="src/scripts/srs.js"></script>
 <script>
 async function loadProgress() {
+  // Telegram Web App Support
+  if (window.Telegram && window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+    if (tg.colorScheme === 'dark') document.body.classList.add('tg-dark');
+    tg.BackButton.show();
+    tg.BackButton.onClick(() => { window.location.href = 'catalogue.html'; });
+  }
+
   document.getElementById('streak-count').textContent = getStreak();
   
   const res = await fetch('verses/index.json');

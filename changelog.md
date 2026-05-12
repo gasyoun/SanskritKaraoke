@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] — 2026-05-12 16:39
+### Added
+- **Telegram Mini App Support**: Full integration with the Telegram Web App SDK.
+- **Dark Mode Sync**: Automatic theme synchronization with Telegram's color scheme.
+- **Native Navigation**: Support for the Telegram Back Button across all student views.
+- **App Expansion**: Automatic full-height viewport activation in Telegram.
+
 ## [1.2.2] — 2026-05-12 16:34
 ### Added
 - **Mobile Optimization**: Complete overhaul of the student view for mobile devices.

@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sanskrit Karaoke — Каталог</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link rel="stylesheet" href="src/style.css">
 <style>
   body { padding: 0; margin: 0; background: var(--bg); color: var(--ink); font-family: 'Segoe UI', system-ui, sans-serif; }
@@ -151,6 +152,15 @@ let allVerses = [];
 let srsData = [];
 
 async function init() {
+  // Telegram Web App Init
+  if (window.Telegram && window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+    if (tg.colorScheme === 'dark') document.body.classList.add('tg-dark');
+    tg.BackButton.hide(); // No back button on catalog home
+  }
+  
   srsData = getSrsData();
   const today = getTodayStr();
   
