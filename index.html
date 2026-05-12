@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ॐ Волновая нотация санскрита v1.196</title>
+<title>ॐ Волновая нотация санскрита v1.267</title>
 <link rel="stylesheet" href="src/style.css">
 <script src="https://cdn.jsdelivr.net/npm/mp4-muxer/build/mp4-muxer.js"></script>
 <script src="https://apis.google.com/js/api.js"></script>
@@ -14,7 +14,7 @@
 <header>
   <div style="display:flex;align-items:baseline;gap:2ch">
     <h1>Волновая нотация санскрита</h1>
-    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.266</span>
+    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.267</span>
   </div>
   <div id="msg-header" style="display:none;font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:3px;margin-left:16px;align-self:center"></div>
   <div style="display:flex;align-items:center;gap:14px">
@@ -98,6 +98,18 @@
     </div>
     <div style="display:flex;gap:6px">
       <button class="btn btn-p" style="flex:1;font-size:.75rem" id="btn-karaoke-mp4" onclick="downloadKaraokeMp4()">↓ Сохранить караоке</button>
+    </div>
+    <div style="display:flex;gap:6px;margin-top:4px;align-items:center">
+      <select id="story-format-sel" style="font-size:.72rem;padding:2px 4px;border-radius:3px;border:1px solid var(--border);background:var(--bg);color:var(--ink)">
+        <option value="9:16">9:16</option>
+        <option value="1:1">1:1</option>
+      </select>
+      <select id="story-zoom-sel" style="font-size:.72rem;padding:2px 4px;border-radius:3px;border:1px solid var(--border);background:var(--bg);color:var(--ink)">
+        <option value="2">2 слога</option>
+        <option value="3" selected>3 слога</option>
+        <option value="4">4 слога</option>
+      </select>
+      <button class="btn btn-p" style="flex:1;font-size:.75rem" id="btn-story-mp4" onclick="downloadTelegramStoryMp4()">↓ Story</button>
     </div>
   </div>
 
