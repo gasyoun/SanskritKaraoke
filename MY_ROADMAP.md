@@ -190,8 +190,8 @@ Add structured logging to the teaching pipeline agent. Every student session: ve
 
 ## Project Deliverables Checklist
 
-- [ ] **Phase 0** — `docs/harness_mental_model.md` (ten-component Claude Code audit)
-- [ ] **Phase 1** — verse agent (raw SDK + Claude Agent SDK) + `POSTMORTEM.md`
+- [x] **Phase 0** — `docs/harness_mental_model.md` (ten-component Claude Code audit)
+- [/] **Phase 1** — verse agent (raw SDK version done) + `POSTMORTEM.md`
 - [ ] **Phase 2** — LangGraph teaching pipeline + LangSmith trace URL
 - [ ] **Phase 3** — `docs/harness_gap_analysis.md` + one custom skill/hook
 - [ ] **Phase 4** — golden dataset (≥8 cases) + LLM-as-judge + CI eval gate

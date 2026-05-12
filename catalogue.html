@@ -3,7 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sanskrit Karaoke — Каталог</title>
+<title>Sanskrit Karaoke — v1.3.1</title>
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="src/icons/icon-192.png">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link rel="stylesheet" href="src/style.css">
 <style>
@@ -159,6 +163,11 @@ async function init() {
     tg.expand();
     if (tg.colorScheme === 'dark') document.body.classList.add('tg-dark');
     tg.BackButton.hide(); // No back button on catalog home
+  }
+  
+  // Register Service Worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
   }
   
   srsData = getSrsData();

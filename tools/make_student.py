@@ -43,6 +43,10 @@ html = re.sub(r'<aside class="sidebar">.*?</aside>', hidden_elements, html, flag
 # Fix CSS (Bug 1: mode-blind class)
 html = html.replace('</head>', """
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="src/icons/icon-192.png">
 <style>
   .main { margin-left: 0 !important; width: 100% !important; }
   .mode-dots .syl-label { display: none !important; }
@@ -271,6 +275,11 @@ if (window.Telegram && window.Telegram.WebApp) {
   tg.BackButton.onClick(() => {
     window.location.href = 'catalogue.html';
   });
+}
+
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
 }
 
 window.addEventListener('DOMContentLoaded', () => waitForApp(loadStudentData));

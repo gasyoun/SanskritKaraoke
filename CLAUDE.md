@@ -37,6 +37,8 @@ No build step, no bundler, no test suite — QA is manual in-browser.
 | `progress.html` | Student progress dashboard (streaks, due verses) |
 | `catalogue.html` | Student verse browser (search, filters, due badges) |
 | `changelog.md` | Project history and versioning |
+| `docs/harness_mental_model.md` | Phase 0: Analysis of the Claude Code harness |
+| `agents/verse_agent_raw.py` | Phase 1: Raw SDK verse-processing agent |
 | `src/scripts/app.js` | All application logic (~480 KB, single monolith) |
 | `src/scripts/strings.js` | i18n translation state and logic |
 | `src/scripts/srs.js` | SRS (SM-2) scheduling and streak logic |
@@ -112,3 +114,14 @@ Scope is `drive` (not `drive.file`) so users can see the shared folder. Token is
 
 This project doubles as a practice vehicle for the 30-week agent engineering curriculum in
 **MY_ROADMAP.md**. See also **AGENTS.md** for the current phase and next action.
+
+## Use Case Scenarios
+
+### 1. Authoring (Teacher)
+Paste text → Auto-meter detection → Sync audio in Timing Editor → Export to Library (JSON) → Export Karaoke (MP4).
+
+### 2. Learning (Student)
+Open Catalogue → Filter by meter/difficulty → Study in Full/Dots/Blind modes → Pass Beat Tap quiz → Rate recall (SRS).
+
+### 3. Review (Scholar)
+Open Progress Dashboard → See due verses → Complete daily repetition session → Track streak and mastery.

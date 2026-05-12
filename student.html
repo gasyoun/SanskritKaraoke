@@ -3,7 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sanskrit Karaoke — v1.2.2</title>
+<title>Sanskrit Karaoke — v1.3.0</title>
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="src/icons/icon-192.png">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link rel="stylesheet" href="src/style.css">
 <script src="https://cdn.jsdelivr.net/npm/mp4-muxer/build/mp4-muxer.js"></script>
@@ -22,12 +26,21 @@ window.addEventListener('DOMContentLoaded', () => {
       document.body.classList.add('tg-dark');
     }
   }
+
+  // Register Service Worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
   
   if (typeof initStrings === 'function') initStrings();
 });
 </script>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="src/icons/icon-192.png">
 <style>
   .main { margin-left: 0 !important; width: 100% !important; }
   .mode-dots .syl-label { display: none !important; }
@@ -601,6 +614,11 @@ if (window.Telegram && window.Telegram.WebApp) {
   tg.BackButton.onClick(() => {
     window.location.href = 'catalogue.html';
   });
+}
+
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
 }
 
 window.addEventListener('DOMContentLoaded', () => waitForApp(loadStudentData));

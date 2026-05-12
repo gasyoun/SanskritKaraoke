@@ -1,0 +1,24 @@
+{
+  "name": "Sanskrit Karaoke",
+  "short_name": "Karaoke",
+  "description": "Visualise and learn Sanskrit metrical structure.",
+  "start_url": "catalogue.html",
+  "display": "standalone",
+  "background_color": "#f7f3ec",
+  "theme_color": "#18120c",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "src/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "src/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

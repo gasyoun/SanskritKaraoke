@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.1] — 2026-05-12 16:57
+### Added
+- **PWA Support**: The app can now be installed on Android/iOS/Desktop as a standalone application.
+- **Offline Mode**: Core assets are cached via Service Worker for use without an internet connection.
+- **Premium App Icon**: Added a high-resolution golden 'Om' wave-pattern icon.
+
 ## [1.3.0] — 2026-05-12 16:39
 ### Added
 - **Telegram Mini App Support**: Full integration with the Telegram Web App SDK.

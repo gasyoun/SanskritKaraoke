@@ -29,5 +29,5 @@ on this project.
 |---|---|
 | High | Phase 4 mobile optimisation (GEMINI_ROADMAP.md) |
 | Medium | Phase 5 Telegram Mini App |
-| Roadmap | `docs/harness_mental_model.md` (Phase 0 deliverable) |
-| Roadmap | `agents/verse_agent_raw.py` (Phase 1 deliverable) |
+| Done | `docs/harness_mental_model.md` (Phase 0 deliverable) |
+| Done | `agents/verse_agent_raw.py` (Phase 1 deliverable) |

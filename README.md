@@ -2,7 +2,7 @@
 
 **Wave-notation visualiser and karaoke exporter for Sanskrit verse**
 
-[**Live app →**](https://samskrtam.ru/shloka-wave) · [v1.266](https://samskrtam.ru/shloka-wave/1.266)
+[**Live app →**](https://samskrtam.ru/shloka-wave) · [v1.3.0](https://samskrtam.ru/shloka-wave/1.3.0)
 
 > **If the app doesn't reflect the latest version after an update, do a hard refresh to clear the cache:**
 > Edge, Firefox, Opera — `Ctrl+F5` · Chrome — `Ctrl+Shift+R` · Safari (Mac) — `Cmd+Shift+R` or `Cmd+Option+R`
@@ -122,8 +122,40 @@ When saving an updated session, the old file can persist on Drive. Needs a delet
 ### Apte prosody cross-check
 Complete the meter cross-check modal that compares the detected meter against the full Apte database and highlights discrepancies.
 
-### Mobile and touch support
-The timing editor and wave canvas currently require a pointer device. Adapt drag interactions and keyboard shortcuts for tablets and touch screens.
+### ~~Mobile and touch support~~ ✓ shipped in v1.2.2
+Complete overhaul of the student view for mobile devices. Sticky bottom bar, collapsible translations, and touch-friendly quiz buttons.
+
+### ~~Telegram Mini App support~~ ✓ shipped in v1.3.0
+Full integration with the Telegram Web App SDK. Dark mode synchronization, native back button support, and automatic expansion.
+
+---
+
+## Use Case Scenarios
+
+### 1. Authoring a New Lesson (Teacher)
+*   **Goal**: Create a high-quality karaoke video and library entry for a new shloka.
+*   **Workflow**:
+    1.  Paste text into `index.html`. The tool identifies the meter and builds the wave.
+    2.  Upload audio and use the **Timing Editor** (Syllable Mode) to sync the highlight dot.
+    3.  Fill in the **Library Export** form (RU/EN translations, tags, difficulty).
+    4.  Download the JSON file and commit it to the repo; CI validates and adds it to the catalogue.
+    5.  Export the **Karaoke MP4** for sharing on YouTube or Telegram.
+
+### 2. Daily Practice & Memorization (Student)
+*   **Goal**: Memorize a verse using visual and auditory cues.
+*   **Workflow**:
+    1.  Open `catalogue.html` in Telegram. Filter by tag or difficulty.
+    2.  Start in **Full Mode** to learn the syllables and rhythm.
+    3.  Switch to **Dots Only Mode** to practice recall while still seeing the metrical pulse.
+    4.  Finish with **Blind Mode** (audio only) to test total memorization.
+    5.  Rate your performance to update the **SM-2 Spaced Repetition** schedule.
+
+### 3. Tracking Progress (Scholar)
+*   **Goal**: Manage a large library of learned verses over months.
+*   **Workflow**:
+    1.  Check `progress.html` daily for the "Study Today" queue.
+    2.  Monitor your **Streak** and the count of "Mastered" verses (interval > 21 days).
+    3.  Use the catalogue status chips (New / Learning / Mastered) to plan your next study sessions.
 
 ---
 
