@@ -87,8 +87,31 @@ The application has no dependencies beyond the browser and `mp4-muxer` (bundled)
 
 ## Roadmap
 
+The project is evolving from a teacher-facing authoring tool into a full **Sanskrit edutech platform** for Russian and English students — covering prosody literacy, pronunciation, and memorisation. Content is delivered via Telegram stories, the web app, course platforms, and YouTube.
+
 ### ~~Telegram Story export~~ ✓ shipped in v1.267
 Zoomed portrait video (9:16 or 1:1) where the camera follows the active syllable dot, keeping 2–4 syllables in frame with a smooth pan. Format and syllable-count selectors in the sidebar. Audio embedded, 24 fps.
+
+### Verse library & JSON schema *(in progress)*
+A structured file-based catalogue (`verses/data/*.json`) with metadata per verse: source, meter, difficulty, translations (RU/EN), Drive links for audio and session. Includes a JSON Schema, validation script, and auto-generated index. The data layer everything else builds on.
+
+### Student player page
+A separate read-only page (`student.html?id=…`) that loads a verse from the catalogue, renders the wave diagram, and plays the karaoke — without any authoring controls. Students land here from Telegram or course links.
+
+### Progressive reveal mode
+A "Mode" cycling button on the student player: **Full** (all labels) → **Dots only** (circles, no text) → **Blind** (audio only, highlight dot). Applies spaced challenge to memorisation practice.
+
+### RU / EN i18n toggle
+A globe button in the header switches the entire UI between Russian and English. Strings extracted to `src/scripts/strings.js`; DOM elements tagged with `data-i18n`.
+
+### Spaced repetition (SM-2)
+After playing a verse, students rate recall (😊 😐 😕). SM-2 scheduling resurfaces verses at optimal intervals. State stored in localStorage; a "Study today" queue shows what's due.
+
+### Self-assessment quizzes
+Three rotating quiz types after a verse plays: tap guru/laghu (beat tap), identify the meter (multiple choice), fill in a hidden syllable before the karaoke reaches it.
+
+### Streak & progress tracking
+Daily streak, "verses mastered" count (SRS interval ≥ 21 days), and a progress page listing all catalogue verses with status chips (New / Learning / Mastered).
 
 ### Re-enable tapping mode
 Real-time tap-along for rough timing capture — the button is present but hidden while the feature is being refined.
