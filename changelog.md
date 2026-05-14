@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.1] — 2026-05-14
+
+### Fixed (Teaching Pipeline — Critical)
+
+- **`nodes.py` — AttributeError on checkpoint resume**: `verse_curator` called `.get()` on
+  a `VerseData` Pydantic object when a thread was resumed. Added `isinstance` guard so resumed
+  threads skip re-validation and return the already-valid model directly.
+- **`persistence.py` — Wrong PostgreSQL driver**: `psycopg2` (sync-only) replaced with
+  `psycopg` v3 (async-compatible) as the primary driver. Graceful fallback to psycopg2
+  with a deprecation warning retained.
+- **`judge.py` — `eval()` security**: Replaced unrestricted `eval()` with a sandboxed call
+  preventing arbitrary code execution from JSON-sourced check strings.
+- **`judge.py` — Pydantic state not serialized before eval**: Added `_normalize_state()` to
+  convert `VerseData` objects to plain dicts before running check expressions.
+- **`nodes.py` — Sync LLM call blocks async event loop**: `content_enricher` now runs
+  `call_llm` via `asyncio.run_in_executor` to avoid blocking on HTTP calls.
+- **`cases.json` case_08**: Corrected expected phase from `rejected` to `curation_failed`
+  and error from `Schema violation` to `Data validation error`.
+- **`nodes.py` — Null translation re-triggers LLM**: Changed translation check to test the
+  `ru` value explicitly; LLM returning `null` no longer causes re-enrichment on every run.
+
+### Changed (Teaching Pipeline — Architecture)
+
+- **`nodes.py`**: Moved all imports to module level. Extracted `_project_root`,
+  `_iast_pattern`, and `_to_verse_data()` as module-level constants. Removed redundant
+  `jsonschema` double-validation (Pydantic enforces schema on construction in curator).
+- **`graph.py`**: Moved `route_start` and `route_after_curator` to module level for
+  independent testability. Improved routing logic to explicit boolean conditions.
+- **`state.py`**: Moved `TypedDict` import to top-level with other imports.
+- **`test_deepcopy.py`**: Now passes a real `VerseData` object to match the production
+  code path (previously tested against a raw dict).
+- **`judge.py`**: Added `atexit` executor shutdown. Summary now counts skipped cases
+  separately from failures.
+
 ## [1.4.0] — 2026-05-14
 
 ### Added

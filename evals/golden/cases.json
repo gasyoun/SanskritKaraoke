@@ -41,7 +41,7 @@
   },
   {
     "id": "case_03_id_format",
-    "description": "Ensures IDs with spaces are rejected.",
+    "description": "Ensures IDs with spaces are rejected by QualityGate.",
     "input": {
       "verse": {
         "id": "invalid id with spaces",
@@ -117,7 +117,7 @@
   },
   {
     "id": "case_07_script_validation",
-    "description": "Verifies that non-IAST characters in IAST field are rejected.",
+    "description": "Verifies that non-IAST characters in IAST fields are rejected.",
     "input": {
       "verse": {
         "id": "cyrillic_test",
@@ -136,8 +136,8 @@
     }
   },
   {
-    "id": "case_08_version_check",
-    "description": "Verifies that verse version must be an integer.",
+    "id": "case_08_version_type",
+    "description": "Verifies that a non-integer version field is caught by Curator (Pydantic validation).",
     "input": {
       "verse": {
         "id": "v_test",
@@ -150,9 +150,9 @@
       }
     },
     "expected": {
-      "phase": "rejected",
+      "phase": "curation_failed",
       "checks": [
-        "'Schema violation' in ''.join(state['errors'])"
+        "'Data validation error' in ''.join(state['errors'])"
       ]
     }
   }

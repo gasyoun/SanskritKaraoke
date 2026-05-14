@@ -1,4 +1,4 @@
-from typing import Annotated, List, Optional, Union, Dict
+from typing import Annotated, List, Optional, Union, Dict, TypedDict
 import operator
 from pydantic import BaseModel, Field
 
@@ -11,7 +11,7 @@ def replace_list(existing: list, new: list) -> list:
 
 class VerseData(BaseModel):
     id: str = Field(..., description="Unique slug for the verse")
-    title: Dict[str, str] = Field(default_factory=dict)  # {"ru": "...", "en": "..."}
+    title: Dict[str, str] = Field(default_factory=dict)
     source: Union[str, Dict[str, str]] = ""
     meter: str = "unknown"
     difficulty: int = 1
@@ -25,26 +25,21 @@ class VerseData(BaseModel):
     version: int = 1
 
 
-# Note: We keep AgentState as a TypedDict because LangGraph 1.0 
-# uses TypedDict type hints to identify reducer annotations.
-from typing import TypedDict
-
 class AgentState(TypedDict):
-    # The primary data being processed (now a Pydantic model)
+    # The primary data being processed (Pydantic model, serialized to dict in checkpoints)
     verse: Optional[VerseData]
 
     # Track the current status/phase
     current_phase: str
 
-    # List of issues found by QualityGate or VerseCurator
     # Uses replace_list so re-running a thread does not duplicate errors
     errors: Annotated[List[str], replace_list]
 
-    # History of agent messages (for the supervisor/enricher)
+    # Message history accumulates across nodes
     messages: Annotated[List[dict], operator.add]
 
     # Metadata about the session
     student_id: Optional[str]
-    student_history: Optional[List[dict]]  # SRS records
+    student_history: Optional[List[dict]]
     recommendations: Annotated[List[str], replace_list]
     is_published: bool

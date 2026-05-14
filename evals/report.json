@@ -40,9 +40,9 @@
     "phase": "rejected"
   },
   {
-    "id": "case_08_version_check",
+    "id": "case_08_version_type",
     "pass": true,
     "reason": "Deterministic checks passed",
-    "phase": "rejected"
+    "phase": "curation_failed"
   }
 ]
