@@ -75,6 +75,10 @@ const STRINGS = {
     errNoTiming: 'Сначала разметьте тайминг!',
     okKaraoke: 'Карaoке-видео готово!',
     okPng: 'PNG-изображение готово!',
+    iosSaveImage: 'Зажмите на изображение → «Сохранить в Фото» или «Сохранить в Файлах»',
+    iosSaveVideo: 'Видео готово. Нажмите «Открыть видео», затем «Поделиться» → «Сохранить видео».',
+    iosOpenVideo: 'Открыть видео',
+    iosNoCapture: 'Этот вид экспорта не поддерживается в Safari. Используйте Karaoke MP4.',
     okStory: 'Видео для Story готово!',
     mobileExportWarning: 'Экспорт MP4 может не работать на мобильных устройствах из-за ограничений памяти браузера. Для надёжного результата используйте десктоп.\n\nПродолжить на мобильном?',
 
@@ -166,6 +170,10 @@ const STRINGS = {
     errNoTiming: 'Please mark the timing first!',
     okKaraoke: 'Karaoke video is ready!',
     okPng: 'PNG image is ready!',
+    iosSaveImage: 'Long-press the image → "Save to Photos" or "Save to Files"',
+    iosSaveVideo: 'Video is ready. Tap "Open video", then "Share" → "Save Video".',
+    iosOpenVideo: 'Open video',
+    iosNoCapture: 'This export type is not supported in Safari. Use Karaoke MP4 instead.',
     okStory: 'Story video is ready!',
     mobileExportWarning: 'MP4 export may fail on mobile devices due to browser memory limits. For reliable results, use a desktop browser.\n\nContinue on mobile anyway?',
 

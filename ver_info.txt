@@ -265,3 +265,4 @@ v267 | 2026-05-12 | Экспорт Telegram Story MP4: зум на активн�
 v1.268 — mobile MP4 export warning
 v1.269 — touch drag support (timing editor, waveform, SVG)
 v1.270 — touch nav bar in timing editor (◀ ▶ −0.01 +0.01 ⌂)
+v1.271 — iOS export fixes (PNG overlay, video link, captureStream block)
