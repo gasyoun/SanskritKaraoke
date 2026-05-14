@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sanskrit-karaoke-v1.4.0';
+const CACHE_NAME = 'sanskrit-karaoke-v1.4.0-cleanup-1';
 const ASSETS = [
   'catalogue.html',
   'student.html',
