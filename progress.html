@@ -32,7 +32,10 @@
   <h2>Изучать сегодня</h2>
   <div id="due-list" style="margin-bottom:40px; display:flex; gap:10px; flex-wrap:wrap;"></div>
 
-  <h2>Каталог Шлок</h2>
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>Каталог Шлок</h2>
+    <button onclick="exportTelemetry()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid var(--border);border-radius:4px;background:var(--bg2);color:var(--ink);cursor:pointer;">📊 Экспорт телеметрии</button>
+  </div>
   <table id="progress-table">
     <thead>
       <tr>
@@ -122,6 +125,17 @@ async function loadProgress() {
   if (dueCount === 0) {
     dueList.innerHTML = '<p style="color:var(--laghu);font-weight:bold;">✨ На сегодня всё! Вы молодец.</p>';
   }
+}
+
+function exportTelemetry() {
+  const telemetry = localStorage.getItem('telemetry') || '[]';
+  const blob = new Blob([telemetry], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `telemetry_${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 window.addEventListener('DOMContentLoaded', loadProgress);

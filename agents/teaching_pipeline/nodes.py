@@ -143,11 +143,11 @@ async def content_enricher(state: AgentState):
             f"Return JSON: {{\"translation_ru\": \"...\", \"tags\": [\"...\", \"...\"]}}"
         )
         try:
-            # Run synchronous call_llm in a thread to avoid blocking the event loop
-            loop = asyncio.get_running_loop()
+            # Use call_llm in a thread executor (since it might use requests/sync SDK internally)
+            loop = asyncio.get_event_loop()
             response_text = await loop.run_in_executor(
                 None,
-                lambda: call_llm(prompt, provider_preference=["gemini", "openrouter"])
+                lambda: call_llm(prompt, provider_preference=["gemini", "anthropic"], metadata={"verse_id": verse.id})
             )
             match = re.search(r'\{.*\}', response_text, re.DOTALL)
             if match:

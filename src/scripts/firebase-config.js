@@ -1,0 +1,14 @@
+// Firebase Configuration Template
+// Replace placeholders with your Firebase project credentials from the Firebase Console.
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+// We will export these via window object for easy access in our modular scripts
+window.FIREBASE_CONFIG = firebaseConfig;

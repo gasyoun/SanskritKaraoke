@@ -11,7 +11,7 @@ _clients = {}
 # Project root calculation for logging
 _project_root = Path(__file__).resolve().parent.parent.parent
 
-def log_cost(provider: str, model: str, prompt_tokens: int, completion_tokens: int):
+def log_cost(provider: str, model: str, prompt_tokens: int, completion_tokens: int, metadata: Optional[dict] = None):
     """
     Logs the token usage and estimated cost of an LLM call to logs/llm_costs.jsonl.
     Costs are estimated in USD per 1M tokens.
@@ -34,7 +34,8 @@ def log_cost(provider: str, model: str, prompt_tokens: int, completion_tokens: i
         "prompt_tokens": prompt_tokens,
         "completion_tokens": completion_tokens,
         "total_tokens": prompt_tokens + completion_tokens,
-        "estimated_cost_usd": round(cost, 6)
+        "estimated_cost_usd": round(cost, 6),
+        "metadata": metadata or {}
     }
     
     log_dir = _project_root / "logs"
@@ -43,7 +44,7 @@ def log_cost(provider: str, model: str, prompt_tokens: int, completion_tokens: i
     with open(log_dir / "llm_costs.jsonl", "a", encoding="utf-8") as f:
         f.write(json.dumps(log_entry) + "\n")
 
-def call_llm(prompt: str, provider_preference: Optional[List[str]] = None):
+def call_llm(prompt: str, provider_preference: Optional[List[str]] = None, metadata: Optional[dict] = None):
     """
     Generic LLM caller that tries multiple providers based on availability.
     Includes cost logging and support for Gemini, Anthropic, and Gemma (via OpenRouter).
@@ -69,7 +70,7 @@ def call_llm(prompt: str, provider_preference: Optional[List[str]] = None):
                     usage = getattr(response, "usage_metadata", None)
                     if usage:
                         log_cost("google", "gemini-1.5-flash", 
-                                 usage.prompt_token_count, usage.candidates_token_count)
+                                 usage.prompt_token_count, usage.candidates_token_count, metadata)
                                  
                     return response.text.strip()
                 except Exception as e:
@@ -95,7 +96,7 @@ def call_llm(prompt: str, provider_preference: Optional[List[str]] = None):
                     # Log cost
                     usage = message.usage
                     log_cost("anthropic", model_name, 
-                             usage.input_tokens, usage.output_tokens)
+                             usage.input_tokens, usage.output_tokens, metadata)
                              
                     return message.content[0].text
                 except Exception as e:
@@ -128,7 +129,7 @@ def call_llm(prompt: str, provider_preference: Optional[List[str]] = None):
                     usage = res_json.get("usage")
                     if usage:
                         log_cost("openrouter", model_id, 
-                                 usage.get("prompt_tokens", 0), usage.get("completion_tokens", 0))
+                                 usage.get("prompt_tokens", 0), usage.get("completion_tokens", 0), metadata)
                                  
                     return content
                 except Exception as e:
