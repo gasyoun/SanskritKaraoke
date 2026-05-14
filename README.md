@@ -40,6 +40,33 @@ Sanskrit Karaoke turns a Sanskrit śloka into an interactive wave diagram that s
    - Switch to *Syllable mode* for precise per-syllable timing.
 6. Export with **PNG** or **Karaoke MP4**.
 
+### Example inputs
+
+Paste s1 into the first field, s2 into the second. Encoding is auto-detected (Devanagari, IAST, SLP1, etc.).
+
+**Anuṣṭubh** (8 syllables × 4 pādas) — Bhagavadgītā 2.47
+
+| Field | Text |
+|---|---|
+| s1 | `कर्मण्येवाधिकारस्ते मा फलेषु कदाचन` |
+| s2 | `मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि` |
+
+**Upajāti / Triṣṭubh** (11 syllables × 4 pādas) — Kumārasambhava 1.1 (Kālidāsa)
+
+| Field | Text |
+|---|---|
+| s1 | `अस्त्युत्तरस्यां दिशि देवतात्मा हिमालयो नाम नगाधिराजः` |
+| s2 | `पूर्वापरौ तोयनिधी वगाह्य स्थितः पृथिव्या इव मानदण्डः` |
+
+**Mandākrāntā** (17 syllables × 4 pādas) — Meghadūta 1.1 (Kālidāsa)
+
+Each printed line of Meghadūta is one pāda. Concatenate lines 1+2 into s1 and lines 3+4 into s2.
+
+| Field | Text |
+|---|---|
+| s1 | `कश्चित्कान्ताविरहगुरुणा स्वाधिकारात्प्रमत्तः शापेनास्तङ्गमितमहिमा वर्षभोग्येण भर्तुः` |
+| s2 | `यक्षश्चक्रे जनकतनयास्नानपुण्योदकेषु स्निग्धच्छायातरुषु वसतिं रामगिर्याश्रमेषु` |
+
 ### Keyboard shortcuts (Timing Editor — syllable mode)
 
 | Key | Action |
