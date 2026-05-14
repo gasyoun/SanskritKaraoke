@@ -31,7 +31,7 @@ Sanskrit Karaoke turns a Sanskrit śloka into an interactive wave diagram that s
 
 ## Using the app
 
-1. Open the [live app](https://gasyoun.github.io/SanskritKaraoke).
+1. Open the [live app](https://samskrtam.ru/shloka-wave).
 2. Paste the first and second half-verse (s1 / s2) into the text fields.
 3. Press **Run** — the wave diagram appears and the meter is identified.
 4. Adjust syllable weights or rows by right-clicking any syllable.
