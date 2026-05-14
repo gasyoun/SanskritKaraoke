@@ -1,0 +1,24 @@
+name: Student Page Generator
+
+on:
+  push:
+    paths:
+      - 'student.html'
+      - 'tools/make_student.py'
+      - 'tools/templates/student.html'
+  pull_request:
+    paths:
+      - 'student.html'
+      - 'tools/make_student.py'
+      - 'tools/templates/student.html'
+
+jobs:
+  check-generated-student-page:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check generated student page
+        run: python tools/make_student.py --check

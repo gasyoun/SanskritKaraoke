@@ -20,6 +20,7 @@ on this project.
 - **Version:** v1.4.1
 - **LLM Stack:** Anthropic (Sonnet 3.5), Gemini (Flash 1.5), OpenRouter (Fallback)
 - **Student flow:** `catalogue.html` → `student.html?id=X` → `progress.html`
+- **Student page source:** edit `tools/templates/student.html`, then run `python tools/make_student.py`
 - **Content pipeline:** edit verse JSON → CI validates → `verses/index.json` auto-rebuilt
 - **Evals:** Golden Dataset (8 cases) implemented in `evals/judge.py` with CI gate.
 

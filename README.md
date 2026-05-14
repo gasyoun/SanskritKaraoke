@@ -92,6 +92,14 @@ python -m http.server 8000
 
 No build step or package manager required.
 
+**Student page generation:**
+```sh
+python tools/make_student.py
+python tools/make_student.py --check
+```
+
+`tools/templates/student.html` is the source of truth for the deployed `student.html`.
+
 **Syntax check:**
 ```sh
 node --check src/scripts/app.js

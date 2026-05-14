@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanskrit Karaoke — v1.4.0</title>
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="src/icons/icon-192.png">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="stylesheet" href="src/style.css">
+<script src="https://cdn.jsdelivr.net/npm/mp4-muxer/build/mp4-muxer.js"></script>
+<script src="https://apis.google.com/js/api.js"></script>
+<script>
+// ── Initialization ─────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  // Telegram Web App Support
+  if (window.Telegram && window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+    
+    // Sync theme
+    if (tg.colorScheme === 'dark') {
+      document.body.classList.add('tg-dark');
+    }
+  }
+
+  // Register Service Worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+  
+  if (typeof initStrings === 'function') initStrings();
+});
+</script>
+
+<style>
+  .main { margin-left: 0 !important; width: 100% !important; }
+  .mode-dots .syl-label { display: none !important; }
+  .mode-blind .wave-layer, .mode-blind .wave-svg-wrap { display: none !important; }
+  #quiz-panel, #srs-panel { 
+    background: var(--card); 
+    border: 1px solid var(--border); 
+    border-radius: 8px; 
+    padding: 20px; 
+    margin: 20px auto; 
+    max-width: 600px;
+  }
+  @media (max-width: 600px) {
+    header { padding: 10px !important; flex-wrap: wrap; height: auto !important; }
+    header .om { display: none; }
+    .main { padding: 10px !important; }
+    .shloka-block { margin-bottom: 20px !important; }
+    .wave-svg-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .wave-svg-wrap svg { min-width: 600px; }
+    #translation-box { font-size: 0.95rem !important; cursor: pointer; }
+    #translation-box.collapsed { display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    #quiz-panel, #srs-panel { margin: 10px; padding: 15px; }
+    .mobile-hide { display: none !important; }
+    .mobile-only { display: block !important; }
+  }
+  .mobile-only { display: none; }
+</style>
+</head>
+
+<body>
+
+<div class="page-wrap">
+<header>
+  <div style="display:flex;align-items:baseline;gap:2ch">
+    <h1 data-i18n="mainTitle">Волновая нотация санскрита</h1>
+    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.267</span>
+  </div>
+  <div id="msg-header" style="display:none;font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:3px;margin-left:16px;align-self:center"></div>
+  <div style="display:flex;align-items:center;gap:14px">
+    <a href="catalogue.html" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;text-decoration:none;cursor:pointer;letter-spacing:.08em" data-i18n="catalogHeading">📚 Каталог</a>
+    <button id="btn-mode" class="mobile-hide" onclick="cycleMode()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em" data-i18n="modeFull">Mode: Full</button>
+    <button id="btn-lang" class="mobile-hide" onclick="toggleLang()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em">🌐 RU</button>
+    <button onclick="openHelp()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em">?</button>
+    <div id="cloud-status" style="font-size:.65rem; font-family:'JetBrains Mono',monospace; color:rgba(247,243,236,.5);">☁</div>
+    <span class="om">ॐ</span>
+  </div>
+</header>
+
+<script src="src/scripts/firebase-config.js"></script>
+<script type="module" src="src/scripts/cloud_sync.js"></script>
+<script>
+  window.onAuthUpdate = (user) => {
+    const status = document.getElementById('cloud-status');
+    if (status) {
+      status.style.color = user ? '#2c4a1e' : 'rgba(247,243,236,.5)';
+      status.title = user ? `Cloud Sync Active: ${user.email}` : 'Local Mode';
+    }
+  };
+</script>
+
+<div class="app">
+
+<!-- ══ SIDEBAR ══ -->
+<div id="student-hidden-bridge" style="display:none !important;"><textarea id="dev-input"></textarea><div id="s1dev"></div><div id="s2dev"></div><div id="s1iast"></div><div id="s2iast"></div><input type="radio" id="syl-mode-user"><input type="radio" id="syl-mode-std"><button id="btn-go" onclick="runPipeline()"></button><div id="msg"></div><input type="text" id="shloka-num"><input type="text" id="ft-year"><input type="text" id="ft-url"><input type="text" id="ft-author"><input type="text" id="ft-source"><input type="text" id="ft-meter"><div id="dl-wrap"></div><div id="mp4-block"></div><div id="audio-drop"></div><div id="audio-name"></div><div id="tap-block"></div><div id="te-padas-info"></div><div id="tap-status"></div><div id="waveform-canvas"></div><button id="btn-mp4-muxer"></button><button id="btn-mp4"></button><button id="btn-karaoke-mp4"></button><button id="btn-story-mp4"></button><select id="scheme-select" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;border:1px solid var(--border);border-radius:3px;padding:2px 6px;background:var(--card);color:var(--ink);cursor:pointer;flex:1;min-width:0">
+        <option value="">— не определена —</option>
+        <option value="DEV">Деванагари</option>
+        <option value="IAST">IAST</option>
+        <option value="SLP">SLP1</option>
+        <option value="HK">Harvard-Kyoto</option>
+        <option value="ITRANS">ITRANS</option>
+        <option value="VH">Velthuis</option>
+        <option value="WX">WX</option>
+      </select></div>
+
+<!-- ══ MAIN ══ -->
+<main class="main" id="main-area">
+  <div class="empty">
+    <div class="e-om">ॐ</div>
+    <p data-i18n="emptyStateHint">Введите данные и нажмите «Построить диаграмму»</p>
+  </div>
+  
+  <div style="max-width: 800px; margin: 40px auto 0; text-align: center; padding: 20px;">
+    <audio id="audio-preview" controls onplay="_mainHighlightStart()" onpause="_mainHighlightStop()" onended="onVerseEnded()" style="width:100%; max-width:600px; margin-bottom:15px; display:none;"></audio>
+    <div id="translation-box" class="collapsed" onclick="this.classList.toggle('collapsed')" style="font-size:1.1rem; line-height:1.5; padding:15px; background:var(--card); border-radius:8px; border:1px solid var(--border); display:none;"></div>
+    
+    <div id="quiz-panel" style="display:none;">
+      <div id="quiz-content"></div>
+    </div>
+    
+    <div id="srs-panel" style="display:none;">
+      <p style="margin-bottom:15px; font-size:1.1rem; color:var(--ink); font-weight:bold;" data-i18n="srsPrompt">Как хорошо вы запомнили?</p>
+      <div style="display:flex; justify-content:center; gap:20px;">
+        <button onclick="submitSrs(1)" style="font-size:2rem; cursor:pointer; background:none; border:none;">😕</button>
+        <button onclick="submitSrs(3)" style="font-size:2rem; cursor:pointer; background:none; border:none;">😐</button>
+        <button onclick="submitSrs(5)" style="font-size:2rem; cursor:pointer; background:none; border:none;">😊</button>
+      </div>
+      <div style="margin-top:20px;">
+        <a href="progress.html" style="color:var(--accent); text-decoration:none; font-size:0.9rem;" data-i18n="catalogHeading">Посмотреть прогресс</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Bar -->
+  <div class="mobile-only mobile-nav">
+    <button onclick="cycleMode()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:var(--accent);color:#fff;cursor:pointer;margin-right:10px" data-i18n="modeFull">Mode: Full</button>
+    <button onclick="toggleLang()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:var(--bg2);color:var(--ink);cursor:pointer">🌐 RU/EN</button>
+  </div>
+<!-- END MAIN CONTENT -->
+</main>
+
+</div>
+
+<!-- CONTEXT MENU -->
+<div class="ctx-menu" id="ctx">
+  <div class="ctx-item guru-opt"  onclick="ctxSetType('guru')">● Гуру (синий)</div>
+  <div class="ctx-item laghu-opt" onclick="ctxSetType('laghu')">● Лагху (зелёный)</div>
+  <div class="ctx-item sep"       onclick="ctxMoveRow(0)">↑↑ Строка 1 (верх)</div>
+  <div class="ctx-item"           onclick="ctxMoveRow(1)">── Строка 2 (основная)</div>
+  <div class="ctx-item"           onclick="ctxMoveRow(2)">↓  Строка 3</div>
+  <div class="ctx-item"           onclick="ctxMoveRow(3)">⬇  Строка 4</div>
+  <div class="ctx-item"           onclick="ctxMoveRow(4)">⬇⬇ Строка 5 (низ)</div>
+  <div class="ctx-item sep"       onclick="ctxDelete()">✕ Убрать из ячейки</div>
+</div>
+
+<script src="src/scripts/strings.js"></script>
+<script src="src/scripts/app.js"></script>
+
+<!-- ══ SETTINGS MODAL ══ -->
+<div id="settings-overlay" onclick="closeSettings()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200"></div>
+<div id="settings-modal" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:201;background:var(--card);border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.25);width:380px;max-width:95vw;max-height:95vh;overflow-y:auto;overflow-x:hidden;padding:20px 24px 24px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+    <span style="font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink2);font-family:'JetBrains Mono',monospace" data-i18n="settingsTitle">Настройки</span>
+    <button onclick="closeSettings()" style="background:none;border:none;cursor:pointer;font-size:1.2rem;color:var(--ink2);padding:0 2px;line-height:1">✕</button>
+  </div>
+
+  <div class="sec" data-i18n="waveHeightLabel">Высота волны</div>
+  <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
+    <input type="range" id="opt-wave-scale" min="0.3" max="1.5" step="0.05" value="0.5"
+      style="flex:1" oninput="waveScaleChanged(this.value)">
+    <span id="opt-wave-scale-val" style="font-family:'JetBrains Mono',monospace;font-size:.78rem;min-width:28px">0.5</span>
+  </div>
+
+  <div class="sec" data-i18n="sylColorsLabel">Цвета слогов</div>
+  <div style="display:flex;gap:12px;margin-top:6px;align-items:stretch">
+    <div style="display:flex;flex-direction:column;gap:5px">
+      <label style="font-size:.7rem;color:var(--ink2);display:flex;align-items:center;gap:6px">
+        <input type="color" id="color-guru" value="#8B0000"
+          oninput="applyColors()" style="width:32px;height:22px;border:none;cursor:pointer;padding:0;border-radius:3px">
+        Гуру
+      </label>
+      <label style="font-size:.7rem;color:var(--ink2);display:flex;align-items:center;gap:6px">
+        <input type="color" id="color-laghu" value="#2C4A1E"
+          oninput="applyColors()" style="width:32px;height:22px;border:none;cursor:pointer;padding:0;border-radius:3px">
+        Лагху
+      </label>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px;margin-left:auto">
+      <button class="btn btn-s color-preset" data-guru="#8B0000" data-laghu="#2C4A1E"
+        onclick="applyColorPreset(this)" style="font-size:.65rem;padding:2px 10px;text-align:left">
+        <span style="color:#8B0000">●</span> <span style="color:#2C4A1E">●</span> Рукописный
+      </button>
+      <button class="btn btn-s color-preset" data-guru="#1a3480" data-laghu="#235c35"
+        onclick="applyColorPreset(this)" style="font-size:.65rem;padding:2px 10px;text-align:left">
+        <span style="color:#1a3480">●</span> <span style="color:#235c35">●</span> Современный
+      </button>
+      <button class="btn btn-s color-preset" data-guru="#6B2D0F" data-laghu="#3D5A1F"
+        onclick="applyColorPreset(this)" style="font-size:.65rem;padding:2px 10px;text-align:left">
+        <span style="color:#6B2D0F">●</span> <span style="color:#3D5A1F">●</span> Тёплый
+      </button>
+    </div>
+  </div>
+
+  <div class="sec" style="margin-top:14px" data-i18n="displayLabel">Отображение</div>
+  <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.78rem;margin-top:6px">
+    <input type="checkbox" id="opt-grey-iast" checked onchange="rebuildAll()"> IAST серый (жирность = гуру)
+  </label>
+  <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.78rem;margin-top:5px">
+    <input type="checkbox" id="opt-cheat-open" onchange="applyCheatOpenSetting()"> Шпаргалка развёрнута по умолчанию
+
+  </label>
+  <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.78rem;margin-top:6px">
+    <input type="checkbox" id="opt-dots" checked onchange="rebuildAll()"> Шарики (кружки)
+  </label>
+  <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.78rem;margin-top:5px;padding-left:20px">
+    <input type="checkbox" id="opt-hollow" checked onchange="rebuildAll()"> Полые (только контур)
+  </label>
+  <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.78rem;margin-top:5px">
+    <input type="checkbox" id="opt-line" checked onchange="rebuildAll()"> Линия волны
+  </label>
+  <div style="margin-top:8px;display:flex;align-items:center;gap:8px">
+    <label style="font-size:.75rem;color:var(--ink2)">Сглаживание</label>
+    <select id="opt-smooth" onchange="const te=document.getElementById('opt-smooth-te');if(te)te.value=this.value;rebuildAll()" style="font-size:.75rem;padding:2px 6px;border-radius:4px;border:1px solid var(--border);background:var(--card);color:var(--ink)">
+      <option value="none">Без сглаживания</option>
+      <option value="bezier" selected>Безье</option>
+      <option value="cardinal">Cardinal spline</option>
+      <option value="monotone">Монотонный сплайн</option>
+    </select>
+  </div>
+  <div class="sec" style="margin-top:14px" data-i18n="notificationsLabel">Уведомления</div>
+  <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.78rem;margin-top:6px">
+    <input type="radio" name="msg-pos" id="msg-pos-sidebar" checked onchange="applyMsgPosSetting()"> В сайдбаре
+  </label>
+  <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.78rem;margin-top:4px">
+    <input type="radio" name="msg-pos" id="msg-pos-header" onchange="applyMsgPosSetting()"> В заголовке
+  </label>
+  <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.78rem;margin-top:4px">
+    <input type="radio" name="msg-pos" id="msg-pos-both" onchange="applyMsgPosSetting()"> Оба
+  </label>
+
+
+
+
+  <div style="display:flex;gap:8px;margin-top:20px">
+    <button class="btn btn-s" style="flex:1" onclick="saveDefaults()" title="Сохранить текущие настройки как умолчание">💾 Запомнить</button>
+    <button class="btn btn-p" style="flex:1" onclick="closeSettings()">Готово</button>
+  </div>
+  <p id="defaults-saved-msg" style="display:none;font-size:.68rem;color:var(--laghu);text-align:center;margin:6px 0 0;font-family:'JetBrains Mono',monospace">✓ Сохранено как умолчание</p>
+</div>
+
+</div><!-- .page-wrap -->
+
+<!-- ══ HELP MODAL ══ -->
+<div id="help-overlay" style="display:none;position:fixed;inset:0;background:rgba(24,18,12,.75);z-index:300;overflow-y:auto;padding:30px 20px;box-sizing:border-box" onclick="if(event.target===this)closeHelp()"><div style="max-width:820px;margin:0 auto;background:var(--card);border-radius:12px;padding:36px 40px;font-family:\'JetBrains Mono\',monospace;font-size:.7rem;color:var(--ink);box-shadow:0 16px 60px rgba(0,0,0,.4)">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;border-bottom:2px solid var(--gold);padding-bottom:16px">
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Sanskrit Karaoke</div>
+      <h2 style="font-size:1.5rem;font-weight:700;margin:0;color:var(--ink);letter-spacing:.03em">Помощь для ученика</h2>
+    </div>
+    <button onclick="closeHelp()" style="font-size:1.3rem;border:none;background:none;cursor:pointer;color:var(--ink2);line-height:1;padding:4px 8px;border-radius:4px">✕</button>
+  </div>
+  <p class="help-sec">Как читать волновой график</p>
+  <p class="help-body">• <b>Цвет:</b> Синий = тяжелый слог (гуру), Зеленый = легкий (лагху).<br>• <b>Высота:</b> 5 рядов показывают высоту тона (мелодию). 1 — верхний, 5 — нижний.</p>
+  <p class="help-sec">Режимы обучения (кнопка Mode)</p>
+  <p class="help-body">• <b>Full:</b> Виден текст и мелодия.<br>• <b>Dots:</b> Текст скрыт, видны только "шарики" мелодии. Вспомните текст по ритму!<br>• <b>Blind:</b> График скрыт. Пойте полностью по памяти.</p>
+  <p class="help-sec">Интервальное повторение (SRS)</p>
+  <p class="help-body">После прослушивания оцените себя: 😊 (легко), 😐 (с трудом), 😕 (забыл). Система сама назначит следующее время для повторения.</p>
+  <p class="help-sec">Тесты</p>
+  <p class="help-body">• <b>Meter ID:</b> Угадайте название размера.<br>• <b>Fill-in:</b> Впишите пропущенный слог во время пения.<br>• <b>Beat Tap:</b> Нажимайте G (гуру) или L (лагху) в такт подсветке. Можно использовать клавиши G и L на клавиатуре.</p>
+</div></div>
+
+<!-- ══ CROSS-CHECK MODAL ══ -->
+<div id="crosscheck-overlay" style="display:none;position:fixed;inset:0;background:rgba(24,18,12,.75);z-index:300;overflow-y:auto;padding:30px 20px;box-sizing:border-box" onclick="if(event.target===this)closeCrossCheck()">
+<div style="max-width:960px;margin:0 auto;background:var(--card);border-radius:12px;padding:36px 40px;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink);box-shadow:0 16px 60px rgba(0,0,0,.4)">
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;border-bottom:2px solid var(--gold);padding-bottom:16px">
+    <div>
+      <div style="font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Перекрёстный контроль</div>
+      <h2 style="font-size:1.4rem;font-weight:700;margin:0;color:var(--ink)">Сравнение метра Апте ↔ Skrutable</h2>
+    </div>
+    <button onclick="closeCrossCheck()" style="font-size:1.3rem;border:none;background:none;cursor:pointer;color:var(--ink2);padding:4px 8px;border-radius:4px">✕</button>
+  </div>
+
+  <p style="margin-bottom:12px;line-height:1.6;color:var(--ink2)">
+    Для каждого размера из базы Апте берётся поле <b>Ex.</b>, строки 1–2 объединяются как первая полустрофа, строки 3–4 как вторая. Алгоритм Skrutable вычисляет метр — результаты сравниваются.
+  </p>
+
+  <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center">
+    <button class="btn btn-p" style="width:auto;padding:8px 20px" onclick="runCrossCheck()">▶ Запустить проверку</button>
+    <div style="display:flex;align-items:center;gap:8px;margin-left:auto">
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:.75rem">
+        <input type="checkbox" id="cc-only-mismatch"> Показать только расхождения
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:.75rem">
+        <input type="radio" name="cc-source" id="cc-source-apte2" value="apte2" checked> APTE2
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:.75rem">
+        <input type="radio" name="cc-source" id="cc-source-apte1" value="apte1"> APTE1
+      </label>
+      <select id="cc-filter-section" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;border:1px solid var(--border);border-radius:3px;padding:2px 8px;background:var(--card);color:var(--ink);cursor:pointer">
+        <option value="">Все разделы</option>
+        <option value="SECTION A">Section A — samavṛtta</option>
+        <option value="SECTION B">Section B — ardhasamavṛtta</option>
+        <option value="SECTION C">Section C — viṣamavṛtta</option>
+        <option value="SECTION D">Section D — jāti</option>
+      </select>
+    </div>
+  </div>
+  <div id="cc-status" style="margin-bottom:12px;font-size:.68rem;color:var(--ink2)"></div>
+
+  <div id="cc-table-wrap">
+    <table id="cc-table" style="width:100%;border-collapse:collapse;font-size:.68rem;display:none">
+      <thead>
+        <tr style="background:var(--bg2)">
+          <th style="padding:7px 10px;text-align:left;border-bottom:2px solid var(--border);width:28px">№</th>
+          <th style="padding:7px 10px;text-align:left;border-bottom:2px solid var(--border);width:130px">Метр у Апте</th>
+          <th style="padding:7px 10px;text-align:left;border-bottom:2px solid var(--border);width:80px">Раздел</th>
+          <th style="padding:7px 10px;text-align:left;border-bottom:2px solid var(--border);width:180px">Метр по Skrutable</th>
+          <th style="padding:7px 10px;text-align:center;border-bottom:2px solid var(--border);width:44px">Статус</th>
+          <th style="padding:7px 10px;text-align:left;border-bottom:2px solid var(--border)">Пример (Ex.)</th>
+        </tr>
+      </thead>
+      <tbody id="cc-tbody"></tbody>
+    </table>
+  </div>
+
+  <div id="cc-summary" style="display:none;margin-top:18px;padding:12px 16px;border-radius:6px;background:var(--bg2);font-size:.72rem;line-height:1.7"></div>
+
+  <button onclick="closeCrossCheck()" class="btn btn-p" style="margin-top:24px;width:100%;font-size:.85rem">Закрыть</button>
+</div>
+</div>
+
+
+<!-- TIMING EDITOR MODAL -->
+<div id="timing-editor-overlay" style="display:none;position:fixed;inset:0;background:rgba(24,18,12,.8);z-index:400;overflow:hidden">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:92vw;max-width:1200px;height:85vh;max-height:90vh;background:var(--card);border-radius:10px;padding:16px 24px 20px;box-shadow:0 8px 40px rgba(0,0,0,.4);display:flex;flex-direction:column">
+
+    <!-- Заголовок -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-shrink:0">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span id="te-mode-title" style="font-size:.7rem;font-family:'JetBrains Mono',monospace;letter-spacing:.15em;text-transform:uppercase;color:var(--ink2)" data-i18n="padaModeLabel">Разметка пад</span>
+        <button id="btn-te-switch" onclick="teSwitchMode()" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:2px 10px;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--ink2);cursor:pointer">→ Тайминг слогов</button>
+      </div>
+      <button onclick="closeTimingEditor()" style="border:none;background:none;cursor:pointer;font-size:1.2rem;color:var(--ink2)">✕</button>
+    </div>
+
+    <!-- Canvas общий -->
+    <canvas id="timing-editor-canvas" style="width:100%;border-radius:4px;cursor:crosshair;border:1px solid var(--border);display:block;user-select:none;flex:1;min-height:200px" height="260"></canvas>
+    <canvas id="te-scrollbar" style="width:100%;height:16px;margin:4px 0 0;display:block;cursor:pointer;flex-shrink:0;border-radius:3px;background:var(--bg2);border:1px solid var(--border)"></canvas>
+
+    <!-- ── Режим 1: Разметка пад ── -->
+    <div id="te-panel-padas" style="flex-shrink:0;margin-top:10px">
+      <!-- Ряд 1: кнопки управления + кнопки воспроизведения + масштаб -->
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+        <button onclick="teMarkPadas()" style="font-size:.75rem;font-family:'JetBrains Mono',monospace;padding:4px 14px;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--ink);cursor:pointer">Указать пады</button>
+        <button id="btn-te-reset" onclick="teResetTiming()" style="display:none;font-size:.75rem;font-family:'JetBrains Mono',monospace;padding:4px 14px;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--ink2);cursor:pointer">Сброс тайминга</button>
+        <div style="flex:1"></div>
+        <!-- ▶▶ вся шлока -->
+        <button id="btn-r1-play-all" onclick="teR1Play('all')" title="Вся шлока от начала до конца"
+          style="width:56px;height:28px;padding:0;font-size:.7rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶▶</button>
+        <!-- ▶| пада от начала -->
+        <button id="btn-r1-play-pada" onclick="teR1Play('pada')" title="Пада от начала до конца"
+          style="width:56px;height:28px;padding:0;font-size:.7rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶|</button>
+        <!-- ▶… от текущей позиции до конца пады -->
+        <button id="btn-r1-play-cur" onclick="teR1Play('cur')" title="От текущей позиции до конца пады"
+          style="width:56px;height:28px;padding:0;font-size:.7rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶…</button>
+        <span style="font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--ink2)">Масштаб:</span>
+        <select id="te-zoom-select-r1" onchange="timingEditorSetZoom(+this.value)" style="font-size:.75rem;padding:2px 4px;border-radius:4px;border:1px solid var(--border);background:var(--card);color:var(--ink)">
+          <option value="1.0">1×</option><option value="1.25">1.25×</option><option value="1.5625">1.56×</option>
+          <option value="1.953125">1.95×</option><option value="2.44140625">2.44×</option>
+          <option value="3.0517578125">3.05×</option><option value="3.814697265625">3.81×</option>
+          <option value="4.76837158203125">4.77×</option><option value="5.9604644775390625">5.96×</option>
+          <option value="7.450580596923828">7.45×</option><option value="9.313225746154785">9.31×</option>
+          <option value="11.641532182693481">11.64×</option><option value="14.551915228366852">14.55×</option>
+          <option value="18.189894035458565">18.19×</option><option value="22.737367544323206">22.74×</option>
+          <option value="28.421709430404007">28.42×</option><option value="32">32×</option>
+        </select>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+        <button id="btn-te-autotiming" onclick="teAutoTimingAndSwitch()" style="display:none;font-size:.75rem;font-family:'JetBrains Mono',monospace;padding:4px 14px;border:1px solid var(--gold);border-radius:3px;background:var(--bg2);color:var(--gold);cursor:pointer">Авторазбивка</button>
+        <label style="font-size:.75rem;color:var(--ink2);display:flex;align-items:center;gap:4px;cursor:pointer">
+          <input type="checkbox" id="opt-last-laghu-as-guru" checked>
+          посл. лагху = гуру
+        </label>
+        <label style="font-size:.75rem;color:var(--ink2);display:flex;align-items:center;gap:4px;cursor:pointer">
+          <input type="checkbox" id="opt-only-unmarked">
+          только неразмеченные
+        </label>
+      </div>
+    </div>
+
+    <!-- ── Режим 2: Тайминг слогов ── -->
+    <div id="te-panel-timing" style="display:none;flex-shrink:0">
+      <!-- Ряд 1: панель воспроизведения по центру + масштаб справа -->
+      <div style="display:flex;gap:6px;align-items:center;justify-content:center;width:100%;margin-top:10px">
+        <button id="btn-te-play-end" onclick="timingEditorPlayOrPause('end')" title="До конца (Ctrl+Space)"
+          style="width:56px;height:28px;padding:0;font-size:.7rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶▶</button>
+        <button id="btn-te-play-pada" onclick="timingEditorPlayOrPause('pada')" title="До конца пады (Ctrl+Enter)"
+          style="width:56px;height:28px;padding:0;font-size:.7rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶|</button>
+        <button id="btn-te-play-syls" onclick="timingEditorPlayOrPause('syllables')" title="N слогов"
+          style="width:56px;height:28px;padding:0;font-size:.7rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶N</button>
+        <input type="number" id="te-play-n" value="3" min="1" max="20"
+          style="width:36px;height:28px;font-size:.75rem;padding:0 4px;border-radius:3px;border:1px solid var(--border);background:var(--card);color:var(--ink);text-align:center;flex-shrink:0">
+        <button id="btn-te-play-syl" onclick="timingEditorPlaySyl()" title="Проиграть текущий слог (Enter)"
+          style="width:56px;height:28px;padding:0;font-size:.7rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶•</button>
+        <button id="btn-te-play-step" onclick="timingEditorPlayStep()" title="Проиграть слог и перейти к следующему (Space)"
+          style="width:56px;height:28px;padding:0;font-size:.7rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶<span style="font-size:.9rem">›</span></button>
+        <div style="flex:1"></div>
+        <span style="font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--ink2)">Масштаб:</span>
+        <select id="te-zoom-select" onchange="timingEditorSetZoom(+this.value)" style="font-size:.75rem;padding:2px 4px;border-radius:4px;border:1px solid var(--border);background:var(--card);color:var(--ink)">
+          <option value="1.0">1×</option><option value="1.25">1.25×</option><option value="1.5625">1.56×</option>
+          <option value="1.953125">1.95×</option><option value="2.44140625">2.44×</option>
+          <option value="3.0517578125">3.05×</option><option value="3.814697265625">3.81×</option>
+          <option value="4.76837158203125">4.77×</option><option value="5.9604644775390625">5.96×</option>
+          <option value="7.450580596923828">7.45×</option><option value="9.313225746154785">9.31×</option>
+          <option value="11.641532182693481">11.64×</option><option value="14.551915228366852">14.55×</option>
+          <option value="18.189894035458565">18.19×</option><option value="22.737367544323206">22.74×</option>
+          <option value="28.421709430404007">28.42×</option><option value="32">32×</option>
+        </select>
+      </div>
+      <!-- Ряд 2: сдвиг влево + Выровнять к началу + сдвиг вправо -->
+      <div style="display:flex;justify-content:center;align-items:center;gap:6px;margin-top:6px">
+        <button onclick="teShiftSyl(-0.01)" title="Сдвинуть слог на 0.01с влево (Ctrl+←)"
+          style="width:28px;height:26px;padding:0;font-size:.85rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">◂</button>
+        <button onclick="teAlignToStart()" title="Выровнять к началу (Home)"
+          style="height:26px;padding:0 14px;font-size:.7rem;font-family:'JetBrains Mono',monospace;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--ink);cursor:pointer">⟵ Выровнять к началу</button>
+        <button onclick="teShiftSyl(+0.01)" title="Сдвинуть слог на 0.01с вправо (Ctrl+→)"
+          style="width:28px;height:26px;padding:0;font-size:.85rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▸</button>
+      </div>
+      <!-- Ряд 2б: выбор предыдущего/следующего слога -->
+      <div style="display:flex;justify-content:center;align-items:center;gap:6px;margin-top:4px">
+        <button onclick="teSelectAdjacentSyl(-1)" title="Выбрать предыдущий слог (←)"
+          style="width:28px;height:26px;padding:0;font-size:.85rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">◀</button>
+        <button onclick="teSelectAdjacentSyl(+1)" title="Выбрать следующий слог (→)"
+          style="width:28px;height:26px;padding:0;font-size:.85rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶</button>
+      </div>
+      <!-- Ряд 3: info + stats + кнопка Закрыть -->
+      <div style="display:flex;align-items:flex-end;gap:8px;margin-top:6px">
+        <div style="flex:1">
+          <div id="timing-editor-info" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);min-height:1.4em"></div>
+          <div id="te-stats" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);margin-top:2px;line-height:1.6"></div>
+        </div>
+        <button onclick="closeTimingEditor()" style="height:36px;padding:0 20px;font-size:.85rem;font-family:'JetBrains Mono',monospace;border:none;border-radius:4px;background:var(--accent,#357bdd);color:#fff;cursor:pointer;flex-shrink:0;letter-spacing:.04em">Закрыть</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Google Drive folder picker dialog -->
+<div id="gdrive-dialog" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;font-family:'Segoe UI',system-ui,sans-serif">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;width:460px;max-width:95vw;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(0,0,0,.4)">
+    <!-- Header -->
+    <div style="display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--border);flex-shrink:0">
+      <span id="gdrive-dialog-title" style="font-size:.88rem;font-weight:700;flex:1;color:#1a1a1a">Google Drive</span>
+      <button onclick="_gdDismiss()" style="border:none;background:none;color:#444;cursor:pointer;font-size:1.1rem;padding:0 4px">✕</button>
+    </div>
+    <!-- Breadcrumbs -->
+    <div id="gdrive-breadcrumbs" style="display:flex;align-items:center;gap:4px;padding:7px 14px;font-size:.78rem;color:#555;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;min-height:32px"></div>
+    <!-- Toolbar -->
+    <div style="display:flex;align-items:center;gap:6px;padding:6px 14px;border-bottom:1px solid var(--border);flex-shrink:0">
+      <button id="gdrive-btn-newfolder" onclick="_gdNewFolder()" style="font-size:.75rem;padding:3px 10px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:#1a1a1a;cursor:pointer;font-weight:600" data-i18n="newFolderBtn">+ Папка</button>
+      <div style="flex:1"></div>
+      <button id="gdrive-btn-sort" onclick="_gdToggleSort()" title="Сортировка" style="font-size:.75rem;padding:3px 8px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:#1a1a1a;cursor:pointer">А→Я</button>
+      <button id="gdrive-btn-view" onclick="_gdToggleView()" title="Вид" style="font-size:.85rem;padding:3px 8px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:#1a1a1a;cursor:pointer">☰</button>
+    </div>
+    <!-- New folder input (hidden by default) -->
+    <div id="gdrive-newfolder-row" style="display:none;padding:6px 14px;border-bottom:1px solid var(--border);flex-shrink:0;gap:6px;align-items:center">
+      <input id="gdrive-newfolder-input" type="text" placeholder="Название папки" style="flex:1;font-size:.8rem;padding:4px 8px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:#1a1a1a;width:100%;box-sizing:border-box">
+      <div style="display:flex;gap:4px;margin-top:4px">
+        <button onclick="_gdCreateFolder()" style="font-size:.75rem;padding:3px 10px;border:1px solid var(--border);border-radius:4px;background:var(--accent, #357bdd);color:#fff;cursor:pointer;font-weight:600">Создать</button>
+        <button onclick="_gdCancelNewFolder()" style="font-size:.75rem;padding:3px 10px;border:1px solid var(--border);border-radius:4px;background:var(--card);color:#1a1a1a;cursor:pointer">Отмена</button>
+      </div>
+    </div>
+    <!-- Folder list -->
+    <div id="gdrive-list" style="overflow-y:auto;flex:1;padding:6px 8px;min-height:120px"></div>
+    <!-- Footer -->
+    <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid var(--border);flex-shrink:0">
+      <span id="gdrive-current-label" style="font-size:.78rem;color:#555;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
+      <button onclick="_gdDismiss()" style="font-size:.8rem;padding:5px 14px;border:1px solid var(--border);border-radius:5px;background:var(--card);color:#1a1a1a;cursor:pointer">Отмена</button>
+      <button id="gdrive-btn-confirm" onclick="_gdConfirm()" style="font-size:.8rem;padding:5px 14px;border:none;border-radius:5px;background:var(--accent,#357bdd);color:#fff;cursor:pointer;font-weight:700" data-i18n="openBtn">Открыть</button>
+    </div>
+  </div>
+</div>
+
+
+<script src="src/scripts/srs.js"></script>
+<script src="src/scripts/quizzes.js"></script>
+<script>
+// Student Logic
+document.addEventListener('contextmenu', e => {
+  if (e.target.closest('svg')) e.preventDefault();
+});
+
+let currentVerse = null;
+let currentMode = 1; 
+let versePlayedCount = 0;
+
+// Bug 15: Safe wait for app.js
+function waitForApp(cb, retries = 20) {
+  if (typeof _applySession === 'function') { cb(); return; }
+  if (retries > 0) setTimeout(() => waitForApp(cb, retries - 1), 100);
+  else console.error('app.js failed to load');
+}
+
+// Telemetry & Observability (Phase 5)
+function logTelemetry(event, data = {}) {
+  const telemetry = JSON.parse(localStorage.getItem('telemetry') || '[]');
+  const entry = {
+    timestamp: new Date().toISOString(),
+    verse_id: currentVerse ? currentVerse.id : null,
+    event,
+    data
+  };
+  telemetry.push(entry);
+  // Keep last 100 entries to prevent localStorage bloat
+  if (telemetry.length > 100) telemetry.shift();
+  localStorage.setItem('telemetry', JSON.stringify(telemetry));
+  console.log(`[Telemetry] ${event}:`, data);
+}
+
+function driveMediaUrl(fileId) {
+  const encodedId = encodeURIComponent(fileId);
+  const apiKey = window.GDRIVE && window.GDRIVE.apiKey;
+  if (apiKey) {
+    return `https://www.googleapis.com/drive/v3/files/${encodedId}?alt=media&key=${encodeURIComponent(apiKey)}`;
+  }
+  return `https://drive.google.com/uc?export=download&id=${encodedId}`;
+}
+
+async function loadStudentData() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  if (!id) {
+    document.getElementById('translation-box').textContent = "No verse ID provided. Use ?id=bhg_2_47";
+    document.getElementById('translation-box').style.display = "block";
+    return;
+  }
+
+  try {
+    const res = await fetch(`verses/data/${id}.json`);
+    if (!res.ok) throw new Error('Verse not found');
+    currentVerse = await res.json();
+    
+    logTelemetry('verse_load', { id });
+    
+    // --- Session Data (JSON) with Drive Fallback ---
+    if (currentVerse.session && currentVerse.session.drive_file_id && currentVerse.session.drive_file_id !== 'TODO') {
+      const sessionId = currentVerse.session.drive_file_id;
+      const sessionUrl = driveMediaUrl(sessionId);
+      const cacheKey = `cache_session_${id}`;
+      
+      try {
+        const sessionRes = await fetch(sessionUrl);
+        if (sessionRes.ok) {
+          const sessionJson = await sessionRes.json();
+          _applySession(sessionJson);
+          localStorage.setItem(cacheKey, JSON.stringify(sessionJson)); // Update cache
+          const empty = document.querySelector('.empty');
+          if (empty) empty.style.display = 'none';
+        } else {
+          throw new Error('Drive fetch failed');
+        }
+      } catch (e) {
+        console.warn('Drive fallback: attempting to load from cache...', e);
+        const cached = localStorage.getItem(cacheKey);
+        if (cached) {
+          _applySession(JSON.parse(cached));
+          const empty = document.querySelector('.empty');
+          if (empty) empty.style.display = 'none';
+          
+          const hdr = document.getElementById('msg-header');
+          if (hdr) {
+            hdr.textContent = 'Offline Mode (Cached)';
+            hdr.style.background = 'var(--gold)';
+            hdr.style.color = '#000';
+            hdr.style.display = 'block';
+          }
+          logTelemetry('drive_fallback', { id, type: 'session' });
+        }
+      }
+    } else {
+      document.getElementById('dev-input').value = currentVerse.s1 + '\n' + currentVerse.s2;
+      document.getElementById('btn-go').click();
+    }
+
+    // --- Audio Data ---
+    if (currentVerse.audio && currentVerse.audio.drive_file_id && currentVerse.audio.drive_file_id !== 'TODO') {
+      const audioId = currentVerse.audio.drive_file_id;
+      const audioUrl = driveMediaUrl(audioId);
+      const audioEl = document.getElementById('audio-preview');
+      audioEl.src = audioUrl;
+      audioEl.style.display = 'block';
+      
+      // Note: Audio caching is not done in localStorage due to size limits.
+      // Relies on browser's native HTTP cache.
+    }
+
+    updateTranslation();
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById('translation-box').textContent = "Error loading verse data.";
+    document.getElementById('translation-box').style.display = "block";
+  }
+}
+
+function updateTranslation() {
+  if (!currentVerse || !currentVerse.translation) return;
+  const lang = typeof LANG !== 'undefined' ? LANG : 'ru';
+  const tBox = document.getElementById('translation-box');
+  tBox.style.display = 'block';
+  tBox.textContent = currentVerse.translation[lang] || currentVerse.translation['ru'] || '';
+}
+
+function cycleMode() {
+  currentMode = (currentMode % 3) + 1;
+  const labels = {1: 'modeFull', 2: 'modeDots', 3: 'modeBlind'};
+  const classes = {1: '', 2: 'mode-dots', 3: 'mode-blind'};
+  
+  logTelemetry('mode_change', { mode: classes[currentMode] || 'full' });
+
+  const btn = document.getElementById('btn-mode');
+  btn.setAttribute('data-i18n', labels[currentMode]);
+  if (typeof t === 'function') btn.textContent = 'Mode: ' + t(labels[currentMode]);
+  
+  const mainArea = document.getElementById('main-area');
+  mainArea.className = 'main ' + classes[currentMode];
+}
+
+function toggleLang() {
+  if (typeof setLang === 'function') {
+    setLang(typeof LANG !== 'undefined' && LANG === 'ru' ? 'en' : 'ru');
+    updateTranslation();
+  }
+}
+
+function onVerseEnded() {
+  if (typeof _mainHighlightStop === 'function') _mainHighlightStop();
+  versePlayedCount++;
+  
+  if (typeof activeQuiz !== 'undefined' && activeQuiz) {
+    if (typeof onQuizAudioEnd === 'function') onQuizAudioEnd();
+  } else if (versePlayedCount === 1) {
+    if (typeof triggerQuizCycle === 'function') {
+      triggerQuizCycle();
+    } else {
+      document.getElementById('srs-panel').style.display = 'block';
+    }
+  } else {
+    if (!activeQuiz) document.getElementById('srs-panel').style.display = 'block';
+  }
+}
+
+function submitSrs(quality) {
+  if (!currentVerse) return;
+  logTelemetry('srs_rating', { quality });
+  if (typeof updateSrs === 'function') { // Bug 10 fix
+    updateSrs(currentVerse.id, quality);
+    updateStreak();
+    window.location.href = 'progress.html';
+  }
+}
+
+// Telegram Back Button
+if (window.Telegram && window.Telegram.WebApp) {
+  const tg = window.Telegram.WebApp;
+  tg.ready();
+  tg.expand();
+  if (tg.colorScheme === 'dark') document.body.classList.add('tg-dark');
+  
+  tg.BackButton.show();
+  tg.BackButton.onClick(() => {
+    window.location.href = 'catalogue.html';
+  });
+}
+
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+
+window.addEventListener('DOMContentLoaded', () => waitForApp(loadStudentData));
+</script>
+</body>
+
+</html>
