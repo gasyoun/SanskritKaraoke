@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "note": "Keyed by first IAST character of the syllable (from DATA[key][i].syl). align_to: onset or peak. offset_ms added after snapping.",
+  "rules": {
+    "y": { "align_to": "peak",  "offset_ms":   0 },
+    "v": { "align_to": "peak",  "offset_ms":   0 },
+    "r": { "align_to": "peak",  "offset_ms":   0 },
+    "l": { "align_to": "peak",  "offset_ms":   0 },
+    "m": { "align_to": "onset", "offset_ms": -15 },
+    "n": { "align_to": "onset", "offset_ms": -15 },
+    "ṅ": { "align_to": "onset", "offset_ms": -10 },
+    "ñ": { "align_to": "onset", "offset_ms": -10 },
+    "default": { "align_to": "onset", "offset_ms": 0 }
+  }
+}

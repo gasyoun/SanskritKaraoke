@@ -191,9 +191,9 @@ Add structured logging to the teaching pipeline agent. Every student session: ve
 ## Project Deliverables Checklist
 
 - [x] **Phase 0** — `docs/harness_mental_model.md` (ten-component Claude Code audit)
-- [/] **Phase 1** — verse agent (raw SDK version done) + `POSTMORTEM.md`
+- [x] **Phase 1** — verse agent (raw & SDK versions) + `POSTMORTEM.md`
 - [ ] **Phase 2** — LangGraph teaching pipeline + LangSmith trace URL
-- [ ] **Phase 3** — `docs/harness_gap_analysis.md` + one custom skill/hook
+- [x] **Phase 3** — `docs/harness_gap_analysis.md` + one custom skill/hook
 - [ ] **Phase 4** — golden dataset (≥8 cases) + LLM-as-judge + CI eval gate
 - [ ] **Phase 5** — cost logging + student session observability + Drive fallback
 
@@ -201,7 +201,7 @@ Add structured logging to the teaching pipeline agent. Every student session: ve
 
 ## Next Action
 
-**Today:** Read the [context engineering post](https://www.anthropic.com/engineering/building-effective-agents) on the Anthropic blog. Then open `CLAUDE.md` in this repo and annotate which of the ten harness components each section covers. Save the result as `docs/harness_mental_model.md`. Time: ~2 hours.
+**Today:** Begin Phase 4 — Evals. Build the **Golden Dataset** from documented bugs (GEMINI_FIXES.md) and implement the **Claude-as-judge** evaluator to automate quality control for future agentic improvements.
 
 ---
 

@@ -2,7 +2,7 @@
 
 **Wave-notation visualiser and karaoke exporter for Sanskrit verse**
 
-[**Live app →**](https://samskrtam.ru/shloka-wave) · [v1.3.0](https://samskrtam.ru/shloka-wave/1.3.0)
+[**Live app →**](https://samskrtam.ru/shloka-wave) · [v1.4.0](https://samskrtam.ru/shloka-wave/1.3.0)
 
 > **If the app doesn't reflect the latest version after an update, do a hard refresh to clear the cache:**
 > Edge, Firefox, Opera — `Ctrl+F5` · Chrome — `Ctrl+Shift+R` · Safari (Mac) — `Cmd+Shift+R` or `Cmd+Option+R`
@@ -153,7 +153,7 @@ Complete the meter cross-check modal that compares the detected meter against th
 ### ~~Mobile and touch support~~ ✓ shipped in v1.2.2
 Complete overhaul of the student view for mobile devices. Sticky bottom bar, collapsible translations, and touch-friendly quiz buttons.
 
-### ~~Telegram Mini App support~~ ✓ shipped in v1.3.0
+### ~~Telegram Mini App support~~ ✓ shipped in v1.4.0
 Full integration with the Telegram Web App SDK. Dark mode synchronization, native back button support, and automatic expansion.
 
 ---

@@ -8,26 +8,32 @@ any new agent session in this repository.
 See **MY_ROADMAP.md** for the full 30-week agent engineering curriculum being practised
 on this project.
 
-**Current phase:** Phase 0 — Mental Models (SPEEDRUN, 1–2 weeks)
+**Current phase:** Phase 1 — First Tool-Using Agent (weeks 4–6: Claude Agent SDK rebuild)
 
 **Next action:**
-> Read the [context engineering post](https://www.anthropic.com/engineering/building-effective-agents) on the Anthropic blog.
-> Then open `CLAUDE.md` in this repo and annotate which of the ten harness components each
-> section covers. Save the result as `docs/harness_mental_model.md`. Time: ~2 hours.
+> Phase 4 — Evals. Build the **Golden Dataset** from `GEMINI_FIXES.md` and 
+> `GEMINI_ROADMAP.md`. Implement the **Claude-as-judge** evaluator in 
+> `evals/judge.py` to automate quality control.
 
 ## Platform context
 
 - **Live URL:** https://samskrtam.ru/shloka-wave
+- **Version:** v1.4.0
+- **LLM Stack:** Anthropic (Sonnet 3.5), Gemini (Flash 1.5), OpenRouter (Fallback)
 - **Student flow:** `catalogue.html` → `student.html?id=X` → `progress.html`
 - **Content pipeline:** edit verse JSON → CI validates → `verses/index.json` auto-rebuilt
 - **Gemini Flash** implements features; review documented in `GEMINI_FIXES.md` and
   `GEMINI_ROADMAP.md`; evals will be built in Phase 4 of MY_ROADMAP.md
+- **Auto-alignment** plan in `GEMINI_ALIGNMENT_PLAN.md` — assigned to Gemini Flash
 
 ## Pending feature work
 
 | Priority | Task |
 |---|---|
-| High | Phase 4 mobile optimisation (GEMINI_ROADMAP.md) |
-| Medium | Phase 5 Telegram Mini App |
-| Done | `docs/harness_mental_model.md` (Phase 0 deliverable) |
-| Done | `agents/verse_agent_raw.py` (Phase 1 deliverable) |
+| High | Phase 4 completion: `evals/golden/` + `evals/judge.py` (MY_ROADMAP.md) |
+| Done | Phase 3 — `docs/harness_gap_analysis.md` (Custom skill audit) |
+| Done | Auto-alignment implementation (GEMINI_ALIGNMENT_PLAN.md — Gemini Flash) |
+| Backlog | Firebase auth + cloud SRS (ROADMAP.md Phase 1) |
+| Done | Phase 0 — `docs/harness_mental_model.md` (ten-component audit) |
+| Done | Phase 1 raw SDK — `agents/verse_agent_raw.py` |
+| Done | Gemini Phases 1–5 (catalogue, student, mobile, Telegram, PWA) |

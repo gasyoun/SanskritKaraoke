@@ -14,10 +14,24 @@ python -m http.server 8000
 # open http://localhost:8000
 ```
 
-## Syntax check
+## Common Commands
 
-```sh
-node --check src/scripts/app.js
+- **Run Locally**: `python -m http.server 8000`
+- **Syntax Check**: `node --check src/scripts/app.js`
+- **Validate Verse**: `python tools/validate_verse.py <file_path>`
+- **Validate Library**: `python tools/validate_library.py`
+- **Build Index**: `python tools/build_index.py`
+- **Run Evals**: `python evals/judge.py` (Requires API keys)
+
+## Environment Setup
+
+To run the agents or the Evaluation Sweep, create a `.env` file in the root:
+
+```text
+ANTHROPIC_API_KEY=your_key        # Primary for Claude-as-Judge
+GEMINI_API_KEY=your_key           # Primary for Content Enrichment
+OPENROUTER_API_KEY=your_key       # 3rd option fallback for all agents
+DATABASE_URL=postgres://...       # Optional: For production persistence
 ```
 
 No build step, no bundler, no test suite — QA is manual in-browser.

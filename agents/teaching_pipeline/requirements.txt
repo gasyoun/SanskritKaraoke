@@ -1,0 +1,8 @@
+langgraph>=0.1.0
+langchain-anthropic
+langchain-google-genai
+google-generativeai
+jsonschema
+python-dotenv
+psycopg2-binary
+pydantic

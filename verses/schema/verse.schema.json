@@ -60,6 +60,23 @@
         "created_at":    { "type": "string", "format": "date" }
       }
     },
+    "timing": {
+      "type": "object",
+      "description": "Per-syllable timestamps exported from the Timing Editor",
+      "properties": {
+        "s1": { "type": "array", "items": { "type": "number" } },
+        "s2": { "type": "array", "items": { "type": "number" } },
+        "confidence": {
+          "type": "object",
+          "properties": {
+            "s1": { "type": "array", "items": { "type": "number", "minimum": 0, "maximum": 1 } },
+            "s2": { "type": "array", "items": { "type": "number", "minimum": 0, "maximum": 1 } }
+          }
+        },
+        "auto_generated": { "type": "boolean" },
+        "generator": { "type": "string", "description": "browser-v1 | whisper-v1 | manual" }
+      }
+    },
     "tags":       { "type": "array", "items": { "type": "string" } },
     "created_at": { "type": "string", "format": "date" },
     "updated_at": { "type": "string", "format": "date" }
