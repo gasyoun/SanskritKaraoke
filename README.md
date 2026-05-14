@@ -190,33 +190,13 @@ Full integration with the Telegram Web App SDK. Dark mode synchronization, nativ
 
 ## Use Case Scenarios
 
-### 1. Authoring a New Lesson (Teacher)
+Detailed workflows for different user roles (Teachers, Students, Curators, and Offline Practitioners) are documented in [**docs/USE_CASES.md**](docs/USE_CASES.md).
 
-- **Goal**: Create a high-quality karaoke video and library entry for a new shloka.
-- **Workflow**:
-  1.  Paste text into `index.html`. The tool identifies the meter and builds the wave.
-  2.  Upload audio and use the **Timing Editor** (Syllable Mode) to sync the highlight dot.
-  3.  Fill in the **Library Export** form (RU/EN translations, tags, difficulty).
-  4.  Download the JSON file and commit it to the repo; CI validates and adds it to the catalogue.
-  5.  Export the **Karaoke MP4** for sharing on YouTube or Telegram.
-
-### 2. Daily Practice & Memorization (Student)
-
-- **Goal**: Memorize a verse using visual and auditory cues.
-- **Workflow**:
-  1.  Open `catalogue.html` in Telegram. Filter by tag or difficulty.
-  2.  Start in **Full Mode** to learn the syllables and rhythm.
-  3.  Switch to **Dots Only Mode** to practice recall while still seeing the metrical pulse.
-  4.  Finish with **Blind Mode** (audio only) to test total memorization.
-  5.  Rate your performance to update the **SM-2 Spaced Repetition** schedule.
-
-### 3. Tracking Progress (Scholar)
-
-- **Goal**: Manage a large library of learned verses over months.
-- **Workflow**:
-  1.  Check `progress.html` daily for the "Study Today" queue.
-  2.  Monitor your **Streak** and the count of "Mastered" verses (interval > 21 days).
-  3.  Use the catalogue status chips (New / Learning / Mastered) to plan your next study sessions.
+### Summary of Roles:
+- **The Content Creator**: Transforms raw text and audio into structured lessons.
+- **The Active Learner**: Systematically memorizes verses using the student player and quizzes.
+- **The Curator**: Manages the verse library using the automated Teaching Pipeline and observability tools.
+- **The Offline Practitioner**: Uses PWA and caching features to practice without connectivity.
 
 ---
 
