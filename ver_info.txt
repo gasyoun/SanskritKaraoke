@@ -264,3 +264,4 @@ v266 | 2026-05-11 | Обновлены справка в интерфейсе и
 v267 | 2026-05-12 | Экспорт Telegram Story MP4: зум на активный слог, камера следует за точкой, форматы 9:16 и 1:1, 2-4 слога в кадре
 v1.268 — mobile MP4 export warning
 v1.269 — touch drag support (timing editor, waveform, SVG)
+v1.270 — touch nav bar in timing editor (◀ ▶ −0.01 +0.01 ⌂)

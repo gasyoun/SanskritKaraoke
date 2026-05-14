@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded', () => {
 <header>
   <div style="display:flex;align-items:baseline;gap:2ch">
     <h1 data-i18n="mainTitle">Волновая нотация санскрита</h1>
-    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.269</span>
+    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.270</span>
   </div>
   <div id="msg-header" style="display:none;font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:3px;margin-left:16px;align-self:center"></div>
   <div style="display:flex;align-items:center;gap:14px">
@@ -624,6 +624,16 @@ window.addEventListener('DOMContentLoaded', () => {
           style="width:28px;height:26px;padding:0;font-size:.85rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">◀</button>
         <button onclick="teSelectAdjacentSyl(+1)" title="Выбрать следующий слог (→)"
           style="width:28px;height:26px;padding:0;font-size:.85rem;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--ink);cursor:pointer;flex-shrink:0">▶</button>
+      </div>
+      <!-- Touch navigation bar (hidden on desktop, shown on touch via CSS) -->
+      <div id="te-touch-nav" style="gap:4px;align-items:center;justify-content:center;margin-top:6px;flex-wrap:wrap">
+        <button onclick="teSelectAdjacentSyl(-1)" title="Предыдущий слог" style="height:36px;min-width:48px;padding:0 10px;font-size:.95rem;border:1px solid var(--border);border-radius:4px;background:var(--bg2);color:var(--ink);cursor:pointer;flex-shrink:0;touch-action:manipulation">◀</button>
+        <button onclick="teSelectAdjacentSyl(+1)" title="Следующий слог" style="height:36px;min-width:48px;padding:0 10px;font-size:.95rem;border:1px solid var(--border);border-radius:4px;background:var(--bg2);color:var(--ink);cursor:pointer;flex-shrink:0;touch-action:manipulation">▶</button>
+        <div style="width:1px;height:24px;background:var(--border);margin:0 2px;flex-shrink:0"></div>
+        <button onclick="teShiftSyl(-0.01)" title="−0.01s" style="height:36px;min-width:48px;padding:0 10px;font-size:.95rem;border:1px solid var(--border);border-radius:4px;background:var(--bg2);color:var(--ink);cursor:pointer;flex-shrink:0;touch-action:manipulation">−0.01</button>
+        <button onclick="teShiftSyl(+0.01)" title="+0.01s" style="height:36px;min-width:48px;padding:0 10px;font-size:.95rem;border:1px solid var(--border);border-radius:4px;background:var(--bg2);color:var(--ink);cursor:pointer;flex-shrink:0;touch-action:manipulation">+0.01</button>
+        <div style="width:1px;height:24px;background:var(--border);margin:0 2px;flex-shrink:0"></div>
+        <button onclick="teAlignToStart()" title="Выровнять к началу пады" style="height:36px;min-width:48px;padding:0 10px;font-size:.95rem;border:1px solid var(--border);border-radius:4px;background:var(--bg2);color:var(--ink);cursor:pointer;flex-shrink:0;touch-action:manipulation">⌂</button>
       </div>
       <!-- Ряд 3: info + stats + кнопка Закрыть -->
       <div style="display:flex;align-items:flex-end;gap:8px;margin-top:6px">
