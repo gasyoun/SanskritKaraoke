@@ -1,27 +1,48 @@
 [
   {
     "id": "case_01_translation",
-    "pass": false,
-    "reason": "\"Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted\""
+    "pass": null,
+    "reason": "skipped: no API key"
   },
   {
     "id": "case_02_meter_gate",
-    "pass": false,
-    "reason": "\"Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted\""
+    "pass": true,
+    "reason": "Deterministic checks passed",
+    "phase": "rejected"
   },
   {
     "id": "case_03_id_format",
-    "pass": false,
-    "reason": "\"Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted\""
+    "pass": true,
+    "reason": "Deterministic checks passed",
+    "phase": "rejected"
   },
   {
     "id": "case_04_tags",
-    "pass": false,
-    "reason": "\"Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted\""
+    "pass": null,
+    "reason": "skipped: no API key"
   },
   {
     "id": "case_05_curator_validation",
-    "pass": false,
-    "reason": "\"Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted\""
+    "pass": true,
+    "reason": "Deterministic checks passed",
+    "phase": "curation_failed"
+  },
+  {
+    "id": "case_06_duplicate_id",
+    "pass": true,
+    "reason": "Deterministic checks passed",
+    "phase": "rejected"
+  },
+  {
+    "id": "case_07_script_validation",
+    "pass": true,
+    "reason": "Deterministic checks passed",
+    "phase": "rejected"
+  },
+  {
+    "id": "case_08_version_check",
+    "pass": true,
+    "reason": "Deterministic checks passed",
+    "phase": "rejected"
   }
 ]

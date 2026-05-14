@@ -30,8 +30,17 @@ def create_teaching_pipeline():
         }
     )
     
-    # Curation Track
-    workflow.add_edge("curator", "enricher")
+    # Curation Track — short-circuit on curator failure
+    def route_after_curator(state: AgentState) -> str:
+        if state.get("current_phase") == "curation_failed":
+            return "end"
+        return "enricher"
+
+    workflow.add_conditional_edges(
+        "curator",
+        route_after_curator,
+        {"end": END, "enricher": "enricher"}
+    )
     workflow.add_edge("enricher", "quality_gate")
     workflow.add_edge("quality_gate", END)
 

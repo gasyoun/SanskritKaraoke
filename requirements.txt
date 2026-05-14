@@ -1,0 +1,7 @@
+langgraph
+langchain
+langchain-anthropic
+google-generativeai
+jsonschema
+python-dotenv
+pathlib

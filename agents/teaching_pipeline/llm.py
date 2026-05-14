@@ -1,11 +1,19 @@
 import os
 import json
 import requests
+from typing import List, Optional
 
-def call_llm(prompt: str, provider_preference: list = ["gemini", "anthropic", "openrouter"]):
+# Singleton-like cache for model clients to avoid re-initialization
+_clients = {}
+
+def call_llm(prompt: str, provider_preference: Optional[List[str]] = None):
     """
     Generic LLM caller that tries multiple providers based on availability.
+    Uses cached clients and handles defaults correctly.
     """
+    if provider_preference is None:
+        provider_preference = ["gemini", "anthropic", "openrouter"]
+        
     last_error = None
     for provider in provider_preference:
         if provider == "gemini":
@@ -13,8 +21,11 @@ def call_llm(prompt: str, provider_preference: list = ["gemini", "anthropic", "o
             if api_key:
                 try:
                     import google.generativeai as genai
-                    genai.configure(api_key=api_key)
-                    model = genai.GenerativeModel('gemini-1.5-flash')
+                    if "gemini" not in _clients:
+                        genai.configure(api_key=api_key)
+                        _clients["gemini"] = genai.GenerativeModel('gemini-1.5-flash')
+                    
+                    model = _clients["gemini"]
                     return model.generate_content(prompt).text.strip()
                 except Exception as e:
                     last_error = f"gemini: {e}"
@@ -25,7 +36,10 @@ def call_llm(prompt: str, provider_preference: list = ["gemini", "anthropic", "o
             if api_key:
                 try:
                     from anthropic import Anthropic
-                    client = Anthropic(api_key=api_key)
+                    if "anthropic" not in _clients:
+                        _clients["anthropic"] = Anthropic(api_key=api_key)
+                    
+                    client = _clients["anthropic"]
                     message = client.messages.create(
                         model="claude-3-5-sonnet-20241022",
                         max_tokens=1024,

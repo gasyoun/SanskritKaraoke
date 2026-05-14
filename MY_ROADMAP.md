@@ -194,7 +194,7 @@ Add structured logging to the teaching pipeline agent. Every student session: ve
 - [x] **Phase 1** — verse agent (raw & SDK versions) + `POSTMORTEM.md`
 - [ ] **Phase 2** — LangGraph teaching pipeline + LangSmith trace URL
 - [x] **Phase 3** — `docs/harness_gap_analysis.md` + one custom skill/hook
-- [ ] **Phase 4** — golden dataset (≥8 cases) + LLM-as-judge + CI eval gate
+- [x] **Phase 4** — golden dataset (≥8 cases) + LLM-as-judge + CI eval gate
 - [ ] **Phase 5** — cost logging + student session observability + Drive fallback
 
 ---

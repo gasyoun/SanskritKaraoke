@@ -45,33 +45,63 @@ async def run_eval():
             config = {"configurable": {"thread_id": f"eval_{case['id']}"}}
             final_state = await pipeline.ainvoke(case['input'], config=config)
             
-            # 2. Judge via LLM
-            judge_prompt = (
-                f"You are an expert Sanskrit Philology Judge. \n"
-                f"Evaluate the agent's output for this test case.\n\n"
-                f"CASE DESCRIPTION: {case['description']}\n"
-                f"EXPECTED PHASE: {case['expected']['phase']}\n"
-                f"EXPECTED CHECKS: {case['expected']['checks']}\n\n"
-                f"ACTUAL FINAL STATE:\n{json.dumps(final_state, indent=2, ensure_ascii=False)}\n\n"
-                f"Is the output correct according to the criteria? \n"
-                f"Respond with a JSON object: {{\"pass\": true/false, \"reason\": \"...\"}}"
-            )
+            # 2. Judge (LLM or Deterministic Fallback)
+            eval_result = {"pass": False, "reason": "Unknown"}
             
-            # Run synchronous call_llm in a thread to avoid blocking the event loop
-            loop = asyncio.get_running_loop()
-            response_content = await loop.run_in_executor(
-                _executor,
-                lambda: call_llm(judge_prompt, provider_preference=["anthropic", "openrouter", "gemini"])
-            )
-            
-            # Simple extraction
-            import re
-            match = re.search(r'\{.*\}', response_content, re.DOTALL)
-            if match:
-                eval_result = json.loads(match.group())
-            else:
-                eval_result = {"pass": False, "reason": "Judge failed to provide JSON response"}
+            if has_any_key:
+                judge_prompt = (
+                    f"You are an expert Sanskrit Philology Judge. \n"
+                    f"Evaluate the agent's output for this test case.\n\n"
+                    f"CASE DESCRIPTION: {case['description']}\n"
+                    f"EXPECTED PHASE: {case['expected']['phase']}\n"
+                    f"EXPECTED CHECKS: {case['expected']['checks']}\n\n"
+                    f"ACTUAL FINAL STATE:\n{json.dumps(final_state, indent=2, ensure_ascii=False)}\n\n"
+                    f"Is the output correct according to the criteria? \n"
+                    f"Respond with a JSON object: {{\"pass\": true/false, \"reason\": \"...\"}}"
+                )
                 
+                # Run synchronous call_llm in a thread to avoid blocking the event loop
+                loop = asyncio.get_running_loop()
+                response_content = await loop.run_in_executor(
+                    _executor,
+                    lambda: call_llm(judge_prompt, provider_preference=["anthropic", "openrouter", "gemini"])
+                )
+                
+                # Simple extraction
+                import re
+                match = re.search(r'\{.*\}', response_content, re.DOTALL)
+                if match:
+                    eval_result = json.loads(match.group())
+                else:
+                    eval_result = {"pass": False, "reason": "Judge failed to provide JSON response"}
+            else:
+                # Deterministic Fallback
+                phase_ok = final_state.get("current_phase") == case['expected']['phase']
+                checks_ok = True
+                failed_checks = []
+                
+                # Setup local scope for check evaluation
+                state = final_state
+                for check in case['expected']['checks']:
+                    try:
+                        # DANGEROUS: but fine for local eval cases we control
+                        if not eval(check):
+                            checks_ok = False
+                            failed_checks.append(check)
+                    except Exception as e:
+                        checks_ok = False
+                        failed_checks.append(f"{check} (Error: {e})")
+                
+                if phase_ok and checks_ok:
+                    eval_result = {"pass": True, "reason": "Deterministic checks passed"}
+                else:
+                    reason = []
+                    if not phase_ok:
+                        reason.append(f"Expected phase '{case['expected']['phase']}', got '{final_state.get('current_phase')}'")
+                    if not checks_ok:
+                        reason.append(f"Failed checks: {failed_checks}")
+                    eval_result = {"pass": False, "reason": "; ".join(reason)}
+            
             results.append({
                 "id": case['id'],
                 "pass": eval_result.get("pass"),

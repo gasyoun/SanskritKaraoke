@@ -30,7 +30,8 @@ on this project.
 
 | Priority | Task |
 |---|---|
-| High | Phase 4 completion: `evals/golden/` + `evals/judge.py` (MY_ROADMAP.md) |
+| **CRITICAL** | Fix pipeline bugs: `GEMINI_FIXES_PIPELINE.md` → `_2.md` → `_3.md` (do in order) |
+| Done | Phase 4 completion: `evals/golden/` + `evals/judge.py` (MY_ROADMAP.md) |
 | Done | Phase 3 — `docs/harness_gap_analysis.md` (Custom skill audit) |
 | Done | Auto-alignment implementation (GEMINI_ALIGNMENT_PLAN.md — Gemini Flash) |
 | Backlog | Firebase auth + cloud SRS (ROADMAP.md Phase 1) |

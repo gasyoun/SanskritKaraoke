@@ -94,5 +94,66 @@
         "'Missing mandatory field: s2' in ''.join(state['errors'])"
       ]
     }
+  },
+  {
+    "id": "case_06_duplicate_id",
+    "description": "Verifies that existing verse IDs are rejected by QualityGate.",
+    "input": {
+      "verse": {
+        "id": "bhg_2_47",
+        "s1": "duplicate check verse text",
+        "s2": "duplicate check verse text",
+        "encoding": "IAST",
+        "meter": "anuṣṭubh",
+        "translation": {"ru": "Тест", "en": "Test"}
+      }
+    },
+    "expected": {
+      "phase": "rejected",
+      "checks": [
+        "'already exists' in ''.join(state['errors'])"
+      ]
+    }
+  },
+  {
+    "id": "case_07_script_validation",
+    "description": "Verifies that non-IAST characters in IAST field are rejected.",
+    "input": {
+      "verse": {
+        "id": "cyrillic_test",
+        "s1": "кириллица в санскрите",
+        "s2": "more cyrillic text",
+        "encoding": "IAST",
+        "meter": "anuṣṭubh",
+        "translation": {"ru": "Тест", "en": "Test"}
+      }
+    },
+    "expected": {
+      "phase": "rejected",
+      "checks": [
+        "'Invalid characters' in ''.join(state['errors'])"
+      ]
+    }
+  },
+  {
+    "id": "case_08_version_check",
+    "description": "Verifies that verse version must be an integer.",
+    "input": {
+      "verse": {
+        "id": "v_test",
+        "s1": "karmaṇyevādhikāraste mā phaleṣu kadācana",
+        "s2": "mā karmaphalaheturbhūr mā te saṅgo'stvakarmaṇi",
+        "encoding": "IAST",
+        "meter": "anuṣṭubh",
+        "version": "not-an-integer",
+        "translation": {"ru": "Тест", "en": "Test"}
+      }
+    },
+    "expected": {
+      "phase": "rejected",
+      "checks": [
+        "'Schema violation' in ''.join(state['errors'])"
+      ]
+    }
   }
 ]
