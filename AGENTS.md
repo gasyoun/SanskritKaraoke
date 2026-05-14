@@ -8,12 +8,11 @@ any new agent session in this repository.
 See **MY_ROADMAP.md** for the full 30-week agent engineering curriculum being practised
 on this project.
 
-**Current phase:** Phase 2 — Multi-Step Persistent Agent (LangGraph pipeline)
+**Current phase:** Phase 5 — Production Hardening & Cloud Sync
 
 **Next action:**
-> Finalize **Phase 2** documentation (architecture diagram) and begin **Phase 5** 
-> (Observability). Implement cost logging for LLM calls and student session 
-> telemetry in `student.html`.
+> Finalize Firebase data migration (legacy LocalStorage → Firestore) and 
+> implement mobile-first UX polish for the progress dashboard.
 
 ## Platform context
 

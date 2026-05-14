@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [1.4.1] — 2026-05-14
 
-### Fixed (Teaching Pipeline — Critical)
+### Fixed [1.4.1]
 
 - **`nodes.py` — AttributeError on checkpoint resume**: `verse_curator` called `.get()` on
   a `VerseData` Pydantic object when a thread was resumed. Added `isinstance` guard so resumed
@@ -23,7 +23,7 @@ All notable changes to this project will be documented in this file.
 - **`nodes.py` — Null translation re-triggers LLM**: Changed translation check to test the
   `ru` value explicitly; LLM returning `null` no longer causes re-enrichment on every run.
 
-### Changed (Teaching Pipeline — Architecture)
+### Changed [1.4.1]
 
 - **`nodes.py`**: Moved all imports to module level. Extracted `_project_root`,
   `_iast_pattern`, and `_to_verse_data()` as module-level constants. Removed redundant
@@ -38,7 +38,7 @@ All notable changes to this project will be documented in this file.
 
 ## [1.4.0] — 2026-05-14
 
-### Added
+### Added [1.4.0]
 
 - **Auto-Alignment Timing Pipeline**: Integrated a waveform-based synchronization engine.
   - **Audio Analysis**: Automated onset (consonant attack) and vowel peak detection using RMS energy envelopes.
@@ -47,11 +47,11 @@ All notable changes to this project will be documented in this file.
   - **Rapid Navigation**: Tab/Shift+Tab support to quickly cycle through uncertain syllables for manual review.
   - **Timing JSON Export**: Dedicated export for per-syllable timestamps and confidence scores for database patching.
 
-### Changed
+### Changed [1.4.0]
 
 - **Version unification**: Merged the two parallel version tracks (incremental v1→v1.272 and semver v1.0.0→v1.3.1) into a single semver track. All pages now show v1.4.0.
 
-### Fixed
+### Fixed [1.4.0]
 
 - **Service Worker cache staleness**: Added `activate` event handler to prune old caches, `skipWaiting()` for immediate activation, and `clients.claim()` so returning users get fresh assets.
 - **Design system consistency**: `catalogue.html` now uses `Cormorant Garamond` (project font) instead of `Segoe UI`.
@@ -59,7 +59,7 @@ All notable changes to this project will be documented in this file.
 
 ## [1.272] — 2026-05-14
 
-### Added
+### Added [1.272]
 
 - **Touch drag support**: All drag interactions in the Timing Editor (pada boundaries, syllable timing, pan, cheatsheet, scrollbar) and waveform now work on touch screens via unified `_normEv(e)` helper that normalises mouse/touch coordinates. SVG syllable drag already had touch support.
 - **Touch navigation bar**: On touch devices (`@media (pointer: coarse)`) a row of buttons appears below the Timing Editor in Syllable mode: ◀ ▶ (navigate syllables), −0.01 / +0.01s (shift timing), ⌂ (align to pada start). Replaces keyboard shortcuts unavailable without a physical keyboard.
@@ -69,7 +69,7 @@ All notable changes to this project will be documented in this file.
 
 ## [1.3.1] — 2026-05-12 16:57
 
-### Added
+### Added [1.3.1]
 
 - **PWA Support**: The app can now be installed on Android/iOS/Desktop as a standalone application.
 - **Offline Mode**: Core assets are cached via Service Worker for use without an internet connection.
@@ -77,7 +77,7 @@ All notable changes to this project will be documented in this file.
 
 ## [1.3.0] — 2026-05-12 16:39
 
-### Added
+### Added [1.3.0]
 
 - **Telegram Mini App Support**: Full integration with the Telegram Web App SDK.
 - **Dark Mode Sync**: Automatic theme synchronization with Telegram's color scheme.
@@ -86,7 +86,7 @@ All notable changes to this project will be documented in this file.
 
 ## [1.2.2] — 2026-05-12 16:34
 
-### Added
+### Added [1.2.2]
 
 - **Mobile Optimization**: Complete overhaul of the student view for mobile devices.
 - **Sticky Bottom Bar**: Added a "thumb zone" navigation bar for easy access to Mode/Lang toggles on mobile.
@@ -95,21 +95,21 @@ All notable changes to this project will be documented in this file.
 
 ## [1.2.1] — 2026-05-12 16:32
 
-### Added
+### Added [1.2.1]
 
 - **Library Export Form**: New sidebar panel in the authoring tool (`index.html`) to export the current session directly as a formatted JSON file for the library.
 - **Auto-slug Generation**: Verse IDs are automatically suggested based on source and year.
 
 ## [1.2.0] — 2026-05-12 16:28
 
-### Added
+### Added [1.2.0]
 
 - **Catalogue Page**: New `catalogue.html` for students to browse the verse library with search, filter (meter, difficulty, tags), and sorting.
 - **SRS Badges**: Real-time status chips (New, Learning, Mastered) and "Study Today" count in headers.
 - **Internationalization (i18n)**: Expanded `strings.js` to cover 100% of the UI; added `data-i18n` attributes to `index.html` and `student.html`.
 - **Student Help**: Dedicated learner's guide in the student view help modal.
 
-### Fixed
+### Fixed [1.2.0]
 
 - **Stable Student Player**: Rewrote `make_student.py` to correctly remove authoring sidebars while preserving necessary IDs in a hidden bridge.
 - **Quiz Synchronization**: Enabled karaoke highlights in "Fill-in" and "Beat Tap" quizzes.
@@ -121,7 +121,7 @@ All notable changes to this project will be documented in this file.
 
 ## [1.1.0] — 2026-05-11
 
-### Added
+### Added [1.1.0]
 
 - **Learning Mechanics**: Implemented SRS (`srs.js`) using SM-2 algorithm.
 - **Interactive Quizzes**: Added Meter ID, Fill-in, and Beat Tap modes in `quizzes.js`.
@@ -130,7 +130,7 @@ All notable changes to this project will be documented in this file.
 
 ## [1.0.0] — 2026-05-10
 
-### Added
+### Added [1.0.0]
 
 - **Core Engine**: Wave notation rendering, devanagari/IAST support.
 - **Timing Editor**: Precise syllable-level audio synchronization.

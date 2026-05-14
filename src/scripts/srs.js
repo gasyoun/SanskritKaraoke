@@ -11,6 +11,9 @@ function getSrsData() {
 
 function saveSrsData(data) {
   localStorage.setItem(SRS_KEY, JSON.stringify(data));
+  if (typeof syncToCloud === 'function') {
+    syncToCloud(SRS_KEY, data);
+  }
 }
 
 function getSrsRecord(id) {
@@ -81,6 +84,12 @@ function updateStreak() {
   
   localStorage.setItem('shloka_last_played', today);
   localStorage.setItem('shloka_streak', streak);
+  
+  // Sync telemetry as well
+  if (typeof syncToCloud === 'function') {
+    const telemetry = JSON.parse(localStorage.getItem('telemetry') || '[]');
+    syncToCloud('telemetry', telemetry);
+  }
 }
 
 function getStreak() {

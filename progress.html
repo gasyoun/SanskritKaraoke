@@ -25,9 +25,36 @@
 <body>
 <div class="container">
   <div class="header">
-    <h1>Обучение и Прогресс</h1>
+    <div style="display:flex; align-items:center; gap:15px;">
+      <h1>Обучение и Прогресс</h1>
+      <button id="btn-cloud" onclick="handleCloudClick()" style="font-size:.65rem; font-family:'JetBrains Mono',monospace; padding:3px 8px; border:1px solid var(--border); border-radius:4px; background:transparent; color:var(--ink2); cursor:pointer;">Sync: Local</button>
+    </div>
     <div class="streak-badge">🔥 <span id="streak-count">0</span> дней подряд</div>
   </div>
+
+  <script src="src/scripts/firebase-config.js"></script>
+  <script type="module" src="src/scripts/cloud_sync.js"></script>
+  <script>
+    function handleCloudClick() {
+      if (window.currentUser) {
+        if (confirm("Выйти из облачной синхронизации?")) window.cloudLogout();
+      } else {
+        window.cloudLogin();
+      }
+    }
+    
+    // Override onAuthUpdate to refresh button
+    const _oldAuthUpdate = window.onAuthUpdate;
+    window.onAuthUpdate = (user) => {
+      if (_oldAuthUpdate) _oldAuthUpdate(user);
+      const btn = document.getElementById('btn-cloud');
+      if (btn) {
+        btn.textContent = user ? `Sync: Cloud (${user.email.split('@')[0]})` : 'Sync: Local';
+        btn.style.color = user ? 'var(--laghu)' : 'var(--ink2)';
+        btn.style.borderColor = user ? 'var(--laghu)' : 'var(--border)';
+      }
+    };
+  </script>
   
   <h2>Изучать сегодня</h2>
   <div id="due-list" style="margin-bottom:40px; display:flex; gap:10px; flex-wrap:wrap;"></div>

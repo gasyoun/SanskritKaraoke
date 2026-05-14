@@ -163,9 +163,11 @@ Add structured logging to the teaching pipeline agent. Every student session: ve
 - SRS data loss: export localStorage to Drive on each session end
 
 **Deliverable:**
-- [ ] Cost dashboard (even a simple script that reads API logs)
-- [ ] Student session logging in `student.html`
-- [ ] Drive-failure fallback in `loadStudentData`
+- [x] Cost dashboard (even a simple script that reads API logs)
+- [x] Student session logging in `student.html`
+- [x] Drive-failure fallback in `loadStudentData`
+- [x] Provider expansion (Gemma 2 27B)
+- [x] Firebase Cloud Sync (Auth + Firestore)
 
 ---
 
@@ -195,13 +197,13 @@ Add structured logging to the teaching pipeline agent. Every student session: ve
 - [x] **Phase 2** — LangGraph teaching pipeline (v1.4.1 Pydantic refactored)
 - [x] **Phase 3** — `docs/harness_gap_analysis.md` + one custom skill/hook
 - [x] **Phase 4** — golden dataset (8 cases) + LLM-as-judge + CI eval gate
-- [ ] **Phase 5** — cost logging + student session observability + Drive fallback
+- [x] **Phase 5** — cost logging + student session observability + Drive fallback + Cloud Sync
 
 ---
 
 ## Next Action
 
-**Today:** Begin Phase 5 — Production Hardening. Implement **LLM Cost Logging** to track spend across Gemini and Anthropic calls, and add **Student Session Observability** to `student.html` to capture learning telemetry for future dataset fine-tuning.
+**Today:** Phase 5 core infrastructure complete. **Next:** Finalize Firebase data migration (moving all legacy LocalStorage SRS to Firestore) and implement mobile-first UX polish for the progress dashboard.
 
 ---
 

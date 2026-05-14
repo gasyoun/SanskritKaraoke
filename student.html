@@ -61,7 +61,7 @@ window.addEventListener('DOMContentLoaded', () => {
     .wave-svg-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .wave-svg-wrap svg { min-width: 600px; }
     #translation-box { font-size: 0.95rem !important; cursor: pointer; }
-    #translation-box.collapsed { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    #translation-box.collapsed { display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     #quiz-panel, #srs-panel { margin: 10px; padding: 15px; }
     .mobile-hide { display: none !important; }
     .mobile-only { display: block !important; }
@@ -84,9 +84,22 @@ window.addEventListener('DOMContentLoaded', () => {
     <button id="btn-mode" class="mobile-hide" onclick="cycleMode()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em" data-i18n="modeFull">Mode: Full</button>
     <button id="btn-lang" class="mobile-hide" onclick="toggleLang()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em">🌐 RU</button>
     <button onclick="openHelp()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em">?</button>
+    <div id="cloud-status" style="font-size:.65rem; font-family:'JetBrains Mono',monospace; color:rgba(247,243,236,.5);">☁</div>
     <span class="om">ॐ</span>
   </div>
 </header>
+
+<script src="src/scripts/firebase-config.js"></script>
+<script type="module" src="src/scripts/cloud_sync.js"></script>
+<script>
+  window.onAuthUpdate = (user) => {
+    const status = document.getElementById('cloud-status');
+    if (status) {
+      status.style.color = user ? '#2c4a1e' : 'rgba(247,243,236,.5)';
+      status.title = user ? `Cloud Sync Active: ${user.email}` : 'Local Mode';
+    }
+  };
+</script>
 
 <div class="app">
 
