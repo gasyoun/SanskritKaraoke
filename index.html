@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Sanskrit Karaoke — v1.3.0</title>
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded', () => {
 <header>
   <div style="display:flex;align-items:baseline;gap:2ch">
     <h1 data-i18n="mainTitle">Волновая нотация санскрита</h1>
-    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.271</span>
+    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.272</span>
   </div>
   <div id="msg-header" style="display:none;font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:3px;margin-left:16px;align-self:center"></div>
   <div style="display:flex;align-items:center;gap:14px">
@@ -524,7 +524,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 <!-- TIMING EDITOR MODAL -->
 <div id="timing-editor-overlay" style="display:none;position:fixed;inset:0;background:rgba(24,18,12,.8);z-index:400;overflow:hidden">
-  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:92vw;max-width:1200px;height:85vh;max-height:90vh;background:var(--card);border-radius:10px;padding:16px 24px 20px;box-shadow:0 8px 40px rgba(0,0,0,.4);display:flex;flex-direction:column">
+  <div style="position:relative;width:92vw;max-width:1200px;height:85vh;max-height:90vh;background:var(--card);border-radius:10px;padding:16px 24px 20px;box-shadow:0 8px 40px rgba(0,0,0,.4);display:flex;flex-direction:column">
 
     <!-- Заголовок -->
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-shrink:0">

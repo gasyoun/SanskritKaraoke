@@ -266,3 +266,4 @@ v1.268 — mobile MP4 export warning
 v1.269 — touch drag support (timing editor, waveform, SVG)
 v1.270 — touch nav bar in timing editor (◀ ▶ −0.01 +0.01 ⌂)
 v1.271 — iOS export fixes (PNG overlay, video link, captureStream block)
+v1.272 — timing editor safe area for iPhone (viewport-fit=cover, flex centering, env padding)
