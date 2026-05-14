@@ -191,17 +191,17 @@ Add structured logging to the teaching pipeline agent. Every student session: ve
 ## Project Deliverables Checklist
 
 - [x] **Phase 0** — `docs/harness_mental_model.md` (ten-component Claude Code audit)
-- [x] **Phase 1** — verse agent (raw & SDK versions) + `POSTMORTEM.md`
-- [ ] **Phase 2** — LangGraph teaching pipeline + LangSmith trace URL
+- [x] **Phase 1** — verse agent (raw & SDK versions) + `POSTMORTEM.md` (moved to `docs/history/`)
+- [x] **Phase 2** — LangGraph teaching pipeline (v1.4.1 Pydantic refactored)
 - [x] **Phase 3** — `docs/harness_gap_analysis.md` + one custom skill/hook
-- [x] **Phase 4** — golden dataset (≥8 cases) + LLM-as-judge + CI eval gate
+- [x] **Phase 4** — golden dataset (8 cases) + LLM-as-judge + CI eval gate
 - [ ] **Phase 5** — cost logging + student session observability + Drive fallback
 
 ---
 
 ## Next Action
 
-**Today:** Begin Phase 4 — Evals. Build the **Golden Dataset** from documented bugs (GEMINI_FIXES.md) and implement the **Claude-as-judge** evaluator to automate quality control for future agentic improvements.
+**Today:** Begin Phase 5 — Production Hardening. Implement **LLM Cost Logging** to track spend across Gemini and Anthropic calls, and add **Student Session Observability** to `student.html` to capture learning telemetry for future dataset fine-tuning.
 
 ---
 

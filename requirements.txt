@@ -1,7 +1,13 @@
-langgraph
-langchain
-langchain-anthropic
-google-generativeai
-jsonschema
-python-dotenv
-pathlib
+# Sanskrit Karaoke — Python Dependencies
+#
+# This file re-exports the canonical requirements from the teaching pipeline.
+# For the full dependency list with version pins, see:
+#   agents/teaching_pipeline/requirements.txt
+#
+# Quick install (no PostgreSQL):
+#   pip install langgraph langchain-anthropic google-generativeai pydantic jsonschema python-dotenv requests
+#
+# Full install (with PostgreSQL production persistence):
+#   pip install -r agents/teaching_pipeline/requirements.txt
+
+-r agents/teaching_pipeline/requirements.txt

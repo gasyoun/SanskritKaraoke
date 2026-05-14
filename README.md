@@ -105,10 +105,25 @@ node --check src/scripts/app.js
 |---|---|
 | `index.html` | Entire UI — main view + all modals (settings, help, timing editor, Drive picker) |
 | `src/scripts/app.js` | All application logic (~480 KB, single file) |
-| `src/style.css` | Styles |
-| `apte_prosody.html` | Apte prosody reference database |
-| `ver_info.txt` | Version history |
+| `docs/reference/apte_prosody.html` | Apte prosody reference database |
+| `docs/history/ver_info.txt` | Version history |
 
+---
+
+## Teaching Pipeline & Evals
+
+The project includes a server-side **Teaching Pipeline** built on **LangGraph 1.0** and **Pydantic**, designed to automate verse curation and student analysis.
+
+### Architecture
+- **VerseCurator**: Validates and enriches new verse JSON files.
+- **ContentEnricher**: Uses Gemini Flash to generate missing translations and tags.
+- **QualityGate**: Enforces strict semantic and schema rules before publication.
+- **StudentAnalyzer**: Analyzes SRS history and recommends the next study queue.
+
+### Automated Quality Control (Evals)
+A **Golden Dataset** of 8 test cases (including edge cases like duplicate IDs and IAST script validation) is maintained in `evals/golden/`. The `evals/judge.py` harness uses **Claude 3.5 Sonnet** as a judge to evaluate the pipeline's output against expected criteria, ensuring no regressions in the automated content enrichment logic.
+
+---
 The application has no dependencies beyond the browser and `mp4-muxer` (bundled). `app.js` is a self-contained monolith; see `CLAUDE.md` for the internal function map.
 
 ---

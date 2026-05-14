@@ -1,10 +1,12 @@
 import os
+import copy
 import json
 import re
 import asyncio
 from pathlib import Path
 from datetime import datetime
 from .state import AgentState, VerseData
+from .llm import call_llm
 
 # Module-level constants — computed once, not per function call
 _project_root = Path(__file__).resolve().parent.parent.parent
@@ -123,8 +125,6 @@ async def content_enricher(state: AgentState):
     Returns a new state delta — never mutates state in-place (deepcopy guard).
     Runs LLM call in a thread executor to avoid blocking the async event loop.
     """
-    import copy
-    from .llm import call_llm
 
     raw_verse = state.get("verse")
     if not raw_verse:

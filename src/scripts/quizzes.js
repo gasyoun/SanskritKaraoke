@@ -37,7 +37,11 @@ async function startMeterQuiz() {
 
 function checkMeter(selected, correct) {
   const qBox = document.getElementById('quiz-content');
-  if (selected === correct) {
+  const isCorrect = selected === correct;
+  if (typeof logTelemetry === 'function') {
+    logTelemetry('quiz_result', { type: 'meter', success: isCorrect, selected, correct });
+  }
+  if (isCorrect) {
     qBox.innerHTML = `<p style="color:var(--laghu); font-size:1.2rem; font-weight:bold;">✅ Верно! Это ${correct}.</p>`;
   } else {
     qBox.innerHTML = `<p style="color:var(--guru); font-size:1.2rem; font-weight:bold;">❌ Ошибка. Правильный ответ: ${correct}.</p>`;
@@ -99,8 +103,13 @@ function checkFillIn(correct) {
       const f = (DATA.s1||[]).concat(DATA.s2||[]).find(s=>s.syl===correct);
       if(f) devCorrect = f.devSyl;
   }
+  
+  const isCorrect = (val.toLowerCase() === correct.toLowerCase() || val === devCorrect);
+  if (typeof logTelemetry === 'function') {
+    logTelemetry('quiz_result', { type: 'fillin', success: isCorrect, input: val, correct });
+  }
 
-  if (val.toLowerCase() === correct.toLowerCase() || val === devCorrect) {
+  if (isCorrect) {
     res.innerHTML = `<span style="color:var(--laghu); font-weight:bold;">✅ Верно!</span>`;
   } else {
     res.innerHTML = `<span style="color:var(--guru); font-weight:bold;">❌ Ошибка. Правильно: ${correct} (${devCorrect})</span>`;
@@ -171,6 +180,16 @@ function onQuizAudioEnd() {
     if (typeof _mainHighlightStop === 'function') _mainHighlightStop();
     document.removeEventListener('keydown', _beatTapKeyHandler);
     const qBox = document.getElementById('quiz-content');
+    
+    if (typeof logTelemetry === 'function') {
+      logTelemetry('quiz_result', { 
+        type: 'beattap', 
+        score: window._tapScore, 
+        total: window._tapTotal,
+        percent: window._tapTotal > 0 ? Math.round((window._tapScore / window._tapTotal) * 100) : 0
+      });
+    }
+
     qBox.innerHTML = `<p style="font-weight:bold; font-size:1.2rem; color:var(--ink);">Тест завершен! Результат: ${window._tapScore} / ${window._tapTotal}</p>`;
     setTimeout(() => { activeQuiz = null; endQuiz(); }, 3000);
   } else if (activeQuiz === 'fillin') {
