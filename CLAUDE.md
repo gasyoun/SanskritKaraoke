@@ -119,6 +119,23 @@ Scope is `drive` (not `drive.file`) so users can see the shared folder. Token is
 | Simple MP4 export (`captureStream`) | ✓ | ✗ blocked |
 | Timing editor safe area | n/a | ✓ env() padding |
 
+## Mobile QA checklist
+
+Test at `https://samskrtam.ru/shloka-wave` with a real device.
+
+**Android:**
+1. Paste BG 2.47 (s1/s2) → Run — wave diagram appears
+2. Touch-drag a syllable circle — it moves
+3. Load audio → open Timing Editor → touch-drag a boundary line
+4. Tap Karaoke MP4 — confirm dialog appears with warning
+
+**iPhone:**
+1. Same steps 1–3 as Android
+2. PNG Export — full-screen overlay with image appears (long-press to save)
+3. Karaoke MP4 — overlay with video link appears (open → share → save)
+4. In Timing Editor (Syllable mode) — bottom nav bar `◀ ▶ −0.01 +0.01 ⌂` is visible
+5. Timing Editor modal does not clip under notch or home indicator
+
 ## Known incomplete features
 
 - Tapping mode temporarily disabled (button hidden).
