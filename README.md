@@ -26,6 +26,7 @@ Sanskrit Karaoke turns a Sanskrit śloka into an interactive wave diagram that s
 - **Karaoke MP4 export** — renders the wave diagram with the audio track and an animated highlight dot
 - **PNG export** — 1920 × 1080 image with Devanagari, IAST transliteration, and footer metadata
 - **Google Drive** — save and load sessions (JSON + audio) to a shared Drive folder
+- **Mobile & touch** — full touch drag in the Timing Editor; on-screen navigation bar (◀ ▶ −0.01 +0.01 ⌂) on touch devices; iOS-specific export overlays for PNG and MP4; iPhone safe-area support
 
 ---
 

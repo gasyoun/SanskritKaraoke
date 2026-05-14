@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.272] — 2026-05-14
+### Added
+- **Touch drag support**: All drag interactions in the Timing Editor (pada boundaries, syllable timing, pan, cheatsheet, scrollbar) and waveform now work on touch screens via unified `_normEv(e)` helper that normalises mouse/touch coordinates. SVG syllable drag already had touch support.
+- **Touch navigation bar**: On touch devices (`@media (pointer: coarse)`) a row of buttons appears below the Timing Editor in Syllable mode: ◀ ▶ (navigate syllables), −0.01 / +0.01s (shift timing), ⌂ (align to pada start). Replaces keyboard shortcuts unavailable without a physical keyboard.
+- **iOS export handling**: `_isIOS()` detection enables platform-specific export flows — PNG shows a full-screen overlay with long-press-to-save instructions; Karaoke MP4 shows a link overlay for share/save; simple MP4 (`captureStream`) is blocked with a clear error since Safari doesn't support `canvas.captureStream()`.
+- **Android MP4 warning**: `confirm()` dialog before starting MP4 export on Android/iOS, explaining memory limitations.
+- **iPhone safe area**: Timing Editor overlay uses `viewport-fit=cover`, `env(safe-area-inset-*)` padding with flex centering — modal clears the notch and Home indicator on all iPhone models.
+
 ## [1.3.1] — 2026-05-12 16:57
 ### Added
 - **PWA Support**: The app can now be installed on Android/iOS/Desktop as a standalone application.

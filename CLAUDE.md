@@ -56,7 +56,8 @@ No build step, no bundler, no test suite — QA is manual in-browser.
 - **SVG rendering** — `buildWaveSVG(key)` draws the wave canvas including vipulā frames.
 - **Timing editor** — `openTimingEditorInMode('padas'|'timing')` / `closeTimingEditor()` / `teSwitchMode()`. Two modes: pada-boundary marking (8 draggable lines) and per-syllable fine timing.
 - **Playback** — `timingEditorPlay(mode)`, `timingEditorPlayOrPause(mode)`, `_mainHighlightLoop()` (rAF loop for syllable highlight).
-- **Export** — `downloadPng()` (1920×1080 PNG), `downloadKaraokeMp4()` (mp4-muxer).
+- **Export** — `downloadPng()` (1920×1080 PNG), `downloadKaraokeMp4()` (mp4-muxer). On iOS: `_iosShowImage()` overlay for PNG, `_iosShowVideoLink()` overlay for MP4. `downloadMp4()` blocked on iOS (no `captureStream`).
+- **Mobile/touch** — `_normEv(e)` normalises mouse/touch coords for all drag handlers. `_isIOS()` detects iPhone/iPad. Touch nav bar (`#te-touch-nav`) shown via `@media (pointer: coarse)` in timing mode.
 - **Google Drive** — `gdriveSave()` / `gdriveLoad()`, `_gdOpen()`, `_gdLoadFolder()`, `_gdConfirm()`.
 - **Student Platform** — `src/scripts/srs.js` (SM-2 implementation), `src/scripts/quizzes.js` (Meter ID, Fill-in, Beat Tap quizzes), `src/scripts/strings.js` (RU/EN i18n).
 
@@ -104,6 +105,19 @@ const GDRIVE = {
 ```
 
 Scope is `drive` (not `drive.file`) so users can see the shared folder. Token is cached in localStorage.
+
+## Mobile support status
+
+| Feature | Android | iPhone |
+|---|---|---|
+| Student flow (catalogue/player/SRS) | ✓ | ✓ |
+| Telegram Mini App | ✓ | ✓ |
+| Touch drag (timing editor, waveform) | ✓ | ✓ |
+| Timing editor touch nav bar | ✓ | ✓ |
+| PNG export | warn (downloads OK) | ✓ overlay |
+| Karaoke MP4 export | confirm dialog | ✓ link overlay |
+| Simple MP4 export (`captureStream`) | ✓ | ✗ blocked |
+| Timing editor safe area | n/a | ✓ env() padding |
 
 ## Known incomplete features
 
