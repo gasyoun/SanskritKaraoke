@@ -76,7 +76,8 @@ const STRINGS = {
     okKaraoke: 'Карaoке-видео готово!',
     okPng: 'PNG-изображение готово!',
     okStory: 'Видео для Story готово!',
-    
+    mobileExportWarning: 'Экспорт MP4 может не работать на мобильных устройствах из-за ограничений памяти браузера. Для надёжного результата используйте десктоп.\n\nПродолжить на мобильном?',
+
     // Progress page
     progressTitle: 'Sanskrit Karaoke — Прогресс',
     studyTodayHeading: 'Изучать сегодня',
@@ -166,7 +167,8 @@ const STRINGS = {
     okKaraoke: 'Karaoke video is ready!',
     okPng: 'PNG image is ready!',
     okStory: 'Story video is ready!',
-    
+    mobileExportWarning: 'MP4 export may fail on mobile devices due to browser memory limits. For reliable results, use a desktop browser.\n\nContinue on mobile anyway?',
+
     // Progress page
     progressTitle: 'Sanskrit Karaoke — Progress',
     studyTodayHeading: 'Study Today',
