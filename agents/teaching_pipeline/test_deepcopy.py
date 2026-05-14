@@ -5,29 +5,31 @@ not a raw dict (which is what the pipeline actually stores after verse_curator r
 Mocks call_llm so no API key is needed.
 """
 import asyncio
-import copy
 import json
 import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+from pathlib import Path
 
-# Mock call_llm BEFORE importing nodes (import order matters)
-import agents.teaching_pipeline.llm as llm_module
+import pytest
 
-def mock_call_llm(prompt, provider_preference=None):
+project_root = Path(__file__).resolve().parent.parent.parent
+sys.path.insert(0, str(project_root))
+
+
+def mock_call_llm(prompt, provider_preference=None, metadata=None):
     """Returns a known JSON response without calling any API."""
     return json.dumps({
         "translation_ru": "Test translation",
         "tags": ["test_tag_1", "test_tag_2"]
     })
 
-llm_module.call_llm = mock_call_llm
-
 from agents.teaching_pipeline.nodes import content_enricher
 from agents.teaching_pipeline.state import VerseData
 
 
-async def test_deepcopy():
+@pytest.mark.asyncio
+async def test_deepcopy(monkeypatch):
+    monkeypatch.setattr("agents.teaching_pipeline.nodes.call_llm", mock_call_llm)
+
     print("="*50)
     print("TEST: content_enricher does not mutate input state")
     print("="*50)

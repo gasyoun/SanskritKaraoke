@@ -42,11 +42,6 @@ html = re.sub(r'<aside class="sidebar">.*?</aside>', hidden_elements, html, flag
 
 # Fix CSS (Bug 1: mode-blind class)
 html = html.replace('</head>', """
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<link rel="manifest" href="manifest.json">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="apple-touch-icon" href="src/icons/icon-192.png">
 <style>
   .main { margin-left: 0 !important; width: 100% !important; }
   .mode-dots .syl-label { display: none !important; }
@@ -144,7 +139,6 @@ html = re.sub(r'<div id="help-overlay".*?>(.*?)</div>\s*</div>',
 
 # Update scripts
 html = html.replace('</body>', """
-<script src="src/scripts/strings.js"></script>
 <script src="src/scripts/srs.js"></script>
 <script src="src/scripts/quizzes.js"></script>
 <script>
@@ -164,6 +158,15 @@ function waitForApp(cb, retries = 20) {
   else console.error('app.js failed to load');
 }
 
+function driveMediaUrl(fileId) {
+  const encodedId = encodeURIComponent(fileId);
+  const apiKey = window.GDRIVE && window.GDRIVE.apiKey;
+  if (apiKey) {
+    return `https://www.googleapis.com/drive/v3/files/${encodedId}?alt=media&key=${encodeURIComponent(apiKey)}`;
+  }
+  return `https://drive.google.com/uc?export=download&id=${encodedId}`;
+}
+
 async function loadStudentData() {
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
@@ -180,7 +183,7 @@ async function loadStudentData() {
     
     if (currentVerse.session && currentVerse.session.drive_file_id && currentVerse.session.drive_file_id !== 'TODO') {
       const sessionId = currentVerse.session.drive_file_id;
-      const sessionUrl = `https://www.googleapis.com/drive/v3/files/${sessionId}?alt=media&key=${GDRIVE.apiKey}`;
+      const sessionUrl = driveMediaUrl(sessionId);
       const sessionRes = await fetch(sessionUrl);
       if (sessionRes.ok) {
         const sessionJson = await sessionRes.json();
@@ -195,7 +198,7 @@ async function loadStudentData() {
 
     if (currentVerse.audio && currentVerse.audio.drive_file_id && currentVerse.audio.drive_file_id !== 'TODO') {
       const audioId = currentVerse.audio.drive_file_id;
-      const audioUrl = `https://www.googleapis.com/drive/v3/files/${audioId}?alt=media&key=${GDRIVE.apiKey}`;
+      const audioUrl = driveMediaUrl(audioId);
       const audioEl = document.getElementById('audio-preview');
       audioEl.src = audioUrl;
       audioEl.style.display = 'block';

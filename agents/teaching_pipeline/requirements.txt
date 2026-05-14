@@ -1,7 +1,7 @@
 # Dependencies for the Sanskrit Karaoke teaching pipeline (agents/teaching_pipeline/)
 #
 # Install:  pip install -r requirements.txt
-# Dev:      pip install -r requirements.txt pytest
+# Dev:      pip install -r requirements.txt pytest pytest-asyncio
 #
 # PostgreSQL persistence (production):
 #   pip install psycopg[binary]   ← psycopg v3, async-compatible (preferred)
@@ -27,7 +27,7 @@ jsonschema>=4.0.0
 # Database drivers
 psycopg[binary]>=3.1.0   # PostgreSQL async (preferred for production)
 psycopg2-binary>=2.9.0   # PostgreSQL sync fallback
-sqlite3                   # stdlib — no install needed
+# sqlite3 is part of the Python standard library and must not be installed via pip.
 
 # Environment
 python-dotenv>=1.0.0

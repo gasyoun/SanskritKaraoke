@@ -144,7 +144,7 @@ async def content_enricher(state: AgentState):
         )
         try:
             # Use call_llm in a thread executor (since it might use requests/sync SDK internally)
-            loop = asyncio.get_event_loop()
+            loop = asyncio.get_running_loop()
             response_text = await loop.run_in_executor(
                 None,
                 lambda: call_llm(prompt, provider_preference=["gemini", "anthropic"], metadata={"verse_id": verse.id})
@@ -156,7 +156,7 @@ async def content_enricher(state: AgentState):
                     verse.translation = {}
                 verse.translation["ru"] = data.get("translation_ru")
                 existing_tags = verse.tags or []
-                verse.tags = list(set(existing_tags + data.get("tags", [])))
+                verse.tags = list(dict.fromkeys(existing_tags + data.get("tags", [])))
         except Exception as e:
             return {"errors": [f"Enrichment error: {str(e)}"]}
 

@@ -20,6 +20,13 @@ Usage:
   from agents.teaching_pipeline.graph import pipeline
   result = await pipeline.ainvoke(initial_state, config={"configurable": {"thread_id": "..."}})
 """
-from .graph import pipeline
-
 __all__ = ["pipeline"]
+
+
+def __getattr__(name: str):
+    """Load the compiled graph lazily so submodule imports stay side-effect free."""
+    if name == "pipeline":
+        from .graph import pipeline
+
+        return pipeline
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

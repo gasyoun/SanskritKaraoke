@@ -1,5 +1,8 @@
 import os
+from pathlib import Path
 from langgraph.checkpoint.memory import MemorySaver
+
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
 
 def get_checkpointer():
@@ -43,7 +46,7 @@ def get_checkpointer():
     try:
         from langgraph.checkpoint.sqlite import SqliteSaver
         import sqlite3
-        conn = sqlite3.connect("teaching_pipeline.db", check_same_thread=False)
+        conn = sqlite3.connect(_PROJECT_ROOT / "teaching_pipeline.db", check_same_thread=False)
         return SqliteSaver(conn)
     except Exception as e:
         print(f"Warning: Failed to initialize SqliteSaver: {e}. Falling back to MemorySaver.")

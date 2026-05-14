@@ -74,8 +74,8 @@ const TE = {
 ## Google Drive
 ```javascript
 const GDRIVE = {
-  clientId: '66648692430-60h3g4a5qa5j8iehjdojak436ph5h6n1.apps.googleusercontent.com',
-  apiKey:   'AIzaSyDVK1eD272C7qHa-cmMokWFqfqfbsW8VVk',
+  clientId: '<GOOGLE_OAUTH_CLIENT_ID>',
+  apiKey:   '<GOOGLE_API_KEY>',
   folderId: '1L4m_UG4XMOcswDRWZUk--2xxrcasHFrs',
   scopes:   'https://www.googleapis.com/auth/drive',  // не drive.file!
   tokenClient: null, accessToken: null,
