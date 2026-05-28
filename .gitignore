@@ -40,3 +40,7 @@ Thumbs.db
 # Logs
 *.log
 logs/
+
+# audit sidecars
+.contributing_old.md
+.contributing_audit.txt
