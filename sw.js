@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sanskrit-karaoke-v1.4.2-first-release';
+const CACHE_NAME = 'sanskrit-karaoke-v1.4.2-student-badge-fix';
 const ASSETS = [
   'catalogue.html',
   'student.html',
