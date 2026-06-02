@@ -24,6 +24,8 @@
     z-index: 100;
   }
   header h1 { margin: 0; font-size: 1.2rem; }
+  .title-wrap { display:flex; align-items:baseline; gap:2ch; min-width:0; flex-wrap:wrap; }
+  .version-badge { font-size:.75rem; font-weight:400; color:#aaa; letter-spacing:0; text-transform:none; font-family:'JetBrains Mono',monospace; }
   .header-actions { display: flex; align-items: center; gap: 15px; }
   
   .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
@@ -101,7 +103,10 @@
 <body>
 
 <header>
-  <h1 data-i18n="catalogHeading">Каталог Шлок</h1>
+  <div class="title-wrap">
+    <h1 data-i18n="catalogHeading">Каталог Шлок</h1>
+    <span class="version-badge">v1.4.2</span>
+  </div>
   <div class="header-actions">
     <a href="progress.html" style="color:#f7f3ec; text-decoration:none; font-size:0.9rem;" data-i18n="progressTitle">Прогресс</a>
     <span id="due-badge-wrap" style="display:none;">

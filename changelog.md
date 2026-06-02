@@ -37,6 +37,8 @@ All notable changes to this project will be documented in this file.
 - **Telegram BackButton warnings**: Guarded native BackButton calls behind
   Telegram SDK version support checks so regular browser sessions do not log
   unsupported-version warnings.
+- **Visible release badges**: Added the `v1.4.2` badge to catalogue and progress
+  headers so all public release surfaces expose the current version consistently.
 - **Progress dashboard duplicate rows**: `loadProgress()` now clears the table and
   due list before rerendering, so cloud-sync refreshes do not duplicate content.
 - **Mobile progress dashboard**: The progress table stacks into labeled rows below

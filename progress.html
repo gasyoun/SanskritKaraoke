@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sanskrit Karaoke — Прогресс и повторение</title>
+<title>Sanskrit Karaoke — v1.4.2 — Прогресс и повторение</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link rel="stylesheet" href="src/style.css">
 <style>
@@ -12,6 +12,7 @@
   .header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; border-bottom: 2px solid var(--gold); padding-bottom: 14px; margin-bottom: 20px; }
   .header-main { display:flex; align-items:center; gap:15px; flex-wrap:wrap; min-width:0; }
   .header h1 { margin: 0; overflow-wrap: anywhere; }
+  .version-badge { font-size:.75rem; font-weight:400; color:#aaa; letter-spacing:0; text-transform:none; font-family:'JetBrains Mono',monospace; }
   .sync-button { font-size:.65rem; font-family:'JetBrains Mono',monospace; padding:5px 10px; border:1px solid var(--border); border-radius:4px; background:transparent; color:var(--ink2); cursor:pointer; white-space:nowrap; }
   .streak-badge { background: var(--gold); color: #fff; padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 1rem; white-space: nowrap; }
   .summary-grid { display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border:1px solid var(--border); border-radius:8px; overflow:hidden; margin: 0 0 24px; }
@@ -60,6 +61,7 @@
   <div class="header">
     <div class="header-main">
       <h1>Обучение и Прогресс</h1>
+      <span class="version-badge">v1.4.2</span>
       <button id="btn-cloud" class="sync-button" onclick="handleCloudClick()">Sync: Local</button>
     </div>
     <div class="streak-badge">🔥 <span id="streak-count">0</span> дней подряд</div>
