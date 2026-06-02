@@ -162,7 +162,8 @@ async function init() {
     tg.ready();
     tg.expand();
     if (tg.colorScheme === 'dark') document.body.classList.add('tg-dark');
-    tg.BackButton.hide(); // No back button on catalog home
+    const canUseBackButton = tg.BackButton && typeof tg.isVersionAtLeast === 'function' && tg.isVersionAtLeast('6.1');
+    if (canUseBackButton) tg.BackButton.hide(); // No back button on catalog home
   }
   
   // Register Service Worker

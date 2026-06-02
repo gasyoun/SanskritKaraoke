@@ -34,6 +34,9 @@ All notable changes to this project will be documented in this file.
 - **HTML cache refresh**: Changed service-worker handling for app HTML pages to
   network-first with `cache: reload`, preventing query-string student URLs from
   staying stale after post-release HTML fixes.
+- **Telegram BackButton warnings**: Guarded native BackButton calls behind
+  Telegram SDK version support checks so regular browser sessions do not log
+  unsupported-version warnings.
 - **Progress dashboard duplicate rows**: `loadProgress()` now clears the table and
   due list before rerendering, so cloud-sync refreshes do not duplicate content.
 - **Mobile progress dashboard**: The progress table stacks into labeled rows below

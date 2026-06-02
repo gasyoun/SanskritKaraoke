@@ -678,10 +678,13 @@ if (window.Telegram && window.Telegram.WebApp) {
   tg.expand();
   if (tg.colorScheme === 'dark') document.body.classList.add('tg-dark');
   
-  tg.BackButton.show();
-  tg.BackButton.onClick(() => {
-    window.location.href = 'catalogue.html';
-  });
+  const canUseBackButton = tg.BackButton && typeof tg.isVersionAtLeast === 'function' && tg.isVersionAtLeast('6.1');
+  if (canUseBackButton) {
+    tg.BackButton.show();
+    tg.BackButton.onClick(() => {
+      window.location.href = 'catalogue.html';
+    });
+  }
 }
 
 // Register Service Worker
