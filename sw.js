@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sanskrit-karaoke-v1.4.2-student-badge-fix';
+const CACHE_NAME = 'sanskrit-karaoke-v1.4.2-html-network-first';
 const ASSETS = [
   'catalogue.html',
   'student.html',
@@ -12,6 +12,7 @@ const ASSETS = [
   'verses/index.json',
   'manifest.json'
 ];
+const HTML_ASSETS = new Set(['', 'catalogue.html', 'student.html', 'progress.html', 'index.html']);
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -34,6 +35,27 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
+
+  const url = new URL(event.request.url);
+  const pathName = url.pathname.split('/').pop() || '';
+  const isAppHtml =
+    url.origin === self.location.origin &&
+    (event.request.mode === 'navigate' || HTML_ASSETS.has(pathName));
+
+  if (isAppHtml) {
+    event.respondWith(
+      fetch(event.request, { cache: 'reload' })
+        .then((response) => {
+          const copy = response.clone();
+          event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy)));
+          return response;
+        })
+        .catch(() => caches.match(event.request).then((response) => response || caches.match(pathName || 'index.html')))
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then((response) => {
       return response || fetch(event.request);
