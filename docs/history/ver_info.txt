@@ -268,3 +268,4 @@ v1.270 — touch nav bar in timing editor (◀ ▶ −0.01 +0.01 ⌂)
 v1.271 — iOS export fixes (PNG overlay, video link, captureStream block)
 v1.272 — timing editor safe area for iPhone (viewport-fit=cover, flex centering, env padding)
 v1.4.0 | 2026-05-14 | Version unification (one semver track); SW cache staleness fix (activate handler); catalogue.html design system fix; stale docs cleanup
+v1.4.2 | 2026-06-02 | First release: Firebase local-to-cloud migration, progress dashboard mobile polish, telemetry sync, release metadata and cache key

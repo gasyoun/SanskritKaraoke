@@ -2,7 +2,7 @@
 
 ## Wave-notation visualiser and karaoke exporter for Sanskrit verse
 
-[**Live app →**](https://samskrtam.ru/shloka-wave) · [v1.4.0](https://samskrtam.ru/shloka-wave/1.3.0)
+[**Live app →**](https://samskrtam.ru/shloka-wave) · [v1.4.2](https://samskrtam.ru/shloka-wave)
 
 > **If the app doesn't reflect the latest version after an update, do a hard refresh to clear the cache:**
 > Edge, Firefox, Opera — `Ctrl+F5` · Chrome — `Ctrl+Shift+R` · Safari (Mac) — `Cmd+Shift+R` or `Cmd+Option+R`

@@ -17,7 +17,7 @@ on this project.
 ## Platform context
 
 - **Live URL:** https://samskrtam.ru/shloka-wave
-- **Version:** v1.4.1
+- **Version:** v1.4.2
 - **LLM Stack:** Anthropic (Sonnet 3.5), Gemini (Flash 1.5), OpenRouter (Fallback)
 - **Student flow:** `catalogue.html` → `student.html?id=X` → `progress.html`
 - **Student page source:** edit `tools/templates/student.html`, then run `python tools/make_student.py`

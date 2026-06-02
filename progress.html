@@ -7,11 +7,22 @@
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link rel="stylesheet" href="src/style.css">
 <style>
-  body { padding: 40px; }
-  .container { max-width: 900px; margin: 0 auto; background: var(--card); padding: 30px; border-radius: 8px; border: 1px solid var(--border); }
-  .header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
-  .streak-badge { background: var(--gold); color: #fff; padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 1rem; }
-  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  body { padding: clamp(12px, 4vw, 40px); }
+  .container { max-width: 960px; margin: 0 auto; background: var(--card); padding: clamp(18px, 4vw, 30px); border-radius: 8px; border: 1px solid var(--border); }
+  .header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; border-bottom: 2px solid var(--gold); padding-bottom: 14px; margin-bottom: 20px; }
+  .header-main { display:flex; align-items:center; gap:15px; flex-wrap:wrap; min-width:0; }
+  .header h1 { margin: 0; overflow-wrap: anywhere; }
+  .sync-button { font-size:.65rem; font-family:'JetBrains Mono',monospace; padding:5px 10px; border:1px solid var(--border); border-radius:4px; background:transparent; color:var(--ink2); cursor:pointer; white-space:nowrap; }
+  .streak-badge { background: var(--gold); color: #fff; padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 1rem; white-space: nowrap; }
+  .summary-grid { display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border:1px solid var(--border); border-radius:8px; overflow:hidden; margin: 0 0 24px; }
+  .summary-grid div { padding:12px; border-right:1px solid var(--border); background:var(--bg2); }
+  .summary-grid div:last-child { border-right:0; }
+  .summary-grid strong { display:block; font-size:1.25rem; color:var(--ink); }
+  .summary-grid span { display:block; margin-top:2px; font-size:.68rem; font-family:'JetBrains Mono',monospace; text-transform:uppercase; color:var(--ink2); letter-spacing:0; }
+  .due-list { margin-bottom:36px; display:flex; gap:10px; flex-wrap:wrap; }
+  .section-heading { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+  .table-wrap { width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; min-width: 720px; }
   th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); color: var(--ink); }
   th { font-family: 'JetBrains Mono', monospace; font-size: .8rem; text-transform: uppercase; color: var(--ink2); }
   .status-chip { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: .75rem; font-weight: bold; }
@@ -20,22 +31,55 @@
   .status-mastered { background: rgba(44, 74, 30, 0.15); color: var(--laghu); }
   .btn-study { display: inline-block; padding: 6px 14px; background: var(--accent, #357bdd); color: #fff; text-decoration: none; border-radius: 4px; font-size: .8rem; font-weight: bold; }
   .btn-study:hover { opacity: 0.9; }
+  @media (max-width: 720px) {
+    body { padding: 0; }
+    .container { min-height: 100dvh; border: 0; border-radius: 0; padding: 16px; }
+    .header { display:block; }
+    .header-main { align-items:flex-start; gap:10px; }
+    .sync-button { min-height:34px; }
+    .streak-badge { display:inline-block; margin-top:12px; }
+    .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .summary-grid div:nth-child(2) { border-right:0; }
+    .summary-grid div:nth-child(-n+2) { border-bottom:1px solid var(--border); }
+    .section-heading { align-items:flex-start; }
+    .table-wrap { overflow:visible; }
+    table { min-width:0; display:block; }
+    thead { display:none; }
+    tbody { display:block; }
+    tr { display:block; border:1px solid var(--border); border-radius:8px; margin:0 0 12px; padding:8px 10px; background:var(--bg2); }
+    td { display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px solid var(--border); text-align:right; }
+    td:last-child { border-bottom:0; }
+    td::before { content:attr(data-label); flex:0 0 38%; text-align:left; color:var(--ink2); font-family:'JetBrains Mono',monospace; font-size:.72rem; text-transform:uppercase; }
+    td:first-child { display:block; text-align:left; }
+    td:first-child::before { display:block; margin-bottom:4px; }
+  }
 </style>
 </head>
 <body>
 <div class="container">
   <div class="header">
-    <div style="display:flex; align-items:center; gap:15px;">
+    <div class="header-main">
       <h1>Обучение и Прогресс</h1>
-      <button id="btn-cloud" onclick="handleCloudClick()" style="font-size:.65rem; font-family:'JetBrains Mono',monospace; padding:3px 8px; border:1px solid var(--border); border-radius:4px; background:transparent; color:var(--ink2); cursor:pointer;">Sync: Local</button>
+      <button id="btn-cloud" class="sync-button" onclick="handleCloudClick()">Sync: Local</button>
     </div>
     <div class="streak-badge">🔥 <span id="streak-count">0</span> дней подряд</div>
+  </div>
+
+  <div class="summary-grid" aria-live="polite">
+    <div><strong id="stat-due">0</strong><span>Due</span></div>
+    <div><strong id="stat-learning">0</strong><span>Learning</span></div>
+    <div><strong id="stat-mastered">0</strong><span>Mastered</span></div>
+    <div><strong id="stat-total">0</strong><span>Total</span></div>
   </div>
 
   <script src="src/scripts/firebase-config.js"></script>
   <script type="module" src="src/scripts/cloud_sync.js"></script>
   <script>
     function handleCloudClick() {
+      if (typeof window.cloudLogin !== 'function' || typeof window.cloudLogout !== 'function') {
+        alert('Cloud sync is still loading. Please try again.');
+        return;
+      }
       if (window.currentUser) {
         if (confirm("Выйти из облачной синхронизации?")) window.cloudLogout();
       } else {
@@ -54,15 +98,25 @@
         btn.style.borderColor = user ? 'var(--laghu)' : 'var(--border)';
       }
     };
+    window.addEventListener('cloud-sync-status', (event) => {
+      const btn = document.getElementById('btn-cloud');
+      if (!btn) return;
+      const status = event.detail && event.detail.status;
+      if (status === 'syncing') btn.textContent = 'Syncing...';
+      if (status === 'synced' && window.currentUser) btn.textContent = `Sync: Cloud (${window.currentUser.email.split('@')[0]})`;
+      if (status === 'disabled') btn.title = 'Fill src/scripts/firebase-config.js to enable cloud sync.';
+      if (status === 'error') btn.textContent = 'Sync: Error';
+    });
   </script>
   
   <h2>Изучать сегодня</h2>
-  <div id="due-list" style="margin-bottom:40px; display:flex; gap:10px; flex-wrap:wrap;"></div>
+  <div id="due-list" class="due-list"></div>
 
-  <div style="display:flex; justify-content:space-between; align-items:center;">
+  <div class="section-heading">
     <h2>Каталог Шлок</h2>
     <button onclick="exportTelemetry()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid var(--border);border-radius:4px;background:var(--bg2);color:var(--ink);cursor:pointer;">📊 Экспорт телеметрии</button>
   </div>
+  <div class="table-wrap">
   <table id="progress-table">
     <thead>
       <tr>
@@ -76,6 +130,7 @@
     </thead>
     <tbody></tbody>
   </table>
+  </div>
 </div>
 
 <script src="src/scripts/srs.js"></script>
@@ -101,8 +156,12 @@ async function loadProgress() {
 
   const tbody = document.querySelector('#progress-table tbody');
   const dueList = document.getElementById('due-list');
+  tbody.innerHTML = '';
+  dueList.innerHTML = '';
 
   let dueCount = 0;
+  let learningCount = 0;
+  let masteredCount = 0;
 
   indexData.verses.forEach(verse => {
     const srs = srsData.find(r => r.id === verse.id);
@@ -116,9 +175,11 @@ async function loadProgress() {
       if (srs.interval >= 21) {
         statusClass = 'status-mastered';
         statusText = 'Mastered';
+        masteredCount++;
       } else {
         statusClass = 'status-learning';
         statusText = 'Learning';
+        learningCount++;
       }
       dueText = srs.due;
       if (srs.due <= today) {
@@ -136,6 +197,9 @@ async function loadProgress() {
       <td>${dueText}</td>
       <td><a href="student.html?id=${verse.id}" class="btn-study" style="background:var(--bg2);color:var(--ink)">Открыть</a></td>
     `;
+    ['Verse', 'Meter', 'Difficulty', 'Status', 'Due', 'Action'].forEach((label, index) => {
+      if (tr.children[index]) tr.children[index].dataset.label = label;
+    });
     tbody.appendChild(tr);
 
     // Build Due Card
@@ -148,6 +212,11 @@ async function loadProgress() {
       dueList.appendChild(card);
     }
   });
+
+  document.getElementById('stat-due').textContent = dueCount;
+  document.getElementById('stat-learning').textContent = learningCount;
+  document.getElementById('stat-mastered').textContent = masteredCount;
+  document.getElementById('stat-total').textContent = indexData.verses.length;
 
   if (dueCount === 0) {
     dueList.innerHTML = '<p style="color:var(--laghu);font-weight:bold;">✨ На сегодня всё! Вы молодец.</p>';

@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.2] - 2026-06-02
+
+### Added [1.4.2]
+
+- **Firebase local-to-cloud migration**: `cloud_sync.js` now merges legacy local
+  `srs_v1`, `telemetry`, and `progress_meta` data into Firestore on login instead
+  of replacing local progress with the remote payload.
+- **Progress metadata sync**: Added `progress_meta` as the cloud bridge for
+  `shloka_last_played` and `shloka_streak` without changing the existing student
+  localStorage contract.
+- **Progress dashboard summary**: `progress.html` now shows due, learning,
+  mastered, and total counts above the full verse table.
+
+### Changed [1.4.2]
+
+- **Cloud sync initialization**: Firebase modules are lazy-loaded only after a real
+  Firebase config is present; placeholder config now leaves the app in a clear
+  local-only mode.
+- **Student telemetry**: Student event logging now pushes telemetry to cloud sync
+  immediately when a cloud user is active.
+- **Student generation**: Regenerated `student.html` from
+  `tools/templates/student.html` after the telemetry hook update.
+
+### Fixed [1.4.2]
+
+- **Progress dashboard duplicate rows**: `loadProgress()` now clears the table and
+  due list before rerendering, so cloud-sync refreshes do not duplicate content.
+- **Mobile progress dashboard**: The progress table stacks into labeled rows below
+  the mobile breakpoint and avoids horizontal overflow.
+- **SRS double streak update**: Removed the extra `updateStreak()` call from
+  `submitSrs()` because `updateSrs()` already updates streak state.
+
 ## [1.4.1] — 2026-05-14
 
 ### Fixed [1.4.1]

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sanskrit Karaoke — v1.4.0</title>
+<title>Sanskrit Karaoke — v1.4.2</title>
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -523,6 +523,9 @@ function logTelemetry(event, data = {}) {
   // Keep last 100 entries to prevent localStorage bloat
   if (telemetry.length > 100) telemetry.shift();
   localStorage.setItem('telemetry', JSON.stringify(telemetry));
+  if (typeof syncToCloud === 'function') {
+    syncToCloud('telemetry', telemetry);
+  }
   console.log(`[Telemetry] ${event}:`, data);
 }
 
@@ -664,7 +667,6 @@ function submitSrs(quality) {
   logTelemetry('srs_rating', { quality });
   if (typeof updateSrs === 'function') { // Bug 10 fix
     updateSrs(currentVerse.id, quality);
-    updateStreak();
     window.location.href = 'progress.html';
   }
 }
