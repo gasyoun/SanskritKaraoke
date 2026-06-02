@@ -27,6 +27,9 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed [1.4.2]
 
+- **Student visible version badge**: Corrected the generated `student.html`
+  header badge from the legacy `v1.267` track to `v1.4.2` after live
+  production acceptance.
 - **Progress dashboard duplicate rows**: `loadProgress()` now clears the table and
   due list before rerendering, so cloud-sync refreshes do not duplicate content.
 - **Mobile progress dashboard**: The progress table stacks into labeled rows below
