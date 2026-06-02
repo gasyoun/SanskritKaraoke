@@ -2,7 +2,7 @@
 
 ## Wave-notation visualiser and karaoke exporter for Sanskrit verse
 
-[**Live app →**](https://samskrtam.ru/shloka-wave) · [v1.4.2](https://samskrtam.ru/shloka-wave)
+[**Live app →**](https://gasyoun.github.io/SanskritKaraoke/) · [v1.4.2](https://gasyoun.github.io/SanskritKaraoke/)
 
 > **If the app doesn't reflect the latest version after an update, do a hard refresh to clear the cache:**
 > Edge, Firefox, Opera — `Ctrl+F5` · Chrome — `Ctrl+Shift+R` · Safari (Mac) — `Cmd+Shift+R` or `Cmd+Option+R`
@@ -32,7 +32,7 @@ Sanskrit Karaoke turns a Sanskrit śloka into an interactive wave diagram that s
 
 ## Using the app
 
-1. Open the [live app](https://samskrtam.ru/shloka-wave).
+1. Open the [live app](https://gasyoun.github.io/SanskritKaraoke/).
 2. Paste the first and second half-verse (s1 / s2) into the text fields.
 3. Press **Run** — the wave diagram appears and the meter is identified.
 4. Adjust syllable weights or rows by right-clicking any syllable.

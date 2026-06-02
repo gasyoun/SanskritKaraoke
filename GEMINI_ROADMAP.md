@@ -283,9 +283,9 @@ open karaoke directly inside Telegram without leaving the app.
 4. Call `Telegram.WebApp.ready()` when content is rendered
 5. Use `Telegram.WebApp.BackButton` instead of browser back
 6. A Telegram bot (separate repo / service) sends messages with a
-   `web_app` button pointing to `https://samskrtam.ru/shloka-wave/catalogue.html`
+   `web_app` button pointing to `https://gasyoun.github.io/SanskritKaraoke/catalogue.html`
 
-**Note:** the Mini App must be served over HTTPS. `samskrtam.ru` already qualifies.
+**Note:** the Mini App must be served over HTTPS. GitHub Pages already qualifies.
 
 ---
 

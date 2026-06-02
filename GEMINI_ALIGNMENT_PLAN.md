@@ -1,7 +1,7 @@
 # Gemini Flash — Auto-Alignment Implementation Plan
 
 **Repo:** https://github.com/gasyoun/SanskritKaraoke  
-**Live app:** https://samskrtam.ru/shloka-wave  
+**Live app:** https://gasyoun.github.io/SanskritKaraoke/
 **Prepared by:** Claude Sonnet 4.6 for Mārcis Gasūns  
 **Date:** 2026-05-14
 

@@ -136,7 +136,7 @@ Scope is `drive` (not `drive.file`) so users can see the shared folder. Token is
 
 ## Mobile QA checklist
 
-Test at `https://samskrtam.ru/shloka-wave` with a real device.
+Test at `https://gasyoun.github.io/SanskritKaraoke/` with a real device.
 
 **Android:**
 1. Paste BG 2.47 (s1/s2) → Run — wave diagram appears

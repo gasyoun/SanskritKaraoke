@@ -2,7 +2,7 @@
 
 ## Волновая нотация санскрита — визуализатор и экспортёр карaoке
 
-[**Открыть приложение →**](https://samskrtam.ru/shloka-wave) · [v1.4.2](https://samskrtam.ru/shloka-wave)
+[**Открыть приложение →**](https://gasyoun.github.io/SanskritKaraoke/) · [v1.4.2](https://gasyoun.github.io/SanskritKaraoke/)
 
 > **Если приложение не отражает последнюю версию после обновления, выполните жёсткую перезагрузку с очисткой кэша:**
 > Edge, Firefox, Opera — `Ctrl+F5` · Chrome — `Ctrl+Shift+R` · Safari (Mac) — `Cmd+Shift+R` или `Cmd+Option+R`
