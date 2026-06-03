@@ -22,6 +22,9 @@ All notable changes to this project will be documented in this file.
   Google Auth and Firestore cloud sync.
 - **Firebase login flow**: Changed cloud login to redirect-based Google auth to
   avoid invalid popup-handler flows in constrained browsers.
+- **Firebase script refresh**: Added version queries to the Firebase config and
+  cloud-sync script tags so deployed clients pick up config/login changes
+  immediately.
 - **Cloud sync initialization**: Firebase modules are lazy-loaded only after a real
   Firebase config is present; placeholder config now leaves the app in a clear
   local-only mode.
