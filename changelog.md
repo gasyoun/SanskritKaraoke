@@ -14,6 +14,8 @@ All notable changes to this project will be documented in this file.
   localStorage contract.
 - **Firestore rules**: Added Firebase project metadata and Firestore rules for
   per-user cloud-sync documents under `users/{uid}/data/{docId}`.
+- **Firebase acceptance handoff**: Added `docs/FIREBASE_ACCEPTANCE.md` with the
+  live Google sign-in blocker and remaining SRS-to-Firestore acceptance steps.
 - **Progress dashboard summary**: `progress.html` now shows due, learning,
   mastered, and total counts above the full verse table.
 

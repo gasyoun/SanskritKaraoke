@@ -11,8 +11,15 @@ on this project.
 **Current phase:** Phase 5 — Production Hardening & Cloud Sync
 
 **Next action:**
-> Finalize Firebase data migration (legacy LocalStorage → Firestore) and 
-> implement mobile-first UX polish for the progress dashboard.
+> Resume Firebase cloud-sync acceptance from the Google password/2FA/consent
+> screen. See `docs/FIREBASE_ACCEPTANCE.md` for the exact current blocker and
+> the remaining SRS -> Firestore -> second-browser acceptance steps.
+
+## Current Firebase acceptance blocker
+
+Google sign-in has reached the password/2FA/consent stage for `gasyoun@gmail.com`.
+After the browser redirects back to SanskritKaraoke, continue the SRS ->
+Firestore -> second-browser acceptance from `docs/FIREBASE_ACCEPTANCE.md`.
 
 ## Platform context
 
