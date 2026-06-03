@@ -209,7 +209,8 @@ async function loadFirebaseRuntime() {
         getDoc: firestoreModule.getDoc,
         setDoc: firestoreModule.setDoc,
         onAuthStateChanged: authModule.onAuthStateChanged,
-        signInWithPopup: authModule.signInWithPopup,
+        getRedirectResult: authModule.getRedirectResult,
+        signInWithRedirect: authModule.signInWithRedirect,
         signOut: authModule.signOut
       };
     }).catch((error) => {
@@ -224,6 +225,11 @@ async function loadFirebaseRuntime() {
 async function startAuthListener() {
   const runtime = await loadFirebaseRuntime();
   if (!runtime) return;
+
+  runtime.getRedirectResult(runtime.auth).catch((error) => {
+    emitCloudSyncStatus('error', { message: error.message });
+    console.error('Redirect login failed:', error);
+  });
 
   runtime.onAuthStateChanged(runtime.auth, async (user) => {
     window.currentUser = user;
@@ -267,8 +273,9 @@ export async function login() {
 
   try {
     const runtime = await loadFirebaseRuntime();
-    const result = await runtime.signInWithPopup(runtime.auth, runtime.provider);
-    return result.user;
+    emitCloudSyncStatus('redirecting');
+    await runtime.signInWithRedirect(runtime.auth, runtime.provider);
+    return null;
   } catch (error) {
     emitCloudSyncStatus('error', { message: error.message });
     console.error('Login failed:', error);

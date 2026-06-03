@@ -104,6 +104,7 @@
       const btn = document.getElementById('btn-cloud');
       if (!btn) return;
       const status = event.detail && event.detail.status;
+      if (status === 'redirecting') btn.textContent = 'Opening Google...';
       if (status === 'syncing') btn.textContent = 'Syncing...';
       if (status === 'synced' && window.currentUser) btn.textContent = `Sync: Cloud (${window.currentUser.email.split('@')[0]})`;
       if (status === 'disabled') btn.title = 'Fill src/scripts/firebase-config.js to enable cloud sync.';
