@@ -12,6 +12,8 @@ All notable changes to this project will be documented in this file.
 - **Progress metadata sync**: Added `progress_meta` as the cloud bridge for
   `shloka_last_played` and `shloka_streak` without changing the existing student
   localStorage contract.
+- **Firestore rules**: Added Firebase project metadata and Firestore rules for
+  per-user cloud-sync documents under `users/{uid}/data/{docId}`.
 - **Progress dashboard summary**: `progress.html` now shows due, learning,
   mastered, and total counts above the full verse table.
 

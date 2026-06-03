@@ -1,0 +1,25 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    function isCloudSyncDoc(docId) {
+      return docId in ['srs_v1', 'telemetry', 'progress_meta'];
+    }
+
+    function hasCloudSyncShape() {
+      return request.resource.data.keys().hasAll(['payload', 'updated_at'])
+        && request.resource.data.keys().hasOnly(['payload', 'updated_at'])
+        && request.resource.data.updated_at is string;
+    }
+
+    match /users/{uid}/data/{docId} {
+      allow read: if isOwner(uid) && isCloudSyncDoc(docId);
+      allow create, update: if isOwner(uid) && isCloudSyncDoc(docId) && hasCloudSyncShape();
+      allow delete: if false;
+    }
+  }
+}
