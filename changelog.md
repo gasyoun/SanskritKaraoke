@@ -17,6 +17,9 @@ All notable changes to this project will be documented in this file.
 
 ### Changed [1.4.2]
 
+- **Firebase production config**: Added the public Firebase web app config for
+  project `sanskritkaraoke`, enabling the deployed GitHub Pages app to initialize
+  Google Auth and Firestore cloud sync.
 - **Cloud sync initialization**: Firebase modules are lazy-loaded only after a real
   Firebase config is present; placeholder config now leaves the app in a clear
   local-only mode.
