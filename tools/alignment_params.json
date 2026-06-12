@@ -1,0 +1,40 @@
+{
+  "version": "cli-v1",
+  "note": "Shared constants between app.js (JS) and align_chapter.py (Python). JS line refs are the authoritative source; when ADR-0001 timing.js lands it will import these constants too.",
+  "onset_detection": {
+    "win_ms": 5,
+    "hop_ms": 2,
+    "min_energy": 0.04,
+    "onset_delta": 0.06,
+    "min_gap_s": 0.06,
+    "peak_min_energy": 0.1,
+    "peak_neighbors": 2,
+    "_js_ref": "detectOnsets (app.js:3688)"
+  },
+  "pada_detection": {
+    "frame_ms": 10,
+    "silence_thresh_min": 0.02,
+    "silence_thresh_max": 0.20,
+    "silence_thresh_step": 0.01,
+    "min_pada_fraction": 0.16667,
+    "_js_ref": "detectPadaBounds (app.js:4391)"
+  },
+  "snap": {
+    "window_s": 0.15,
+    "confidence_bands_s": [0.03, 0.07, 0.12],
+    "confidence_values": [1.0, 0.7, 0.4, 0.15],
+    "no_candidate_confidence": 0.2,
+    "_js_ref": "_snapToNearest/_snapConfidence (app.js:3737)"
+  },
+  "mora": {
+    "guru": 2,
+    "laghu": 1,
+    "last_laghu_as_guru_default": false,
+    "_js_ref": "calcAutoTiming (app.js:4480)"
+  },
+  "decode": {
+    "sample_rate": 22050,
+    "channels": 1,
+    "format": "f32le"
+  }
+}
