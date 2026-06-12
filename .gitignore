@@ -44,3 +44,6 @@ logs/
 # audit sidecars
 .contributing_old.md
 .contributing_audit.txt
+
+# Node (docs/legal generator)
+node_modules/
