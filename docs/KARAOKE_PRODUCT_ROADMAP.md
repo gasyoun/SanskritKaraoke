@@ -10,6 +10,11 @@ The strategic consequence: the product is not the web app — it is the **pipeli
 `chapter audio + verse JSON → aligned timings → branded 9:16 videos + captions → scheduled posts`.
 Everything below serves that pipeline.
 
+**Technical design is locked in ADRs** (full-monolith audit, 2026-06-12):
+[adr/0001](adr/0001-rendering-core-extraction.md) — DOM-free core extraction map for app.js;
+[adr/0002](adr/0002-headless-batch-renderer.md) — Puppeteer-driven batch renderer + template v1;
+[adr/0003](adr/0003-auto-alignment-cli.md) — `align_chapter.py` as a port of the proven in-browser algorithm.
+
 ---
 
 ## Phase 0 — Rights & data hygiene (gates everything; ~1 week)
