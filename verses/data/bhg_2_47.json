@@ -1,6 +1,6 @@
 {
   "id": "bhg_2_47",
-  "version": 1,
+  "version": 2,
   "title": {
     "ru": "Бхагавад-гита 2.47",
     "en": "Bhagavad Gita 2.47"
@@ -27,11 +27,18 @@
   "s2dev": "मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥",
   "translation": {
     "ru": "Твое право лишь в действии, но не в его плодах.",
-    "en": "You have a right to perform your prescribed duty, but you are not entitled to the fruits of action."
+    "en": "You have a right to perform your prescribed duty, but you are not entitled to the fruits of action.",
+    "provenance": {
+      "ru": "unknown",
+      "en": "unknown"
+    }
   },
   "audio": {
     "drive_file_id": "TODO",
-    "duration_s": 15.5
+    "duration_s": 15.5,
+    "rights_holder": "Usha Sanka",
+    "license": "SK-LIC-2026-001",
+    "permission_ref": "SK-LIC-2026-001/USK-2026-001"
   },
   "session": {
     "drive_file_id": "TODO",
@@ -42,5 +49,5 @@
     "beginner"
   ],
   "created_at": "2026-05-12",
-  "updated_at": "2026-05-12"
+  "updated_at": "2026-06-12"
 }

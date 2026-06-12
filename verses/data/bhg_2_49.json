@@ -1,6 +1,6 @@
 {
   "id": "bhg_2_49",
-  "version": 1,
+  "version": 2,
   "title": {
     "ru": "Бхагавад-гита 2.49",
     "en": "Bhagavad Gita 2.49"
@@ -27,11 +27,18 @@
   "s2dev": "बुद्धौ शरणमन्विच्छ कृपणाः फलहेतवः॥",
   "translation": {
     "ru": "Воистину, действие намного ниже йоги разума, о Дхананджая.",
-    "en": "O Dhananjaya, keep all abominable activities far distant by buddhi-yoga."
+    "en": "O Dhananjaya, keep all abominable activities far distant by buddhi-yoga.",
+    "provenance": {
+      "ru": "unknown",
+      "en": "unknown"
+    }
   },
   "audio": {
     "drive_file_id": "TODO",
-    "duration_s": 15.5
+    "duration_s": 15.5,
+    "rights_holder": "Usha Sanka",
+    "license": "SK-LIC-2026-001",
+    "permission_ref": "SK-LIC-2026-001/USK-2026-003"
   },
   "session": {
     "drive_file_id": "TODO",
@@ -42,5 +49,5 @@
     "intermediate"
   ],
   "created_at": "2026-05-12",
-  "updated_at": "2026-05-12"
+  "updated_at": "2026-06-12"
 }
