@@ -58,7 +58,8 @@
       "required": ["rights_holder", "license", "permission_ref"],
       "properties": {
         "drive_file_id": { "type": "string" },
-        "duration_s":    { "type": "number" },
+        "duration_s":    { "type": ["number", "null"],
+                           "description": "Actual recording duration in seconds; null when audio is not yet uploaded" },
         "rights_holder": { "type": "string",
                            "description": "Performer / copyright owner of the recording, e.g. Usha Sanka" },
         "license":       { "type": "string",

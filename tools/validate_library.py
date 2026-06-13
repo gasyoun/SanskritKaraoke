@@ -19,6 +19,8 @@ def main():
 
     errors = 0
     warnings = 0
+    verses = {}  # id → instance, for cross-file checks
+
     for file_path in data_files:
         with open(file_path, "r", encoding="utf-8") as f:
             try:
@@ -26,6 +28,7 @@ def main():
                 jsonschema.validate(instance=instance, schema=schema)
                 print(f"✓ {os.path.basename(file_path)}")
                 warnings += lint_verse(os.path.basename(file_path), instance)
+                verses[os.path.basename(file_path)] = instance
             except json.JSONDecodeError as e:
                 print(f"✗ {os.path.basename(file_path)}: Invalid JSON ({e})")
                 errors += 1
@@ -34,12 +37,23 @@ def main():
                 print(f"  {e.message}")
                 errors += 1
 
+    # Cross-file: permission_ref uniqueness
+    seen_refs = {}  # ref → first filename
+    for fname, instance in verses.items():
+        ref = instance.get("audio", {}).get("permission_ref")
+        if ref:
+            if ref in seen_refs:
+                print(f"✗ {fname}: audio.permission_ref {ref!r} duplicates {seen_refs[ref]}")
+                errors += 1
+            else:
+                seen_refs[ref] = fname
+
     if errors == 0:
         suffix = f", {warnings} warning(s)" if warnings else ""
         print(f"All {len(data_files)} verse(s) valid{suffix}.")
         sys.exit(0)
     else:
-        print(f"Failed: {errors} verse(s) had errors.")
+        print(f"Failed: {errors} error(s) across {len(data_files)} verse(s).")
         sys.exit(1)
 
 

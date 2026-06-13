@@ -35,7 +35,7 @@
   },
   "audio": {
     "drive_file_id": "TODO",
-    "duration_s": 15.5,
+    "duration_s": null,
     "rights_holder": "Usha Sanka",
     "license": "SK-LIC-2026-001",
     "permission_ref": "SK-LIC-2026-001/USK-2026-003"
