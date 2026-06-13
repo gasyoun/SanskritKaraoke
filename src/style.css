@@ -76,9 +76,12 @@ label { display: block; font-size: .7rem; color: var(--ink2); margin-bottom: 3px
 textarea, input[type=text] {
   width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 3px;
   padding: 6px 8px; font-family: 'JetBrains Mono'; font-size: .75rem; color: var(--ink);
-  resize: vertical; outline: none; transition: border-color .15s;
+  resize: vertical; transition: border-color .15s;
 }
 textarea:focus, input:focus { border-color: var(--accent); }
+textarea:focus-visible, input:focus-visible, select:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
 textarea { min-height: 50px; }
 hr { border: none; border-top: 1px solid var(--border); }
 
@@ -198,6 +201,20 @@ hr { border: none; border-top: 1px solid var(--border); }
 /* Touch navigation bar — shown only on touch devices */
 #te-touch-nav { display: none }
 @media (pointer: coarse) { #te-touch-nav { display: flex !important } }
+
+/* ── MOBILE LAYOUT ── */
+@media (max-width: 640px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  header { padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
+  header h1 { font-size: .82rem; }
+  .main { padding: 14px 12px; }
+}
 
 /* Timing editor overlay — flex centering + iOS safe area */
 #timing-editor-overlay {

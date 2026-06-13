@@ -19,10 +19,14 @@ const STRINGS = {
     libTransRuLabel: 'Перевод (RU)',
     libTransEnLabel: 'Перевод (EN)',
     libTagsLabel: 'Теги',
+    libDiffLabel: 'Сложность',
     libExportBtn: '↓ Скачать JSON',
     beatTapIntro: 'Нажимайте G или L синхронно с подсветкой.',
     emptyStateHint: 'Введите данные и нажмите «Построить диаграмму»',
-    
+    onboardStep1: 'Вставьте шлоку на санскрите в поле ввода слева',
+    onboardStep2: 'Нажмите «Построить диаграмму» — появится волновая схема',
+    onboardStep3: 'Загрузите аудио и откройте редактор тайминга для экспорта MP4',
+
     // Settings labels
     waveHeightLabel: 'Высота волны',
     sylColorsLabel: 'Цвета слогов',
@@ -41,7 +45,7 @@ const STRINGS = {
     downloadBtn: 'Скачать',
     showPngBtn: 'Показать PNG',
     altDownloadBtn: 'Скачать PNG',
-    karaokeBtn: 'Карaoке MP4',
+    karaokeBtn: 'Караоке MP4',
     storyBtn: 'Story MP4',
     saveSessionBtn: 'Сохранить на Drive',
     loadSessionBtn: 'Загрузить с Drive',
@@ -73,7 +77,7 @@ const STRINGS = {
     errNoAudio: 'Сначала загрузите аудиофайл!',
     errNoDiagram: 'Сначала постройте диаграмму (Run)!',
     errNoTiming: 'Сначала разметьте тайминг!',
-    okKaraoke: 'Карaoке-видео готово!',
+    okKaraoke: 'Караоке-видео готово!',
     okPng: 'PNG-изображение готово!',
     iosSaveImage: 'Зажмите на изображение → «Сохранить в Фото» или «Сохранить в Файлах»',
     iosSaveVideo: 'Видео готово. Нажмите «Открыть видео», затем «Поделиться» → «Сохранить видео».',
@@ -84,15 +88,34 @@ const STRINGS = {
 
     // Progress page
     progressTitle: 'Sanskrit Karaoke — Прогресс',
+    progressHeading: 'Обучение и Прогресс',
     studyTodayHeading: 'Изучать сегодня',
     catalogHeading: 'Каталог шлок',
     allDoneMsg: 'На сегодня всё! Отличная работа. 🔥',
-    
+    statusNew: 'Новое',
+    statusLearning: 'Учу',
+    statusMastered: 'Освоено',
+    statDue: 'Повторить',
+    statLearning: 'Учу',
+    statMastered: 'Освоено',
+    statTotal: 'Всего',
+
     // Student page
     srsPrompt: 'Как хорошо вы запомнили?',
     modeFull: 'Полный',
     modeDots: 'Кружки',
-    modeBlind: 'Вслепую'
+    modeBlind: 'Вслепую',
+
+    // Student help modal
+    helpModalTitle: 'Помощь для ученика',
+    helpWaveHead: 'Как читать волновой график',
+    helpWaveBody: '• <b>Цвет:</b> Синий = тяжелый слог (гуру), Зеленый = легкий (лагху).<br>• <b>Высота:</b> 5 рядов показывают высоту тона (мелодию). 1 — верхний, 5 — нижний.',
+    helpModesHead: 'Режимы обучения (кнопка Mode)',
+    helpModesBody: '• <b>Full:</b> Виден текст и мелодия.<br>• <b>Dots:</b> Текст скрыт, видны только «шарики» мелодии. Вспомните текст по ритму!<br>• <b>Blind:</b> График скрыт. Пойте полностью по памяти.',
+    helpSrsHead: 'Интервальное повторение (SRS)',
+    helpSrsBody: 'После прослушивания оцените себя: 😊 (легко), 😐 (с трудом), 😕 (забыл). Система сама назначит следующее время для повторения.',
+    helpQuizHead: 'Тесты',
+    helpQuizBody: '• <b>Meter ID:</b> Угадайте название размера.<br>• <b>Fill-in:</b> Впишите пропущенный слог во время пения.<br>• <b>Beat Tap:</b> Нажимайте G (гуру) или L (лагху) в такт подсветке. Можно использовать клавиши G и L на клавиатуре.'
   },
   en: {
     // App titles & headers
@@ -117,7 +140,10 @@ const STRINGS = {
     libExportBtn: '↓ Download JSON',
     beatTapIntro: 'Tap G or L in sync with the highlight.',
     emptyStateHint: 'Enter text and click "Run" to build the diagram',
-    
+    onboardStep1: 'Paste a Sanskrit śloka into the input field on the left',
+    onboardStep2: 'Click "Run" — the wave diagram will appear here',
+    onboardStep3: 'Upload audio and open the Timing Editor to export MP4',
+
     // Settings labels
     waveHeightLabel: 'Wave Height',
     sylColorsLabel: 'Syllable Colors',
@@ -161,7 +187,7 @@ const STRINGS = {
     dropZoneNoFile: 'No file selected',
     
     // Timing editor
-    padaModeLabel: 'Pada Layout',
+    padaModeLabel: 'Pada Boundaries',
     sylModeLabel: 'Syllable Timing',
     
     // Messages
@@ -179,15 +205,35 @@ const STRINGS = {
 
     // Progress page
     progressTitle: 'Sanskrit Karaoke — Progress',
+    progressHeading: 'Study & Progress',
     studyTodayHeading: 'Study Today',
     catalogHeading: 'Verse Catalog',
     allDoneMsg: 'All done for today! Great job. 🔥',
-    
+    statusNew: 'New',
+    statusLearning: 'Learning',
+    statusMastered: 'Mastered',
+    statDue: 'Due',
+    statLearning: 'Learning',
+    statMastered: 'Mastered',
+    statTotal: 'Total',
+    libDiffLabel: 'Difficulty',
+
     // Student page
     srsPrompt: 'How well did you remember?',
     modeFull: 'Full',
     modeDots: 'Dots',
-    modeBlind: 'Blind'
+    modeBlind: 'Blind',
+
+    // Student help modal
+    helpModalTitle: 'Student Help',
+    helpWaveHead: 'How to Read the Wave Diagram',
+    helpWaveBody: '• <b>Color:</b> Blue = heavy syllable (guru), Green = light (laghu).<br>• <b>Row:</b> 5 rows show pitch level. Row 1 is highest, row 5 is lowest.',
+    helpModesHead: 'Study Modes (Mode button)',
+    helpModesBody: '• <b>Full:</b> Text and melody both visible.<br>• <b>Dots:</b> Text hidden, only melodic dots shown. Recall the words from rhythm!<br>• <b>Blind:</b> Diagram hidden. Sing entirely from memory.',
+    helpSrsHead: 'Spaced Repetition (SRS)',
+    helpSrsBody: 'After listening, rate yourself: 😊 (easy), 😐 (struggled), 😕 (forgot). The system schedules the next review automatically.',
+    helpQuizHead: 'Exercises',
+    helpQuizBody: '• <b>Meter ID:</b> Guess the meter name.<br>• <b>Fill-in:</b> Type the missing syllable while singing.<br>• <b>Beat Tap:</b> Press G (guru) or L (laghu) in time with the highlight. You can also use the G and L keys on your keyboard.'
   }
 };
 
@@ -210,7 +256,10 @@ function applyI18n() {
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
   });
-  
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    el.innerHTML = t(el.getAttribute('data-i18n-html'));
+  });
+
   const langBtn = document.getElementById('btn-lang');
   if (langBtn) langBtn.textContent = '🌐 ' + LANG.toUpperCase();
 }

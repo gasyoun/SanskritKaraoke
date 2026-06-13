@@ -160,7 +160,7 @@ window.addEventListener('DOMContentLoaded', () => {
   <div class="ctx-item sep"       onclick="ctxDelete()">✕ Убрать из ячейки</div>
 </div>
 
-<script src="src/scripts/strings.js"></script>
+<script src="src/scripts/strings.js?v=1.4.2"></script>
 <script src="src/scripts/app.js"></script>
 
 <!-- ══ SETTINGS MODAL ══ -->
@@ -262,18 +262,18 @@ window.addEventListener('DOMContentLoaded', () => {
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;border-bottom:2px solid var(--gold);padding-bottom:16px">
     <div>
       <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Sanskrit Karaoke</div>
-      <h2 style="font-size:1.5rem;font-weight:700;margin:0;color:var(--ink);letter-spacing:.03em">Помощь для ученика</h2>
+      <h2 style="font-size:1.5rem;font-weight:700;margin:0;color:var(--ink);letter-spacing:.03em" data-i18n="helpModalTitle">Помощь для ученика</h2>
     </div>
     <button onclick="closeHelp()" style="font-size:1.3rem;border:none;background:none;cursor:pointer;color:var(--ink2);line-height:1;padding:4px 8px;border-radius:4px">✕</button>
   </div>
-  <p class="help-sec">Как читать волновой график</p>
-  <p class="help-body">• <b>Цвет:</b> Синий = тяжелый слог (гуру), Зеленый = легкий (лагху).<br>• <b>Высота:</b> 5 рядов показывают высоту тона (мелодию). 1 — верхний, 5 — нижний.</p>
-  <p class="help-sec">Режимы обучения (кнопка Mode)</p>
-  <p class="help-body">• <b>Full:</b> Виден текст и мелодия.<br>• <b>Dots:</b> Текст скрыт, видны только "шарики" мелодии. Вспомните текст по ритму!<br>• <b>Blind:</b> График скрыт. Пойте полностью по памяти.</p>
-  <p class="help-sec">Интервальное повторение (SRS)</p>
-  <p class="help-body">После прослушивания оцените себя: 😊 (легко), 😐 (с трудом), 😕 (забыл). Система сама назначит следующее время для повторения.</p>
-  <p class="help-sec">Тесты</p>
-  <p class="help-body">• <b>Meter ID:</b> Угадайте название размера.<br>• <b>Fill-in:</b> Впишите пропущенный слог во время пения.<br>• <b>Beat Tap:</b> Нажимайте G (гуру) или L (лагху) в такт подсветке. Можно использовать клавиши G и L на клавиатуре.</p>
+  <p class="help-sec" data-i18n="helpWaveHead">Как читать волновой график</p>
+  <p class="help-body" data-i18n-html="helpWaveBody">• <b>Цвет:</b> Синий = тяжелый слог (гуру), Зеленый = легкий (лагху).<br>• <b>Высота:</b> 5 рядов показывают высоту тона (мелодию). 1 — верхний, 5 — нижний.</p>
+  <p class="help-sec" data-i18n="helpModesHead">Режимы обучения (кнопка Mode)</p>
+  <p class="help-body" data-i18n-html="helpModesBody">• <b>Full:</b> Виден текст и мелодия.<br>• <b>Dots:</b> Текст скрыт, видны только «шарики» мелодии. Вспомните текст по ритму!<br>• <b>Blind:</b> График скрыт. Пойте полностью по памяти.</p>
+  <p class="help-sec" data-i18n="helpSrsHead">Интервальное повторение (SRS)</p>
+  <p class="help-body" data-i18n-html="helpSrsBody">После прослушивания оцените себя: 😊 (легко), 😐 (с трудом), 😕 (забыл). Система сама назначит следующее время для повторения.</p>
+  <p class="help-sec" data-i18n="helpQuizHead">Тесты</p>
+  <p class="help-body" data-i18n-html="helpQuizBody">• <b>Meter ID:</b> Угадайте название размера.<br>• <b>Fill-in:</b> Впишите пропущенный слог во время пения.<br>• <b>Beat Tap:</b> Нажимайте G (гуру) или L (лагху) в такт подсветке. Можно использовать клавиши G и L на клавиатуре.</p>
 </div></div>
 
 <!-- ══ CROSS-CHECK MODAL ══ -->
@@ -541,7 +541,7 @@ function driveMediaUrl(fileId) {
 async function loadStudentData() {
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
-  if (!id) {
+  if (!id || !/^[a-zA-Z0-9_-]+$/.test(id)) {
     document.getElementById('translation-box').textContent = "No verse ID provided. Use ?id=bhg_2_47";
     document.getElementById('translation-box').style.display = "block";
     return;

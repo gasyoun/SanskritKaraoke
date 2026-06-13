@@ -108,6 +108,7 @@
     <span class="version-badge">v1.4.2</span>
   </div>
   <div class="header-actions">
+    <a href="index.html" style="color:#f7f3ec; text-decoration:none; font-size:0.9rem; opacity:.75;" title="Открыть редактор">✎ Редактор</a>
     <a href="progress.html" style="color:#f7f3ec; text-decoration:none; font-size:0.9rem;" data-i18n="progressTitle">Прогресс</a>
     <span id="due-badge-wrap" style="display:none;">
       <span class="study-badge" id="due-count">0</span>
@@ -123,9 +124,9 @@
       <input type="text" id="search-input" data-i18n-placeholder="shlokaPlaceholder" placeholder="Название, текст или тег..." oninput="filterVerses()">
     </div>
     <div class="filter-group">
-      <label data-i18n="schemLabel">Размер</label>
+      <label data-i18n="schemLabel" title="Стихотворный метр (ануштубх, тотака и др.)">Метр / Размер</label>
       <select id="filter-meter" onchange="filterVerses()">
-        <option value="">Все размеры</option>
+        <option value="">Все метры</option>
       </select>
     </div>
     <div class="filter-group">
@@ -222,10 +223,10 @@ function renderVerses(verses) {
   verses.forEach(v => {
     const srs = srsData.find(r => r.id === v.id);
     let statusClass = 'status-new';
-    let statusText = 'New';
+    let statusText = (typeof t === 'function') ? t('statusNew') : 'New';
     if (srs) {
-      if (srs.interval >= 21) { statusClass = 'status-mastered'; statusText = 'Mastered'; }
-      else { statusClass = 'status-learning'; statusText = 'Learning'; }
+      if (srs.interval >= 21) { statusClass = 'status-mastered'; statusText = (typeof t === 'function') ? t('statusMastered') : 'Mastered'; }
+      else { statusClass = 'status-learning'; statusText = (typeof t === 'function') ? t('statusLearning') : 'Learning'; }
     }
     
     const title = v.title[lang] || v.title['ru'] || v.id;

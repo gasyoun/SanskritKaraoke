@@ -60,18 +60,20 @@
 <div class="container">
   <div class="header">
     <div class="header-main">
-      <h1>Обучение и Прогресс</h1>
+      <h1 data-i18n="progressHeading">Обучение и Прогресс</h1>
       <span class="version-badge">v1.4.2</span>
-      <button id="btn-cloud" class="sync-button" onclick="handleCloudClick()">Sync: Local</button>
+      <a href="index.html" style="font-size:.65rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);text-decoration:none;border:1px solid var(--border);border-radius:4px;padding:3px 9px;white-space:nowrap" title="Открыть редактор">✎ Редактор</a>
+      <button id="btn-cloud" class="sync-button" onclick="handleCloudClick()" title="Сейчас данные хранятся только в браузере. Нажмите, чтобы войти через Google и включить облачную синхронизацию.">☁ Войти для синхронизации</button>
+      <button id="btn-lang" onclick="setLang(typeof LANG!=='undefined'&&LANG==='ru'?'en':'ru')" style="font-size:.65rem;font-family:'JetBrains Mono',monospace;padding:4px 10px;border:1px solid var(--border);border-radius:4px;background:transparent;color:var(--ink2);cursor:pointer;">🌐 RU</button>
     </div>
     <div class="streak-badge">🔥 <span id="streak-count">0</span> дней подряд</div>
   </div>
 
   <div class="summary-grid" aria-live="polite">
-    <div><strong id="stat-due">0</strong><span>Due</span></div>
-    <div><strong id="stat-learning">0</strong><span>Learning</span></div>
-    <div><strong id="stat-mastered">0</strong><span>Mastered</span></div>
-    <div><strong id="stat-total">0</strong><span>Total</span></div>
+    <div><strong id="stat-due">0</strong><span data-i18n="statDue">Повторить</span></div>
+    <div><strong id="stat-learning">0</strong><span data-i18n="statLearning">Учу</span></div>
+    <div><strong id="stat-mastered">0</strong><span data-i18n="statMastered">Освоено</span></div>
+    <div><strong id="stat-total">0</strong><span data-i18n="statTotal">Всего</span></div>
   </div>
 
   <script src="src/scripts/firebase-config.js?v=1.4.2-firebase-config"></script>
@@ -95,7 +97,8 @@
       if (_oldAuthUpdate) _oldAuthUpdate(user);
       const btn = document.getElementById('btn-cloud');
       if (btn) {
-        btn.textContent = user ? `Sync: Cloud (${user.email.split('@')[0]})` : 'Sync: Local';
+        btn.textContent = user ? `☁ ${user.email.split('@')[0]}` : '☁ Войти для синхронизации';
+        btn.title = user ? 'Нажмите для выхода из облачной синхронизации.' : 'Сейчас данные хранятся только в браузере. Нажмите, чтобы войти через Google и включить облачную синхронизацию.';
         btn.style.color = user ? 'var(--laghu)' : 'var(--ink2)';
         btn.style.borderColor = user ? 'var(--laghu)' : 'var(--border)';
       }
@@ -104,9 +107,9 @@
       const btn = document.getElementById('btn-cloud');
       if (!btn) return;
       const status = event.detail && event.detail.status;
-      if (status === 'redirecting') btn.textContent = 'Opening Google...';
-      if (status === 'syncing') btn.textContent = 'Syncing...';
-      if (status === 'synced' && window.currentUser) btn.textContent = `Sync: Cloud (${window.currentUser.email.split('@')[0]})`;
+      if (status === 'redirecting') btn.textContent = '☁ Открываю Google...';
+      if (status === 'syncing') btn.textContent = '☁ Синхронизация...';
+      if (status === 'synced' && window.currentUser) btn.textContent = `☁ ${window.currentUser.email.split('@')[0]}`;
       if (status === 'disabled') btn.title = 'Fill src/scripts/firebase-config.js to enable cloud sync.';
       if (status === 'error') btn.textContent = 'Sync: Error';
     });
@@ -136,6 +139,7 @@
   </div>
 </div>
 
+<script src="src/scripts/strings.js"></script>
 <script src="src/scripts/srs.js"></script>
 <script>
 async function loadProgress() {
@@ -173,18 +177,18 @@ async function loadProgress() {
     const srs = srsData.find(r => r.id === verse.id);
     
     let statusClass = 'status-new';
-    let statusText = 'New';
+    let statusText = (typeof t === 'function') ? t('statusNew') : 'New';
     let dueText = '-';
     let isDue = false;
 
     if (srs) {
       if (srs.interval >= 21) {
         statusClass = 'status-mastered';
-        statusText = 'Mastered';
+        statusText = (typeof t === 'function') ? t('statusMastered') : 'Mastered';
         masteredCount++;
       } else {
         statusClass = 'status-learning';
-        statusText = 'Learning';
+        statusText = (typeof t === 'function') ? t('statusLearning') : 'Learning';
         learningCount++;
       }
       dueText = srs.due;
