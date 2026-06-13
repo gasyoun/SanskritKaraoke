@@ -1,6 +1,6 @@
 {
   "version": "cli-v1",
-  "note": "Shared constants between app.js (JS) and align_chapter.py (Python). JS line refs are the authoritative source; when ADR-0001 timing.js lands it will import these constants too.",
+  "note": "Shared constants across src/core/timing.js (canonical JS) and tools/align_chapter.py (Python port). src/core/timing.js ONSET_DEFAULTS mirror these values; keep all three in sync. _js_ref points at the canonical core/timing.js export (line numbers omitted — they drift).",
   "onset_detection": {
     "win_ms": 5,
     "hop_ms": 2,
@@ -9,7 +9,7 @@
     "min_gap_s": 0.06,
     "peak_min_energy": 0.1,
     "peak_neighbors": 2,
-    "_js_ref": "detectOnsets (app.js:3688)"
+    "_js_ref": "core/timing.js detectOnsetsFromPcm / ONSET_DEFAULTS"
   },
   "pada_detection": {
     "frame_ms": 10,
@@ -24,13 +24,13 @@
     "confidence_bands_s": [0.03, 0.07, 0.12],
     "confidence_values": [1.0, 0.7, 0.4, 0.15],
     "no_candidate_confidence": 0.2,
-    "_js_ref": "_snapToNearest/_snapConfidence (app.js:3737)"
+    "_js_ref": "core/timing.js snapToNearest / snapConfidence"
   },
   "mora": {
     "guru": 2,
     "laghu": 1,
     "last_laghu_as_guru_default": false,
-    "_js_ref": "calcAutoTiming (app.js:4480)"
+    "_js_ref": "core/timing.js moraUnits / distributePada (calcAutoTiming wraps it)"
   },
   "decode": {
     "sample_rate": 22050,

@@ -55,6 +55,7 @@ No build step, no bundler, no test suite — QA is manual in-browser.
 | `docs/harness_mental_model.md` | Phase 0: Analysis of the Claude Code harness |
 | `agents/verse_agent_raw.py` | Phase 1: Raw SDK verse-processing agent |
 | `src/scripts/app.js` | All application logic (~480 KB, single monolith) |
+| `src/core/*.js` | ADR-0001 strangler-fig: pure ES modules extracted from app.js — `translit`, `layout`, `svg`, `compose`, `karaoke-frame`, `timing`. No DOM/globals; app.js wraps them |
 | `src/scripts/strings.js` | i18n translation state and logic |
 | `src/scripts/srs.js` | SRS (SM-2) scheduling and streak logic |
 | `src/scripts/quizzes.js` | Interactive self-assessment quizzes |
@@ -80,11 +81,22 @@ No build step, no bundler, no test suite — QA is manual in-browser.
 
 ```javascript
 DATA = { s1: [...], s2: [...] }
-// Each syllable: { syl, type:'guru'|'laghu', row, col, devSyl, arrow,
-//                  vipula:'culprit'|'group'|undefined, vipulaType:string }
+// Each syllable object:
+// { syl,          — IAST syllable string
+//   devSyl,       — Devanagari syllable (computed via core/translit.js)
+//   type,         — 'guru' | 'laghu'
+//   row,          — 1–4 (wave diagram row)
+//   col,          — 0-based column index within the row
+//   arrow,        — '' | '↑' | '↓'  melodic annotation (from cheatsheet textarea);
+//                    serialised in session JSON; absent in verse JSON files
+//   vipula,       — 'culprit' | 'group' | undefined  (added by detectAndMarkVipula)
+//   vipulaType }  — e.g. 'ma-vipulā' | 'bha-vipulā' | 'na-vipulā' | 'ra-vipulā'
+//                    (only present when vipula is set)
 
 TAP = {
-  times: { s1: [t0,t1,...], s2: [...] },
+  times: { s1: [t0,t1,...], s2: [...] },  // per-syllable timestamps (seconds)
+  confidence: { s1: [], s2: [] },          // per-syllable [0–1] scores; populated by
+                                           // whisper-v1 aligner only — never by manual edits
   cheatY: { s1: [], s2: [] },
   zoom, offset, drag, pan, hover, selected,
   _playStartT, _playStopT, _playMode, _userPaused, _stepCallback,
