@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.0] - 2026-06-13
+
+### Changed
+- Released the current changelog state as version 1.
+
 ## [1.4.2] - 2026-06-02
 
 ### Added [1.4.2]
