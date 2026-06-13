@@ -42,14 +42,35 @@
       "type": "object",
       "properties": {
         "ru": { "type": "string" },
-        "en": { "type": "string" }
+        "en": { "type": "string" },
+        "provenance": {
+          "type": "object",
+          "description": "Who produced each translation — machine output must be marked (DH norm)",
+          "properties": {
+            "ru": { "type": "string", "enum": ["human", "human-reviewed", "gemini-flash", "claude", "unknown"] },
+            "en": { "type": "string", "enum": ["human", "human-reviewed", "gemini-flash", "claude", "unknown"] }
+          }
+        }
       }
     },
     "audio": {
       "type": "object",
+      "required": ["rights_holder", "license", "permission_ref"],
       "properties": {
         "drive_file_id": { "type": "string" },
-        "duration_s":    { "type": "number" }
+        "duration_s":    { "type": ["number", "null"],
+                           "description": "Actual recording duration in seconds; null when audio is not yet uploaded" },
+        "rights_holder": { "type": "string",
+                           "description": "Performer / copyright owner of the recording, e.g. Usha Sanka" },
+        "license":       { "type": "string",
+                           "description": "Agreement number (SK-LIC-YYYY-NNN) or SPDX id (e.g. CC-BY-4.0)" },
+        "permission_ref": { "type": "string",
+                            "pattern": "^[A-Z]{2,5}-[A-Z]{2,5}-[0-9]{4}-[0-9]{3}(/[A-Z]{2,5}-[0-9]{4}-[0-9]{3})?$",
+                            "description": "Agreement/recording reference, e.g. SK-LIC-2026-001/USK-2026-001 (Annex A Recording ID)" },
+        "sha256":        { "type": "string", "pattern": "^[0-9a-f]{64}$",
+                           "description": "Checksum of the canonical audio file (FAIR integrity)" },
+        "canonical_url": { "type": "string", "format": "uri",
+                           "description": "Stable public URL of the canonical audio; Drive is only a working copy" }
       }
     },
     "session": {

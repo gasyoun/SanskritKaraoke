@@ -55,6 +55,8 @@ No build step, no bundler, no test suite — QA is manual in-browser.
 | `docs/harness_mental_model.md` | Phase 0: Analysis of the Claude Code harness |
 | `agents/verse_agent_raw.py` | Phase 1: Raw SDK verse-processing agent |
 | `src/scripts/app.js` | All application logic (~480 KB, single monolith) |
+| `src/core/*.js` | ADR-0001 strangler-fig: pure ES modules extracted from app.js — `translit`, `layout`, `svg`, `compose`, `karaoke-frame`, `timing`. No DOM/globals; app.js wraps them |
+| `src/data/apte_meters.json` | Apte prosody reference data (`APTE_METERS` + `APTE_METERS2`, ~203 KB) lazy-loaded by `loadApteMeters()` on first Meter-Info/cross-check use — kept out of the initial app.js payload |
 | `src/scripts/strings.js` | i18n translation state and logic |
 | `src/scripts/srs.js` | SRS (SM-2) scheduling and streak logic |
 | `src/scripts/quizzes.js` | Interactive self-assessment quizzes |
@@ -69,7 +71,7 @@ No build step, no bundler, no test suite — QA is manual in-browser.
 - **Pipeline** — `runPipeline()` builds the wave diagram from text input; calls syllabification, meter detection, and SVG construction.
 - **Meter analysis** — `ftDetectMeter()` identifies meter type and vipulā; `detectAndMarkVipula(label)` marks syllables with `vipula:'culprit'|'group'`.
 - **SVG rendering** — `buildWaveSVG(key)` draws the wave canvas including vipulā frames.
-- **Timing editor** — `openTimingEditorInMode('padas'|'timing')` / `closeTimingEditor()` / `teSwitchMode()`. Two modes: pada-boundary marking (8 draggable lines) and per-syllable fine timing.
+- **Timing editor** — `openTimingEditorInMode('padas'|'timing')` / `closeTimingEditor()` / `teSwitchMode()`. Two modes: pada-boundary marking (8 draggable lines) and per-syllable fine timing. `teMarkPadas()` auto-detects the 4 padas from audio pauses via `core/timing.js` `detectPadaBoundsFromPcm` when PCM is loaded, falling back to uniform division.
 - **Playback** — `timingEditorPlay(mode)`, `timingEditorPlayOrPause(mode)`, `_mainHighlightLoop()` (rAF loop for syllable highlight).
 - **Export** — `downloadPng()` (1920×1080 PNG), `downloadKaraokeMp4()` (mp4-muxer). On iOS: `_iosShowImage()` overlay for PNG, `_iosShowVideoLink()` overlay for MP4. `downloadMp4()` blocked on iOS (no `captureStream`).
 - **Mobile/touch** — `_normEv(e)` normalises mouse/touch coords for all drag handlers. `_isIOS()` detects iPhone/iPad. Touch nav bar (`#te-touch-nav`) shown via `@media (pointer: coarse)` in timing mode.
@@ -80,11 +82,22 @@ No build step, no bundler, no test suite — QA is manual in-browser.
 
 ```javascript
 DATA = { s1: [...], s2: [...] }
-// Each syllable: { syl, type:'guru'|'laghu', row, col, devSyl, arrow,
-//                  vipula:'culprit'|'group'|undefined, vipulaType:string }
+// Each syllable object:
+// { syl,          — IAST syllable string
+//   devSyl,       — Devanagari syllable (computed via core/translit.js)
+//   type,         — 'guru' | 'laghu'
+//   row,          — 1–4 (wave diagram row)
+//   col,          — 0-based column index within the row
+//   arrow,        — '' | '↑' | '↓'  melodic annotation (from cheatsheet textarea);
+//                    serialised in session JSON; absent in verse JSON files
+//   vipula,       — 'culprit' | 'group' | undefined  (added by detectAndMarkVipula)
+//   vipulaType }  — e.g. 'ma-vipulā' | 'bha-vipulā' | 'na-vipulā' | 'ra-vipulā'
+//                    (only present when vipula is set)
 
 TAP = {
-  times: { s1: [t0,t1,...], s2: [...] },
+  times: { s1: [t0,t1,...], s2: [...] },  // per-syllable timestamps (seconds)
+  confidence: { s1: [], s2: [] },          // per-syllable [0–1] scores; populated by
+                                           // whisper-v1 aligner only — never by manual edits
   cheatY: { s1: [], s2: [] },
   zoom, offset, drag, pan, hover, selected,
   _playStartT, _playStopT, _playMode, _userPaused, _stepCallback,

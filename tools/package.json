@@ -1,0 +1,13 @@
+{
+  "name": "sanskrit-karaoke-tools",
+  "version": "1.0.0",
+  "description": "Headless batch renderer and alignment tools for Sanskrit Karaoke",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "render": "node render_chapter.js"
+  },
+  "devDependencies": {
+    "puppeteer": "^22.0.0"
+  }
+}

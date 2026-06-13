@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="src/icons/icon-192.png">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link rel="stylesheet" href="src/style.css">
-<script src="https://cdn.jsdelivr.net/npm/mp4-muxer/build/mp4-muxer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mp4-muxer@5.2.2/build/mp4-muxer.js" integrity="sha384-wr0AQH9RBAKio/g7bHM5245MBCU5B/b0Y9u42cTxRYQQJXKEijZvWEJKL9JG26hs" crossorigin="anonymous"></script>
 <script src="https://apis.google.com/js/api.js"></script>
 <script>
 // ── Initialization ─────────────────────────────────────────────────────────
@@ -109,7 +109,28 @@ window.addEventListener('DOMContentLoaded', () => {
 
   <hr>
 
-  <hr>
+  <div>
+    <div class="sec" data-i18n="audioLabel">Загрузить аудио</div>
+    <div class="drop-zone" id="audio-drop"
+         ondragover="event.preventDefault();this.classList.add('over')"
+         ondragleave="this.classList.remove('over')"
+         ondrop="onAudioDrop(event)"
+         onclick="document.getElementById('audio-file').click()">
+      <span data-i18n="dropZoneText">Перетащите аудио или нажмите для выбора</span>
+      <small style="opacity:.7">M4A · MP3 · WAV · OGG · FLAC</small>
+      <small id="audio-name" data-i18n="dropZoneNoFile">файл не выбран</small>
+    </div>
+    <input type="file" id="audio-file" accept="audio/*" style="display:none" onchange="onAudioFile(this)">
+    <audio id="audio-preview" controls style="display:none;width:100%;margin-top:6px" onplay="_mainHighlightStart()" onpause="_mainHighlightStop()" onended="_mainHighlightStop()"></audio>
+  </div>
+
+  <div id="tap-block" style="display:none;margin-bottom:8px">
+    <button class="btn btn-p" style="width:100%;font-size:.75rem" onclick="openTimingEditor()" data-i18n="timingEditorBtn">✎ Указать пады / Редактор тайминга</button>
+    <div id="te-padas-info" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);margin-top:3px;min-height:1em"></div>
+    <div id="tap-status" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);margin-top:2px;min-height:1.2em"></div>
+    <canvas id="waveform-canvas" height="48" style="display:none;width:100%;border-radius:3px;cursor:default;margin-top:2px;border:1px solid var(--border);pointer-events:none"></canvas>
+  </div>
+
 
   <div id="dl-wrap" style="display:none">
     <div style="margin-bottom:4px">
@@ -145,28 +166,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   </div>
 
-
-  <div>
-    <div class="sec" data-i18n="audioLabel">Загрузить аудио</div>
-    <div class="drop-zone" id="audio-drop"
-         ondragover="event.preventDefault();this.classList.add('over')"
-         ondragleave="this.classList.remove('over')"
-         ondrop="onAudioDrop(event)"
-         onclick="document.getElementById('audio-file').click()">
-      <span data-i18n="dropZoneText">Перетащите аудио или нажмите для выбора</span>
-      <small style="opacity:.7">M4A · MP3 · WAV · OGG · FLAC</small>
-      <small id="audio-name" data-i18n="dropZoneNoFile">файл не выбран</small>
-    </div>
-    <input type="file" id="audio-file" accept="audio/*" style="display:none" onchange="onAudioFile(this)">
-    <audio id="audio-preview" controls style="display:none;width:100%;margin-top:6px" onplay="_mainHighlightStart()" onpause="_mainHighlightStop()" onended="_mainHighlightStop()"></audio>
-  </div>
-
-  <div id="tap-block" style="display:none;margin-bottom:8px">
-    <button class="btn btn-p" style="width:100%;font-size:.75rem" onclick="openTimingEditor()" data-i18n="timingEditorBtn">✎ Указать пады / Редактор тайминга</button>
-    <div id="te-padas-info" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);margin-top:3px;min-height:1em"></div>
-    <div id="tap-status" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);margin-top:2px;min-height:1.2em"></div>
-    <canvas id="waveform-canvas" height="48" style="display:none;width:100%;border-radius:3px;cursor:default;margin-top:2px;border:1px solid var(--border);pointer-events:none"></canvas>
-  </div>
 
 
   <div style="margin-bottom:8px">
@@ -266,7 +265,21 @@ window.addEventListener('DOMContentLoaded', () => {
 <main class="main" id="main-area">
   <div class="empty">
     <div class="e-om">ॐ</div>
-    <p data-i18n="emptyStateHint">Введите данные и нажмите «Построить диаграмму»</p>
+    <p data-i18n="emptyStateHint" style="margin-bottom:18px">Введите данные и нажмите «Построить диаграмму»</p>
+    <div style="display:flex;gap:20px;opacity:1;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--ink2);text-align:center">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;max-width:110px">
+        <span style="font-size:1.4rem">①</span>
+        <span data-i18n="onboardStep1">Вставьте шлоку на санскрите в поле ввода слева</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;max-width:110px">
+        <span style="font-size:1.4rem">②</span>
+        <span data-i18n="onboardStep2">Нажмите «Построить диаграмму» — появится волновая схема</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;max-width:110px">
+        <span style="font-size:1.4rem">③</span>
+        <span data-i18n="onboardStep3">Загрузите аудио и откройте редактор тайминга для экспорта MP4</span>
+      </div>
+    </div>
   </div>
   <!-- END MAIN CONTENT -->
 </main>
@@ -286,7 +299,7 @@ window.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <script src="src/scripts/strings.js"></script>
-<script src="src/scripts/app.js"></script>
+<script type="module" src="src/scripts/app.js"></script>
 
 <!-- ══ SETTINGS MODAL ══ -->
 <div id="settings-overlay" onclick="closeSettings()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200"></div>
@@ -533,7 +546,7 @@ window.addEventListener('DOMContentLoaded', () => {
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-shrink:0">
       <div style="display:flex;align-items:center;gap:10px">
         <span id="te-mode-title" style="font-size:.7rem;font-family:'JetBrains Mono',monospace;letter-spacing:.15em;text-transform:uppercase;color:var(--ink2)" data-i18n="padaModeLabel">Разметка пад</span>
-        <button id="btn-te-switch" onclick="teSwitchMode()" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:2px 10px;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--ink2);cursor:pointer">→ Тайминг слогов</button>
+        <button id="btn-te-switch" onclick="teSwitchMode()" title="Разметка пад — перетаскивайте границы четырёх пад. Тайминг слогов — точная настройка времени каждого слога." style="font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:2px 10px;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--ink2);cursor:pointer">→ Тайминг слогов</button>
       </div>
       <button onclick="closeTimingEditor()" style="border:none;background:none;cursor:pointer;font-size:1.2rem;color:var(--ink2)">✕</button>
     </div>
