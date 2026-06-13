@@ -56,6 +56,7 @@ No build step, no bundler, no test suite — QA is manual in-browser.
 | `agents/verse_agent_raw.py` | Phase 1: Raw SDK verse-processing agent |
 | `src/scripts/app.js` | All application logic (~480 KB, single monolith) |
 | `src/core/*.js` | ADR-0001 strangler-fig: pure ES modules extracted from app.js — `translit`, `layout`, `svg`, `compose`, `karaoke-frame`, `timing`. No DOM/globals; app.js wraps them |
+| `src/data/apte_meters.json` | Apte prosody reference data (`APTE_METERS` + `APTE_METERS2`, ~203 KB) lazy-loaded by `loadApteMeters()` on first Meter-Info/cross-check use — kept out of the initial app.js payload |
 | `src/scripts/strings.js` | i18n translation state and logic |
 | `src/scripts/srs.js` | SRS (SM-2) scheduling and streak logic |
 | `src/scripts/quizzes.js` | Interactive self-assessment quizzes |
