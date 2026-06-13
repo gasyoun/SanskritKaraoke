@@ -71,7 +71,7 @@ No build step, no bundler, no test suite — QA is manual in-browser.
 - **Pipeline** — `runPipeline()` builds the wave diagram from text input; calls syllabification, meter detection, and SVG construction.
 - **Meter analysis** — `ftDetectMeter()` identifies meter type and vipulā; `detectAndMarkVipula(label)` marks syllables with `vipula:'culprit'|'group'`.
 - **SVG rendering** — `buildWaveSVG(key)` draws the wave canvas including vipulā frames.
-- **Timing editor** — `openTimingEditorInMode('padas'|'timing')` / `closeTimingEditor()` / `teSwitchMode()`. Two modes: pada-boundary marking (8 draggable lines) and per-syllable fine timing.
+- **Timing editor** — `openTimingEditorInMode('padas'|'timing')` / `closeTimingEditor()` / `teSwitchMode()`. Two modes: pada-boundary marking (8 draggable lines) and per-syllable fine timing. `teMarkPadas()` auto-detects the 4 padas from audio pauses via `core/timing.js` `detectPadaBoundsFromPcm` when PCM is loaded, falling back to uniform division.
 - **Playback** — `timingEditorPlay(mode)`, `timingEditorPlayOrPause(mode)`, `_mainHighlightLoop()` (rAF loop for syllable highlight).
 - **Export** — `downloadPng()` (1920×1080 PNG), `downloadKaraokeMp4()` (mp4-muxer). On iOS: `_iosShowImage()` overlay for PNG, `_iosShowVideoLink()` overlay for MP4. `downloadMp4()` blocked on iOS (no `captureStream`).
 - **Mobile/touch** — `_normEv(e)` normalises mouse/touch coords for all drag handlers. `_isIOS()` detects iPhone/iPad. Touch nav bar (`#te-touch-nav`) shown via `@media (pointer: coarse)` in timing mode.

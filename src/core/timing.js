@@ -156,3 +156,82 @@ export function scaleTiming(timing, fromDuration, toDuration) {
     s2: (timing.s2 || []).map(t => t * scale),
   };
 }
+
+// ── Pāda-boundary detection ──────────────────────────────────────────────────
+// Mirrors pada_detection in tools/alignment_params.json.
+export const PADA_DEFAULTS = {
+  frameS:          0.01,    // 10 ms RMS frames
+  threshMin:       0.02,
+  threshMax:       0.20,
+  threshStep:      0.01,
+  minPadaFraction: 1 / 6,   // a pāda must be at least duration/6 long
+};
+
+/**
+ * Detect the 4 pāda boundaries of a śloka from mono PCM by locating the three
+ * longest internal silences (RMS below an iteratively-raised threshold).
+ * Pure core of the former app.js detectPadaBounds.
+ *
+ * @param {Float32Array} pcm
+ * @param {number} sampleRate
+ * @param {number} duration   — clip length (s); used for the min-pāda test
+ * @param {object} [p]        — overrides for PADA_DEFAULTS
+ * @returns {{padas:({t0:number,t1:number}[]|null), thresh:number,
+ *            norm:Float32Array, frameDur:number, empty:boolean}}
+ *   padas is null when no threshold yields 4 valid pādas; empty is true for silent audio.
+ */
+export function detectPadaBoundsFromPcm(pcm, sampleRate, duration, p = PADA_DEFAULTS) {
+  const frameSize = Math.round(sampleRate * p.frameS);
+  const numFrames = Math.floor(pcm.length / frameSize);
+  const frameDur  = frameSize / sampleRate;
+
+  const rms = new Float32Array(numFrames);
+  for (let f = 0; f < numFrames; f++) {
+    let sum = 0;
+    for (let j = 0; j < frameSize; j++) sum += pcm[f * frameSize + j] ** 2;
+    rms[f] = Math.sqrt(sum / frameSize);
+  }
+
+  const maxRms = rms.reduce((a, v) => a > v ? a : v, 0);
+  if (maxRms === 0)
+    return { padas: null, thresh: 0, norm: new Float32Array(0), frameDur, empty: true };
+
+  const norm = new Float32Array(numFrames);
+  for (let f = 0; f < numFrames; f++) norm[f] = rms[f] / maxRms;
+
+  const minPadaDur = duration * p.minPadaFraction;
+
+  function tryThresh(thresh) {
+    const sil = new Uint8Array(numFrames);
+    for (let f = 0; f < numFrames; f++) sil[f] = norm[f] < thresh ? 1 : 0;
+    // Trim leading / trailing silence
+    let first = 0, last = numFrames - 1;
+    while (first < numFrames && sil[first]) first++;
+    while (last >= 0 && sil[last]) last--;
+    if (first >= last) return null;
+    // Collect silent runs inside [first..last]
+    const ranges = [];
+    let i = first;
+    while (i <= last) {
+      if (sil[i]) { const s = i; while (i <= last && sil[i]) i++; ranges.push({ s, e: i - 1, len: i - s }); }
+      else i++;
+    }
+    if (ranges.length < 3) return null;
+    const top3 = [...ranges].sort((a, b) => b.len - a.len).slice(0, 3);
+    top3.sort((a, b) => a.s - b.s); // chronological
+    const padas = [
+      { t0: first * frameDur,     t1: top3[0].s * frameDur },
+      { t0: top3[0].e * frameDur, t1: top3[1].s * frameDur },
+      { t0: top3[1].e * frameDur, t1: top3[2].s * frameDur },
+      { t0: top3[2].e * frameDur, t1: last * frameDur },
+    ];
+    return padas.every(pd => (pd.t1 - pd.t0) >= minPadaDur) ? padas : null;
+  }
+
+  let padas = null, thresh = p.threshMin;
+  for (let t = p.threshMin; t <= p.threshMax; t = Math.round((t + p.threshStep) * 100) / 100) {
+    const r = tryThresh(t);
+    if (r) { padas = r; thresh = t; break; }
+  }
+  return { padas, thresh, norm, frameDur, empty: false };
+}

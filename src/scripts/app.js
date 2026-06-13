@@ -10,7 +10,7 @@ import { buildWaveSvgString as _coreBuildWaveSvgString, wrapSvgInDiv,
        } from '../core/svg.js';
 import { detectOnsetsFromPcm, snapToNearest as _snapToNearest,
          snapConfidence as _snapConfidence, distributePada,
-         padaUnitDuration, scaleTiming,
+         padaUnitDuration, scaleTiming, detectPadaBoundsFromPcm,
        } from '../core/timing.js';
 
 // ═══════════════════════════════════════════════
@@ -3829,187 +3829,6 @@ function _flashSyllable(key, idx) {
 // PADA BOUNDARY DETECTION & AUTO-TIMING
 // ══════════════════════════════════════════════════════════════════════════════
 
-function _showRmsData(rms, frameDur, silThresh, meanRms) {
-  // Remove existing panel
-  const existing = document.getElementById('rms-panel');
-  if (existing) existing.remove();
-
-  // Build table: show every 5th frame to keep it manageable
-  const step = 10; // show every 10th frame = 100ms with 10ms frames
-
-  // Build pada boundary labels: frame index -> label
-  const padaLabels = {};
-  if (_padaBounds) {
-    _padaBounds.forEach((b, pi) => {
-      const fsSnap = Math.round(b[0] / frameDur / step) * step;
-      const feSnap = Math.round(b[1] / frameDur / step) * step;
-      padaLabels[fsSnap] = (padaLabels[fsSnap] ? padaLabels[fsSnap] + ', ' : '') + `начало П${pi+1}`;
-      padaLabels[feSnap] = (padaLabels[feSnap] ? padaLabels[feSnap] + ', ' : '') + `конец П${pi+1}`;
-    });
-  }
-
-  let rows = '';
-  for (let i = 0; i < rms.length; i += step) {
-    const t = (i * frameDur).toFixed(3);
-    const v = rms[i].toFixed(4);
-    const isSil = rms[i] < silThresh;
-    const bar = '█'.repeat(Math.round(rms[i] / meanRms * 10));
-    const label = padaLabels[i] || (isSil ? 'тишь' : '');
-    const labelColor = padaLabels[i] ? '#a07020' : (isSil ? '#c44' : '#4a4');
-    const bg = padaLabels[i] ? 'rgba(160,112,32,0.12)' : (isSil ? 'rgba(200,100,100,0.15)' : 'transparent');
-    rows += `<tr style="background:${bg}">
-      <td style="padding:1px 6px;font-family:monospace;font-size:.7rem">${t}</td>
-      <td style="padding:1px 6px;font-family:monospace;font-size:.7rem">${v}</td>
-      <td style="padding:1px 6px;font-family:monospace;font-size:.65rem;color:var(--guru)">${bar}</td>
-      <td style="padding:1px 6px;font-size:.65rem;color:${labelColor};white-space:nowrap">${label}</td>
-    </tr>`;
-  }
-
-  const panel = document.createElement('div');
-  panel.id = 'rms-panel';
-  panel.style.cssText = 'position:fixed;top:60px;right:20px;z-index:500;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:12px;max-height:70vh;overflow-y:auto;box-shadow:0 4px 20px rgba(0,0,0,.2);min-width:320px';
-  panel.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-      <span style="font-size:.7rem;font-family:monospace;letter-spacing:.1em">RMS данные (каждые ${(step*frameDur*1000).toFixed(0)}мс)</span>
-      <div style="display:flex;gap:6px;align-items:center">
-        <button id="rms-copy-btn" onclick="
-          const rows = [];
-          rows.push('Время (с)\tRMS\tТишина');
-          document.querySelectorAll('#rms-panel tbody tr').forEach(tr => {
-            const cells = tr.querySelectorAll('td');
-            const t = cells[0].textContent.trim();
-            const v = cells[1].textContent.trim();
-            const sil = cells[3].textContent.trim() === 'тишь' ? '1' : '0';
-            rows.push(t + '\t' + v + '\t' + sil);
-          });
-          navigator.clipboard.writeText(rows.join('\n')).then(() => {
-            this.textContent = '✓ Скопировано';
-            setTimeout(() => this.textContent = '⎘ Копировать', 1500);
-          });
-        " style="font-size:.68rem;font-family:monospace;padding:2px 8px;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--ink);cursor:pointer">⎘ Копировать</button>
-        <button onclick="document.getElementById('rms-panel').remove()" style="border:none;background:none;cursor:pointer;font-size:1rem;color:var(--ink2)">✕</button>
-      </div>
-    </div>
-    <div style="font-size:.68rem;font-family:monospace;margin-bottom:6px;color:var(--ink2)">
-      Средний RMS: ${meanRms.toFixed(4)} · Порог тишины: ${silThresh.toFixed(4)}
-    </div>
-    <table style="border-collapse:collapse;width:100%">
-      <thead><tr style="border-bottom:1px solid var(--border)">
-        <th style="padding:2px 6px;font-size:.68rem;text-align:left">Время, с</th>
-        <th style="padding:2px 6px;font-size:.68rem;text-align:left">RMS</th>
-        <th style="padding:2px 6px;font-size:.68rem;text-align:left">Уровень</th>
-        <th></th>
-      </tr></thead>
-      <tbody>${rows}</tbody>
-    </table>`;
-  document.body.appendChild(panel);
-}
-
-function copyPadaBounds() {
-  if (!_padaBounds || _padaBounds.length < 4) {
-    showMsg('Сначала найдите пады', 'err'); return;
-  }
-  const lines = ['Пада	Начало (с)	Конец (с)	Длина (с)'];
-  _padaBounds.forEach((b, i) => {
-    const start = b[0].toFixed(3);
-    const end   = b[1].toFixed(3);
-    const len   = (b[1] - b[0]).toFixed(3);
-    lines.push(`П${i+1}	${start}	${end}	${len}`);
-  });
-  navigator.clipboard.writeText(lines.join('\n')).then(() => {
-    showMsg('✓ Границы пад скопированы', 'ok');
-  });
-}
-
-function detectPadaBounds() {
-  if (!_waveformFull) { showMsg('Сначала загрузите аудио и дождитесь декодирования', 'err'); return; }
-  const preview = document.getElementById('audio-preview');
-  const dur = preview ? preview.duration || 1 : 1;
-  const sr = _waveformSr;
-  const pcm = _waveformFull;
-
-  // Step 1: RMS в фреймах по 10 мс
-  const frameSize = Math.round(sr * 0.01);
-  const numFrames = Math.floor(pcm.length / frameSize);
-  const frameDur = frameSize / sr;
-  const rms = new Float32Array(numFrames);
-  for (let f = 0; f < numFrames; f++) {
-    let sum = 0;
-    for (let j = 0; j < frameSize; j++) sum += pcm[f * frameSize + j] ** 2;
-    rms[f] = Math.sqrt(sum / frameSize);
-  }
-
-  // Step 2: Нормализация RMS к [0..1]
-  const maxRms = rms.reduce((a, v) => a > v ? a : v, 0);
-  if (maxRms === 0) { showMsg('Аудио пустое', 'err'); return; }
-  const norm = new Float32Array(numFrames);
-  for (let f = 0; f < numFrames; f++) norm[f] = rms[f] / maxRms;
-
-  // Минимальная длина пады: dur/6
-  const minPadaDur = dur / 6;
-
-  // Step 3: Итеративный поиск трёх длиннейших пауз между падами
-  function tryThresh(thresh) {
-    const sil = new Uint8Array(numFrames);
-    for (let f = 0; f < numFrames; f++) sil[f] = norm[f] < thresh ? 1 : 0;
-
-    // Обрезаем начальную и конечную тишину
-    let first = 0, last = numFrames - 1;
-    while (first < numFrames && sil[first]) first++;
-    while (last >= 0 && sil[last]) last--;
-    if (first >= last) return null;
-
-    // Собираем все диапазоны тишины внутри [first..last]
-    const ranges = [];
-    let i = first;
-    while (i <= last) {
-      if (sil[i]) {
-        const s = i;
-        while (i <= last && sil[i]) i++;
-        ranges.push({ s, e: i - 1, len: i - s });
-      } else i++;
-    }
-
-    if (ranges.length < 3) return null;
-
-    // Три самых длинных диапазона тишины
-    const top3 = [...ranges].sort((a, b) => b.len - a.len).slice(0, 3);
-    top3.sort((a, b) => a.s - b.s); // по времени
-
-    // Границы пад: пада заканчивается перед паузой, начинается после паузы
-    const padas = [
-      { t0: first * frameDur,       t1: top3[0].s * frameDur },
-      { t0: top3[0].e * frameDur,   t1: top3[1].s * frameDur },
-      { t0: top3[1].e * frameDur,   t1: top3[2].s * frameDur },
-      { t0: top3[2].e * frameDur,   t1: last * frameDur },
-    ];
-
-    const ok = padas.every(p => (p.t1 - p.t0) >= minPadaDur);
-    return ok ? padas : null;
-  }
-
-  let padas = null;
-  let usedThresh = 0.02;
-  for (let t = 0.02; t <= 0.20; t = Math.round((t + 0.01) * 100) / 100) {
-    const result = tryThresh(t);
-    if (result) { padas = result; usedThresh = t; break; }
-  }
-
-  if (!padas) {
-    showMsg('Не удалось найти 4 пады. Скорректируйте вручную.', 'err');
-    // Заглушка: равномерное деление
-    padas = [0,1,2,3].map(i => ({ t0: dur * i / 4, t1: dur * (i + 1) / 4 }));
-  }
-
-  _showRmsData(norm, frameDur, usedThresh, 1.0);
-  _padaBounds = padas.map(p => [p.t0, p.t1]);
-
-  refreshWaveform();
-  _enablePadaDrag();
-  const labels = _padaBounds.map((b, i) => `П${i+1}: ${b[0].toFixed(2)}–${b[1].toFixed(2)}s`).join('  ');
-  showMsg(`✓ Aтиш=${usedThresh.toFixed(2)}  ${labels}`, 'ok');
-}
-
 function calcAutoTiming() {
   if (!_padaBounds) { showMsg('Сначала найдите границы пад', 'err'); return; }
   if (!DATA.s1.length && !DATA.s2.length) { showMsg('Сначала постройте диаграмму', 'err'); return; }
@@ -4520,13 +4339,27 @@ function _teUpdatePadasInfo() {
 // Расставить 8 линий пад равномерно
 function teMarkPadas() {
   const dur = _teDur();
-  const margin = 1.0; // отступ от начала/конца
-  const gap = 0.5;    // зазор между падами
-  const padaDur = (dur - margin * 2 - gap * 3) / 4;
-  _padaBounds = [];
-  for (let i = 0; i < 4; i++) {
-    const t0 = margin + i * (padaDur + gap);
-    _padaBounds.push([t0, t0 + padaDur]);
+  // Audio-based auto-detection when full-res PCM is available (core/timing.js):
+  // place pāda bounds at the 3 longest pauses; fall back to uniform division.
+  let detected = null;
+  if (_waveformFull && _waveformSr) {
+    const r = detectPadaBoundsFromPcm(_waveformFull, _waveformSr, dur);
+    if (r.padas) {
+      detected = r.padas.map(p => [p.t0, p.t1]);
+      showMsg(`✓ Пады определены по паузам (порог ${r.thresh.toFixed(2)})`, 'ok');
+    }
+  }
+  if (detected) {
+    _padaBounds = detected;
+  } else {
+    const margin = 1.0; // отступ от начала/конца
+    const gap = 0.5;    // зазор между падами
+    const padaDur = (dur - margin * 2 - gap * 3) / 4;
+    _padaBounds = [];
+    for (let i = 0; i < 4; i++) {
+      const t0 = margin + i * (padaDur + gap);
+      _padaBounds.push([t0, t0 + padaDur]);
+    }
   }
   const btnAuto  = document.getElementById('btn-te-autotiming');
   const btnReset = document.getElementById('btn-te-reset');

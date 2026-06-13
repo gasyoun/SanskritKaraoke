@@ -17,7 +17,7 @@
     "silence_thresh_max": 0.20,
     "silence_thresh_step": 0.01,
     "min_pada_fraction": 0.16667,
-    "_js_ref": "detectPadaBounds (app.js:4391)"
+    "_js_ref": "core/timing.js detectPadaBoundsFromPcm / PADA_DEFAULTS (wired into teMarkPadas)"
   },
   "snap": {
     "window_s": 0.15,
