@@ -27,7 +27,8 @@ karaoke videos with a measurable funnel to the paid course. See
   manifests, and posts via per-platform publishers for **Telegram, VK, Facebook, Instagram,
   and WordPress** (`--live`). Safety gate: a publisher fires only when `--live` is set **and**
   that platform's env-var credentials are present — otherwise it reports `skip` and makes no
-  network call.
+  network call. Credentials live in a git-ignored `.env` (copy `.env.example`, which `--live`
+  auto-loads); per-platform "where to get each" is in `docs/USE_CASES.md` Appendix D.
 - **Thumbnail PNG export** in `tools/render_chapter.js`, plus `--template/--handle/--cta/--lang`.
 - **Translation-rights metadata**: a `translation.rights` block (rights_holder / source /
   license / permission_ref / status) in the verse schema; `validate_library.py` and

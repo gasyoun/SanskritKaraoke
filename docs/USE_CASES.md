@@ -252,6 +252,45 @@ it is skipped with no network call. Keep these in a git-ignored `.env` — never
 | **Instagram** | `IG_BUSINESS_ACCOUNT_ID`, `IG_ACCESS_TOKEN`, `IG_VIDEO_BASE_URL` | Meta app + IG Business/Creator account; App Review for `instagram_content_publish` | **Needs the MP4 at a public URL** (`IG_VIDEO_BASE_URL`/`<id>_9x16.mp4`) — IG can't take a local file. |
 | **WordPress** | `WP_BASE_URL`, `WP_USER`, `WP_APP_PASSWORD` | WP Admin → Users → Application Passwords | Uploads the video and creates a **draft** post (review before publish). |
 
-Telegram, VK, Facebook and WordPress upload the local `dist/` file directly; Instagram is the
-exception (public URL required). Run without `--live` (or without creds) to preview the
-dispatch — every entry shows `skip` / `dry-run` and nothing is sent.
+### `.env` quick start
+
+Copy **`.env.example`** → **`.env`** (git-ignored), fill in the platforms you want, then:
+
+```sh
+python tools/schedule_drops.py --live
+```
+
+`--live` auto-loads `.env`. A platform posts only when **all** its vars are set; the rest are
+skipped with no network call. Without `--live` (or without creds) every entry shows
+`skip` / `dry-run` and nothing is sent. Telegram, VK, Facebook and WordPress upload the local
+`dist/` MP4 directly; Instagram is the exception — it fetches the file from a public URL
+(`IG_VIDEO_BASE_URL`).
+
+### Where to get each
+
+**Telegram** — no review, start here.
+1. Message **@BotFather** → `/newbot` → copy the bot **token** → `TELEGRAM_BOT_TOKEN`.
+2. Create your channel and add the bot as an **admin** with post rights.
+3. `TELEGRAM_CHANNEL_ID` = `@publicusername`, or the numeric `-100…` id for a private channel (forward a channel post to `@userinfobot` to read it).
+
+**VK**
+1. Create a **Standalone** app at [dev.vk.com](https://dev.vk.com/).
+2. Get a token with the `video` + `wall` scopes — a community token (Community → Manage → API usage → Create token) or an OAuth token with `scope=video,wall,offline` → `VK_ACCESS_TOKEN`.
+3. `VK_OWNER_ID` = the community wall id as a **negative** number (e.g. `-123456789`); find the numeric id via [regvk.com/id](https://regvk.com/id/) or the group page source.
+
+**Facebook** (Page)
+1. [developers.facebook.com](https://developers.facebook.com/) → **Create App** (Business).
+2. In the Graph API Explorer, select your Page and grant `pages_manage_posts`, `pages_read_engagement`, `pages_show_list`.
+3. Exchange for a **long-lived Page token** (Access Token Debugger → "Extend Access Token") → `FB_PAGE_ACCESS_TOKEN`.
+4. `FB_PAGE_ID` = Page → About → "Page transparency" (or `GET /me/accounts`).
+
+**Instagram** (Reels — needs a public video URL)
+1. Make the IG account **Business/Creator** and link it to the Facebook Page.
+2. Same Meta app; request `instagram_basic` + `instagram_content_publish` (**App Review** + business verification for live use) → `IG_ACCESS_TOKEN`.
+3. `IG_BUSINESS_ACCOUNT_ID` = `GET /{page-id}?fields=instagram_business_account`.
+4. `IG_VIDEO_BASE_URL` = a public base URL serving `dist/<id>_9x16.mp4` (e.g. `https://samskrtam.ru/karaoke/video`).
+
+**WordPress** (creates a draft)
+1. `WP_BASE_URL` = site root, e.g. `https://samskrtam.ru` (no trailing slash).
+2. WP Admin → **Users → Profile → Application Passwords** → name it → "Add New Application Password" → copy → `WP_APP_PASSWORD` (WordPress 5.6+ over HTTPS).
+3. `WP_USER` = your WordPress login.

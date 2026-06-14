@@ -128,6 +128,8 @@ def main():
                     help="actually post via the publishers (fires ONLY where that platform's credentials are set)")
     args = ap.parse_args()
 
+    publishers.load_dotenv()  # pick up repo-root .env so --live finds platform credentials
+
     cfg_path = args.config if os.path.isabs(args.config) else os.path.join(REPO_ROOT, args.config)
     if not os.path.exists(cfg_path):
         raise SystemExit(f"config not found: {args.config} (copy schedule.example.yaml → schedule.yaml)")

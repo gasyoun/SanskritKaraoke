@@ -253,6 +253,45 @@
 | **Instagram** | `IG_BUSINESS_ACCOUNT_ID`, `IG_ACCESS_TOKEN`, `IG_VIDEO_BASE_URL` | Meta-приложение + IG Business/Creator; App Review для `instagram_content_publish` | **Нужен MP4 по публичному URL** (`IG_VIDEO_BASE_URL`/`<id>_9x16.mp4`) — IG не принимает локальный файл. |
 | **WordPress** | `WP_BASE_URL`, `WP_USER`, `WP_APP_PASSWORD` | WP Admin → Пользователи → Пароли приложений | Заливает видео и создаёт **черновик** записи. |
 
-Telegram, VK, Facebook и WordPress заливают локальный файл из `dist/` напрямую; Instagram —
-исключение (нужен публичный URL). Запуск без `--live` (или без учётных данных) показывает
-предпросмотр диспетчеризации — каждая запись со статусом `skip` / `dry-run`, ничего не отправляется.
+### Быстрый старт с `.env`
+
+Скопируйте **`.env.example`** → **`.env`** (в .gitignore), заполните нужные площадки, затем:
+
+```sh
+python tools/schedule_drops.py --live
+```
+
+`--live` автоматически загружает `.env`. Площадка постит только когда заданы **все** её
+переменные; остальные пропускаются без сетевых вызовов. Без `--live` (или без учётных данных)
+каждая запись показывается со статусом `skip` / `dry-run`, ничего не отправляется. Telegram,
+VK, Facebook и WordPress заливают локальный MP4 из `dist/` напрямую; Instagram — исключение:
+он забирает файл по публичному URL (`IG_VIDEO_BASE_URL`).
+
+### Где взять каждый
+
+**Telegram** — без проверки, начните отсюда.
+1. Напишите **@BotFather** → `/newbot` → скопируйте **токен** бота → `TELEGRAM_BOT_TOKEN`.
+2. Создайте канал и добавьте бота **админом** с правом публикации.
+3. `TELEGRAM_CHANNEL_ID` = `@публичноеимя` или числовой `-100…` id приватного канала (перешлите пост канала боту `@userinfobot`, чтобы узнать id).
+
+**VK**
+1. Создайте **Standalone**-приложение на [dev.vk.com](https://dev.vk.com/).
+2. Получите токен со scope `video` + `wall` — токен сообщества (Сообщество → Управление → Работа с API → Создать ключ) или OAuth-токен со `scope=video,wall,offline` → `VK_ACCESS_TOKEN`.
+3. `VK_OWNER_ID` = id стены сообщества **отрицательным** числом (напр. `-123456789`); числовой id — через [regvk.com/id](https://regvk.com/id/) или исходник страницы группы.
+
+**Facebook** (Страница)
+1. [developers.facebook.com](https://developers.facebook.com/) → **Create App** (Business).
+2. В Graph API Explorer выберите Страницу и выдайте `pages_manage_posts`, `pages_read_engagement`, `pages_show_list`.
+3. Обменяйте на **долгоживущий токен Страницы** (Access Token Debugger → «Extend Access Token») → `FB_PAGE_ACCESS_TOKEN`.
+4. `FB_PAGE_ID` = Страница → О странице → «Прозрачность Страницы» (или `GET /me/accounts`).
+
+**Instagram** (Reels — нужен публичный URL видео)
+1. Переведите аккаунт IG в **Business/Creator** и привяжите к Странице Facebook.
+2. То же Meta-приложение; запросите `instagram_basic` + `instagram_content_publish` (**App Review** + верификация бизнеса для боевого режима) → `IG_ACCESS_TOKEN`.
+3. `IG_BUSINESS_ACCOUNT_ID` = `GET /{page-id}?fields=instagram_business_account`.
+4. `IG_VIDEO_BASE_URL` = публичный базовый URL, отдающий `dist/<id>_9x16.mp4` (напр. `https://samskrtam.ru/karaoke/video`).
+
+**WordPress** (создаёт черновик)
+1. `WP_BASE_URL` = корень сайта, напр. `https://samskrtam.ru` (без слэша в конце).
+2. WP Admin → **Пользователи → Профиль → Пароли приложений** → задайте имя → «Добавить новый пароль приложения» → скопируйте → `WP_APP_PASSWORD` (WordPress 5.6+ по HTTPS).
+3. `WP_USER` = ваш логин WordPress.

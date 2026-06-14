@@ -49,6 +49,30 @@ def missing_creds(platform):
     return [v for v in CREDS.get(platform, []) if not os.environ.get(v)]
 
 
+def load_dotenv(path=None):
+    """Load KEY=VALUE lines from a repo-root .env into os.environ (no override).
+
+    Dependency-free. Real environment variables win over .env. Lines that are blank,
+    comments (#), or have no '=' are ignored; surrounding quotes are stripped.
+    Returns True if a .env was found.
+    """
+    if path is None:
+        path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env")
+    if not os.path.exists(path):
+        return False
+    with open(path, encoding="utf-8") as f:
+        for raw in f:
+            line = raw.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, val = line.split("=", 1)
+            key = key.strip()
+            val = val.strip().strip('"').strip("'")
+            if key and val and key not in os.environ:
+                os.environ[key] = val
+    return True
+
+
 def _requests():
     try:
         import requests
