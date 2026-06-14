@@ -1,20 +1,20 @@
-"""schedule_drops.py — compute a posting timeline for a chapter drop (Phase 3).
+"""schedule_drops.py — compute a posting timeline for a chapter drop and post it (Phase 3).
 
 Reads a cadence config (schedule.yaml) + the post-kit drop/<campaign>/<id>/
-manifests, and computes WHEN each verse posts to EACH platform — the queue a
-live publisher would execute. This build is plan-only (dry-run); live posting
-is a credential-gated stub that does nothing until per-platform API publishers
-are implemented (Telegram is trivial via Bot API; IG/TikTok/YouTube need app
-review). Nothing here makes an outward request.
+manifests, computes WHEN each verse posts to EACH platform, and — with --live —
+posts via tools/publishers.py to Telegram, VK, Facebook, Instagram, and WordPress.
+
+A publisher fires ONLY when --live is set AND that platform's credentials are present
+in the environment (see docs/USE_CASES.md Appendix D); otherwise it is skipped with no
+network call. Without --live the run is a plan/preview and nothing is sent.
 
     schedule.yaml + drop/<campaign>/*/manifest.json  →  posting plan
-                                                     →  drop/schedule_plan.json
+                                                     →  drop/schedule_plan.json  (+ --live: posts)
 
 Usage:
-    python tools/schedule_drops.py [--config schedule.yaml] [--drop drop]
-                                   [--campaign bhg_2] [--include-gated]
-                                   [--out drop/schedule_plan.json]
-    # --live is intentionally unimplemented: every platform publisher is a stub.
+    python tools/schedule_drops.py [--config schedule.yaml] [--drop drop] [--dist dist]
+                                   [--campaign bhg_2] [--include-gated] [--lang ru]
+                                   [--out drop/schedule_plan.json] [--live]
 """
 import sys
 import os
@@ -25,11 +25,14 @@ from glob import glob
 
 import yaml
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # allow `import publishers` as a script
+import publishers
+
 sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-KNOWN_PLATFORMS = {"telegram", "instagram", "youtube", "tiktok"}
+KNOWN_PLATFORMS = set(publishers.PLATFORMS)
 
 
 def load_config(path):
@@ -99,6 +102,7 @@ def build_plan(cfg, manifests, include_gated):
                 "when": when.strftime("%Y-%m-%d %H:%M"),
                 "timezone": tz,
                 "verse_id": m.get("verse_id"),
+                "campaign": m.get("campaign") or (m.get("verse_id") or "").rsplit("_", 1)[0],
                 "platform": platform,
                 "ready": ready,
                 "cta": cta,
@@ -110,12 +114,6 @@ def build_plan(cfg, manifests, include_gated):
     return plan, skipped
 
 
-def stub_publisher(entry):
-    raise NotImplementedError(
-        f"live posting to {entry['platform']} is not implemented "
-        "(needs API credentials/app review; this build is plan-only)")
-
-
 def main():
     ap = argparse.ArgumentParser(description="Compute the posting plan for a chapter drop (plan-only).")
     ap.add_argument("--config", default="schedule.yaml")
@@ -124,8 +122,10 @@ def main():
     ap.add_argument("--include-gated", action="store_true",
                     help="include verses whose manifest is not ready_to_publish")
     ap.add_argument("--out", default=os.path.join("drop", "schedule_plan.json"))
+    ap.add_argument("--dist", default="dist", help="directory with rendered <id>_9x16.mp4 / <id>.png")
+    ap.add_argument("--lang", default="ru", help="caption language to post (ru|en)")
     ap.add_argument("--live", action="store_true",
-                    help="(unimplemented) execute publishers; every platform is a stub")
+                    help="actually post via the publishers (fires ONLY where that platform's credentials are set)")
     args = ap.parse_args()
 
     cfg_path = args.config if os.path.isabs(args.config) else os.path.join(REPO_ROOT, args.config)
@@ -142,6 +142,9 @@ def main():
 
     print(f"config    : {args.config}  (per_day={cfg['per_day']}, "
           f"platforms={','.join(cfg['platforms'])}, stagger={cfg['stagger_minutes']}m, tz={cfg.get('timezone') or '—'})")
+    cfg_set = [p for p in cfg["platforms"] if p in KNOWN_PLATFORMS and publishers.creds_present(p)]
+    cfg_unset = [p for p in cfg["platforms"] if p in KNOWN_PLATFORMS and not publishers.creds_present(p)]
+    print(f"creds     : configured={','.join(cfg_set) or '—'}; missing={','.join(cfg_unset) or '—'}")
     print(f"manifests : {len(manifests)} found; {len(skipped)} skipped as not-ready"
           f"{' (use --include-gated to show)' if skipped and not args.include_gated else ''}")
     print(f"plan      : {len(plan)} scheduled post(s)\n")
@@ -156,12 +159,24 @@ def main():
         json.dump(plan, f, ensure_ascii=False, indent=2)
     print(f"\nWrote plan → {os.path.relpath(out_path, REPO_ROOT)}")
 
-    if args.live:
-        print("\n--live: dispatching to publishers …")
-        for e in plan:
-            if not e["ready"]:
-                continue
-            stub_publisher(e)  # raises until per-platform API publishers exist
+    ctx = {
+        "dist_dir": args.dist if os.path.isabs(args.dist) else os.path.join(REPO_ROOT, args.dist),
+        "drop_dir": drop_dir,
+        "lang": args.lang,
+    }
+    ready_plan = [e for e in plan if e["ready"]]
+    if ready_plan:
+        print("\n--live: posting" if args.live else "\n(dry-run — pass --live to post; preview below)")
+        posted = 0
+        for e in ready_plan:
+            res = publishers.run_publish(e, ctx, live=args.live)
+            if res["status"] == "posted":
+                posted += 1
+            print(f"  {e['when']}  {e['verse_id']:<10} {e['platform']:<10} [{res['status']}] {res['detail']}")
+        if args.live:
+            print(f"\nPosted {posted}/{len(ready_plan)} item(s).")
+    elif args.live:
+        print("\n--live: nothing ready to publish (all entries gated — clear rights / add audio first).")
 
 
 if __name__ == "__main__":

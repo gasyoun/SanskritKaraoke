@@ -22,9 +22,12 @@ karaoke videos with a measurable funnel to the paid course. See
 - **Post-kit generator** (`tools/post_kit.py`): per-verse `drop/<chapter>/<id>/` with
   RU/EN captions, hashtags, and per-platform UTM CTAs to the course landing page; the RU
   caption is auto-withheld (`caption_ru.BLOCKED.txt`) until its translation is cleared.
-- **Scheduling plan-core** (`tools/schedule_drops.py` + `schedule.example.yaml`): computes a
-  posting timeline from a cadence config and the drop manifests; live per-platform
-  publishers are credential-gated stubs.
+- **Scheduling + publishers** (`tools/schedule_drops.py` + `tools/publishers.py` +
+  `schedule.example.yaml`): computes a posting timeline from a cadence config and the drop
+  manifests, and posts via per-platform publishers for **Telegram, VK, Facebook, Instagram,
+  and WordPress** (`--live`). Safety gate: a publisher fires only when `--live` is set **and**
+  that platform's env-var credentials are present — otherwise it reports `skip` and makes no
+  network call.
 - **Thumbnail PNG export** in `tools/render_chapter.js`, plus `--template/--handle/--cta/--lang`.
 - **Translation-rights metadata**: a `translation.rights` block (rights_holder / source /
   license / permission_ref / status) in the verse schema; `validate_library.py` and

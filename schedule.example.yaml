@@ -10,9 +10,10 @@ slots:                     # wall-clock post times; need >= per_day entries
 
 platforms:                 # post order, per verse
   - telegram
+  - vk
+  - facebook
   - instagram
-  - youtube
-  - tiktok
+  - wordpress
 stagger_minutes: 20        # gap between platforms posting the same verse
 
 campaign: bhg_2            # which drop/<campaign>/ to schedule (omit = all campaigns)

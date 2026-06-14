@@ -29,7 +29,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
 
 DEFAULT_URL = "https://samskrtam.ru/usha-sanka"
-PLATFORMS = ["telegram", "instagram", "youtube", "tiktok"]
+PLATFORMS = ["telegram", "vk", "facebook", "instagram", "wordpress"]
 PUBLISHABLE = {"public-domain", "own-work", "cleared"}
 
 BASE_HASHTAGS = ["#sanskrit", "#sanskritkaraoke", "#chanting", "#mantra",

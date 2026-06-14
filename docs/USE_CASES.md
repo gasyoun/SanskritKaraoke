@@ -63,10 +63,12 @@ captions, hashtags, and funnel links. This is the heart of the new layer.
 5. **QA:** syllables with low auto-timing confidence are highlighted orange in the Timing
    Editor — fix them there if needed. The closing readiness summary lists anything still
    blocking publication (e.g. missing audio).
-6. **Scheduling:** `python tools/schedule_drops.py --config schedule.yaml` builds the
-   posting plan (`drop/schedule_plan.json`) from a cadence file (`schedule.example.yaml` →
-   copy to `schedule.yaml`). It is plan-only for now: live per-platform publishers are stubs
-   until platform API keys exist (Telegram Bot API first; IG/YT/TikTok need app review).
+6. **Scheduling & posting:** `python tools/schedule_drops.py --config schedule.yaml` builds
+   the posting plan (`drop/schedule_plan.json`) from a cadence file (`schedule.example.yaml`
+   → copy to `schedule.yaml`). Add `--live` to actually post via the per-platform publishers
+   (Telegram, VK, Facebook, Instagram, WordPress). **Safety:** a publisher fires *only* when
+   `--live` is set **and** that platform's credentials are in the environment — otherwise it
+   reports `skip` and makes no network call. Credentials are listed in Appendix D.
 
 ---
 
@@ -121,7 +123,7 @@ intellectual property.
 is no paywall — the video *is* the funnel.
 
 ### The viewer's path:
-1. **Sees a `feed_v1` clip** on Telegram / Reels / Shorts / TikTok: a dark vertical frame —
+1. **Sees a `feed_v1` clip** on Telegram / VK / Facebook / Instagram (or as a WordPress post): a dark vertical frame —
    ॐ, title and meter (hook) → Devanagari with a per-line syllable highlight under the chant
    (karaoke-fill) → an end-card with the translation and a button in the final seconds.
 2. **Taps the CTA** `samskrtam.ru/usha-sanka` — the link is UTM-tagged by platform and
@@ -193,7 +195,7 @@ End to end, from a chapter's audio to scheduled posts:
 7. ☐ **QA timing** — review orange (low-confidence) syllables in the Timing Editor; re-align or hand-fix where needed.
 8. ☐ **Readiness** — every verse's `manifest.json` shows `ready_to_publish: true` (no gates).
 9. ☐ **Schedule** — copy `schedule.example.yaml` → `schedule.yaml`, then `python tools/schedule_drops.py` → `drop/schedule_plan.json`.
-10. ☐ **Publish** — post per the plan (manual until the live publishers have platform credentials).
+10. ☐ **Publish** — `python tools/schedule_drops.py --live` posts to every platform whose credentials are set (Telegram needs only a BotFather token); the rest are skipped cleanly. Credentials → Appendix D.
 
 ---
 
@@ -233,3 +235,23 @@ End to end, from a chapter's audio to scheduled posts:
 - **publish gate** — a reason a verse may not be published yet (un-cleared rights, missing audio); enforced by `validate_library.py` and `post_kit.py`.
 - **UTM** — campaign tags appended to the CTA link so the funnel can measure which verses and templates convert.
 - **clearance / `cleared`** — a translation or audio source confirmed legal to publish (`public-domain`, `own-work`, or licensed).
+
+---
+
+# Appendix D — Publisher credentials
+
+`python tools/schedule_drops.py --live` posts via `tools/publishers.py`. A publisher runs
+**only** when `--live` is set **and** all of its environment variables are present; otherwise
+it is skipped with no network call. Keep these in a git-ignored `.env` — never commit them.
+
+| Platform | Env vars | Where to get them | Notes |
+| :--- | :--- | :--- | :--- |
+| **Telegram** | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHANNEL_ID` | @BotFather → `/newbot`; add the bot as a channel admin | No review — easiest, start here. Uploads the local MP4. |
+| **VK** | `VK_ACCESS_TOKEN`, `VK_OWNER_ID` | a VK app / community access token; `VK_OWNER_ID` = the community wall id (negative) | Uploads via `video.save` → `wall.post`. |
+| **Facebook** | `FB_PAGE_ID`, `FB_PAGE_ACCESS_TOKEN` | developers.facebook.com → app → Page access token | Posts to the Page's videos. |
+| **Instagram** | `IG_BUSINESS_ACCOUNT_ID`, `IG_ACCESS_TOKEN`, `IG_VIDEO_BASE_URL` | Meta app + IG Business/Creator account; App Review for `instagram_content_publish` | **Needs the MP4 at a public URL** (`IG_VIDEO_BASE_URL`/`<id>_9x16.mp4`) — IG can't take a local file. |
+| **WordPress** | `WP_BASE_URL`, `WP_USER`, `WP_APP_PASSWORD` | WP Admin → Users → Application Passwords | Uploads the video and creates a **draft** post (review before publish). |
+
+Telegram, VK, Facebook and WordPress upload the local `dist/` file directly; Instagram is the
+exception (public URL required). Run without `--live` (or without creds) to preview the
+dispatch — every entry shows `skip` / `dry-run` and nothing is sent.

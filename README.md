@@ -155,9 +155,11 @@ step-by-step workflows are in [docs/USE_CASES.md](docs/USE_CASES.md).
   Sementsov (under copyright in Russia until end of 2056), licensed via a permission letter
   from his daughter (heir). `validate_library.py` and `post_kit.py` refuse to publish
   anything not cleared (see the "Rights Manager" role in the use cases).
-- **Scheduling:** `python tools/schedule_drops.py --config schedule.yaml` builds the posting
-  plan from a cadence file (`schedule.example.yaml`); live per-platform publishers are added
-  as their API credentials arrive (Telegram first).
+- **Scheduling & posting:** `python tools/schedule_drops.py --config schedule.yaml` builds
+  the posting plan from a cadence file; add `--live` to post via the publishers for
+  **Telegram, VK, Facebook, Instagram, and WordPress** — each fires only where that
+  platform's env-var credentials are set (see [docs/USE_CASES.md](docs/USE_CASES.md)
+  Appendix D). Telegram needs just a BotFather token; nothing is sent without `--live` + creds.
 - **The only gate to a first drop:** Uṣā Saṅkā's recordings (audio). The rest of the
   pipeline is already built.
 
