@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--
+  feed_preview.html — dev harness to eyeball the feed_v1 template (src/core/feed.js)
+  without audio/Puppeteer. Renders three representative frames (s1 active,
+  s2 active, end-card) with synthetic timing. Serve over http and open:
+    /feed_preview.html?id=bhg_2_47
+-->
+<html lang="sa">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: 'Sanskrit 2003';       src: url('src/fonts/Sanskrit2003.ttf') format('truetype'); font-display: block; }
+  @font-face { font-family: 'Charter Indologique'; src: url('src/fonts/charis-sil.ttf') format('truetype'); font-weight: 400; font-display: block; }
+  @font-face { font-family: 'Charter Indologique'; src: url('src/fonts/charis-sil-bold.ttf') format('truetype'); font-weight: 700; font-display: block; }
+  body { margin: 0; background: #2a2a2a; display: flex; gap: 16px; justify-content: center; align-items: flex-start; padding: 16px; }
+  figure { margin: 0; text-align: center; }
+  canvas { height: 88vh; box-shadow: 0 4px 24px rgba(0,0,0,0.6); border-radius: 8px; }
+  figcaption { color: #bbb; font: 13px sans-serif; margin-top: 6px; }
+</style>
+</head>
+<body>
+<figure><canvas id="c1"></canvas><figcaption>1 · s1 active</figcaption></figure>
+<figure><canvas id="c2"></canvas><figcaption>2 · s2 active</figcaption></figure>
+<figure><canvas id="c3"></canvas><figcaption>3 · end-card</figcaption></figure>
+<script type="module">
+import { syllabifyVerse } from './src/core/translit.js';
+import { prepareFeed, drawFeedFrame, FEED_W, FEED_H } from './src/core/feed.js';
+
+const id = new URLSearchParams(location.search).get('id') || 'bhg_2_47';
+const verse = await (await fetch(`verses/data/${id}.json`)).json();
+const syl = syllabifyVerse(verse);
+
+// Synthetic even-spaced timing across a nominal duration (no audio here).
+const DUR = 16;
+const n1 = syl.s1.length, n2 = syl.s2.length, total = n1 + n2 || 1;
+const t0 = 1.0, tEnd = DUR - 3.4, span = tEnd - t0;
+const times = [];
+for (let i = 0; i < total; i++) times.push(t0 + span * (i / total));
+const timing = { s1: times.slice(0, n1), s2: times.slice(n1) };
+
+const prep = prepareFeed(verse, syl, { handle: '@samskrtam', cta: 'samskrtam.ru/usha-sanka', lang: 'ru' });
+
+await document.fonts.ready;
+
+function draw(canvasId, t) {
+  const c = document.getElementById(canvasId);
+  c.width = FEED_W; c.height = FEED_H;
+  drawFeedFrame(c.getContext('2d'), prep, timing, null, t, DUR);
+}
+draw('c1', timing.s1[Math.floor(n1 / 2)] ?? 3);
+draw('c2', timing.s2[Math.floor(n2 / 2)] ?? 9);
+draw('c3', DUR - 0.4);
+window._feedReady = true;
+</script>
+</body>
+</html>

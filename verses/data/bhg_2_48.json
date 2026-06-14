@@ -27,10 +27,25 @@
   "s2dev": "सिद्ध्यसिद्ध्योः समो भूत्वा समत्वं योग उच्यते॥",
   "translation": {
     "ru": "Пребывая в йоге, совершай действия, оставив привязанность, о Дхананджая.",
-    "en": "Perform your duty equipoised, O Arjuna, abandoning all attachment to success or failure.",
+    "en": "Having recourse to devotion, O Dhanañjaya! perform actions, casting off (all) attachment, and being equable in success or ill-success; (such) equability is called devotion.",
     "provenance": {
-      "ru": "unknown",
-      "en": "unknown"
+      "ru": "licensed",
+      "en": "public-domain"
+    },
+    "rights": {
+      "ru": {
+        "rights_holder": "V. S. Sementsov; translation copyright held by his daughter (heir)",
+        "source": "Семенцов В. С., «Бхагавадгита в традиции и в современной научной критике», Москва: Наука, 1985",
+        "license": "permission letter from the translator's daughter (heir); to be formalized as SK-LIC-2026-002",
+        "permission_ref": "SK-LIC-2026-002/SEM-2026-002",
+        "status": "cleared"
+      },
+      "en": {
+        "rights_holder": "public domain (K. T. Telang, d. 1893)",
+        "source": "Telang, K. T., The Bhagavadgîtâ, Sacred Books of the East vol. 8, Oxford 1882",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
     }
   },
   "audio": {

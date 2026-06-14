@@ -78,9 +78,15 @@ def lint_verse(name, v):
 
     tr = v.get("translation", {})
     prov = tr.get("provenance", {})
+    rights = tr.get("rights", {})
     for lang in ("ru", "en"):
-        if lang in tr and prov.get(lang) in (None, "unknown"):
+        if lang not in tr:
+            continue
+        if prov.get(lang) in (None, "unknown"):
             warn(f"translation.{lang} provenance is unknown — verify source before publication")
+        status = (rights.get(lang) or {}).get("status")
+        if status in (None, "unknown", "license-pending"):
+            warn(f"translation.{lang} not cleared to publish (rights.status={status or 'missing'})")
     return warnings
 
 if __name__ == "__main__":

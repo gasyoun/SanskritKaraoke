@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+The batch video-production layer: a chapter's audio becomes publish-ready vertical
+karaoke videos with a measurable funnel to the paid course. See
+`docs/KARAOKE_PRODUCT_ROADMAP.md` and `docs/USE_CASES.md`.
+
+### Added
+
+- **`feed_v1` vertical template** (`src/core/feed.js`): native 1080 × 1920 karaoke frame —
+  ॐ + title + meter hook, continuous Devanagari with a per-syllable IAST karaoke-fill,
+  progress bar, handle/CTA footer, and a translation + CTA end-card in the final seconds.
+  Frame-verified in-browser via `feed_preview.html`.
+- **`render.html` template branch**: `opts.template='feed_v1'` renders natively vertical
+  (vs the classic camera-pan path) and returns a `thumbnailBase64`.
+- **Chapter batch pipeline** (`tools/build_chapter.py`): one command chains
+  `align_chapter.py` → `render_chapter.js` → `post_kit.py` over a folder of audio, with
+  `--dry-run`, orphan / no-audio handling, node+Puppeteer pre-flight, and a readiness summary.
+- **Post-kit generator** (`tools/post_kit.py`): per-verse `drop/<chapter>/<id>/` with
+  RU/EN captions, hashtags, and per-platform UTM CTAs to the course landing page; the RU
+  caption is auto-withheld (`caption_ru.BLOCKED.txt`) until its translation is cleared.
+- **Scheduling plan-core** (`tools/schedule_drops.py` + `schedule.example.yaml`): computes a
+  posting timeline from a cadence config and the drop manifests; live per-platform
+  publishers are credential-gated stubs.
+- **Thumbnail PNG export** in `tools/render_chapter.js`, plus `--template/--handle/--cta/--lang`.
+- **Translation-rights metadata**: a `translation.rights` block (rights_holder / source /
+  license / permission_ref / status) in the verse schema; `validate_library.py` and
+  `post_kit.py` gate publication on it.
+- **Sementsov translation license draft** (`docs/legal/make_sementsov_agreement.js` →
+  `Sementsov_Translation_License_Agreement_DRAFT.docx`, agreement SK-LIC-2026-002).
+- **Deepened bilingual docs**: the `README(.ru).md` video-pipeline section and
+  `docs/USE_CASES(.ru).md`, reorganised by audience (maintainers / end-users) with new
+  pipeline use cases and command-reference / first-drop-checklist / glossary appendices.
+
+### Changed
+
+- **English translations** of Bhagavadgītā 2.47–2.49 replaced with Telang (1882, public
+  domain); `provenance.en = public-domain` with a source citation.
+- **Russian translations** (Sementsov) marked `cleared` via the heir's permission letter
+  (`SK-LIC-2026-002`).
+- **`render_chapter.js`** default template is now `feed_v1`.
+
+### Notes
+
+- The pipeline is built but **unreleased**: a first real drop is gated on Uṣā Saṅkā's
+  chapter audio recordings and `npm install --prefix tools` (Puppeteer).
+
 ## [1.4.2] - 2026-06-02
 
 ### Added [1.4.2]

@@ -1,65 +1,235 @@
 # Use Case Scenarios — Sanskrit Karaoke
 
-This document outlines the primary workflows for different user roles within the Sanskrit Karaoke ecosystem.
+The project serves **two audiences**, and this document is organised around them:
+
+- **Maintainers** — those who develop the application and operate the video-production
+  pipeline (developers, drop producers, the rights manager, the library curator).
+- **End-users** — the people it is all for: viewers arriving from social media through the
+  funnel, and students systematically memorising verses.
+
+Technically there are two layers:
+
+1. **Browser application** (the older layer) — `index.html` for authoring, and
+   `student.html` / `catalogue.html` / `progress.html` for students.
+2. **Batch video-production pipeline** (the 2026 layer) — a single recording of a whole
+   chapter becomes publish-ready vertical karaoke videos (`feed_v1`) with a funnel to the
+   paid course.
 
 ---
 
-## 1. The Content Creator (Teacher / Scholar)
-**Goal:** Transform a raw Sanskrit text and an audio recording into a structured, interactive lesson for the library.
+# Part I. Maintainers
+
+## 1. Developer — local setup and architecture
+**Goal:** run the project locally and learn where everything lives.
 
 ### Workflow:
-1.  **Text Input:** Open `index.html`. Paste the first half-verse (s1) and second half-verse (s2). The tool automatically detects the meter and renders the initial Wave Diagram.
-2.  **Audio Integration:** Load the `.mp3` or `.wav` recording.
-3.  **Metrical Polish:** Right-click syllables to correct weights (Guru/Laghu) if the auto-detection missed a poetic nuance (e.g., *muta cum liquida*).
-4.  **Timing Synchronization:**
-    *   Open the **Timing Editor**.
-    *   Use **Pada Mode** to drag the 8 padas boundaries.
-    *   Switch to **Syllable Mode** to fine-tune the "dot" highlight for every syllable using keyboard shortcuts (`Ctrl+Arrows`).
-5.  **Metadata & Export:**
-    *   Fill in the **Library Export** form (add translations, difficulty level, and tags).
-    *   Download the `[id].json` file and save it to `verses/data/`.
-    *   Export a high-resolution **PNG** for printable handouts and a **Karaoke MP4** for social media.
-6.  **Cloud Save:** Save the session to Google Drive to allow for future corrections.
+1. **Run:** no build step or package manager — `python -m http.server 8000`, open
+   `http://localhost:8000`.
+2. **Syntax check:** `node --check src/scripts/app.js`.
+3. **Core architecture:** logic is extracted from the `app.js` monolith into pure ES
+   modules `src/core/*` (ADR-0001): `translit`, `layout`, `svg`, `compose`,
+   `karaoke-frame`, `timing`, and **`feed`** (the `feed_v1` vertical template). The modules
+   have no DOM/globals; `app.js` wraps them.
+4. **Headless render:** `render.html` is loaded by Puppeteer and calls
+   `window.renderVerse()` — the surface for batch video rendering (no UI).
+5. **Validation & index:** `python tools/validate_library.py` (schema + publish-readiness
+   checks), `python tools/build_index.py` (rebuild the catalogue index).
+6. **Conventions:** session journal — `.ai_state.md`; architecture decisions —
+   `docs/adr/*`; all files UTF-8 **without BOM**.
 
 ---
 
-## 2. The Active Learner (Student)
-**Goal:** Systematically memorize a verse and master its metrical rhythm using spaced repetition.
+## 2. Drop Producer — "chapter → videos → posts" in one command
+**Goal:** turn a batch chapter recording into a set of publish-ready karaoke videos with
+captions, hashtags, and funnel links. This is the heart of the new layer.
 
 ### Workflow:
-1.  **Discovery:** Browse `catalogue.html` (or open it via Telegram Mini App). Filter by "Difficulty: Easy" or "Meter: Anushtubh".
-2.  **Study Session:**
-    *   **Phase A (Full Mode):** Listen to the audio while watching the Wave labels to associate sounds with syllables.
-    *   **Phase B (Dots Mode):** Hide the text. Follow the visual metrical pulse (Wave peaks) while chanting aloud.
-    *   **Phase C (Blind Mode):** Everything is hidden except the moving highlight dot. Attempt total recall.
-3.  **Self-Assessment:**
-    *   Complete the **Rotating Quizzes** (identify the meter, fill in the hidden syllable, or beat-tap the rhythm).
-    *   Rate the recall quality (😊/😐/😕).
-4.  **Cloud Sync:** Sign in via the **Cloud Sync** button to ensure progress is saved to Firebase.
+1. **Audio:** Uṣā Saṅkā records a whole chapter in one session (batch recording). Files are
+   named after the verse `id` — `bhg_2_47.m4a`, `bhg_2_48.m4a`, etc. — in one folder.
+2. **Render dependency:** once — `npm install --prefix tools` (Puppeteer).
+3. **One command:**
+   ```sh
+   python tools/build_chapter.py <audio_dir>
+   ```
+   which runs, in order:
+   * **`align_chapter.py --write`** — auto-timing from mora weight (guru = 2, laghu = 1)
+     and audio onsets; writes the `timing` field into the verse JSON;
+   * **`render_chapter.js`** — renders `feed_v1` (vertical 9:16 MP4 @ 30 fps) plus
+     `.srt`/`.vtt` subtitles → `dist/`;
+   * **`post_kit.py`** — RU/EN captions, hashtags, and per-platform UTM CTAs →
+     `drop/<chapter>/<id>/`.
+4. **Useful flags:** `--dry-run` (print the plan and commands, run nothing),
+   `--only id1,id2`, `--format 9:16|1:1`, `--skip-align/--skip-render/--skip-postkit`.
+5. **QA:** syllables with low auto-timing confidence are highlighted orange in the Timing
+   Editor — fix them there if needed. The closing readiness summary lists anything still
+   blocking publication (e.g. missing audio).
+6. **Scheduling:** `python tools/schedule_drops.py --config schedule.yaml` builds the
+   posting plan (`drop/schedule_plan.json`) from a cadence file (`schedule.example.yaml` →
+   copy to `schedule.yaml`). It is plan-only for now: live per-platform publishers are stubs
+   until platform API keys exist (Telegram Bot API first; IG/YT/TikTok need app review).
 
 ---
 
-## 3. The Curator (Pipeline Operator / Engineer)
-**Goal:** Maintain the quality of the verse library and monitor platform efficiency.
+## 3. Rights Manager — clearance before publishing
+**Goal:** make sure no video is published until **both the audio and the translation** are
+cleared. Not a formality: both the chant and the Russian translation are someone else's
+intellectual property.
+
+### What is cleared, and how:
+| Layer | Source | Status | Recorded in |
+| :--- | :--- | :--- | :--- |
+| **EN translation** | Telang (1882) | public domain (`public-domain`) | `translation.rights.en` |
+| **RU translation** | Sementsov (under copyright in Russia until end of 2056) | **licensed** via a permission letter from his daughter (heir) — `cleared` | `translation.rights.ru`, `permission_ref: SK-LIC-2026-002/…` |
+| **Audio** | Uṣā Saṅkā, `SK-LIC-2026-001` | draft agreement + no recordings yet → **the only remaining gate** | `audio.license` |
 
 ### Workflow:
-1.  **Content Ingestion:** Review a Pull Request containing new verse JSONs.
-2.  **Automated Validation:** The **Teaching Pipeline** runs:
-    *   **VerseCurator** checks schema compliance.
-    *   **ContentEnricher** (via Gemini) fills in missing Russian/English translations.
-    *   **QualityGate** ensures the meter name matches the metrical structure.
-3.  **Observability Check:**
-    *   Run `python tools/cost_dashboard.py` to ensure the automated enrichment stayed under the **$0.10/verse** budget.
-    *   Run `python tools/student_stats.py` to identify if any new verses are "Harder" than expected based on student fail rates.
-4.  **Eval Benchmarking:** Run `python evals/judge.py` to ensure the LLM-based translations didn't regress after a pipeline change.
+1. **Rights field:** in every `verses/data/*.json`, the `translation.rights` block stores
+   the rights holder, source, license, `permission_ref`, and `status`.
+2. **Automatic blocking:** `validate_library.py` and `post_kit.py` refuse to publish
+   anything not cleared — only `public-domain`, `own-work`, or `cleared` may go out. An
+   un-cleared RU translation produces `caption_ru.BLOCKED.txt` instead of a caption and
+   drops the verse's "ready to publish" flag.
+3. **Agreements:** generated by scripts — `docs/legal/make_agreement.js` (audio,
+   SK-LIC-2026-001) and `docs/legal/make_sementsov_agreement.js` (translation,
+   SK-LIC-2026-002). The `.docx` drafts keep blank fields (name/address/date/scope) until
+   the rights holder's details arrive.
 
 ---
 
-## 4. The Offline Practitioner (Mobile/Traveler)
-**Goal:** Continue studying during a commute or in areas with poor connectivity.
+## 4. The Curator — Teaching Pipeline and Evals
+**Goal:** maintain the quality of the verse library and monitor platform efficiency.
 
 ### Workflow:
-1.  **Preparation:** Load a verse once while online. The system automatically caches the session data.
-2.  **Offline Use:** Open `student.html?id=[id]`. The browser's **Service Worker** serves the UI, and the **Drive Fallback** loads the session wave from local cache.
-3.  **Indicator:** The header displays **"Offline Mode (Cached)"** to confirm local data usage.
-4.  **Sync-Back:** When back online, the student visits `progress.html`, and their offline practice results are synced to the Firebase cloud.
+1. **Content ingestion:** review a Pull Request containing new verse JSONs.
+2. **Automated validation** — the **Teaching Pipeline** (LangGraph) runs:
+   * **VerseCurator** checks schema compliance;
+   * **ContentEnricher** (via Gemini Flash) fills in missing RU/EN translations and tags —
+     machine translations are marked in `provenance`;
+   * **QualityGate** ensures the meter name matches the metrical structure;
+   * **StudentAnalyzer** analyses SRS history and recommends the next study queue.
+3. **Observability check:** `python tools/cost_dashboard.py` (budget ≈ **$0.10/verse**),
+   `python tools/student_stats.py` (verses that turned out harder than expected).
+4. **Eval benchmarking:** `python evals/judge.py` — a "golden set" of 8 cases in
+   `evals/golden/`; confirm the LLM translations did not regress after a pipeline change.
+
+---
+
+# Part II. End-users
+
+## 5. Viewer → Student — the social-media funnel
+**Goal (for the project):** a free vertical video brings a viewer to the paid course. There
+is no paywall — the video *is* the funnel.
+
+### The viewer's path:
+1. **Sees a `feed_v1` clip** on Telegram / Reels / Shorts / TikTok: a dark vertical frame —
+   ॐ, title and meter (hook) → Devanagari with a per-line syllable highlight under the chant
+   (karaoke-fill) → an end-card with the translation and a button in the final seconds.
+2. **Taps the CTA** `samskrtam.ru/usha-sanka` — the link is UTM-tagged by platform and
+   verse, so it is visible **which verses and templates convert**.
+3. **Becomes a course student**, and/or moves into the browser player below.
+
+---
+
+## 6. The Content Creator (Teacher / Scholar)
+**Goal:** transform a raw Sanskrit text and an audio recording into a structured lesson for
+the library — which then becomes source material for the video pipeline.
+
+### Workflow:
+1. **Text input:** open `index.html`, paste the half-verses (s1/s2). The meter is detected
+   automatically and the wave diagram is rendered.
+2. **Audio integration:** load the `.mp3`/`.wav`.
+3. **Metrical polish:** right-click syllables to correct weights (Guru/Laghu) if
+   auto-detection missed a nuance (e.g. *muta cum liquida*).
+4. **Timing synchronization:** the **Timing Editor** — *Pada mode* first (8 boundaries),
+   then *Syllable mode* (fine-tune per syllable with `Ctrl+Arrows`).
+5. **Metadata & export:** fill in the **Library Export** form (translations, difficulty,
+   tags), download `[id].json` into `verses/data/`. Export a high-resolution **PNG** for
+   handouts and a **Karaoke MP4** for social media.
+6. **Cloud save:** save the session to Google Drive for future corrections.
+
+> Verses from the library are then rendered in batch with the `feed_v1` template (see
+> scenario 2), so clean metadata and timing here save work for the drop producer.
+
+---
+
+## 7. The Active Learner (Student)
+**Goal:** systematically memorize a verse and master its metrical rhythm using spaced
+repetition.
+
+### Workflow:
+1. **Discovery:** `catalogue.html` (or the Telegram Mini App), filter by difficulty/meter.
+2. **Study session:**
+   * **Phase A (Full mode):** listen to the audio while watching the syllable labels.
+   * **Phase B (Dots mode):** hide the text, follow the metrical pulse, chanting aloud.
+   * **Phase C (Blind mode):** only the moving highlight dot — recall from memory.
+3. **Self-assessment:** **Quizzes** (identify the meter, fill in the hidden syllable,
+   beat-tap the rhythm), then rate recall (😊/😐/😕) — SM-2 schedules the repetitions.
+4. **Cloud sync:** **Cloud Sync** saves progress to Firebase across devices.
+
+---
+
+## 8. The Offline Practitioner (Mobile/Traveler)
+**Goal:** keep studying during a commute or in areas with poor connectivity.
+
+### Workflow:
+1. **Preparation:** load a verse once while online — the session data is cached.
+2. **Offline:** open `student.html?id=[id]`; the **Service Worker** serves the UI and the
+   **Drive Fallback** loads the verse from local cache.
+3. **Indicator:** the header shows **"Offline Mode (Cached)"**.
+4. **Sync-back:** when connectivity returns, `progress.html` syncs the results to Firebase.
+
+---
+
+# Appendix A — First-drop checklist (Drop Producer)
+
+End to end, from a chapter's audio to scheduled posts:
+
+1. ☐ **Verses exist** in `verses/data/` for every recorded line; `python tools/validate_library.py` passes.
+2. ☐ **Rights cleared** — `validate_library.py` reports no *"not cleared to publish"* warnings (EN/RU), and the audio license is in place.
+3. ☐ **Audio named** `<verse_id>.<ext>` (e.g. `bhg_2_47.m4a`), all in one folder.
+4. ☐ **Puppeteer installed** — `npm install --prefix tools` (once).
+5. ☐ **Dry run** — `python tools/build_chapter.py <audio_dir> --dry-run` shows the right verses matched and no orphan audio.
+6. ☐ **Build** — `python tools/build_chapter.py <audio_dir>` → `dist/*.mp4` + `.srt`/`.vtt` + `.png`, and `drop/<chapter>/<id>/`.
+7. ☐ **QA timing** — review orange (low-confidence) syllables in the Timing Editor; re-align or hand-fix where needed.
+8. ☐ **Readiness** — every verse's `manifest.json` shows `ready_to_publish: true` (no gates).
+9. ☐ **Schedule** — copy `schedule.example.yaml` → `schedule.yaml`, then `python tools/schedule_drops.py` → `drop/schedule_plan.json`.
+10. ☐ **Publish** — post per the plan (manual until the live publishers have platform credentials).
+
+---
+
+# Appendix B — Command reference
+
+| Command | What it does |
+| :--- | :--- |
+| `python -m http.server 8000` | Serve the browser app locally |
+| `node --check src/scripts/app.js` | Syntax-check the app monolith |
+| `python tools/validate_library.py` | Validate all verses + publish-readiness gates |
+| `python tools/validate_verse.py <file>` | Validate a single verse JSON |
+| `python tools/build_index.py` | Rebuild the catalogue index |
+| `python tools/build_chapter.py <audio_dir>` | **Full pipeline:** align → render → post-kit (`--dry-run` to preview) |
+| `python tools/align_chapter.py <audio_dir> --write` | Auto-timing → verse JSON `timing` field |
+| `node tools/render_chapter.js <audio_dir>` | Render `feed_v1` MP4 + `.srt`/`.vtt` → `dist/` |
+| `python tools/post_kit.py --all` | Captions + hashtags + per-platform UTM CTAs → `drop/` |
+| `python tools/schedule_drops.py --config schedule.yaml` | Posting plan → `drop/schedule_plan.json` |
+| `python tools/make_student.py` | Regenerate `student.html` from the template |
+| `python tools/cost_dashboard.py` | LLM enrichment cost report (Teaching Pipeline) |
+| `python tools/student_stats.py` | Per-verse difficulty from student statistics |
+| `python evals/judge.py` | LLM-as-judge eval over the golden set |
+
+**Output layout:**
+
+- `dist/` — `<id>_9x16.mp4`, `<id>.srt`, `<id>.vtt`, `<id>.png` (thumbnail). *(git-ignored)*
+- `drop/<chapter>/<id>/` — `caption_en.txt`, `caption_ru.txt` (or `caption_ru.BLOCKED.txt`), `hashtags.txt`, `manifest.json`. *(git-ignored)*
+
+---
+
+# Appendix C — Glossary
+
+- **guru / laghu** — heavy / light syllable; the metrical weights the wave diagram shows (guru dark red, laghu dark green).
+- **pada** — a quarter of a verse; an anuṣṭubh has 4 padas of 8 syllables.
+- **mora** — prosodic timing unit; the aligner weights guru = 2 morae, laghu = 1.
+- **feed_v1** — the native-vertical (1080 × 1920) social karaoke template (`src/core/feed.js`).
+- **drop kit** — the `drop/<chapter>/<id>/` folder: captions, hashtags, UTM CTAs, and a `manifest.json`.
+- **publish gate** — a reason a verse may not be published yet (un-cleared rights, missing audio); enforced by `validate_library.py` and `post_kit.py`.
+- **UTM** — campaign tags appended to the CTA link so the funnel can measure which verses and templates convert.
+- **clearance / `cleared`** — a translation or audio source confirmed legal to publish (`public-domain`, `own-work`, or licensed).

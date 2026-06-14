@@ -1,0 +1,19 @@
+# Cadence config for chapter drops — consumed by tools/schedule_drops.py
+# Copy to schedule.yaml and edit. Versioned in-repo so a drop is reproducible.
+
+start: 2026-07-01          # first posting day (date, or "YYYY-MM-DD HH:MM")
+timezone: Europe/Moscow    # label only — the times below are wall-clock in this zone
+
+per_day: 1                 # how many verses to post per day
+slots:                     # wall-clock post times; need >= per_day entries
+  - "09:00"
+
+platforms:                 # post order, per verse
+  - telegram
+  - instagram
+  - youtube
+  - tiktok
+stagger_minutes: 20        # gap between platforms posting the same verse
+
+campaign: bhg_2            # which drop/<campaign>/ to schedule (omit = all campaigns)
+only_ready: true           # skip verses whose manifest.ready_to_publish is false

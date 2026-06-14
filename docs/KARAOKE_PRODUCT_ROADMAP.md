@@ -17,6 +17,19 @@ Everything below serves that pipeline.
 
 ---
 
+## Status & decisions (2026-06-14)
+
+**Rights (Phase 0) is largely solved; AUDIO is now the single hard gate.**
+
+- **Translations cleared, both languages:** EN = Telang (1882, public domain); RU = Sementsov, cleared via a permission letter from his daughter (heir). `translation.rights` is recorded per verse; `validate_library.py` + `tools/post_kit.py` gate publication on it.
+- **Audio = batch session (the gate):** Уша Санка will record a whole chapter in one sitting → the pipeline must ingest a *folder* of audio in one command (align → render → post-kit). No recordings exist yet; nothing ships until they land.
+- **Library growth = repertoire-driven:** grow by what Уша Санка already chants, across texts — content availability sets the order (not a fixed chapter).
+- **Template = one strong `feed_v1`, perfected** — a single template, iterated; not a template system yet.
+- **Funnel = full custom multi-platform scheduling automation** (Telegram + Instagram + YouTube + TikTok via their official APIs), driven by a versioned repo cadence config (`schedule.yaml`). Upgrades the "start manual" stance in Phase 3. ⚠ IG/TikTok/YT posting needs platform app credentials + review → build pluggable per-platform publishers, Telegram working first.
+- **Shipped:** `translation.rights` schema + validator gate; `tools/post_kit.py` (UTM CTAs to samskrtam.ru/usha-sanka); Sementsov agreement draft (SK-LIC-2026-002). **Next build:** `feed_v1` + a chapter batch-ingest entry point + scheduling automation.
+
+---
+
 ## Phase 0 — Rights & data hygiene (gates everything; ~1 week)
 
 The legal and DH foundation. No video ships publicly at scale before this.
@@ -52,7 +65,7 @@ Replace "browser tab, one verse at a time, 10 fps" with one command per chapter.
 ## Phase 3 — Distribution & funnel (~1–2 weeks)
 
 - [ ] **Post kit generator**: per verse, auto-write the caption text (RU+EN), hashtags, and the course CTA link with UTM parameters per platform — so a chapter drop produces a ready-to-schedule folder.
-- [ ] Scheduling: start manual (Telegram scheduled posts + Meta Business Suite + YouTube scheduler); automate only if cadence proves it's worth it.
+- [ ] **Scheduling automation (chosen 2026-06-14):** full custom multi-platform posting (Telegram/Instagram/YouTube/TikTok via official APIs), driven by a versioned repo `schedule.yaml` (start date, per-day slots, platform order) that spaces a chapter's verses automatically. Input = post-kit `drop/<id>/` folders. Pluggable per-platform publishers; Telegram (Bot API) works first, IG/TikTok/YT gated on app credentials + review.
 - [ ] **Funnel measurement**: UTM-tagged links → course landing; track which verses/templates convert. Without this you can't tell whether "trendy" is working.
 - [ ] Student player deep links from video CTAs (`student.html?id=…` already exists — every video should point at its interactive version).
 

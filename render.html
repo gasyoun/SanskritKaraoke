@@ -27,6 +27,7 @@ import {
   updateCamera, drawStoryFrame,
   buildCues, toSrt, toVtt,
 } from './src/core/karaoke-frame.js';
+import { prepareFeed, drawFeedFrame, FEED_W, FEED_H } from './src/core/feed.js';
 
 /** Base64-encode an ArrayBuffer. */
 function toBase64(buf) {
@@ -53,7 +54,10 @@ function fromBase64(b64) {
  * @param {Object} [opts]
  *   format:   '9:16' | '1:1'   (default '9:16')
  *   fps:       number           (default 30)
- *   template: 'classic'        (only classic for now; feed_v1 = Phase 2 next)
+ *   template: 'classic' | 'feed_v1'   (feed_v1 = native-vertical karaoke; default classic)
+ *   handle:   '@your_handle'  (feed_v1 watermark)
+ *   cta:      'samskrtam.ru/usha-sanka'  (feed_v1 CTA text)
+ *   lang:     'ru' | 'en'     (feed_v1 end-card translation language)
  *   footer:   {author, year, url, source, meter}
  *   colors:   {guru, laghu}
  *   showDev:  boolean
@@ -61,14 +65,16 @@ function fromBase64(b64) {
  * @returns {Promise<{mp4Base64: string, srtText: string, vttText: string}>}
  */
 async function renderVerse(verseJson, audioBase64, opts = {}) {
-  const fmt    = opts.format  || '9:16';
+  const template = opts.template || 'classic';
+  const fmt    = template === 'feed_v1' ? '9:16' : (opts.format || '9:16');
   const FPS    = opts.fps     || 30;
   const footer = opts.footer  || {};
   const guruCol  = opts.colors?.guru   || '#8B0000';
   const laghuCol = opts.colors?.laghu  || '#2C4A1E';
   const showDev  = opts.showDev ?? false;
 
-  const [storyW, storyH] = fmt === '1:1' ? [1080, 1080] : [1080, 1920];
+  const [storyW, storyH] = template === 'feed_v1' ? [FEED_W, FEED_H]
+    : (fmt === '1:1' ? [1080, 1080] : [1080, 1920]);
 
   // Wait for fonts
   await document.fonts.ready;
@@ -92,45 +98,57 @@ async function renderVerse(verseJson, audioBase64, opts = {}) {
   const totalFrames = Math.ceil(duration * FPS);
   const frameDurUs  = Math.round(1_000_000 / FPS);
 
-  // ── Compose base frame ──
-  const composeOpts = {
-    guruColor: guruCol, laghuColor: laghuCol,
-    showDev, waveScale: 0.5, greyIast: true,
-    footer: { ...footer, meter: footer.meter || verseJson.meter || '' },
-  };
-  const { canvas: baseCanvas, sylPositions } = await composePngFrame(verseJson, syllables, composeOpts);
-  const BW = baseCanvas.width, BH = baseCanvas.height; // 1920 × 1080
-
-  // ── Camera setup ──
-  const allXPos = [];
-  for (const key of ['s1', 's2'])
-    for (const col in (sylPositions[key] || {})) allXPos.push(sylPositions[key][col].x);
-  allXPos.sort((a, b) => a - b);
-  let avgSpacing = 120;
-  if (allXPos.length >= 2) {
-    const spacings = allXPos.slice(1).map((x, i) => x - allXPos[i]).filter(d => d > 4);
-    if (spacings.length) { spacings.sort((a, b) => a - b); avgSpacing = spacings[Math.floor(spacings.length / 2)]; }
+  // ── Per-template frame painter: paintFrame(wdc, t) ──
+  let paintFrame;
+  if (template === 'feed_v1') {
+    const prep = prepareFeed(verseJson, syllables, {
+      handle: opts.handle || footer.handle || '',
+      cta:    opts.cta    || footer.cta    || footer.url || '',
+      lang:   opts.lang   || 'ru',
+    });
+    paintFrame = (wdc, t) => drawFeedFrame(wdc, prep, timing, padaBounds, t, duration);
+  } else {
+    // classic: compose a 1920×1080 academic frame and pan a 9:16 camera over it
+    const composeOpts = {
+      guruColor: guruCol, laghuColor: laghuCol,
+      showDev, waveScale: 0.5, greyIast: true,
+      footer: { ...footer, meter: footer.meter || verseJson.meter || '' },
+    };
+    const { canvas: baseCanvas, sylPositions } = await composePngFrame(verseJson, syllables, composeOpts);
+    const BW = baseCanvas.width, BH = baseCanvas.height; // 1920 × 1080
+    const allXPos = [];
+    for (const key of ['s1', 's2'])
+      for (const col in (sylPositions[key] || {})) allXPos.push(sylPositions[key][col].x);
+    allXPos.sort((a, b) => a - b);
+    let avgSpacing = 120;
+    if (allXPos.length >= 2) {
+      const spacings = allXPos.slice(1).map((x, i) => x - allXPos[i]).filter(d => d > 4);
+      if (spacings.length) { spacings.sort((a, b) => a - b); avgSpacing = spacings[Math.floor(spacings.length / 2)]; }
+    }
+    const sylsToShow = 3;
+    let srcW = avgSpacing * (sylsToShow + 0.5);
+    let srcH = srcW * (storyH / storyW);
+    if (srcH > BH) { srcH = BH; srcW = BH * (storyW / storyH); }
+    srcW = Math.max(srcW, 80); srcH = Math.max(srcH, 80);
+    const minCamX = srcW / 2, maxCamX = BW - srcW / 2;
+    const minCamY = srcH / 2, maxCamY = BH - srcH / 2;
+    let camX = BW / 2, camY = BH / 2;
+    const s1Sorted = [...(syllables.s1 || [])].sort((a, b) => a.col - b.col);
+    if (s1Sorted.length) {
+      const p0 = sylPositions.s1?.[s1Sorted[0].col];
+      if (p0) { camX = p0.x; camY = p0.y; }
+    }
+    camX = Math.max(minCamX, Math.min(maxCamX, camX));
+    camY = Math.max(minCamY, Math.min(maxCamY, camY));
+    let cam = { camX, camY };
+    const LERP = 0.10;
+    paintFrame = (wdc, t) => {
+      cam = updateCamera(cam, sylPositions, timing, syllables, padaBounds, t,
+                         { minX: minCamX, maxX: maxCamX, minY: minCamY, maxY: maxCamY }, LERP);
+      drawStoryFrame(wdc, baseCanvas, cam, srcW, srcH, storyW, storyH,
+                     sylPositions, timing, syllables, padaBounds, t);
+    };
   }
-
-  const sylsToShow = 3;
-  let srcW = avgSpacing * (sylsToShow + 0.5);
-  let srcH = srcW * (storyH / storyW);
-  if (srcH > BH) { srcH = BH; srcW = BH * (storyW / storyH); }
-  srcW = Math.max(srcW, 80); srcH = Math.max(srcH, 80);
-
-  const minCamX = srcW / 2, maxCamX = BW - srcW / 2;
-  const minCamY = srcH / 2, maxCamY = BH - srcH / 2;
-
-  // Initial camera: first syllable of s1
-  let camX = BW / 2, camY = BH / 2;
-  const s1Sorted = [...(syllables.s1 || [])].sort((a, b) => a.col - b.col);
-  if (s1Sorted.length) {
-    const p0 = sylPositions.s1?.[s1Sorted[0].col];
-    if (p0) { camX = p0.x; camY = p0.y; }
-  }
-  camX = Math.max(minCamX, Math.min(maxCamX, camX));
-  camY = Math.max(minCamY, Math.min(maxCamY, camY));
-  let cam = { camX, camY };
 
   // ── WebCodecs muxer ──
   if (typeof Mp4Muxer === 'undefined') throw new Error('mp4-muxer not loaded (add <script> in render.html)');
@@ -155,19 +173,24 @@ async function renderVerse(verseJson, audioBase64, opts = {}) {
   const workCanvas = document.createElement('canvas');
   workCanvas.width = storyW; workCanvas.height = storyH;
   const wdc = workCanvas.getContext('2d');
-  const LERP = 0.10;
 
-  // ── Encode video frames ──
+  // ── Encode video frames (capture a representative thumbnail mid-way) ──
+  let thumbnailBase64 = '';
+  const thumbAt = Math.min(duration * 0.4, (timing.s1?.[0] || 0) + 1.0);
   for (let fi = 0; fi < totalFrames; fi++) {
     const t = fi / FPS;
-    cam = updateCamera(cam, sylPositions, timing, syllables, padaBounds, t,
-                       { minX: minCamX, maxX: maxCamX, minY: minCamY, maxY: maxCamY }, LERP);
-    drawStoryFrame(wdc, baseCanvas, cam, srcW, srcH, storyW, storyH,
-                   sylPositions, timing, syllables, padaBounds, t);
+    paintFrame(wdc, t);
+    if (!thumbnailBase64 && t >= thumbAt) {
+      thumbnailBase64 = workCanvas.toDataURL('image/png').split(',')[1];
+    }
     const bitmap = await createImageBitmap(workCanvas);
     const vf = new VideoFrame(bitmap, { timestamp: fi * frameDurUs, duration: frameDurUs });
     videoEncoder.encode(vf, { keyFrame: fi % (FPS * 2) === 0 });
     vf.close(); bitmap.close();
+  }
+  if (!thumbnailBase64) {
+    paintFrame(wdc, Math.min(thumbAt, duration));
+    thumbnailBase64 = workCanvas.toDataURL('image/png').split(',')[1];
   }
   await videoEncoder.flush();
 
@@ -199,7 +222,7 @@ async function renderVerse(verseJson, audioBase64, opts = {}) {
 
   // ── Return ──
   const mp4Base64 = toBase64(target.buffer);
-  return { mp4Base64, srtText, vttText };
+  return { mp4Base64, srtText, vttText, thumbnailBase64 };
 }
 
 // Expose globally so Puppeteer can call via page.evaluate()

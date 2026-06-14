@@ -27,10 +27,25 @@
   "s2dev": "बुद्धौ शरणमन्विच्छ कृपणाः फलहेतवः॥",
   "translation": {
     "ru": "Воистину, действие намного ниже йоги разума, о Дхананджая.",
-    "en": "O Dhananjaya, keep all abominable activities far distant by buddhi-yoga.",
+    "en": "For action is far inferior to the devotion of the mind, O Dhanañjaya! Have recourse (then) to (this) devotion. Wretched are they whose motive (to action) is the fruit (of action).",
     "provenance": {
-      "ru": "unknown",
-      "en": "unknown"
+      "ru": "licensed",
+      "en": "public-domain"
+    },
+    "rights": {
+      "ru": {
+        "rights_holder": "V. S. Sementsov; translation copyright held by his daughter (heir)",
+        "source": "Семенцов В. С., «Бхагавадгита в традиции и в современной научной критике», Москва: Наука, 1985",
+        "license": "permission letter from the translator's daughter (heir); to be formalized as SK-LIC-2026-002",
+        "permission_ref": "SK-LIC-2026-002/SEM-2026-003",
+        "status": "cleared"
+      },
+      "en": {
+        "rights_holder": "public domain (K. T. Telang, d. 1893)",
+        "source": "Telang, K. T., The Bhagavadgîtâ, Sacred Books of the East vol. 8, Oxford 1882",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
     }
   },
   "audio": {

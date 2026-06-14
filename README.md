@@ -138,6 +138,42 @@ The application has no dependencies beyond the browser and `mp4-muxer` (bundled)
 
 ---
 
+## Video production pipeline (batch drops)
+
+The 2026 layer: a single batch recording of a **whole chapter** becomes a set of
+publish-ready vertical karaoke videos with a funnel to the paid course. Roles and
+step-by-step workflows are in [docs/USE_CASES.md](docs/USE_CASES.md).
+
+- **One command:** `python tools/build_chapter.py <audio_dir>` — auto-timing
+  (`align_chapter.py`) → `feed_v1` render (vertical 9:16 MP4 @ 30 fps + `.srt`/`.vtt`,
+  `render_chapter.js` via Puppeteer) → post-kit with per-platform UTM CTAs (`post_kit.py`).
+  Run `npm install --prefix tools` once; `--dry-run` prints the plan without executing.
+- **`feed_v1` template** (`src/core/feed.js`): a dark vertical frame — ॐ + title + meter
+  (hook), Devanagari with a per-syllable IAST karaoke-fill on the active syllable, a
+  progress bar, and a CTA end-card with the translation and link in the final seconds.
+- **Rights (clearance before publishing):** EN — Telang, 1882 (public domain); RU —
+  Sementsov (under copyright in Russia until end of 2056), licensed via a permission letter
+  from his daughter (heir). `validate_library.py` and `post_kit.py` refuse to publish
+  anything not cleared (see the "Rights Manager" role in the use cases).
+- **Scheduling:** `python tools/schedule_drops.py --config schedule.yaml` builds the posting
+  plan from a cadence file (`schedule.example.yaml`); live per-platform publishers are added
+  as their API credentials arrive (Telegram first).
+- **The only gate to a first drop:** Uṣā Saṅkā's recordings (audio). The rest of the
+  pipeline is already built.
+
+**At a glance:**
+
+```
+audio_dir/<id>.m4a ─▶ align_chapter.py ─▶ render_chapter.js ─▶ post_kit.py ─▶ schedule_drops.py
+   (one recording)      timing → JSON       feed_v1 MP4+subs     captions+UTM     posting plan
+                                            → dist/              → drop/<ch>/<id>/  → drop/schedule_plan.json
+```
+
+A full **command reference**, the **first-drop checklist**, and a **glossary** are in
+[docs/USE_CASES.md](docs/USE_CASES.md) (Appendices A–C).
+
+---
+
 ### Roadmap
 
 The project is evolving from a teacher-facing authoring tool into a full **Sanskrit edutech platform** for Russian and English students — covering prosody literacy, pronunciation, and memorisation. Content is delivered via Telegram stories, the web app, course platforms, and YouTube.
@@ -194,17 +230,33 @@ Complete overhaul of the student view for mobile devices. Sticky bottom bar, col
 
 Full integration with the Telegram Web App SDK. Dark mode synchronization, native back button support, and automatic expansion.
 
+### ~~Production hardening & monitoring~~ ✓ shipped in v1.4.1
+
+LLM cost logging (`llm_costs.jsonl`), a cost dashboard, student-session telemetry, and local caching (Drive Fallback).
+
+### Firebase cloud sync
+
+Firebase Auth (Google) + Firestore for cross-device sync of student progress (SRS) and telemetry. See `docs/FIREBASE_ACCEPTANCE.md` for the remaining live acceptance steps.
+
 ---
 
 ## Use Case Scenarios
 
-Detailed workflows for different user roles (Teachers, Students, Curators, and Offline Practitioners) are documented in [**docs/USE_CASES.md**](docs/USE_CASES.md).
+Detailed workflows for both audiences — maintainers (developers, drop producers, the rights manager, curators) and end-users (viewers, students, content creators, offline practitioners) — are documented in [**docs/USE_CASES.md**](docs/USE_CASES.md).
 
 ### Summary of Roles:
-- **The Content Creator**: Transforms raw text and audio into structured lessons.
-- **The Active Learner**: Systematically memorizes verses using the student player and quizzes.
-- **The Curator**: Manages the verse library using the automated Teaching Pipeline and observability tools.
-- **The Offline Practitioner**: Uses PWA and caching features to practice without connectivity.
+
+**Maintainers:**
+- **Developer**: local setup, the `src/core/*` modules, the headless `render.html`.
+- **Drop Producer**: `build_chapter.py` — chapter → videos → posts in one command.
+- **Rights Manager**: clears audio and translations (EN/RU/audio) before publishing.
+- **The Curator**: manages the verse library via the automated Teaching Pipeline and observability tools.
+
+**End-users:**
+- **Viewer → Student**: arrives from social media via the `feed_v1` UTM funnel to the course.
+- **The Content Creator**: transforms raw text and audio into structured lessons.
+- **The Active Learner**: systematically memorizes verses using the student player and quizzes.
+- **The Offline Practitioner**: uses PWA and caching features to practice without connectivity.
 
 ---
 

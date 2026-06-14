@@ -27,10 +27,25 @@
   "s2dev": "मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥",
   "translation": {
     "ru": "Твое право лишь в действии, но не в его плодах.",
-    "en": "You have a right to perform your prescribed duty, but you are not entitled to the fruits of action.",
+    "en": "Your business is with action alone; not by any means with fruit. Let not the fruit of action be your motive (to action). Let not your attachment be (fixed) on inaction.",
     "provenance": {
-      "ru": "unknown",
-      "en": "unknown"
+      "ru": "licensed",
+      "en": "public-domain"
+    },
+    "rights": {
+      "ru": {
+        "rights_holder": "V. S. Sementsov; translation copyright held by his daughter (heir)",
+        "source": "Семенцов В. С., «Бхагавадгита в традиции и в современной научной критике», Москва: Наука, 1985",
+        "license": "permission letter from the translator's daughter (heir); to be formalized as SK-LIC-2026-002",
+        "permission_ref": "SK-LIC-2026-002/SEM-2026-001",
+        "status": "cleared"
+      },
+      "en": {
+        "rights_holder": "public domain (K. T. Telang, d. 1893)",
+        "source": "Telang, K. T., The Bhagavadgîtâ, Sacred Books of the East vol. 8, Oxford 1882",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
     }
   },
   "audio": {

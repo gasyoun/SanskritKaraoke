@@ -30,7 +30,7 @@ const puppeteer = require('puppeteer');
 // ── CLI args ───────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
 if (!args.length || args[0] === '--help') {
-  console.log('Usage: node tools/render_chapter.js <audio_dir> [--verses dir] [--out dir] [--only id1,id2] [--format 9:16|1:1] [--fps 30] [--show-dev] [--no-headless]');
+  console.log('Usage: node tools/render_chapter.js <audio_dir> [--verses dir] [--out dir] [--only id1,id2] [--template feed_v1|classic] [--handle @x] [--cta url] [--lang ru|en] [--format 9:16|1:1] [--fps 30] [--show-dev] [--no-headless]');
   process.exit(0);
 }
 
@@ -40,6 +40,10 @@ const outDir     = path.resolve(getArg('--out')    || 'dist');
 const onlyIds    = (getArg('--only') || '').split(',').map(s => s.trim()).filter(Boolean);
 const format     = getArg('--format') || '9:16';
 const fps        = parseInt(getArg('--fps') || '30', 10);
+const template   = getArg('--template') || 'feed_v1';
+const handle     = getArg('--handle') || '';
+const cta        = getArg('--cta') || getArg('--url') || '';
+const lang       = getArg('--lang') || 'ru';
 const showDev    = args.includes('--show-dev');
 const headless   = !args.includes('--no-headless');
 
@@ -120,6 +124,7 @@ function loadVerses(dir, ids) {
     const outMp4 = path.join(outDir, `${id}_${format.replace(':', 'x')}.mp4`);
     const outSrt = path.join(outDir, `${id}.srt`);
     const outVtt = path.join(outDir, `${id}.vtt`);
+    const outPng = path.join(outDir, `${id}.png`);
 
     console.log(`[RENDER] ${id} …`);
     const t0 = Date.now();
@@ -149,7 +154,7 @@ function loadVerses(dir, ids) {
         meter:  verse.meter  || '',
       };
 
-      const opts = { format, fps, showDev, footer };
+      const opts = { template, format, fps, showDev, footer, handle, cta, lang };
 
       const result = await page.evaluate(
         async (verseJson, audioBase64, renderOpts) => {
@@ -169,6 +174,7 @@ function loadVerses(dir, ids) {
       fs.writeFileSync(outMp4, mp4Buf);
       fs.writeFileSync(outSrt, result.srtText, 'utf-8');
       fs.writeFileSync(outVtt, result.vttText, 'utf-8');
+      if (result.thumbnailBase64) fs.writeFileSync(outPng, Buffer.from(result.thumbnailBase64, 'base64'));
 
       const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
       console.log(`  ✓  ${id} → ${path.basename(outMp4)} (${(mp4Buf.length / 1e6).toFixed(1)} MB, ${elapsed}s)`);

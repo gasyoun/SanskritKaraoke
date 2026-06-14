@@ -47,3 +47,9 @@ logs/
 
 # Node (docs/legal generator)
 node_modules/
+
+# Generated social drop kits (output of tools/post_kit.py)
+drop/
+
+# Rendered video output (tools/render_chapter.js / build_chapter.py)
+dist/
