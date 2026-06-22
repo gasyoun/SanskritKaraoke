@@ -38,6 +38,7 @@ export function buildWaveSvgString(key, syls, colWidths, opts = {}) {
   const guruCol   = opts.guruColor  || '#8B0000';
   const laghuCol  = opts.laghuColor || '#2C4A1E';
   const measureFn = opts.measureFn  || null;
+  const showDivider = opts.showPadaDivider ?? true;
 
   const hasVipula = syls.some(s => s.vipula);
   const rowY      = getRowY(scale);
@@ -114,11 +115,11 @@ export function buildWaveSvgString(key, syls, colWidths, opts = {}) {
   // Pada divider line
   const halfIdx = Math.ceil(sorted.length / 2);
   let divLine = '';
-  if (halfIdx > 0 && halfIdx < sorted.length) {
+  if (showDivider && halfIdx > 0 && halfIdx < sorted.length) {
     const xA = colX(sorted[halfIdx - 1].col, colWidths);
     const xB = colX(sorted[halfIdx].col, colWidths);
     const dx = (xA + xB) / 2;
-    divLine = `<line x1="${dx}" y1="4" x2="${dx}" y2="${svgH - 4}" stroke="#a07020" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.7"/>`;
+    divLine = `<line class="pada-divider" x1="${dx}" y1="4" x2="${dx}" y2="${svgH - 4}" stroke="#a07020" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.7"/>`;
   }
 
   // Vipulā bracket (syllables 5–7 of the first half)

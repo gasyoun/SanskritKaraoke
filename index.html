@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Sanskrit Karaoke — v1.4.2</title>
+<title>Sanskrit Karaoke — v1.4.5</title>
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded', () => {
 <header>
   <div style="display:flex;align-items:baseline;gap:2ch">
     <h1 data-i18n="mainTitle">Волновая нотация санскрита</h1>
-    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.4.2</span>
+    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.4.5</span>
   </div>
   <div id="msg-header" style="display:none;font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:3px;margin-left:16px;align-self:center"></div>
   <div style="display:flex;align-items:center;gap:14px">
@@ -362,6 +362,9 @@ window.addEventListener('DOMContentLoaded', () => {
   </label>
   <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.78rem;margin-top:5px">
     <input type="checkbox" id="opt-line" checked onchange="rebuildAll()"> Линия волны
+  </label>
+  <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.78rem;margin-top:5px" title="Вертикальный пунктир между падами 1|2 и 3|4. В главном окне отображается всегда; настройка влияет только на экспорт (PNG, MP4, караоке-видео).">
+    <input type="checkbox" id="opt-pada-divider" checked> Разделитель пад в экспорте (PNG / MP4)
   </label>
   <div style="margin-top:8px;display:flex;align-items:center;gap:8px">
     <label style="font-size:.75rem;color:var(--ink2)">Сглаживание</label>

@@ -52,6 +52,44 @@ karaoke videos with a measurable funnel to the paid course. See
 - The pipeline is built but **unreleased**: a first real drop is gated on Uṣā Saṅkā's
   chapter audio recordings and `npm install --prefix tools` (Puppeteer).
 
+## [1.4.5] — 2026-06-22
+
+### Changed
+
+- The **pada-divider export toggle** is now persisted **only in the session JSON**,
+  not in saved settings/defaults. Removed it from `collectSettings`/`applySettingsToUI`;
+  `_buildSessionState` writes `padaDivider` explicitly and `_applySession` reads it back.
+- On session load the checkbox is set from the file; **legacy sessions without the key
+  default to ON** (divider shown). A fresh page (no session) also defaults to ON via the
+  `checked` attribute in `index.html`.
+
+## [1.4.4] — 2026-06-22
+
+### Fixed
+
+- The **pada-divider export toggle** is now restored on session load. It was already
+  written into saved sessions (via `collectSettings`) and into saved defaults, but
+  `_applySession` rebuilt settings manually and omitted `opt-pada-divider`, so opening
+  a session left the checkbox at its current value. Added the matching restore line.
+
+## [1.4.3] — 2026-06-22
+
+### Added
+
+- **Optional pada divider in exports** (`opt-pada-divider` in Settings → Отображение,
+  default on). The vertical dashed line between padas 1|2 and 3|4 can now be turned off
+  for output only. It is always shown in the main editor window; the toggle affects PNG
+  export, all MP4 exports (wave, karaoke, Telegram Story) and the batch chapter renderer.
+
+### Changed
+
+- `buildWaveSvgString` (`src/core/svg.js`) accepts `opts.showPadaDivider` (default `true`)
+  and tags the divider `<line>` with class `pada-divider`.
+- Export paths gate the divider: `renderSvgToCanvas` strips `.pada-divider` from the
+  export clone and `_renderPngCanvas` skips `drawPngPadaDivider` when the option is off;
+  `composePngFrame` threads `showPadaDivider` through to the SVG builder and canvas draw.
+- The setting is persisted via `collectSettings`/`applySettingsToUI` (saved defaults).
+
 ## [1.4.2] - 2026-06-02
 
 ### Added [1.4.2]

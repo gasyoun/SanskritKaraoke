@@ -1183,6 +1183,11 @@ function resolveCssVars(el) {
 }
 
 // Render one SVG element → canvas at given scale
+function _exportPadaDivider() {
+  const el = document.getElementById('opt-pada-divider');
+  return el ? el.checked : true;
+}
+
 function renderSvgToCanvas(svgEl, scale) {
   const W = +svgEl.getAttribute('width') || 620;
   const vb = svgEl.getAttribute('viewBox');
@@ -1191,6 +1196,7 @@ function renderSvgToCanvas(svgEl, scale) {
     return Promise.reject(new Error('SVG has zero/invalid dimensions: W=' + W + ' H=' + H + ' scale=' + scale));
   }
   const clone = svgEl.cloneNode(true);
+  if (!_exportPadaDivider()) clone.querySelectorAll('.pada-divider').forEach(el => el.remove());
   resolveCssVars(clone);
   const bg = document.createElementNS('http://www.w3.org/2000/svg','rect');
   bg.setAttribute('width', W); bg.setAttribute('height', H); bg.setAttribute('fill','#ffffff');
@@ -2088,8 +2094,10 @@ async function _renderPngCanvas() {
     ctx.stroke();
     ctx.restore();
   }
-  drawPngPadaDivider('s1', vOffset, svgEl1, svgW1);
-  drawPngPadaDivider('s2', vOffset + fb1.totalH + Math.round(GAP_BLOCK * vScale), svgEl2, svgW2);
+  if (_exportPadaDivider()) {
+    drawPngPadaDivider('s1', vOffset, svgEl1, svgW1);
+    drawPngPadaDivider('s2', vOffset + fb1.totalH + Math.round(GAP_BLOCK * vScale), svgEl2, svgW2);
+  }
 
   // Собираем точные позиции кружков слогов для видеокодера
   const sylPositions = {};
@@ -2301,7 +2309,8 @@ function _buildSessionState() {
       s2: (() => { const el = document.getElementById('cheatsheet-s2'); return el ? el.value : ''; })(),
     },
     // Settings
-    settings: { ...collectSettings(), showDev: SHOW_DEV }
+    settings: { ...collectSettings(), showDev: SHOW_DEV,
+      padaDivider: document.getElementById('opt-pada-divider') ? document.getElementById('opt-pada-divider').checked : true }
   };
   return state;
 }
@@ -2355,6 +2364,7 @@ function _applySession(state) {
       if (s.showLine   !== undefined && document.getElementById('opt-line'))      document.getElementById('opt-line').checked    = s.showLine;
       if (s.hollow     !== undefined && document.getElementById('opt-hollow'))    document.getElementById('opt-hollow').checked  = s.hollow;
       if (s.greyIast   !== undefined && document.getElementById('opt-grey-iast'))document.getElementById('opt-grey-iast').checked= s.greyIast;
+      if (document.getElementById('opt-pada-divider')) document.getElementById('opt-pada-divider').checked = (s.padaDivider !== undefined ? s.padaDivider : true);
       if (s.sylMode    && document.getElementById('syl-mode-std'))  document.getElementById(s.sylMode === 'std' ? 'syl-mode-std' : 'syl-mode-user').checked = true;
       if (s.waveScale  && document.getElementById('opt-wave-scale')) {
         document.getElementById('opt-wave-scale').value = s.waveScale;

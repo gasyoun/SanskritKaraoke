@@ -269,3 +269,6 @@ v1.271 — iOS export fixes (PNG overlay, video link, captureStream block)
 v1.272 — timing editor safe area for iPhone (viewport-fit=cover, flex centering, env padding)
 v1.4.0 | 2026-05-14 | Version unification (one semver track); SW cache staleness fix (activate handler); catalogue.html design system fix; stale docs cleanup
 v1.4.2 | 2026-06-02 | First release: Firebase local-to-cloud migration, progress dashboard mobile polish, telemetry sync, release metadata and cache key
+v1.4.3 | 2026-06-22 | Разделитель пад в экспорте опционален: вертикальный пунктир между падами 1|2 и 3|4 теперь можно отключить в Настройках (по умолчанию вкл.); влияет на PNG, MP4, караоке-видео и пакетный рендер глав; в главном окне отображается всегда
+v1.4.4 | 2026-06-22 | Настройка «Разделитель пад в экспорте» теперь восстанавливается при загрузке сессии (добавлено в _applySession); ранее сохранялась в файл, но не применялась при открытии
+v1.4.5 | 2026-06-22 | Разделитель пад в экспорте: опция хранится только в JSON-сессии, а не в настройках-дефолтах. Убрана из collectSettings/applySettingsToUI; явно пишется в _buildSessionState и читается в _applySession. В старых файлах без этого ключа разделитель включается по умолчанию (ON)

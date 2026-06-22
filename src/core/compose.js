@@ -75,6 +75,7 @@ export async function composePngFrame(verse, syllables, opts = {}) {
   const showDev   = opts.showDev    ?? false;
   const waveScale = opts.waveScale  ?? 0.5;
   const greyIast  = opts.greyIast   ?? true;
+  const showPadaDivider = opts.showPadaDivider ?? true;
   const footer    = opts.footer     || {};
   const measureFn = opts.measureFn  || null;
 
@@ -87,7 +88,7 @@ export async function composePngFrame(verse, syllables, opts = {}) {
   const svgOpts = {
     scale: waveScale, smooth: opts.smooth || 'bezier',
     showDots: opts.showDots ?? true, showLine: opts.showLine ?? true,
-    hollow: opts.hollow ?? true, showDev, guruColor: guruCol, laghuColor: laghuCol,
+    hollow: opts.hollow ?? true, showPadaDivider, showDev, guruColor: guruCol, laghuColor: laghuCol,
     measureFn,
   };
 
@@ -224,8 +225,10 @@ export async function composePngFrame(verse, syllables, opts = {}) {
     ctx.beginPath(); ctx.moveTo(divX, y0); ctx.lineTo(divX, y1); ctx.stroke();
     ctx.restore();
   }
-  drawPadaDivider(syls1, vOffset, dims1);
-  drawPadaDivider(syls2, vOffset + fb1.totalH + Math.round(GAP_BLOCK * vScale), dims2);
+  if (showPadaDivider) {
+    drawPadaDivider(syls1, vOffset, dims1);
+    drawPadaDivider(syls2, vOffset + fb1.totalH + Math.round(GAP_BLOCK * vScale), dims2);
+  }
 
   // Collect sylPositions for the karaoke encoder
   const sylPositions = {};
