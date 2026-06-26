@@ -8,9 +8,14 @@ import { computeSharedColWidths as _coreSharedColWidths, colX as _coreColX,
        } from '../core/layout.js';
 import { buildWaveSvgString as _coreBuildWaveSvgString, wrapSvgInDiv,
        } from '../core/svg.js';
+import { composePngFrame } from '../core/compose.js';
+import { currentSylIndex as _coreCurrentSylIndex, drawHighlight, drawStoryFrame,
+         updateCamera,
+       } from '../core/karaoke-frame.js';
 import { detectOnsetsFromPcm, snapToNearest as _snapToNearest,
          snapConfidence as _snapConfidence, distributePada,
-         padaUnitDuration, scaleTiming, detectPadaBoundsFromPcm,
+         padaUnitDuration, detectPadaBoundsFromPcm,
+         corpusScaleTiming as _coreCorpusScaleTiming,
        } from '../core/timing.js';
 
 // ═══════════════════════════════════════════════
@@ -1539,14 +1544,7 @@ async function downloadKaraokeMp4() {
         const s = DATA[key][idx];
         if (!s) return;
         const pos = getSylPngPos(key, s.col);
-        if (!pos) return;
-        wdc.beginPath();
-        wdc.arc(pos.x, pos.y, pos.r * 1.6, 0, Math.PI * 2);
-        wdc.fillStyle = 'rgba(238,68,68,0.85)';
-        wdc.fill();
-        wdc.strokeStyle = '#ffffff';
-        wdc.lineWidth = Math.max(2, pos.r * 0.3);
-        wdc.stroke();
+        drawHighlight(wdc, pos);
       });
 
       const bitmap = await createImageBitmap(workCanvas);
@@ -1665,42 +1663,6 @@ async function downloadTelegramStoryMp4() {
 
     function getSylPos(key, col) { return _sylPos[key]?.[col] || null; }
 
-    function getStoryLaghuDur(key) {
-      const times = TAP.times[key] || [], syls = DATA[key] || [];
-      if (times.length < 2) return 0.3;
-      const halfIdx = Math.floor(times.length / 2);
-      const span = times[times.length - 1] - times[halfIdx];
-      const units = syls.slice(halfIdx).reduce((a, s) => a + (s.type === 'guru' ? 2 : 1), 0);
-      return units > 0 ? span / units : 0.3;
-    }
-
-    function isKeyActive(key, t) {
-      const times = TAP.times[key] || [];
-      if (!times.length) return false;
-      let lastSylEnd;
-      if (_padaBounds) {
-        const lastPada = key === 's1' ? _padaBounds[1] : _padaBounds[3];
-        lastSylEnd = lastPada ? lastPada[1] : (times[times.length - 1] + getStoryLaghuDur(key) * 2);
-      } else {
-        lastSylEnd = times[times.length - 1] + getStoryLaghuDur(key) * 2;
-      }
-      return t <= lastSylEnd;
-    }
-
-    // Get active syllable position (x, y) in base canvas coords
-    function getCamTarget(t) {
-      for (const key of ['s1', 's2']) {
-        if (!isKeyActive(key, t)) continue;
-        const idx = _currentSylIndex(key, t);
-        if (idx < 0) continue;
-        const s = DATA[key][idx];
-        if (!s) continue;
-        const pos = getSylPos(key, s.col);
-        if (pos) return { x: pos.x, y: pos.y };
-      }
-      return null;
-    }
-
     // Initial camera: first syllable of s1
     let camX = BW / 2, camY = BH / 2;
     const s1Sorted = [...(DATA.s1 || [])].sort((a, b) => a.col - b.col);
@@ -1713,6 +1675,7 @@ async function downloadTelegramStoryMp4() {
     const minCamY = srcH / 2, maxCamY = BH - srcH / 2;
     camX = Math.max(minCamX, Math.min(maxCamX, camX));
     camY = Math.max(minCamY, Math.min(maxCamY, camY));
+    let cam = { camX, camY };
 
     // Setup muxer
     const { Muxer, ArrayBufferTarget } = Mp4Muxer;
@@ -1736,46 +1699,14 @@ async function downloadTelegramStoryMp4() {
     workCanvas.width = storyW; workCanvas.height = storyH;
     const wdc = workCanvas.getContext('2d');
     const LERP = 0.10; // camera smoothing per frame
+    const camBounds = { minX: minCamX, maxX: maxCamX, minY: minCamY, maxY: maxCamY };
 
     showMsg('Кодирование видео...', 'info');
     for (let fi = 0; fi < totalFrames; fi++) {
       const t = fi / FPS;
-
-      const target2d = getCamTarget(t);
-      if (target2d) {
-        const tx = Math.max(minCamX, Math.min(maxCamX, target2d.x));
-        const ty = Math.max(minCamY, Math.min(maxCamY, target2d.y));
-        camX += (tx - camX) * LERP;
-        camY += (ty - camY) * LERP;
-      }
-
-      const sx = Math.max(0, Math.min(BW - srcW, camX - srcW / 2));
-      const sy = Math.max(0, Math.min(BH - srcH, camY - srcH / 2));
-
-      wdc.clearRect(0, 0, storyW, storyH);
-      wdc.drawImage(baseCanvas, sx, sy, srcW, srcH, 0, 0, storyW, storyH);
-
-      // Draw karaoke highlight ring (transformed to story coords)
-      const scaleX = storyW / srcW, scaleY = storyH / srcH;
-      for (const key of ['s1', 's2']) {
-        if (!isKeyActive(key, t)) continue;
-        const idx = _currentSylIndex(key, t);
-        if (idx < 0) continue;
-        const s = DATA[key][idx];
-        if (!s) continue;
-        const pos = getSylPos(key, s.col);
-        if (!pos) continue;
-        const dx = (pos.x - sx) * scaleX;
-        const dy = (pos.y - sy) * scaleY;
-        const dr = pos.r * scaleX * 1.6;
-        wdc.beginPath();
-        wdc.arc(dx, dy, dr, 0, Math.PI * 2);
-        wdc.fillStyle = 'rgba(238,68,68,0.85)';
-        wdc.fill();
-        wdc.strokeStyle = '#ffffff';
-        wdc.lineWidth = Math.max(2, pos.r * scaleX * 0.3);
-        wdc.stroke();
-      }
+      cam = updateCamera(cam, _sylPos, TAP.times, DATA, _padaBounds, t, camBounds, LERP);
+      drawStoryFrame(wdc, baseCanvas, cam, srcW, srcH, storyW, storyH,
+                     _sylPos, TAP.times, DATA, _padaBounds, t);
 
       const bitmap = await createImageBitmap(workCanvas);
       const vf = new VideoFrame(bitmap, { timestamp: fi * frameDurUs, duration: frameDurUs });
@@ -1937,16 +1868,41 @@ async function renderToPngDataUrl() {
 async function _renderPngCanvas() {
   await document.fonts.ready;
 
+  const svgEl1 = document.getElementById('svg-s1');
+  const svgEl2 = document.getElementById('svg-s2');
+  if (!svgEl1 || !svgEl2) return null;
+
+  const { guruColor, laghuColor } = _getWaveColors();
+  const verse = {
+    s1dev: document.getElementById('s1dev')?.value.trim() || '',
+    s2dev: document.getElementById('s2dev')?.value.trim() || '',
+    meter: document.getElementById('meter-label')?.textContent?.trim() || '',
+  };
+  return composePngFrame(verse, { s1: DATA.s1, s2: DATA.s2 }, {
+    guruColor,
+    laghuColor,
+    showDev: SHOW_DEV,
+    waveScale: waveScale(),
+    smooth: document.getElementById('opt-smooth')?.value || 'bezier',
+    showDots: !document.getElementById('opt-dots') || document.getElementById('opt-dots').checked,
+    showLine: !document.getElementById('opt-line') || document.getElementById('opt-line').checked,
+    hollow: !document.getElementById('opt-hollow') || document.getElementById('opt-hollow').checked,
+    greyIast: !document.getElementById('opt-grey-iast') || document.getElementById('opt-grey-iast').checked,
+    footer: {
+      author: document.getElementById('ft-author')?.value.trim() || '',
+      year: document.getElementById('ft-year')?.value.trim() || '',
+      url: document.getElementById('ft-url')?.value.trim() || '',
+      source: document.getElementById('ft-source')?.value.trim() || '',
+      meter: document.getElementById('ft-meter')?.value.trim() || '',
+    },
+  });
+
   const OUT_W = 1920, OUT_H = 1080, MARGIN = 24, FT_AREA = 80;
   const contentH = OUT_H - MARGIN - FT_AREA - MARGIN;
   const GAP_BLOCK = 40, GAP_LINE = 14;
   const GURU_C = getComputedStyle(document.documentElement).getPropertyValue('--guru').trim()||'#8B0000';
     const LAGHU_C = getComputedStyle(document.documentElement).getPropertyValue('--laghu').trim()||'#2C4A1E';
     const INK_C = '#18120c';
-
-  const svgEl1 = document.getElementById('svg-s1');
-  const svgEl2 = document.getElementById('svg-s2');
-  if (!svgEl1 || !svgEl2) return null;
 
   const measure = document.createElement('canvas').getContext('2d');
   function fitFontSize(ctx, text, family, maxW, maxSz, minSz) {
@@ -3324,28 +3280,24 @@ function _getPhonemeRule(syl, rules) {
 
 // ── Corpus-based timing scale ─────────────────────────────────────────────────
 async function corpusScaleTiming(meter, s1len, s2len, newDuration) {
-  // Fetch verse index to find all verses of same meter
-  let index;
   try {
-    const r = await fetch('verses/index.json');
-    index = await r.json();
-  } catch(e) { return null; }
-
-  const candidates = (index.verses || []).filter(v => v.meter === meter && v.id);
-
-  for (const candidate of candidates) {
-    try {
-      const r = await fetch(`verses/data/${candidate.id}.json`);
-      const v = await r.json();
-      if (!v.timing || !v.timing.s1 || !v.timing.s2) continue;
-      if (v.timing.s1.length !== s1len || v.timing.s2.length !== s2len) continue;
-      if (!v.audio || !v.audio.duration_s) continue;
-
-      // Scale step → core/timing.js; the fetch + match loop stays here.
-      return scaleTiming(v.timing, v.audio.duration_s, newDuration);
-    } catch(e) { continue; }
+    return await _coreCorpusScaleTiming({
+      meter,
+      s1len,
+      s2len,
+      newDuration,
+      loadIndex: async () => {
+        const r = await fetch('verses/index.json');
+        return r.json();
+      },
+      loadVerse: async id => {
+        const r = await fetch(`verses/data/${id}.json`);
+        return r.json();
+      },
+    });
+  } catch(e) {
+    return null;
   }
-  return null;  // no suitable corpus match found
 }
 
 function refreshWaveform() {
@@ -3670,12 +3622,7 @@ function _mainHighlightStop() {
 }
 
 function _currentSylIndex(key, t) {
-  const times = TAP.times[key] || [];
-  let cur = -1;
-  for (let i = 0; i < times.length; i++) {
-    if (times[i] <= t) cur = i; else break;
-  }
-  return cur;
+  return _coreCurrentSylIndex(TAP.times[key] || [], t);
 }
 
 // Track previously highlighted node to restore it efficiently

@@ -157,6 +157,40 @@ export function scaleTiming(timing, fromDuration, toDuration) {
   };
 }
 
+/**
+ * Find a compatible timed verse through injected data accessors and scale it
+ * to the new audio duration. Hosts decide where data comes from: browser fetch,
+ * test fixtures, IndexedDB, or a future batch renderer manifest.
+ *
+ * @param {Object} args
+ * @param {string} args.meter
+ * @param {number} args.s1len
+ * @param {number} args.s2len
+ * @param {number} args.newDuration
+ * @param {Function} args.loadIndex — async () => {verses:[{id,meter},...]}
+ * @param {Function} args.loadVerse — async (id) => verse JSON
+ */
+export async function corpusScaleTiming({
+  meter,
+  s1len,
+  s2len,
+  newDuration,
+  loadIndex,
+  loadVerse,
+}) {
+  const index = await loadIndex();
+  const candidates = (index.verses || []).filter(v => v.meter === meter && v.id);
+
+  for (const candidate of candidates) {
+    const verse = await loadVerse(candidate.id);
+    if (!verse.timing || !verse.timing.s1 || !verse.timing.s2) continue;
+    if (verse.timing.s1.length !== s1len || verse.timing.s2.length !== s2len) continue;
+    if (!verse.audio || !verse.audio.duration_s) continue;
+    return scaleTiming(verse.timing, verse.audio.duration_s, newDuration);
+  }
+  return null;
+}
+
 // ── Pāda-boundary detection ──────────────────────────────────────────────────
 // Mirrors pada_detection in tools/alignment_params.json.
 export const PADA_DEFAULTS = {
