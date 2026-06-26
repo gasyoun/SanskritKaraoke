@@ -64,5 +64,74 @@
     "beginner"
   ],
   "created_at": "2026-05-12",
-  "updated_at": "2026-06-12"
+  "updated_at": "2026-06-12",
+  "glosses": [
+    {
+      "slp1": "yogasTaH",
+      "sa": "yogasthaḥ",
+      "ru": "в йоге стоек"
+    },
+    {
+      "slp1": "kuru",
+      "sa": "kuru",
+      "ru": "свершай"
+    },
+    {
+      "slp1": "karmARi",
+      "sa": "karmāṇi",
+      "ru": "деянья"
+    },
+    {
+      "slp1": "saNgam",
+      "sa": "saṅgam",
+      "ru": "привязанность"
+    },
+    {
+      "slp1": "tyaktvA",
+      "sa": "tyaktvā",
+      "ru": "отбросив"
+    },
+    {
+      "slp1": "DanaYjaya",
+      "sa": "dhanañjaya",
+      "ru": "Дхананджая"
+    },
+    {
+      "slp1": "sidDyasidDyoH",
+      "sa": "siddhyasiddhyoḥ",
+      "ru": "удачи и неудачи"
+    },
+    {
+      "slp1": "samaH",
+      "sa": "samaḥ",
+      "ru": "равный"
+    },
+    {
+      "slp1": "BUtvA",
+      "sa": "bhūtvā",
+      "ru": "став"
+    },
+    {
+      "slp1": "samatvam",
+      "sa": "samatvam",
+      "ru": "ровность"
+    },
+    {
+      "slp1": "yogaH",
+      "sa": "yogaḥ",
+      "ru": "йогой"
+    },
+    {
+      "slp1": "ucyate",
+      "sa": "ucyate",
+      "ru": "называется"
+    }
+  ],
+  "gloss_source": {
+    "corpus": "SanskritLexicography/RussianTranslation/src/corpus_lexicon.jsonl",
+    "work": "bhagavadgita-sementsov",
+    "passage": "2.48",
+    "provenance": "corpus-align",
+    "rights_note": "Word-level RU glosses are a machine word-alignment over the source translation; they inherit that translation's rights (see translation.rights)."
+  }
 }

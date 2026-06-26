@@ -64,5 +64,54 @@
     "intermediate"
   ],
   "created_at": "2026-05-12",
-  "updated_at": "2026-06-12"
+  "updated_at": "2026-06-12",
+  "glosses": [
+    {
+      "slp1": "dUreRa",
+      "sa": "dūreṇa",
+      "ru": "превосходит"
+    },
+    {
+      "slp1": "avara",
+      "sa": "avara",
+      "ru": "низшее"
+    },
+    {
+      "slp1": "karman",
+      "sa": "karman",
+      "ru": "действия"
+    },
+    {
+      "slp1": "budDiyoga",
+      "sa": "buddhiyoga",
+      "ru": "йогой мысли"
+    },
+    {
+      "slp1": "budDi",
+      "sa": "buddhi",
+      "ru": "мысль"
+    },
+    {
+      "slp1": "SaraRa",
+      "sa": "śaraṇa",
+      "ru": "цель"
+    },
+    {
+      "slp1": "kfpaRa",
+      "sa": "kṛpaṇa",
+      "ru": "жалок"
+    },
+    {
+      "slp1": "Palahetu",
+      "sa": "phalahetu",
+      "ru": "кто к плодам устремляется"
+    }
+  ],
+  "gloss_source": {
+    "corpus": "SanskritLexicography/RussianTranslation/src/corpus_lexicon.jsonl",
+    "work": "bhagavadgita-sementsov",
+    "passage": "2.49",
+    "provenance": "corpus-align",
+    "rights_note": "Word-level RU glosses are a machine word-alignment over the source translation; they inherit that translation's rights (see translation.rights)."
+  }
 }

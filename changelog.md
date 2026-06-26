@@ -10,6 +10,12 @@ karaoke videos with a measurable funnel to the paid course. See
 
 ### Added
 
+- **Per-word Russian gloss layer** (`tools/build_glosses.py` + schema `glosses`/`gloss_source`):
+  bakes word-aligned RU glosses into each `verses/data/<id>.json` from the Sa→Ru
+  `corpus_lexicon.jsonl` owned by SanskritLexicography (PROJECT_INTERLINKS feed). Matches by
+  corpus work + passage (Gita verses → `bhagavadgita-sementsov`, the edition cited in each
+  verse's rights block), so no sandhi segmentation is needed. BG 2.47/2.48/2.49 now carry
+  13/12/8 glosses; provenance marked `corpus-align`. UI rendering of the layer is the next step.
 - **`feed_v1` vertical template** (`src/core/feed.js`): native 1080 × 1920 karaoke frame —
   ॐ + title + meter hook, continuous Devanagari with a per-syllable IAST karaoke-fill,
   progress bar, handle/CTA footer, and a translation + CTA end-card in the final seconds.

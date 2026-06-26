@@ -120,6 +120,31 @@
         "generator": { "type": "string", "description": "browser-v1 | whisper-v1 | manual" }
       }
     },
+    "glosses": {
+      "type": "array",
+      "description": "Per-word Russian gloss layer, word-aligned to the verse. Sourced from the Sa→Ru corpus_lexicon (SanskritLexicography/RussianTranslation) and baked in by tools/build_glosses.py — generated, not hand-authored.",
+      "items": {
+        "type": "object",
+        "required": ["slp1", "ru"],
+        "properties": {
+          "slp1": { "type": "string", "description": "SLP1 word/lemma key as aligned in the corpus" },
+          "sa":   { "type": "string", "description": "IAST form of the word" },
+          "ru":   { "type": "string", "description": "Russian gloss for this word" }
+        }
+      }
+    },
+    "gloss_source": {
+      "type": "object",
+      "description": "Provenance of the glosses layer (DH norm: machine-aligned output is marked).",
+      "properties": {
+        "corpus":     { "type": "string", "description": "Source asset, e.g. SanskritLexicography/RussianTranslation/src/corpus_lexicon.jsonl" },
+        "work":       { "type": "string", "description": "Corpus work id the glosses were drawn from, e.g. bhagavadgita-sementsov" },
+        "passage":    { "type": "string", "description": "Corpus passage key, e.g. 2.47" },
+        "provenance": { "type": "string", "enum": ["corpus-align", "human", "human-reviewed", "unknown"],
+                        "description": "corpus-align = machine word-alignment over a translation" },
+        "rights_note":{ "type": "string", "description": "Rights context inherited from the source translation" }
+      }
+    },
     "tags":       { "type": "array", "items": { "type": "string" } },
     "created_at": { "type": "string", "format": "date" },
     "updated_at": { "type": "string", "format": "date" }

@@ -64,5 +64,79 @@
     "beginner"
   ],
   "created_at": "2026-05-12",
-  "updated_at": "2026-06-12"
+  "updated_at": "2026-06-12",
+  "glosses": [
+    {
+      "slp1": "karmaRi",
+      "sa": "karmaṇi",
+      "ru": "на действие"
+    },
+    {
+      "slp1": "eva",
+      "sa": "eva",
+      "ru": "лишь"
+    },
+    {
+      "slp1": "aDikAraH",
+      "sa": "adhikāraḥ",
+      "ru": "направлен"
+    },
+    {
+      "slp1": "te",
+      "sa": "te",
+      "ru": "твой"
+    },
+    {
+      "slp1": "mA",
+      "sa": "mā",
+      "ru": "не"
+    },
+    {
+      "slp1": "Palezu",
+      "sa": "phaleṣu",
+      "ru": "на плоды"
+    },
+    {
+      "slp1": "kadAcana",
+      "sa": "kadācana",
+      "ru": "когда-либо"
+    },
+    {
+      "slp1": "karmaPalahetuH",
+      "sa": "karmaphalahetuḥ",
+      "ru": "причиной плодов"
+    },
+    {
+      "slp1": "BUH",
+      "sa": "bhūḥ",
+      "ru": "будь"
+    },
+    {
+      "slp1": "te",
+      "sa": "te",
+      "ru": "твоя"
+    },
+    {
+      "slp1": "saNgaH",
+      "sa": "saṅgaḥ",
+      "ru": "привязанность"
+    },
+    {
+      "slp1": "astu",
+      "sa": "astu",
+      "ru": "будет"
+    },
+    {
+      "slp1": "akarmaRi",
+      "sa": "akarmaṇi",
+      "ru": "к бездействию"
+    }
+  ],
+  "gloss_source": {
+    "corpus": "SanskritLexicography/RussianTranslation/src/corpus_lexicon.jsonl",
+    "work": "bhagavadgita-sementsov",
+    "passage": "2.47",
+    "provenance": "corpus-align",
+    "rights_note": "Word-level RU glosses are a machine word-alignment over the source translation; they inherit that translation's rights (see translation.rights)."
+  }
 }
