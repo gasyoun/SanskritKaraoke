@@ -1,0 +1,57 @@
+{
+  "id": "subh_2852",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №2852 (durjanaḥ priyavādī ca…)",
+    "en": "Subhāṣita №2852 (durjanaḥ priyavādī ca…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 2852,
+    "attribution": "Böhtlingk, Indische Sprüche №2852; Cāṇakya / Hitopadeśa"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "दुर्जनः प्रियवादी च नैतद्विश्वासकारणम्।",
+  "s2": "मधु तिष्ठति जिह्वाग्रे हृदये तु हलाहलम्॥",
+  "s1dev": "दुर्जनः प्रियवादी च नैतद्विश्वासकारणम्।",
+  "s2dev": "मधु तिष्ठति जिह्वाग्रे हृदये तु हलाहलम्॥",
+  "translation": {
+    "de": "Wenn ein Bösewicht uns etwas Liebes sagt, so ist dieses kein Grund zum Vertrauen: auf der Zungenspitze ist Honig, im Herzen aber furchtbares Gift.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "caution",
+    "canakya"
+  ],
+  "created_at": "2026-07-02",
+  "updated_at": "2026-07-02",
+  "import_meta": {
+    "source_db": "VisualDCS/src/DCS-data-2026/archive.sqlite",
+    "source_table": "subhashita",
+    "saying_id": "Saying 2852",
+    "page": "Page 2.131",
+    "iast_reference": "durjanaḥ priyavādī ca naitadviśvāsakāraṇam | madhu tiṣṭhati jihvāgre hṛdaye tu halāhalam ||",
+    "corrections": [
+      "OCR: तिष्ठुति → तिष्ठति (tiṣṭhuti → tiṣṭhati)",
+      "Reading: विश्वस → विश्वास (viśvasa → viśvāsa), per DB variant note and German 'Vertrauen'"
+    ],
+    "note": "Text-only feed verse (no audio yet). Sanskrit + German are public domain; scansion verified as clean anuṣṭubh (8/8/8/8) via src/core/translit.js."
+  }
+}

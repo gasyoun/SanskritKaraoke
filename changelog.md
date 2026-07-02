@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Subhāṣita verse feed: 10 curated short anuṣṭubh ślokas from Böhtlingk's *Indische
+  Sprüche* (public domain), imported from VisualDCS `archive.sqlite` via
+  `tools/import_subhashita.py` into `verses/data/subh_*.json`. Text-only (no audio yet);
+  German kept as the explicitly-labelled translation. Verse schema extended additively
+  with a German (`de`) translation branch and `source.attribution`.
 
 ### Changed
 

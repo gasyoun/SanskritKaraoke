@@ -1,0 +1,54 @@
+{
+  "id": "subh_6665",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №6665 (saṅkṣepātkathyate dharmo janāḥ…)",
+    "en": "Subhāṣita №6665 (saṅkṣepātkathyate dharmo janāḥ…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 6665,
+    "attribution": "Böhtlingk, Indische Sprüche №6665; Pañcatantra"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "संक्षेपात्कथ्यते धर्मो जनाः किं विस्तरेण वः।",
+  "s2": "परोपकारः पुण्याय पापाय परपीडनम्॥",
+  "s1dev": "संक्षेपात्कथ्यते धर्मो जनाः किं विस्तरेण वः।",
+  "s2dev": "परोपकारः पुण्याय पापाय परपीडनम्॥",
+  "translation": {
+    "de": "In Kürze — und wozu bedürftet ihr vieler Worte? — lautet, o Leute, das Gesetz: Andern zu helfen bringt Verdienst, Andere zu peinigen — Sünde.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "paropakara",
+    "pancatantra"
+  ],
+  "created_at": "2026-07-02",
+  "updated_at": "2026-07-02",
+  "import_meta": {
+    "source_db": "VisualDCS/src/DCS-data-2026/archive.sqlite",
+    "source_table": "subhashita",
+    "saying_id": "Saying 6665",
+    "page": "Page 3.420",
+    "iast_reference": "saṅkṣepātkathyate dharmo janāḥ kiṃ vistareṇa vaḥ | paropakāraḥ puṇyāya pāpāya parapīḍanam ||",
+    "corrections": [],
+    "note": "Text-only feed verse (no audio yet). Sanskrit + German are public domain; scansion verified as clean anuṣṭubh (8/8/8/8) via src/core/translit.js."
+  }
+}

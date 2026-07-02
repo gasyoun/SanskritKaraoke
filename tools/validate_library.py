@@ -79,7 +79,7 @@ def lint_verse(name, v):
     tr = v.get("translation", {})
     prov = tr.get("provenance", {})
     rights = tr.get("rights", {})
-    for lang in ("ru", "en"):
+    for lang in ("ru", "en", "de"):
         if lang not in tr:
             continue
         if prov.get(lang) in (None, "unknown"):

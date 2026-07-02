@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-06-26",
+  "generated_at": "2026-07-02",
   "verses": [
     {
       "id": "bhg_2_47",
@@ -43,6 +43,48 @@
       "created_at": "2026-05-12"
     },
     {
+      "id": "subh_1249",
+      "title": {
+        "ru": "Субхашита №1249 (udyamena hi sidhyanti…)",
+        "en": "Subhāṣita №1249 (udyamena hi sidhyanti…)"
+      },
+      "meter": "anushtubh",
+      "difficulty": 1,
+      "language_tags": [
+        "de"
+      ],
+      "tags": [
+        "subhashita",
+        "bohtlingk",
+        "effort",
+        "pancatantra"
+      ],
+      "has_audio": false,
+      "has_session": false,
+      "created_at": "2026-07-02"
+    },
+    {
+      "id": "subh_6087",
+      "title": {
+        "ru": "Субхашита №6087 (vidyā dadāti vinayaṃ…)",
+        "en": "Subhāṣita №6087 (vidyā dadāti vinayaṃ…)"
+      },
+      "meter": "anushtubh",
+      "difficulty": 1,
+      "language_tags": [
+        "de"
+      ],
+      "tags": [
+        "subhashita",
+        "bohtlingk",
+        "knowledge",
+        "hitopadesha"
+      ],
+      "has_audio": false,
+      "has_session": false,
+      "created_at": "2026-07-02"
+    },
+    {
       "id": "bhg_2_49",
       "title": {
         "ru": "Бхагавад-гита 2.49",
@@ -61,6 +103,172 @@
       "has_audio": false,
       "has_session": false,
       "created_at": "2026-05-12"
+    },
+    {
+      "id": "subh_0550",
+      "title": {
+        "ru": "Субхашита №550 (ayaṃ nijaḥ paro…)",
+        "en": "Subhāṣita №550 (ayaṃ nijaḥ paro…)"
+      },
+      "meter": "anushtubh",
+      "difficulty": 2,
+      "language_tags": [
+        "de"
+      ],
+      "tags": [
+        "subhashita",
+        "bohtlingk",
+        "unity",
+        "bhartrhari"
+      ],
+      "has_audio": false,
+      "has_session": false,
+      "created_at": "2026-07-02"
+    },
+    {
+      "id": "subh_0648",
+      "title": {
+        "ru": "Субхашита №648 (alpānāmapi vastūnāṃ saṃhatiḥ…)",
+        "en": "Subhāṣita №648 (alpānāmapi vastūnāṃ saṃhatiḥ…)"
+      },
+      "meter": "anushtubh",
+      "difficulty": 2,
+      "language_tags": [
+        "de"
+      ],
+      "tags": [
+        "subhashita",
+        "bohtlingk",
+        "unity",
+        "hitopadesha"
+      ],
+      "has_audio": false,
+      "has_session": false,
+      "created_at": "2026-07-02"
+    },
+    {
+      "id": "subh_2852",
+      "title": {
+        "ru": "Субхашита №2852 (durjanaḥ priyavādī ca…)",
+        "en": "Subhāṣita №2852 (durjanaḥ priyavādī ca…)"
+      },
+      "meter": "anushtubh",
+      "difficulty": 2,
+      "language_tags": [
+        "de"
+      ],
+      "tags": [
+        "subhashita",
+        "bohtlingk",
+        "caution",
+        "canakya"
+      ],
+      "has_audio": false,
+      "has_session": false,
+      "created_at": "2026-07-02"
+    },
+    {
+      "id": "subh_3981",
+      "title": {
+        "ru": "Субхашита №3981 (paropakāraḥ kartavyaḥ prāṇaiḥ…)",
+        "en": "Subhāṣita №3981 (paropakāraḥ kartavyaḥ prāṇaiḥ…)"
+      },
+      "meter": "anushtubh",
+      "difficulty": 2,
+      "language_tags": [
+        "de"
+      ],
+      "tags": [
+        "subhashita",
+        "bohtlingk",
+        "paropakara"
+      ],
+      "has_audio": false,
+      "has_session": false,
+      "created_at": "2026-07-02"
+    },
+    {
+      "id": "subh_6665",
+      "title": {
+        "ru": "Субхашита №6665 (saṅkṣepātkathyate dharmo janāḥ…)",
+        "en": "Subhāṣita №6665 (saṅkṣepātkathyate dharmo janāḥ…)"
+      },
+      "meter": "anushtubh",
+      "difficulty": 2,
+      "language_tags": [
+        "de"
+      ],
+      "tags": [
+        "subhashita",
+        "bohtlingk",
+        "paropakara",
+        "pancatantra"
+      ],
+      "has_audio": false,
+      "has_session": false,
+      "created_at": "2026-07-02"
+    },
+    {
+      "id": "subh_1794",
+      "title": {
+        "ru": "Субхашита №1794 (kutsitasya śarīrasya sāramasti…)",
+        "en": "Subhāṣita №1794 (kutsitasya śarīrasya sāramasti…)"
+      },
+      "meter": "anushtubh",
+      "difficulty": 3,
+      "language_tags": [
+        "de"
+      ],
+      "tags": [
+        "subhashita",
+        "bohtlingk",
+        "paropakara"
+      ],
+      "has_audio": false,
+      "has_session": false,
+      "created_at": "2026-07-02"
+    },
+    {
+      "id": "subh_6678",
+      "title": {
+        "ru": "Субхашита №6678 (saṅghātavānyathā veṇurnibiḍaḥ kaṇṭakairvṛtaḥ…)",
+        "en": "Subhāṣita №6678 (saṅghātavānyathā veṇurnibiḍaḥ kaṇṭakairvṛtaḥ…)"
+      },
+      "meter": "anushtubh",
+      "difficulty": 3,
+      "language_tags": [
+        "de"
+      ],
+      "tags": [
+        "subhashita",
+        "bohtlingk",
+        "unity",
+        "kamandaki"
+      ],
+      "has_audio": false,
+      "has_session": false,
+      "created_at": "2026-07-02"
+    },
+    {
+      "id": "subh_6876",
+      "title": {
+        "ru": "Субхашита №6876 (saṃpatsu mahatāṃ cittaṃ…)",
+        "en": "Subhāṣita №6876 (saṃpatsu mahatāṃ cittaṃ…)"
+      },
+      "meter": "anushtubh",
+      "difficulty": 3,
+      "language_tags": [
+        "de"
+      ],
+      "tags": [
+        "subhashita",
+        "bohtlingk",
+        "character",
+        "bhartrhari"
+      ],
+      "has_audio": false,
+      "has_session": false,
+      "created_at": "2026-07-02"
     }
   ]
 }
