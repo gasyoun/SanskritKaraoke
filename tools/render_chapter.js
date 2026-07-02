@@ -25,6 +25,7 @@
 
 const path      = require('path');
 const fs        = require('fs');
+const http      = require('http');
 const puppeteer = require('puppeteer');
 
 // ── CLI args ───────────────────────────────────────────────────────────────────
@@ -92,6 +93,35 @@ function loadVerses(dir, ids) {
   return results;
 }
 
+// ES modules cannot be imported from a file:// page (Chromium CORS), so
+// render.html must be served over HTTP — same as `python -m http.server` in dev.
+const MIME = {
+  '.html': 'text/html; charset=utf-8',
+  '.js':   'text/javascript; charset=utf-8',
+  '.mjs':  'text/javascript; charset=utf-8',
+  '.json': 'application/json; charset=utf-8',
+  '.css':  'text/css; charset=utf-8',
+  '.svg':  'image/svg+xml',
+  '.png':  'image/png',
+  '.woff2':'font/woff2',
+};
+
+function startStaticServer(rootDir) {
+  return new Promise((resolve, reject) => {
+    const server = http.createServer((req, res) => {
+      const urlPath = decodeURIComponent(req.url.split('?')[0]);
+      const filePath = path.join(rootDir, path.normalize(urlPath).replace(/^([.][.][\\/])+/, ''));
+      if (!filePath.startsWith(rootDir) || !fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
+        res.writeHead(404); res.end('not found'); return;
+      }
+      res.writeHead(200, { 'Content-Type': MIME[path.extname(filePath).toLowerCase()] || 'application/octet-stream' });
+      fs.createReadStream(filePath).pipe(res);
+    });
+    server.on('error', reject);
+    server.listen(0, '127.0.0.1', () => resolve(server));
+  });
+}
+
 // ── Main ───────────────────────────────────────────────────────────────────────
 (async () => {
   const verses = loadVerses(versesDir, onlyIds);
@@ -104,6 +134,9 @@ function loadVerses(dir, ids) {
   }
 
   fs.mkdirSync(outDir, { recursive: true });
+
+  const server = await startStaticServer(path.dirname(renderHtml));
+  const baseUrl = `http://127.0.0.1:${server.address().port}`;
 
   const browser = await puppeteer.launch({
     headless,
@@ -137,7 +170,7 @@ function loadVerses(dir, ids) {
       // Increase default timeout for encoding long verses
       page.setDefaultTimeout(300_000);
 
-      await page.goto(`file://${renderHtml}`, { waitUntil: 'networkidle0', timeout: 60_000 });
+      await page.goto(`${baseUrl}/render.html`, { waitUntil: 'networkidle0', timeout: 60_000 });
 
       // Wait for mp4-muxer CDN load + module init
       await page.waitForFunction(() => window._renderReady === true, { timeout: 30_000 });
@@ -189,6 +222,7 @@ function loadVerses(dir, ids) {
   }
 
   await browser.close();
+  server.close();
 
   console.log(`\nDone: ${ok} rendered, ${skipped} skipped, ${failed} failed.`);
   if (failed) process.exit(1);

@@ -5,6 +5,9 @@ _Created: 02-07-2026 · Last updated: 02-07-2026_
 This is the exact sequence from **audio files in hand** to **scheduled posts**. Written for
 M.G. (the human) and for the agent session that executes it. The pipeline is code-complete
 and has never run on real audio — this document is the contract for that first run.
+A **synthetic end-to-end run** (fake chanting-like audio, 02-07-2026) passed: 3/3 aligned,
+3/3 rendered (MP4 + SRT/VTT + thumbnail), post-kits correctly gated. It also caught and
+fixed a real blocker (renderer `file://` ES-module CORS), so real audio won't be run #1.
 
 **TL;DR — one command does the heavy lifting:**
 

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- [docs/AUDIO_DROP_RUNBOOK.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/AUDIO_DROP_RUNBOOK.md) — audio-in-hand → scheduled-posts contract for the first chapter drop; MY_ROADMAP.md Phase 6 (Autonomous Production Run) defined.
 
 ### Changed
 
@@ -16,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
+- `tools/render_chapter.js` never worked: it loaded `render.html` via `file://`, and Chromium blocks ES-module imports cross-origin from `file://` (every render timed out). Now serves the repo over an embedded localhost HTTP server. Found by the first synthetic end-to-end pipeline run (fake audio, 02-07-2026); all 3 sample verses now render 1080×1920 H.264 30 fps MP4 + SRT/VTT + thumbnail.
 
 ### Security
 
