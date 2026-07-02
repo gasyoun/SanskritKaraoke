@@ -8,18 +8,19 @@ any new agent session in this repository.
 See **MY_ROADMAP.md** for the full 30-week agent engineering curriculum being practised
 on this project.
 
-**Current phase:** Phase 5 — Production Hardening & Cloud Sync
+**Current phase:** Phase 6 — Autonomous Production Run (first chapter drop)
 
 **Next action:**
-> Resume Firebase cloud-sync acceptance from the Google password/2FA/consent
-> screen. See `docs/FIREBASE_ACCEPTANCE.md` for the exact current blocker and
-> the remaining SRS -> Firestore -> second-browser acceptance steps.
+> The drop is gated on chapter audio from Уша Санка. The moment audio exists,
+> execute [docs/AUDIO_DROP_RUNBOOK.md](docs/AUDIO_DROP_RUNBOOK.md) end-to-end
+> (align → render → post-kit → schedule). Pre-flight is green: Puppeteer
+> installed 02-07-2026, dry-run verified.
 
-## Current Firebase acceptance blocker
+## Secondary thread (needs M.G. at a 2FA screen)
 
-Google sign-in has reached the password/2FA/consent stage for `gasyoun@gmail.com`.
-After the browser redirects back to SanskritKaraoke, continue the SRS ->
-Firestore -> second-browser acceptance from `docs/FIREBASE_ACCEPTANCE.md`.
+Firebase cloud-sync acceptance is paused at the Google password/2FA/consent
+stage for `gasyoun@gmail.com` — see `docs/FIREBASE_ACCEPTANCE.md`. Not a drop
+blocker; resume opportunistically.
 
 ## Platform context
 

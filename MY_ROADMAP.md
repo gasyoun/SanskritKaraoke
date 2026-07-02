@@ -1,5 +1,7 @@
 # My Agent Engineering Roadmap
 
+_Created: 12-05-2026 · Last updated: 02-07-2026_
+
 *Personalized from https://github.com/codejunkie99/agent-roadmap-2026 on 2026-05-12.*  
 *Practice vehicle: Sanskrit Karaoke edutech platform.*
 
@@ -171,6 +173,36 @@ Add structured logging to the teaching pipeline agent. Every student session: ve
 
 ---
 
+### Phase 6 — Autonomous Production Run `DEEP` · gated on content
+
+The capstone: everything Phases 0–5 built (agents, harness knowledge, evals, cost/observability)
+executes a **real product deliverable unattended** — the first chapter drop.
+
+**The task:** given a folder of Уша Санка's chapter audio, one agent session runs
+[docs/AUDIO_DROP_RUNBOOK.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/AUDIO_DROP_RUNBOOK.md)
+end-to-end: align → render `feed_v1` MP4s → post-kits → posting plan → (creds permitting)
+live Telegram posts — with the human touching only QA sign-off.
+
+**What makes it a curriculum phase, not just ops:**
+- **Trajectory discipline** (Phase 4 week 9–10 payoff): the run is logged as a tool-call
+  trajectory; a post-run judge pass evaluates whether the agent took a reasonable path.
+- **Eval activation:** first real audio activates the parked alignment eval
+  (`eval_alignment.py`, acceptance ≥90% within ±50 ms) — the golden dataset gains real cases.
+- **Cost discipline** (Phase 5 payoff): per-verse end-to-end cost measured against the
+  < $0.10 target.
+
+**Deliverable:**
+- [ ] First real `build_chapter.py` run on session audio — MP4s + post-kits produced
+- [ ] Alignment eval report on real audio (`eval_alignment.py`)
+- [ ] Run trajectory log + post-run judge assessment in `logs/`
+- [ ] ≥1 live post published via `schedule_drops.py --live` (Telegram)
+- [ ] Postmortem: measured cost/verse, human-minutes/verse vs the ≤2 min QA target
+
+**Pre-work done before audio lands (02-07-2026):** runbook written; `npm install --prefix tools`
+executed for the first time; dry-run path verified earlier (2026-06-14).
+
+---
+
 ## Curated Resources for This Profile
 
 | Phase | Resource | Why |
@@ -198,12 +230,15 @@ Add structured logging to the teaching pipeline agent. Every student session: ve
 - [x] **Phase 3** — `docs/harness_gap_analysis.md` + one custom skill/hook
 - [x] **Phase 4** — golden dataset (8 cases) + LLM-as-judge + CI eval gate
 - [x] **Phase 5** — cost logging + student session observability + Drive fallback + Cloud Sync
+- [ ] **Phase 6** — autonomous chapter-drop run + trajectory judge + cost postmortem (gated on audio)
 
 ---
 
 ## Next Action
 
-**Today:** Phase 5 core infrastructure complete. **Next:** Finalize Firebase data migration (moving all legacy LocalStorage SRS to Firestore) and implement mobile-first UX polish for the progress dashboard.
+**Today (02-07-2026):** Phases 0–5 complete; Phase 6 defined. **Next:** when chapter audio
+lands, execute [docs/AUDIO_DROP_RUNBOOK.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/AUDIO_DROP_RUNBOOK.md)
+as the Phase 6 run. Until then: keep pre-flight green (Puppeteer installed, validator clean).
 
 ---
 
