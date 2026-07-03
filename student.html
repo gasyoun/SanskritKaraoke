@@ -652,11 +652,19 @@ async function loadStudentData() {
 }
 
 function updateTranslation() {
-  if (!currentVerse || !currentVerse.translation) return;
-  const lang = typeof LANG !== 'undefined' ? LANG : 'ru';
   const tBox = document.getElementById('translation-box');
+  if (!currentVerse || !currentVerse.translation) { tBox.style.display = 'none'; return; }
+  const lang = typeof LANG !== 'undefined' ? LANG : 'ru';
+  const tr = currentVerse.translation;
+  // The translation object mixes language keys with metadata (provenance,
+  // rights) — only non-empty string values are actual translations.
+  const langs = Object.keys(tr).filter(k => typeof tr[k] === 'string' && tr[k].trim());
+  // Preferred UI language, then RU/EN, then whatever the verse has (e.g.
+  // the German-only subhāṣita feed).
+  const pick = [lang, 'ru', 'en'].concat(langs).find(k => langs.includes(k));
+  if (!pick) { tBox.style.display = 'none'; return; }
   tBox.style.display = 'block';
-  tBox.textContent = currentVerse.translation[lang] || currentVerse.translation['ru'] || '';
+  tBox.textContent = pick === lang ? tr[pick] : `(${pick.toUpperCase()}) ${tr[pick]}`;
 }
 
 function renderGlosses() {
