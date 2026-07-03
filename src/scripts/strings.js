@@ -115,7 +115,11 @@ const STRINGS = {
     helpSrsHead: 'Интервальное повторение (SRS)',
     helpSrsBody: 'После прослушивания оцените себя: 😊 (легко), 😐 (с трудом), 😕 (забыл). Система сама назначит следующее время для повторения.',
     helpQuizHead: 'Тесты',
-    helpQuizBody: '• <b>Meter ID:</b> Угадайте название размера.<br>• <b>Fill-in:</b> Впишите пропущенный слог во время пения.<br>• <b>Beat Tap:</b> Нажимайте G (гуру) или L (лагху) в такт подсветке. Можно использовать клавиши G и L на клавиатуре.'
+    helpQuizBody: '• <b>Meter ID:</b> Угадайте название размера.<br>• <b>Fill-in:</b> Впишите пропущенный слог во время пения.<br>• <b>Beat Tap:</b> Нажимайте G (гуру) или L (лагху) в такт подсветке. Можно использовать клавиши G и L на клавиатуре.',
+
+    // Gloss layer (word-by-word)
+    glossHeading: 'Пословный разбор',
+    glossAutoNote: 'Автоматическое сопоставление слов с переводом — возможны неточности.'
   },
   en: {
     // App titles & headers
@@ -233,7 +237,11 @@ const STRINGS = {
     helpSrsHead: 'Spaced Repetition (SRS)',
     helpSrsBody: 'After listening, rate yourself: 😊 (easy), 😐 (struggled), 😕 (forgot). The system schedules the next review automatically.',
     helpQuizHead: 'Exercises',
-    helpQuizBody: '• <b>Meter ID:</b> Guess the meter name.<br>• <b>Fill-in:</b> Type the missing syllable while singing.<br>• <b>Beat Tap:</b> Press G (guru) or L (laghu) in time with the highlight. You can also use the G and L keys on your keyboard.'
+    helpQuizBody: '• <b>Meter ID:</b> Guess the meter name.<br>• <b>Fill-in:</b> Type the missing syllable while singing.<br>• <b>Beat Tap:</b> Press G (guru) or L (laghu) in time with the highlight. You can also use the G and L keys on your keyboard.',
+
+    // Gloss layer (word-by-word)
+    glossHeading: 'Word-by-word gloss',
+    glossAutoNote: 'Words are auto-aligned to the translation — minor mismatches possible.'
   }
 };
 

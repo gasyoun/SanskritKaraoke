@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sanskrit Karaoke — v1.4.2</title>
+<title>Sanskrit Karaoke — v1.4.6</title>
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -38,8 +38,25 @@ window.addEventListener('DOMContentLoaded', () => {
 
 <style>
   .main { margin-left: 0 !important; width: 100% !important; }
+  /* Student page has no sidebar: stack main + student panels full-width */
+  .app { grid-template-columns: 1fr; }
+  #student-panels { padding: 0 24px 40px; }
   .mode-dots .syl-label { display: none !important; }
   .mode-blind .wave-layer, .mode-blind .wave-svg-wrap { display: none !important; }
+  /* Gloss layer: word meanings are a study aid — hidden in recall modes.
+     Mode classes sit on #main-area; the gloss box lives in the sibling
+     #student-panels, hence the general-sibling selector. */
+  .mode-dots ~ #student-panels #gloss-box,
+  .mode-blind ~ #student-panels #gloss-box { display: none !important; }
+  #gloss-box { text-align: left; padding: 12px 15px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 15px; }
+  #gloss-head { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink2); font-family: 'JetBrains Mono', monospace; user-select: none; }
+  #gloss-head .chev { transition: transform .15s; }
+  #gloss-box.collapsed .chev { transform: rotate(-90deg); }
+  #gloss-box.collapsed #gloss-words { display: none; }
+  #gloss-words { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 10px; }
+  .gloss-w { display: inline-flex; flex-direction: column; align-items: center; }
+  .gloss-sa { font-size: 1rem; color: var(--ink); line-height: 1.2; }
+  .gloss-ru { font-size: .78rem; color: var(--ink2); line-height: 1.3; }
   #quiz-panel, #srs-panel { 
     background: var(--card); 
     border: 1px solid var(--border); 
@@ -71,7 +88,7 @@ window.addEventListener('DOMContentLoaded', () => {
 <header>
   <div style="display:flex;align-items:baseline;gap:2ch">
     <h1 data-i18n="mainTitle">Волновая нотация санскрита</h1>
-    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.4.2</span>
+    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.4.6</span>
   </div>
   <div id="msg-header" style="display:none;font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:3px;margin-left:16px;align-self:center"></div>
   <div style="display:flex;align-items:center;gap:14px">
@@ -116,9 +133,20 @@ window.addEventListener('DOMContentLoaded', () => {
     <div class="e-om">ॐ</div>
     <p data-i18n="emptyStateHint">Введите данные и нажмите «Построить диаграмму»</p>
   </div>
-  
+<!-- END MAIN CONTENT -->
+</main>
+
+<!-- Student panels live OUTSIDE #main-area: app.js render() clears
+     main-area's innerHTML on every pipeline run and would wipe them. -->
+<section id="student-panels">
   <div style="max-width: 800px; margin: 40px auto 0; text-align: center; padding: 20px;">
     <audio id="audio-preview" controls onplay="_mainHighlightStart()" onpause="_mainHighlightStop()" onended="onVerseEnded()" style="width:100%; max-width:600px; margin-bottom:15px; display:none;"></audio>
+    <div id="gloss-box" style="display:none;">
+      <div id="gloss-head" onclick="toggleGlossBox()" title="">
+        <span class="chev">▾</span><span data-i18n="glossHeading">Пословный разбор</span>
+      </div>
+      <div id="gloss-words"></div>
+    </div>
     <div id="translation-box" class="collapsed" onclick="this.classList.toggle('collapsed')" style="font-size:1.1rem; line-height:1.5; padding:15px; background:var(--card); border-radius:8px; border:1px solid var(--border); display:none;"></div>
     
     <div id="quiz-panel" style="display:none;">
@@ -143,8 +171,7 @@ window.addEventListener('DOMContentLoaded', () => {
     <button onclick="cycleMode()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:var(--accent);color:#fff;cursor:pointer;margin-right:10px" data-i18n="modeFull">Mode: Full</button>
     <button onclick="toggleLang()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:var(--bg2);color:var(--ink);cursor:pointer">🌐 RU/EN</button>
   </div>
-<!-- END MAIN CONTENT -->
-</main>
+</section>
 
 </div>
 
@@ -160,8 +187,8 @@ window.addEventListener('DOMContentLoaded', () => {
   <div class="ctx-item sep"       onclick="ctxDelete()">✕ Убрать из ячейки</div>
 </div>
 
-<script src="src/scripts/strings.js"></script>
-<script src="src/scripts/app.js"></script>
+<script src="src/scripts/strings.js?v=1.4.6"></script>
+<script type="module" src="src/scripts/app.js"></script>
 
 <!-- ══ SETTINGS MODAL ══ -->
 <div id="settings-overlay" onclick="closeSettings()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200"></div>
@@ -262,18 +289,18 @@ window.addEventListener('DOMContentLoaded', () => {
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;border-bottom:2px solid var(--gold);padding-bottom:16px">
     <div>
       <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Sanskrit Karaoke</div>
-      <h2 style="font-size:1.5rem;font-weight:700;margin:0;color:var(--ink);letter-spacing:.03em">Помощь для ученика</h2>
+      <h2 style="font-size:1.5rem;font-weight:700;margin:0;color:var(--ink);letter-spacing:.03em" data-i18n="helpModalTitle">Помощь для ученика</h2>
     </div>
     <button onclick="closeHelp()" style="font-size:1.3rem;border:none;background:none;cursor:pointer;color:var(--ink2);line-height:1;padding:4px 8px;border-radius:4px">✕</button>
   </div>
-  <p class="help-sec">Как читать волновой график</p>
-  <p class="help-body">• <b>Цвет:</b> Синий = тяжелый слог (гуру), Зеленый = легкий (лагху).<br>• <b>Высота:</b> 5 рядов показывают высоту тона (мелодию). 1 — верхний, 5 — нижний.</p>
-  <p class="help-sec">Режимы обучения (кнопка Mode)</p>
-  <p class="help-body">• <b>Full:</b> Виден текст и мелодия.<br>• <b>Dots:</b> Текст скрыт, видны только "шарики" мелодии. Вспомните текст по ритму!<br>• <b>Blind:</b> График скрыт. Пойте полностью по памяти.</p>
-  <p class="help-sec">Интервальное повторение (SRS)</p>
-  <p class="help-body">После прослушивания оцените себя: 😊 (легко), 😐 (с трудом), 😕 (забыл). Система сама назначит следующее время для повторения.</p>
-  <p class="help-sec">Тесты</p>
-  <p class="help-body">• <b>Meter ID:</b> Угадайте название размера.<br>• <b>Fill-in:</b> Впишите пропущенный слог во время пения.<br>• <b>Beat Tap:</b> Нажимайте G (гуру) или L (лагху) в такт подсветке. Можно использовать клавиши G и L на клавиатуре.</p>
+  <p class="help-sec" data-i18n="helpWaveHead">Как читать волновой график</p>
+  <p class="help-body" data-i18n-html="helpWaveBody">• <b>Цвет:</b> Синий = тяжелый слог (гуру), Зеленый = легкий (лагху).<br>• <b>Высота:</b> 5 рядов показывают высоту тона (мелодию). 1 — верхний, 5 — нижний.</p>
+  <p class="help-sec" data-i18n="helpModesHead">Режимы обучения (кнопка Mode)</p>
+  <p class="help-body" data-i18n-html="helpModesBody">• <b>Full:</b> Виден текст и мелодия.<br>• <b>Dots:</b> Текст скрыт, видны только «шарики» мелодии. Вспомните текст по ритму!<br>• <b>Blind:</b> График скрыт. Пойте полностью по памяти.</p>
+  <p class="help-sec" data-i18n="helpSrsHead">Интервальное повторение (SRS)</p>
+  <p class="help-body" data-i18n-html="helpSrsBody">После прослушивания оцените себя: 😊 (легко), 😐 (с трудом), 😕 (забыл). Система сама назначит следующее время для повторения.</p>
+  <p class="help-sec" data-i18n="helpQuizHead">Тесты</p>
+  <p class="help-body" data-i18n-html="helpQuizBody">• <b>Meter ID:</b> Угадайте название размера.<br>• <b>Fill-in:</b> Впишите пропущенный слог во время пения.<br>• <b>Beat Tap:</b> Нажимайте G (гуру) или L (лагху) в такт подсветке. Можно использовать клавиши G и L на клавиатуре.</p>
 </div></div>
 
 <!-- ══ CROSS-CHECK MODAL ══ -->
@@ -504,8 +531,10 @@ let currentMode = 1;
 let versePlayedCount = 0;
 
 // Bug 15: Safe wait for app.js
-function waitForApp(cb, retries = 20) {
+function waitForApp(cb, retries = 150) {
   if (typeof _applySession === 'function') { cb(); return; }
+  // 15 s budget: the app.js ES-module graph can take seconds on slow
+  // connections; giving up too early leaves the player permanently blank.
   if (retries > 0) setTimeout(() => waitForApp(cb, retries - 1), 100);
   else console.error('app.js failed to load');
 }
@@ -541,7 +570,7 @@ function driveMediaUrl(fileId) {
 async function loadStudentData() {
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
-  if (!id) {
+  if (!id || !/^[a-zA-Z0-9_-]+$/.test(id)) {
     document.getElementById('translation-box').textContent = "No verse ID provided. Use ?id=bhg_2_47";
     document.getElementById('translation-box').style.display = "block";
     return;
@@ -591,7 +620,13 @@ async function loadStudentData() {
       }
     } else {
       document.getElementById('dev-input').value = currentVerse.s1 + '\n' + currentVerse.s2;
+      // Setting .value fires no input event, so the debounced scheme
+      // auto-detect never runs and runPipeline bails on the empty
+      // scheme-select — detect explicitly before building.
+      if (typeof forceSchemeDetect === 'function') forceSchemeDetect();
       document.getElementById('btn-go').click();
+      const empty = document.querySelector('.empty');
+      if (empty) empty.style.display = 'none';
     }
 
     // --- Audio Data ---
@@ -607,6 +642,7 @@ async function loadStudentData() {
     }
 
     updateTranslation();
+    renderGlosses();
 
   } catch (err) {
     console.error(err);
@@ -621,6 +657,38 @@ function updateTranslation() {
   const tBox = document.getElementById('translation-box');
   tBox.style.display = 'block';
   tBox.textContent = currentVerse.translation[lang] || currentVerse.translation['ru'] || '';
+}
+
+function renderGlosses() {
+  const box = document.getElementById('gloss-box');
+  const words = document.getElementById('gloss-words');
+  const glosses = currentVerse && currentVerse.glosses;
+  if (!Array.isArray(glosses) || !glosses.length) { box.style.display = 'none'; return; }
+  words.replaceChildren();
+  for (const g of glosses) {
+    if (!g || !g.sa) continue;
+    const w = document.createElement('span');
+    w.className = 'gloss-w';
+    const sa = document.createElement('span');
+    sa.className = 'gloss-sa';
+    sa.textContent = g.sa;
+    const ru = document.createElement('span');
+    ru.className = 'gloss-ru';
+    ru.textContent = g.ru || '—';
+    w.append(sa, ru);
+    words.appendChild(w);
+  }
+  const head = document.getElementById('gloss-head');
+  head.title = typeof t === 'function' ? t('glossAutoNote') : '';
+  if (localStorage.getItem('gloss_collapsed') === '1') box.classList.add('collapsed');
+  box.style.display = 'block';
+}
+
+function toggleGlossBox() {
+  const box = document.getElementById('gloss-box');
+  const collapsed = box.classList.toggle('collapsed');
+  localStorage.setItem('gloss_collapsed', collapsed ? '1' : '0');
+  logTelemetry('gloss_toggle', { collapsed });
 }
 
 function cycleMode() {
@@ -642,6 +710,7 @@ function toggleLang() {
   if (typeof setLang === 'function') {
     setLang(typeof LANG !== 'undefined' && LANG === 'ru' ? 'en' : 'ru');
     updateTranslation();
+    if (currentVerse) renderGlosses();
   }
 }
 

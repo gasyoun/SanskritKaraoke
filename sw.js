@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sanskrit-karaoke-v1.4.2-html-network-first';
+const CACHE_NAME = 'sanskrit-karaoke-v1.4.6-html-network-first';
 const ASSETS = [
   'catalogue.html',
   'student.html',

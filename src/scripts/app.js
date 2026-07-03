@@ -7090,6 +7090,7 @@ window.downloadTimingJson = function() {
 // ── Global handler exposure (required when app.js runs as ES module) ─────────
 // onclick= and SVG inline event handlers need these on window.
 window.runPipeline             = runPipeline;
+window._applySession           = _applySession; // student.html session loader + waitForApp gate
 window.rebuildAll              = rebuildAll;
 window.openSettings            = openSettings;
 window.closeSettings           = closeSettings;
