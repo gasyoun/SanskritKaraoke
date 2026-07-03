@@ -31,15 +31,17 @@
     "source": {
       "type": "object",
       "properties": {
-        "text":    { "type": "string", "description": "Scripture name" },
+        "text":    { "type": "string", "description": "Scripture / collection name, e.g. Bhagavad Gita, Indische Sprüche (Böhtlingk)" },
         "chapter": { "type": "integer" },
-        "verse":   { "type": "integer" }
+        "verse":   { "type": "integer" },
+        "attribution": { "type": "string",
+                         "description": "Original-source citation as recorded by the collector, e.g. 'Böhtlingk, Indische Sprüche №1249; Pañcatantra / Hitopadeśa'" }
       }
     },
     "meter":      { "type": "string", "description": "e.g. anushtubh, indravajra, mandakranta" },
     "difficulty": { "type": "integer", "minimum": 1, "maximum": 5,
                     "description": "1=beginner … 5=advanced" },
-    "language_tags": { "type": "array", "items": { "type": "string", "enum": ["ru","en"] } },
+    "language_tags": { "type": "array", "items": { "type": "string", "enum": ["ru","en","de"] } },
     "author": {
       "type": "object",
       "properties": {
@@ -57,12 +59,14 @@
       "properties": {
         "ru": { "type": "string" },
         "en": { "type": "string" },
+        "de": { "type": "string", "description": "German translation/gloss, e.g. Böhtlingk's rendering in Indische Sprüche" },
         "provenance": {
           "type": "object",
           "description": "Who produced each translation — machine output must be marked (DH norm)",
           "properties": {
             "ru": { "type": "string", "enum": ["human", "human-reviewed", "gemini-flash", "claude", "public-domain", "licensed", "unknown"] },
-            "en": { "type": "string", "enum": ["human", "human-reviewed", "gemini-flash", "claude", "public-domain", "licensed", "unknown"] }
+            "en": { "type": "string", "enum": ["human", "human-reviewed", "gemini-flash", "claude", "public-domain", "licensed", "unknown"] },
+            "de": { "type": "string", "enum": ["human", "human-reviewed", "gemini-flash", "claude", "public-domain", "licensed", "unknown"] }
           }
         },
         "rights": {
@@ -70,7 +74,8 @@
           "description": "Per-language publication-rights status for the translation text.",
           "properties": {
             "ru": { "$ref": "#/definitions/translationRights" },
-            "en": { "$ref": "#/definitions/translationRights" }
+            "en": { "$ref": "#/definitions/translationRights" },
+            "de": { "$ref": "#/definitions/translationRights" }
           }
         }
       }

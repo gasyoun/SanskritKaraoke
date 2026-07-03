@@ -1,0 +1,53 @@
+{
+  "id": "subh_3981",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №3981 (paropakāraḥ kartavyaḥ prāṇaiḥ…)",
+    "en": "Subhāṣita №3981 (paropakāraḥ kartavyaḥ prāṇaiḥ…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 3981,
+    "attribution": "Böhtlingk, Indische Sprüche №3981; Padmottarakhaṇḍa"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "परोपकारः कर्तव्यः प्राणैः कण्ठगतैरपि।",
+  "s2": "परोपकारजं पुण्यं तुल्यं क्रतुशतैरपि॥",
+  "s1dev": "परोपकारः कर्तव्यः प्राणैः कण्ठगतैरपि।",
+  "s2dev": "परोपकारजं पुण्यं तुल्यं क्रतुशतैरपि॥",
+  "translation": {
+    "de": "Wir sollen Anderen helfen, selbst wenn die Lebensgeister uns schon in der Kehle stecken (d. h. selbst wenn wir dem Tode nahe sind): das Verdienst der Hilfeleistung kommt sogar hundert Opfern gleich.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "paropakara"
+  ],
+  "created_at": "2026-07-02",
+  "updated_at": "2026-07-02",
+  "import_meta": {
+    "source_db": "VisualDCS/src/DCS-data-2026/archive.sqlite",
+    "source_table": "subhashita",
+    "saying_id": "Saying 3981",
+    "page": "Page 2.360",
+    "iast_reference": "paropakāraḥ kartavyaḥ prāṇaiḥ kaṇṭhagatairapi | paropakārajaṃ puṇyaṃ tulyaṃ kratuśatairapi ||",
+    "corrections": [],
+    "note": "Text-only feed verse (no audio yet). Sanskrit + German are public domain; scansion verified as clean anuṣṭubh (8/8/8/8) via src/core/translit.js."
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "id": "subh_0550",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №550 (ayaṃ nijaḥ paro…)",
+    "en": "Subhāṣita №550 (ayaṃ nijaḥ paro…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 550,
+    "attribution": "Böhtlingk, Indische Sprüche №550; Bhartṛhari / Pañcatantra / Hitopadeśa"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "अयं निजः परो वेति गणना लघुचेतसाम्।",
+  "s2": "उदारचरितानां तु वसुधैव कुटुम्बकम्॥",
+  "s1dev": "अयं निजः परो वेति गणना लघुचेतसाम्।",
+  "s2dev": "उदारचरितानां तु वसुधैव कुटुम्बकम्॥",
+  "translation": {
+    "de": "«Dieser ist Einer von den Unsrigen oder ein Fremder», so rechnen Menschen von niederem Sinne; Männer von edler Handlungsweise dagegen betrachten die ganze Erde als ihre Familie.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "unity",
+    "bhartrhari"
+  ],
+  "created_at": "2026-07-02",
+  "updated_at": "2026-07-02",
+  "import_meta": {
+    "source_db": "VisualDCS/src/DCS-data-2026/archive.sqlite",
+    "source_table": "subhashita",
+    "saying_id": "Saying 550",
+    "page": "Page 1.102",
+    "iast_reference": "ayaṃ nijaḥ paro veti gaṇanā laghucetasām | udāracaritānāṃ tu vasudhaiva kuṭumbakam ||",
+    "corrections": [
+      "German reconstructed from split translation_de + source_attribution fields in the DB"
+    ],
+    "note": "Text-only feed verse (no audio yet). Sanskrit + German are public domain; scansion verified as clean anuṣṭubh (8/8/8/8) via src/core/translit.js."
+  }
+}

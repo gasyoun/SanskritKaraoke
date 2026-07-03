@@ -1,0 +1,54 @@
+{
+  "id": "subh_1249",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №1249 (udyamena hi sidhyanti…)",
+    "en": "Subhāṣita №1249 (udyamena hi sidhyanti…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 1249,
+    "attribution": "Böhtlingk, Indische Sprüche №1249; Pañcatantra / Hitopadeśa"
+  },
+  "meter": "anushtubh",
+  "difficulty": 1,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "उद्यमेन हि सिध्यन्ति कार्याणि न मनोरथैः।",
+  "s2": "नहि सुप्तस्य सिंहस्य प्रविशन्ति मुखे मृगाः॥",
+  "s1dev": "उद्यमेन हि सिध्यन्ति कार्याणि न मनोरथैः।",
+  "s2dev": "नहि सुप्तस्य सिंहस्य प्रविशन्ति मुखे मृगाः॥",
+  "translation": {
+    "de": "Durch Anstrengung kommen ja Werke zu Stande, nicht durch Wünsche: es laufen ja die Gazellen nicht in den Rachen eines schlafenden Löwen.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "effort",
+    "pancatantra"
+  ],
+  "created_at": "2026-07-02",
+  "updated_at": "2026-07-02",
+  "import_meta": {
+    "source_db": "VisualDCS/src/DCS-data-2026/archive.sqlite",
+    "source_table": "subhashita",
+    "saying_id": "Saying 1249",
+    "page": "Page 1.237",
+    "iast_reference": "udyamena hi sidhyanti kāryāṇi na manorathaiḥ | nahi suptasya siṃhasya praviśanti mukhe mṛgāḥ ||",
+    "corrections": [],
+    "note": "Text-only feed verse (no audio yet). Sanskrit + German are public domain; scansion verified as clean anuṣṭubh (8/8/8/8) via src/core/translit.js."
+  }
+}

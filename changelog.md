@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - [docs/AUDIO_DROP_RUNBOOK.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/AUDIO_DROP_RUNBOOK.md) — audio-in-hand → scheduled-posts contract for the first chapter drop; MY_ROADMAP.md Phase 6 (Autonomous Production Run) defined.
+- Subhāṣita verse feed: 10 curated short anuṣṭubh ślokas from Böhtlingk's *Indische
+  Sprüche* (public domain), imported from VisualDCS `archive.sqlite` via
+  `tools/import_subhashita.py` into `verses/data/subh_*.json`. Text-only (no audio yet);
+  German kept as the explicitly-labelled translation. Verse schema extended additively
+  with a German (`de`) translation branch and `source.attribution`.
 
 ### Changed
 

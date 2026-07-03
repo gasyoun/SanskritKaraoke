@@ -1,0 +1,53 @@
+{
+  "id": "subh_1794",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №1794 (kutsitasya śarīrasya sāramasti…)",
+    "en": "Subhāṣita №1794 (kutsitasya śarīrasya sāramasti…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 1794,
+    "attribution": "Böhtlingk, Indische Sprüche №1794; Subhāṣitārṇava"
+  },
+  "meter": "anushtubh",
+  "difficulty": 3,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "कुत्सितस्य शरीरस्य सारमस्ति गुणद्वयम्।",
+  "s2": "परोपकारकरणं परमेश्वरपूजनम्॥",
+  "s1dev": "कुत्सितस्य शरीरस्य सारमस्ति गुणद्वयम्।",
+  "s2dev": "परोपकारकरणं परमेश्वरपूजनम्॥",
+  "translation": {
+    "de": "Das Beste am tadelhaften Körper sind zwei Vorzüge: die Andern erwiesene Hilfe und die Verehrung des höchsten Wesens.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "paropakara"
+  ],
+  "created_at": "2026-07-02",
+  "updated_at": "2026-07-02",
+  "import_meta": {
+    "source_db": "VisualDCS/src/DCS-data-2026/archive.sqlite",
+    "source_table": "subhashita",
+    "saying_id": "Saying 1794",
+    "page": "Page 1.347",
+    "iast_reference": "kutsitasya śarīrasya sāramasti guṇadvayam | paropakārakaraṇaṃ parameśvarapūjanam ||",
+    "corrections": [],
+    "note": "Text-only feed verse (no audio yet). Sanskrit + German are public domain; scansion verified as clean anuṣṭubh (8/8/8/8) via src/core/translit.js."
+  }
+}

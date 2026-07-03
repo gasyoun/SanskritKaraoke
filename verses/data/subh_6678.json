@@ -1,0 +1,56 @@
+{
+  "id": "subh_6678",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №6678 (saṅghātavānyathā veṇurnibiḍaḥ kaṇṭakairvṛtaḥ…)",
+    "en": "Subhāṣita №6678 (saṅghātavānyathā veṇurnibiḍaḥ kaṇṭakairvṛtaḥ…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 6678,
+    "attribution": "Böhtlingk, Indische Sprüche №6678; Kāmandakīya Nītisāra"
+  },
+  "meter": "anushtubh",
+  "difficulty": 3,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "संघातवान्यथा वेणुर्निबिडः कण्टकैर्वृतः।",
+  "s2": "न शक्यते समुच्छेत्तुं भ्रातृसंघातवांस्तथा॥",
+  "s1dev": "संघातवान्यथा वेणुर्निबिडः कण्टकैर्वृतः।",
+  "s2dev": "न शक्यते समुच्छेत्तुं भ्रातृसंघातवांस्तथा॥",
+  "translation": {
+    "de": "Wie dichtes Bambusrohr, wenn es zusammen steht und von Dornen umgeben ist, nicht vernichtet werden kann, eben so wenig derjenige, der mit seinen Brüdern zusammen steht.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "unity",
+    "kamandaki"
+  ],
+  "created_at": "2026-07-02",
+  "updated_at": "2026-07-02",
+  "import_meta": {
+    "source_db": "VisualDCS/src/DCS-data-2026/archive.sqlite",
+    "source_table": "subhashita",
+    "saying_id": "Saying 6678",
+    "page": "Page 3.422",
+    "iast_reference": "saṅghātavānyathā veṇurnibiḍaḥ kaṇṭakairvṛtaḥ | na śakyate samucchettuṃ bhrātṛsaṅghātavāṃstathā ||",
+    "corrections": [
+      "German OCR: 'umgehen' → 'umgeben'"
+    ],
+    "note": "Text-only feed verse (no audio yet). Sanskrit + German are public domain; scansion verified as clean anuṣṭubh (8/8/8/8) via src/core/translit.js."
+  }
+}
