@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.4.7] - 2026-07-03
 
+### Changed
+- Docs-only maintenance release: CLAUDE.md versioning workflow rewritten (5 real version locations, release recipe, Pages-flake workaround; dead `ver_info.txt` dropped) + `.ai_state.md` session-close tidies. No application changes — the in-browser version intentionally remains v1.4.6.
+
 ## [1.4.6] - 2026-07-03
 
 ### Added
