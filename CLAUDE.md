@@ -38,9 +38,21 @@ No build step, no bundler, no test suite — QA is manual in-browser.
 
 ## Versioning workflow
 
-1. Update `<title>` and `>v1.NNN<` in `index.html` (two places).
-2. Append a line to `ver_info.txt`.
-3. Run syntax check above.
+The version string lives in FIVE places — bump all of them together (v1.4.6 audit
+found them drifted across three different values; `ver_info.txt` no longer exists):
+
+1. `index.html` — `<title>` and the `v1.N.N` header span (two places).
+2. `tools/templates/student.html` — same two places, plus the `strings.js?v=` cache-bust query; then regenerate: `python tools/make_student.py`.
+3. `sw.js` — `CACHE_NAME` (invalidates the service-worker cache; without this, deployed users keep stale assets).
+4. `changelog.md` — record changes under `## [Unreleased]` as you work.
+5. Run the syntax check above.
+
+**Cutting a release**: promote `[Unreleased]` → `## [x.y.z] - YYYY-MM-DD` (prune empty
+subsections, update the compare links at the bottom), commit, `git tag -a vX.Y.Z`,
+push both, `gh release create vX.Y.Z` with the promoted notes. Pushing to `main`
+deploys GitHub Pages via the `Deploy GitHub Pages` workflow — if a deploy run flakes
+("try again later" / duplicate-artifact error on rerun), dispatch a fresh full run:
+`gh workflow run pages.yml` (never rerun only the failed job).
 
 ## File structure
 
@@ -62,7 +74,6 @@ No build step, no bundler, no test suite — QA is manual in-browser.
 | `src/scripts/quizzes.js` | Interactive self-assessment quizzes |
 | `src/style.css` | Styles (light neutral palette, Devanagari + Latin fonts) |
 | `apte_prosody.html` / `apte_prosody_ru.html` | Apte prosody reference database |
-| `ver_info.txt` | Version history (one line per version) |
 
 ## Architecture
 
