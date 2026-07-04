@@ -179,7 +179,7 @@ The capstone: everything Phases 0–5 built (agents, harness knowledge, evals, c
 executes a **real product deliverable unattended** — the first chapter drop.
 
 **The task:** given a folder of Уша Санка's chapter audio, one agent session runs
-[docs/AUDIO_DROP_RUNBOOK.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/AUDIO_DROP_RUNBOOK.md)
+[docs/H132-Sonnet_SanskritKaraoke_AUDIO_DROP_RUNBOOK_02.07.26.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/H132-Sonnet_SanskritKaraoke_AUDIO_DROP_RUNBOOK_02.07.26.md)
 end-to-end: align → render `feed_v1` MP4s → post-kits → posting plan → (creds permitting)
 live Telegram posts — with the human touching only QA sign-off.
 
@@ -237,7 +237,7 @@ executed for the first time; dry-run path verified earlier (2026-06-14).
 ## Next Action
 
 **Today (02-07-2026):** Phases 0–5 complete; Phase 6 defined. **Next:** when chapter audio
-lands, execute [docs/AUDIO_DROP_RUNBOOK.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/AUDIO_DROP_RUNBOOK.md)
+lands, execute [docs/H132-Sonnet_SanskritKaraoke_AUDIO_DROP_RUNBOOK_02.07.26.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/H132-Sonnet_SanskritKaraoke_AUDIO_DROP_RUNBOOK_02.07.26.md)
 as the Phase 6 run. Until then: keep pre-flight green (Puppeteer installed, validator clean).
 
 ---

@@ -109,7 +109,7 @@ each is hard-gated on its own env credentials — no creds, no network call. Gat
 When the audio folder exists, start the session with:
 
 ```
-Read C:\Users\user\Documents\GitHub\SanskritKaraoke\docs\AUDIO_DROP_RUNBOOK.md and execute it. Audio is in <audio_dir>.
+Read C:\Users\user\Documents\GitHub\SanskritKaraoke\docs\H132-Sonnet_SanskritKaraoke_AUDIO_DROP_RUNBOOK_02.07.26.md and execute it. Audio is in <audio_dir>.
 ```
 
 _Dr. Mārcis Gasūns_
