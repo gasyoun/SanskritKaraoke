@@ -64,7 +64,7 @@ Browser (student / teacher)     samskrtam.ru (nginx + Python API)
 |---|---|---|
 | API | Python + FastAPI | Уже есть Python на сервере (`http.server`); FastAPI — минимальный overhead |
 | БД | SQLite | Нет отдельного DB-сервера, <1000 студентов, embedded |
-| Auth | JWT (HS256) | Самодельный сайт уже знает пользователей — выдаём токен при логине |
+| Auth | JWT (HS256) | Самодельный сайт уже знает пользователей — выдаем токен при логине |
 | Сессия | `localStorage['sk_token']` | Как Google Drive token сейчас |
 
 ### Схема авторизации
@@ -84,7 +84,7 @@ Browser (student / teacher)     samskrtam.ru (nginx + Python API)
                                             └── пишет в SQLite
 ```
 
-**Важно:** JWT-секрет один и тот же на самодельном сайте и на Python API — они на одном сервере, секрет берётся из env-файла.
+**Важно:** JWT-секрет один и тот же на самодельном сайте и на Python API — они на одном сервере, секрет берется из env-файла.
 
 ### Модель данных (SQLite)
 
@@ -153,7 +153,7 @@ systemd unit: sanskrit-api.service
 ### Целевой pipeline (GitHub Actions)
 
 ```
-Учитель:  [записывает аудио] → [создаёт JSON с текстом, без timing] → [git push]
+Учитель:  [записывает аудио] → [создает JSON с текстом, без timing] → [git push]
                                                                             │
                           GitHub Actions: .github/workflows/align.yml       │
                           ─────────────────────────────────────────         │
@@ -186,7 +186,7 @@ systemd unit: sanskrit-api.service
 # Время: ~30-60 сек на GitHub-раннере для 30-секундного аудио
 ```
 
-**Точность:** Whisper не знает Sanskrit, но forced alignment по аудио даёт ~0.05-0.1s error — достаточно для каждого слога (средняя длина ~0.3s). Учитель правит только явные расхождения.
+**Точность:** Whisper не знает Sanskrit, но forced alignment по аудио дает ~0.05-0.1s error — достаточно для каждого слога (средняя длина ~0.3s). Учитель правит только явные расхождения.
 
 ---
 
@@ -265,9 +265,9 @@ CREATE TABLE assignments (
 
 | Риск | Вероятность | Митигация |
 |---|---|---|
-| Whisper даёт плохой alignment для Sanskrit | Средняя | Fallback: линейная интерполяция + UI правки |
+| Whisper дает плохой alignment для Sanskrit | Средняя | Fallback: линейная интерполяция + UI правки |
 | SQLite медленно при >500 одновременных запросах | Низкая (аудитория небольшая) | WAL mode; при росте — Postgres |
-| JWT-секрет утечёт | Низкая | Хранить в `.env`, не в репо; rotation раз в год |
+| JWT-секрет утечет | Низкая | Хранить в `.env`, не в репо; rotation раз в год |
 | GitHub Actions минуты кончатся | Низкая | 2000 мин/мес бесплатно; alignment ~1 мин/шлока |
 
 ---

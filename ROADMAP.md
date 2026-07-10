@@ -28,7 +28,7 @@
 
 - [ ] Интеграция TTS (Google Cloud TTS Sanskrit / ElevenLabs) для генерации аудио
 - [ ] Forced-alignment pipeline: text + audio → per-syllable timestamps автоматически
-  - Вариант A: Whisper + CTC alignment (локально/дёшево)
+  - Вариант A: Whisper + CTC alignment (локально/дешево)
   - Вариант B: Assembly AI forced alignment API
 - [ ] Verse agent: на входе текст шлоки → на выходе готовый JSON с таймингом для проверки учителем
 - [ ] UI-режим "проверка авто-тайминга": учитель слышит + видит авто-разметку, правит только расхождения
@@ -63,7 +63,7 @@
 
 - Словарные подсказки: клик на слово → перевод из Apte / Monier-Williams
 - Открытый контрибьют: форма для добавления шлоки внешним учителем (с модерацией)
-- Восстановить tapping mode (временно отключён)
+- Восстановить tapping mode (временно отключен)
 - Исправить Drive file replacement (старый файл не удаляется)
 - Apte prosody cross-check modal
 
