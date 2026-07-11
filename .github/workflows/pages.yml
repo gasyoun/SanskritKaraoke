@@ -38,6 +38,8 @@ jobs:
           cp index.html catalogue.html student.html progress.html manifest.json sw.js _site/
           cp README.md README.ru.md LICENSE changelog.md _site/
           cp -R docs src verses _site/
+          # Draft license agreements (personal data) must not ship publicly
+          rm -rf _site/docs/legal
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5

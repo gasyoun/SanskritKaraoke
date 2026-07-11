@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.8] - 2026-07-12
+
+### Added
+- **Course CTA footer on all four deployed pages** (H716 free-funnel CTA audit): `index.html`, `catalogue.html`, `progress.html` and the student player (via `tools/templates/student.html` + regeneration) now carry a shared `.cta-footer` block — primary button «Записаться на курс санскрита →» to `https://samskrtam.ru/usha-sanka` with UTM tagging (`utm_source=karaoke&utm_medium=cta&utm_campaign=<page>`, matching the `tools/post_kit.py` convention), custdev-proven hint «Можно в записи и в своём темпе», secondary link «Задать вопрос в Telegram» to `https://t.me/rusamskrtam`. RU/EN i18n keys `ctaCourse`/`ctaCourseHint`/`ctaTelegram` in `src/scripts/strings.js`; styles in `src/style.css`. No urgency/social-proof copy per the ORS-FAQ custdev win/loss evidence.
+- [docs/FREE_FUNNEL_CTA_AUDIT_07_2026.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/FREE_FUNNEL_CTA_AUDIT_07_2026.md) — cross-surface audit table (CTA present? destination? metric wired?) over the org's free-funnel surfaces.
+
+### Fixed
+- GitHub Pages artifact no longer ships `docs/legal/` (draft license agreements with personal data were publicly reachable on the Pages site).
+
 ## [1.4.7] - 2026-07-03
 
 ### Changed
@@ -34,6 +43,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release of SanskritKaraoke
 
-[Unreleased]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.6...HEAD
+[Unreleased]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.8...HEAD
+[1.4.8]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.7...v1.4.8
+[1.4.7]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.6...v1.4.7
 [1.4.6]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.2...v1.4.6
 [1.4.2]: https://github.com/gasyoun/SanskritKaraoke/releases/tag/v1.4.2
