@@ -63,6 +63,11 @@ const STRINGS = {
     sessionLabel: 'Сессия',
     footerLabel: 'Футер (PNG)',
     driveLabel: 'Google Drive',
+
+    // Course CTA footer
+    ctaCourse: 'Записаться на курс санскрита →',
+    ctaCourseHint: 'Можно в записи и в своём темпе',
+    ctaTelegram: 'Задать вопрос в Telegram',
     
     // Audio drop zone
     dropZoneText: 'Перетащите сюда аудиофайл или нажмите для выбора',
@@ -184,6 +189,11 @@ const STRINGS = {
     sessionLabel: 'Session',
     footerLabel: 'Footer (PNG)',
     driveLabel: 'Google Drive',
+
+    // Course CTA footer
+    ctaCourse: 'Join the Sanskrit course →',
+    ctaCourseHint: 'Self-paced, recordings included',
+    ctaTelegram: 'Ask a question on Telegram',
     
     // Audio drop zone
     dropZoneText: 'Drop audio file here or click to select',

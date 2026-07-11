@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sanskrit Karaoke — v1.4.6</title>
+<title>Sanskrit Karaoke — v1.4.8</title>
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -88,7 +88,7 @@ window.addEventListener('DOMContentLoaded', () => {
 <header>
   <div style="display:flex;align-items:baseline;gap:2ch">
     <h1 data-i18n="mainTitle">Волновая нотация санскрита</h1>
-    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.4.6</span>
+    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.4.8</span>
   </div>
   <div id="msg-header" style="display:none;font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:3px;margin-left:16px;align-self:center"></div>
   <div style="display:flex;align-items:center;gap:14px">
@@ -187,7 +187,7 @@ window.addEventListener('DOMContentLoaded', () => {
   <div class="ctx-item sep"       onclick="ctxDelete()">✕ Убрать из ячейки</div>
 </div>
 
-<script src="src/scripts/strings.js?v=1.4.6"></script>
+<script src="src/scripts/strings.js?v=1.4.8"></script>
 <script type="module" src="src/scripts/app.js"></script>
 
 <!-- ══ SETTINGS MODAL ══ -->
@@ -771,6 +771,12 @@ if ('serviceWorker' in navigator) {
 
 window.addEventListener('DOMContentLoaded', () => waitForApp(loadStudentData));
 </script>
+
+<footer class="cta-footer">
+  <a class="cta-btn" href="https://samskrtam.ru/usha-sanka?utm_source=karaoke&amp;utm_medium=cta&amp;utm_campaign=student" target="_blank" rel="noopener" data-i18n="ctaCourse">Записаться на курс санскрита →</a>
+  <span class="cta-hint" data-i18n="ctaCourseHint">Можно в записи и в своём темпе</span>
+  <a class="cta-link" href="https://t.me/rusamskrtam" target="_blank" rel="noopener" data-i18n="ctaTelegram">Задать вопрос в Telegram</a>
+</footer>
 </body>
 
 </html>
