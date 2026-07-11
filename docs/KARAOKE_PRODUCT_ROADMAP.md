@@ -1,5 +1,7 @@
 # Karaoke Product Roadmap — batch-drop funnel edition
 
+_Created: 12-06-2026 · Last updated: 14-06-2026_
+
 Decided 2026-06-12 (with M.G.):
 - **Audio**: Уша Санка recordings, with written permission — license metadata required per verse.
 - **Channels**: all of Telegram / Instagram Reels / YouTube Shorts / TikTok (one 9:16 master per verse, cross-posted).
@@ -89,3 +91,5 @@ Replace "browser tab, one verse at a time, 10 fps" with one command per chapter.
 - One chapter (≈20 verses) goes from raw audio to scheduled posts in **one working day**.
 - Every published verse has rights metadata and a permission reference.
 - Measurable course-signup clicks attributable to videos within the first two drops.
+
+_Dr. Mārcis Gasūns_
