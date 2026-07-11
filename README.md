@@ -1,8 +1,10 @@
 # Sanskrit Karaoke
 
+_Created: 12-05-2026 · Last updated: 11-07-2026_
+
 ## Wave-notation visualiser and karaoke exporter for Sanskrit verse
 
-[**Live app →**](https://gasyoun.github.io/SanskritKaraoke/) · [v1.4.2](https://gasyoun.github.io/SanskritKaraoke/)
+[**Live app →**](https://gasyoun.github.io/SanskritKaraoke/) · [v1.4.6](https://gasyoun.github.io/SanskritKaraoke/) · [changelog](https://github.com/gasyoun/SanskritKaraoke/blob/main/changelog.md)
 
 > **If the app doesn't reflect the latest version after an update, do a hard refresh to clear the cache:**
 > Edge, Firefox, Opera — `Ctrl+F5` · Chrome — `Ctrl+Shift+R` · Safari (Mac) — `Cmd+Shift+R` or `Cmd+Option+R`
@@ -11,7 +13,7 @@
 
 Sanskrit Karaoke turns a Sanskrit śloka into an interactive wave diagram that shows the metrical weight of each syllable (guru / laghu), lets you mark audio timing, and exports karaoke videos or high-resolution images.
 
-[![Sanskrit Karaoke Video](https://img.shields.io/badge/Video-Sample-red)](src/bhg_2_3-shloka-sample.mp4)
+[![Sanskrit Karaoke Video](https://img.shields.io/badge/Video-Sample-red)](https://github.com/gasyoun/SanskritKaraoke/blob/main/src/bhg_2_3-shloka-sample.mp4)
 
 ---
 
@@ -112,9 +114,10 @@ node --check src/scripts/app.js
 | File | Contents |
 | :--- | :--- |
 | `index.html` | Entire UI — main view + all modals (settings, help, timing editor, Drive picker) |
-| `src/scripts/app.js` | All application logic (~480 KB, single file) |
+| `src/scripts/app.js` | Main application logic (~320 KB ES module) — imports the reusable rendering core |
+| `src/core/*.js` | Extracted rendering core (`translit`, `layout`, `svg`, `compose`, `karaoke-frame`, `timing`, `feed`) shared by the app and the headless renderer — see [ADR-0001](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0001-rendering-core-extraction.md) |
 | `docs/reference/apte_prosody.html` | Apte prosody reference database |
-| `docs/history/ver_info.txt` | Version history |
+| [`ARCHITECTURE.md`](https://github.com/gasyoun/SanskritKaraoke/blob/main/ARCHITECTURE.md) | Current + target architecture, phase by phase |
 
 ---
 
@@ -131,10 +134,10 @@ The project includes a server-side **Teaching Pipeline** built on **LangGraph 1.
 
 ### Automated Quality Control (Evals)
 
-A **Golden Dataset** of 8 test cases (including edge cases like duplicate IDs and IAST script validation) is maintained in `evals/golden/`. The `evals/judge.py` harness uses **Claude 3.5 Sonnet** as a judge to evaluate the pipeline's output against expected criteria, ensuring no regressions in the automated content enrichment logic.
+A **Golden Dataset** of 8 test cases (including edge cases like duplicate IDs and IAST script validation) is maintained in `evals/golden/`. The `evals/judge.py` harness scores the pipeline's output against expected criteria using an LLM judge with a provider-preference chain (Anthropic → OpenRouter → Gemini), ensuring no regressions in the automated content enrichment logic.
 
 ---
-The application has no dependencies beyond the browser and `mp4-muxer` (bundled). `app.js` is a self-contained monolith; see `CLAUDE.md` for the internal function map.
+The browser app has no dependencies beyond the browser itself and `mp4-muxer` (bundled). `app.js` is an ES module that imports the shared `src/core/*` rendering modules; see [`CLAUDE.md`](https://github.com/gasyoun/SanskritKaraoke/blob/main/CLAUDE.md) for the internal function map.
 
 ---
 
@@ -142,7 +145,7 @@ The application has no dependencies beyond the browser and `mp4-muxer` (bundled)
 
 The 2026 layer: a single batch recording of a **whole chapter** becomes a set of
 publish-ready vertical karaoke videos with a funnel to the paid course. Roles and
-step-by-step workflows are in [docs/USE_CASES.md](docs/USE_CASES.md).
+step-by-step workflows are in [docs/USE_CASES.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/USE_CASES.md).
 
 - **One command:** `python tools/build_chapter.py <audio_dir>` — auto-timing
   (`align_chapter.py`) → `feed_v1` render (vertical 9:16 MP4 @ 30 fps + `.srt`/`.vtt`,
@@ -158,7 +161,7 @@ step-by-step workflows are in [docs/USE_CASES.md](docs/USE_CASES.md).
 - **Scheduling & posting:** `python tools/schedule_drops.py --config schedule.yaml` builds
   the posting plan from a cadence file; add `--live` to post via the publishers for
   **Telegram, VK, Facebook, Instagram, and WordPress** — each fires only where that
-  platform's env-var credentials are set (see [docs/USE_CASES.md](docs/USE_CASES.md)
+  platform's env-var credentials are set (see [docs/USE_CASES.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/USE_CASES.md)
   Appendix D). Telegram needs just a BotFather token; nothing is sent without `--live` + creds.
 - **The only gate to a first drop:** Uṣā Saṅkā's recordings (audio). The rest of the
   pipeline is already built.
@@ -172,7 +175,7 @@ audio_dir/<id>.m4a ─▶ align_chapter.py ─▶ render_chapter.js ─▶ post_
 ```
 
 A full **command reference**, the **first-drop checklist**, and a **glossary** are in
-[docs/USE_CASES.md](docs/USE_CASES.md) (Appendices A–C).
+[docs/USE_CASES.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/USE_CASES.md) (Appendices A–C).
 
 ---
 
@@ -244,7 +247,7 @@ Firebase Auth (Google) + Firestore for cross-device sync of student progress (SR
 
 ## Use Case Scenarios
 
-Detailed workflows for both audiences — maintainers (developers, drop producers, the rights manager, curators) and end-users (viewers, students, content creators, offline practitioners) — are documented in [**docs/USE_CASES.md**](docs/USE_CASES.md).
+Detailed workflows for both audiences — maintainers (developers, drop producers, the rights manager, curators) and end-users (viewers, students, content creators, offline practitioners) — are documented in [**docs/USE_CASES.md**](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/USE_CASES.md).
 
 ### Summary of Roles:
 
@@ -264,4 +267,8 @@ Detailed workflows for both audiences — maintainers (developers, drop producer
 
 ## License
 
-Apache 2.0 — see [LICENSE](LICENSE).
+Apache 2.0 — see [LICENSE](https://github.com/gasyoun/SanskritKaraoke/blob/main/LICENSE).
+
+---
+
+_Dr. Mārcis Gasūns_
