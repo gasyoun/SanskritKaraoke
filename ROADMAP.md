@@ -1,5 +1,7 @@
 # Sanskrit Karaoke — Product Roadmap
 
+_Created: 14-05-2026 · Last updated: 10-07-2026_
+
 **Vision:** двуликий инструмент — authoring-студия для учителя и интерактивный курс для студента,
 живущий на samskrtam.ru, с платящей аудиторией уже сейчас.
 
@@ -90,3 +92,5 @@
 | Alignment | Whisper + `torchaudio` CTC forced alignment |
 | Notifications | Telegram Bot API |
 | Hosting | Текущий сервер samskrtam.ru |
+
+_Dr. Mārcis Gasūns_
