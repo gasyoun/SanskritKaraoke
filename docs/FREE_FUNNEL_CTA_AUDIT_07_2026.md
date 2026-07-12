@@ -2,7 +2,7 @@
 
 _Created: 12-07-2026 · Last updated: 12-07-2026_
 
-Executed as [H716](https://github.com/gasyoun/Uprava/blob/main/handoffs/H716-Fable_SanskritKaraoke_free-funnel-cta-audit_11.07.26.md)
+Executed as [H716](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H716-Fable_SanskritKaraoke_free-funnel-cta-audit_11.07.26.md)
 (MEGABOOK §4.3, Lane D of the Fable sprint) by Fable 5 (`claude-fable-5`), 12-07-2026.
 Scope: the org's live free-funnel surfaces — CTA present? points where? metric wired? —
 plus repo-local fixes where the repo fully owns the rendered surface. No deploys, no new

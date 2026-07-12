@@ -33,7 +33,7 @@ two VedaWeb 2.0 exports already landed in the sibling `VisualDCS` repo on the sh
   [FINDINGS.md §48](https://github.com/gasyoun/SanskritLexicography/blob/master/FINDINGS.md)
   for the API shape).
 - `VisualDCS/non-derived/vedaweb/accented_text_scarlata_widmer_lubotsky.json` — landed by
-  [H096](https://github.com/gasyoun/Uprava/blob/main/handoffs/H096-Sonnet_VisualDCS_vedaweb_feed_export_03.07.26.md).
+  [H096](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H096-Sonnet_VisualDCS_vedaweb_feed_export_03.07.26.md).
 
 All 10,551 metrical-data rows joined against an accented-text row on the first attempt
 (0 misses).
