@@ -12,7 +12,7 @@ on this project.
 
 **Next action:**
 > The drop is gated on chapter audio from Уша Санка. The moment audio exists,
-> execute [docs/H132-Sonnet_SanskritKaraoke_AUDIO_DROP_RUNBOOK_02.07.26.md](docs/H132-Sonnet_SanskritKaraoke_AUDIO_DROP_RUNBOOK_02.07.26.md) end-to-end
+> execute [docs/archive/H132-Sonnet_SanskritKaraoke_AUDIO_DROP_RUNBOOK_02.07.26.md](docs/archive/H132-Sonnet_SanskritKaraoke_AUDIO_DROP_RUNBOOK_02.07.26.md) end-to-end
 > (align → render → post-kit → schedule). Pre-flight is green: Puppeteer
 > installed 02-07-2026, dry-run verified.
 
