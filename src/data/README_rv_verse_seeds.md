@@ -42,7 +42,7 @@ All 10,551 metrical-data rows joined against an accented-text row on the first a
 
 **CC BY 4.0.** Rights confirmed by Prof. Daniel Kölligan (writing also on behalf of
 Prof. Uta Reinöhl), 08-07-2026 — see
-[`Uprava/handoffs/OUTREACH_2026-07-08_vedaweb_kolligan_reinohl_rights.md`](https://github.com/gasyoun/Uprava/blob/main/handoffs/OUTREACH_2026-07-08_vedaweb_kolligan_reinohl_rights.md).
+[`Uprava/handoffs/outreach/OUTREACH_2026-07-08_vedaweb_kolligan_reinohl_rights.md`](https://github.com/gasyoun/Uprava/blob/main/handoffs/outreach/OUTREACH_2026-07-08_vedaweb_kolligan_reinohl_rights.md).
 Attribute **"VedaWeb 2.0 – Universität zu Köln"** plus the specific resource citation
 (embedded in the file's `citation` field):
 
