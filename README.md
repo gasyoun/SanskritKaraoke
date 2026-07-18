@@ -151,6 +151,13 @@ step-by-step workflows are in [docs/USE_CASES.md](https://github.com/gasyoun/San
   (`align_chapter.py`) → `feed_v1` render (vertical 9:16 MP4 @ 30 fps + `.srt`/`.vtt`,
   `render_chapter.js` via Puppeteer) → post-kit with per-platform UTM CTAs (`post_kit.py`).
   Run `npm install --prefix tools` once; `--dry-run` prints the plan without executing.
+- **Alignment contract:** one highlight per syllable, beginning at its earliest audible onset
+  (initial consonant, or vowel for a vowel-initial syllable); guru/laghu mātrās guide expected
+  duration but do not create extra visual transitions. Real pauses clear the highlight. The next
+  alignment version learns from automatic-before vs human-approved-after JSON pairs for Uṣā's
+  stable recording setup, with a product target of **under one minute of human review per clip**.
+  See [ADR-0004](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0004-approved-timing-corpus-alignment.md)
+  and the [user rulings](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/DECISIONS_ALIGNMENT.md).
 - **`feed_v1` template** (`src/core/feed.js`): a dark vertical frame — ॐ + title + meter
   (hook), Devanagari with a per-syllable IAST karaoke-fill on the active syllable, a
   progress bar, and a CTA end-card with the translation and link in the final seconds.

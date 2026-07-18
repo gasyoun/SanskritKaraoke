@@ -40,6 +40,7 @@ blocker; resume opportunistically.
 | Done | Phase 4 — `evals/golden/` + `evals/judge.py` (MY_ROADMAP.md) |
 | Done | Phase 3 — `docs/harness_gap_analysis.md` (Custom skill audit) |
 | Done | Auto-alignment implementation (GEMINI_ALIGNMENT_PLAN.md — Gemini Flash) |
+| Next | Gold-pair alignment v2 ([ADR-0004](docs/adr/0004-approved-timing-corpus-alignment.md)): waiting for original audio + automatic-before/human-approved-after JSONs; target <1 minute human review |
 | Backlog | Firebase auth + cloud SRS (ROADMAP.md Phase 1) |
 | Done | Phase 0 — `docs/harness_mental_model.md` (ten-component audit) |
 | Done | Phase 1 raw SDK — `docs/history/verse_agent_raw.py` |

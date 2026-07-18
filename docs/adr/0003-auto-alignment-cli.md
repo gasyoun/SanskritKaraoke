@@ -1,6 +1,8 @@
 # ADR-0003: Auto-alignment as a Python CLI port of the proven in-browser algorithm
 
-**Status:** Accepted · 2026-06-12
+**Status:** Superseded in algorithm and QA by [ADR-0004](0004-approved-timing-corpus-alignment.md) · 2026-07-18
+
+**Retained:** the Python CLI and batch interface remain valid.
 **Replaces as plan-of-record:** `GEMINI_ALIGNMENT_PLAN.md`, `docs/auto_alignment_spec.md`
 (both remain as historical design input; this ADR is what gets built).
 

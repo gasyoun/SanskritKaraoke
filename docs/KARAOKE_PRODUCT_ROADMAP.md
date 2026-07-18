@@ -44,10 +44,16 @@ The legal and DH foundation. No video ships publicly at scale before this.
 
 ## Phase 1 — Auto-alignment (the force multiplier; ~2–3 weeks)
 
-Manual ±0.01 s syllable timing is incompatible with chapter-sized batches. Target: ≤2 min of human QA per verse instead of ~20 min of manual timing.
+Manual tapping, dragging, and repeated listening is incompatible with chapter-sized batches.
+The approved 15.7-second sample took about 10 minutes; the binding target is **<1 minute of human
+review per clip** with cursor behavior matching that sample.
 
-- [ ] Revive the parked auto-alignment spec (`GEMINI_ALIGNMENT_PLAN.md` / `docs/auto_alignment_spec.md`) as a **Python CLI**, not an in-browser feature: input = audio file + syllable list (already produced by the pipeline), output = `TAP.times`-compatible JSON.
-- [ ] Approach: energy/onset detection seeded by pada count works surprisingly well for chanting (steady tempo, clear syllable onsets); fall back to WhisperX/stable-ts cross-check where onset detection is ambiguous. Forced aligners trained on speech (MFA) underperform on melodic chanting — treat them as optional.
+- [ ] Implement [ADR-0004](adr/0004-approved-timing-corpus-alignment.md): comparison corpus =
+  original audio + automatic-before JSON + human-approved-after JSON; learn Uṣā-specific onset
+  offsets and evaluate on held-out recordings.
+- [ ] Approach: automatic phrase/pause segmentation + existing Taylor-derived chandas constraints
+  + monotonic known-text acoustic alignment. Target the earliest audible syllable onset; use vowel
+  nuclei internally where helpful. General ASR remains optional evidence, not the primary engine.
 - [ ] **Timing QA mode** in the existing Timing Editor: load auto-aligned JSON, flag low-confidence syllables, human nudges only those. The editor you already built becomes the *reviewer*, not the *author*.
 - [ ] Batch entry point: `python tools/align_chapter.py audio_dir/ verses/data/` → writes timing JSONs for every verse in the drop.
 
