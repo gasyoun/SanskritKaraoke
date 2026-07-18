@@ -142,8 +142,10 @@ the library — which then becomes source material for the video pipeline.
 2. **Audio integration:** load the `.mp3`/`.wav`.
 3. **Metrical polish:** right-click syllables to correct weights (Guru/Laghu) if
    auto-detection missed a nuance (e.g. *muta cum liquida*).
-4. **Timing synchronization:** the **Timing Editor** — *Pada mode* first (8 boundaries),
-   then *Syllable mode* (fine-tune per syllable with `Ctrl+Arrows`).
+4. **Timing approval:** auto-alignment detects phrases/pauses and produces one timestamp per
+   syllable at its earliest audible onset. Existing chandas logic supplies pāda/mātrā constraints
+   for ślokas; no manual sūtra boundaries are required. Open the **Timing Editor** to review only
+   flagged points, with a target of under one minute per clip. A real pause clears the red dot.
 5. **Metadata & export:** fill in the **Library Export** form (translations, difficulty,
    tags), download `[id].json` into `verses/data/`. Export a high-resolution **PNG** for
    handouts and a **Karaoke MP4** for social media.

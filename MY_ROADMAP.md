@@ -186,8 +186,9 @@ live Telegram posts — with the human touching only QA sign-off.
 **What makes it a curriculum phase, not just ops:**
 - **Trajectory discipline** (Phase 4 week 9–10 payoff): the run is logged as a tool-call
   trajectory; a post-run judge pass evaluates whether the agent took a reasonable path.
-- **Eval activation:** first real audio activates the parked alignment eval
-  (`eval_alignment.py`, acceptance ≥90% within ±50 ms) — the golden dataset gains real cases.
+- **Eval activation:** original audio plus automatic-before and human-approved-after JSONs activate
+  the ADR-0004 comparison corpus. Report held-out ±50 ms accuracy, but accept the product only when
+  human review takes under one minute per clip.
 - **Cost discipline** (Phase 5 payoff): per-verse end-to-end cost measured against the
   < $0.10 target.
 
@@ -196,7 +197,7 @@ live Telegram posts — with the human touching only QA sign-off.
 - [ ] Alignment eval report on real audio (`eval_alignment.py`)
 - [ ] Run trajectory log + post-run judge assessment in `logs/`
 - [ ] ≥1 live post published via `schedule_drops.py --live` (Telegram)
-- [ ] Postmortem: measured cost/verse, human-minutes/verse vs the ≤2 min QA target
+- [ ] Postmortem: measured cost/verse and human-minutes/verse vs the **<1 min** QA target
 
 **Pre-work done before audio lands (02-07-2026):** runbook written; `npm install --prefix tools`
 executed for the first time; dry-run path verified earlier (2026-06-14).
