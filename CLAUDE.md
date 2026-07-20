@@ -195,3 +195,12 @@ Open Catalogue → Filter by meter/difficulty → Study in Full/Dots/Blind modes
 
 ### 3. Review (Scholar)
 Open Progress Dashboard → See due verses → Complete daily repetition session → Track streak and mastery.
+
+## Operational hazard notes
+
+Destructive-risk facts for this repo (do-not-rerun scripts, decoys, traps) are
+registered centrally in an org-private hub
+([Uprava DANGER_FACTS.md](https://github.com/gasyoun/Uprava/blob/main/DANGER_FACTS.md),
+org members only); the public-safe subset is mirrored in the generated block of
+[AGENTS.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/AGENTS.md). Check them
+before running anything that writes.
