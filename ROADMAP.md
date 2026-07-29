@@ -1,6 +1,6 @@
 # Sanskrit Karaoke — Product Roadmap
 
-_Created: 14-05-2026 · Last updated: 10-07-2026_
+_Created: 14-05-2026 · Last updated: 29-07-2026_
 
 **Vision:** двуликий инструмент — authoring-студия для учителя и интерактивный курс для студента,
 живущий на samskrtam.ru, с платящей аудиторией уже сейчас.
@@ -14,9 +14,15 @@ _Created: 14-05-2026 · Last updated: 10-07-2026_
 
 Сейчас SRS-состояние хранится в `localStorage` — при смене устройства или браузера всё теряется. Это критично для платящих студентов.
 
-- [ ] Подключить Firebase / Supabase: auth + Firestore/realtime DB
-- [ ] Перенести SRS-состояние (streak, intervals, ratings) из localStorage в облако
-- [ ] Google-логин на student/progress/catalogue страницах
+**Статус (29-07-2026, H1879):** первые три пункта уже реализованы кодом (MY_ROADMAP.md
+Phase 5 · `.ai_state.md` v1.4.0–v1.4.2 — Firebase Cloud Sync (Auth + Firestore) shipped);
+чекбоксы просто не были проставлены после этого. Реально открыты только
+cross-page auth-wiring консолидация (три страницы по-разному подключают Firebase auth —
+см. `.ai_state.md` Dev Notes) и teacher dashboard.
+
+- [x] Подключить Firebase / Supabase: auth + Firestore/realtime DB
+- [x] Перенести SRS-состояние (streak, intervals, ratings) из localStorage в облако
+- [x] Google-логин на student/progress/catalogue страницах (live acceptance test still pending — blocked on M.G. at password/2FA, see `.ai_state.md`)
 - [ ] Teacher dashboard: кто из студентов что изучал, какой streak
 
 **Технические решения:** Firebase Auth + Firestore (бессерверный, бесплатный тариф покрывает сотни студентов).

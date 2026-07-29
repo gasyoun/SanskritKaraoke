@@ -1,6 +1,15 @@
 # Gemini Flash — Round 2 Review + Roadmap
 
-_Created: 12-05-2026 · Last updated: 02-06-2026_
+_Created: 12-05-2026 · Last updated: 29-07-2026_
+
+> **АРХИВ (29-07-2026):** this document's bug list (9–16) targets code paths
+> in [tools/make_student.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/make_student.py)
+> — `main_end_tag` injection, `updateSrsRecord`, tap-block stub generation —
+> that no longer exist in current `main` (verified this session: zero grep
+> hits for `main_end_tag`, `updateSrsRecord`, `tap_block`/`tap-block` in
+> `tools/make_student.py`). The whole document is stale/superseded, not a
+> live per-bug checklist — archived wholesale rather than triaged item by
+> item, per H1879.
 
 **Previous bugs:** see `GEMINI_FIXES.md` (8 issues, fix those first)  
 **This document:** 8 additional bugs found in round 2 review, then a prioritised roadmap.
