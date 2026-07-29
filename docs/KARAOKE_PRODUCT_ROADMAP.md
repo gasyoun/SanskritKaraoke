@@ -1,6 +1,6 @@
 # Karaoke Product Roadmap — batch-drop funnel edition
 
-_Created: 12-06-2026 · Last updated: 14-06-2026_
+_Created: 12-06-2026 · Last updated: 29-07-2026_
 
 Decided 2026-06-12 (with M.G.):
 - **Audio**: Уша Санка recordings, with written permission — license metadata required per verse.
@@ -37,7 +37,7 @@ Everything below serves that pipeline.
 The legal and DH foundation. No video ships publicly at scale before this.
 
 - [ ] **Written permission from Уша Санка** — one short agreement covering: redistribution of her recordings inside derivative karaoke videos, all platforms, commercial context (free videos promoting paid courses). Store a copy (or its reference) in the repo.
-- [ ] **Rights metadata in the verse schema**: add `audio.license`, `audio.rights_holder`, `audio.permission_ref` to `verses/schema` and backfill the 3 existing verses. Reject `TODO` drive IDs in `validate_library.py`.
+- [ ] **Rights metadata in the verse schema**: add `audio.license`, `audio.rights_holder`, `audio.permission_ref` to `verses/schema` and backfill the 3 existing verses. `validate_library.py` already **warns** (not hard-rejects) on `TODO` drive IDs — deliberate, since every verse currently lacks real audio; a hard reject would break the pipeline before real audio lands, so this item stays warn-only until Уша Санка's chapter drop, not "fix into a hard reject" (H1879, 29-07-2026).
 - [ ] **Provenance fields**: `translation.provenance: human|gemini-flash|claude` per language. Machine translations must be marked (DH norm and increasingly platform policy).
 - [ ] **FAIR-ify the corpus**: move canonical audio out of personal Google Drive — GitHub Releases or a public bucket with checksums in the verse JSON; Drive stays a working copy. Add canonical source refs (GRETIL-style citation per verse).
 - [ ] **Narrow OAuth scope** from `drive` to `drive.file` (long-standing smell; do it while touching Drive code).
