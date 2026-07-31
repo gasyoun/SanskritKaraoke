@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Sanskrit Karaoke — v1.4.8</title>
+<title>Sanskrit Karaoke — v1.5.0</title>
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -42,11 +42,12 @@ window.addEventListener('DOMContentLoaded', () => {
 <header>
   <div style="display:flex;align-items:baseline;gap:2ch">
     <h1 data-i18n="mainTitle">Волновая нотация санскрита</h1>
-    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.4.8</span>
+    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.5.0</span>
   </div>
   <div id="msg-header" style="display:none;font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:3px;margin-left:16px;align-self:center"></div>
   <div style="display:flex;align-items:center;gap:14px">
     <a href="catalogue.html" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;text-decoration:none;cursor:pointer;letter-spacing:.08em" data-i18n="catalogHeading">📚 Каталог</a>
+    <a href="teacher.html" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;text-decoration:none;cursor:pointer;letter-spacing:.08em" data-i18n="teacherHeading">🎓 Учитель</a>
     <button id="btn-lang" onclick="setLang(LANG === 'ru' ? 'en' : 'ru')" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em">🌐 RU/EN</button>
     <button onclick="openSettings()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em" data-i18n="settingsBtn">⚙ Настройки</button>
     <button onclick="openHelp()" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:4px 12px;border:1px solid rgba(247,243,236,.3);border-radius:4px;background:transparent;color:#f7f3ec;cursor:pointer;letter-spacing:.08em" data-i18n="helpBtn">? Инструкция</button>

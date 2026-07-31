@@ -105,6 +105,16 @@ const STRINGS = {
     statMastered: 'Освоено',
     statTotal: 'Всего',
 
+    // Teacher dashboard
+    teacherHeading: 'Кабинет учителя',
+    teacherRefresh: '↻ Обновить',
+    teacherLoginPrompt: 'Войдите через Google, чтобы увидеть прогресс студентов.',
+    teacherDenied: 'У этого аккаунта нет доступа к кабинету учителя.',
+    teacherColStudent: 'Студент',
+    teacherColStreak: 'Streak',
+    teacherColLast: 'Последний раз',
+    teacherEmpty: 'Пока ни один студент не синхронизировал прогресс.',
+
     // Student page
     srsPrompt: 'Как хорошо вы запомнили?',
     modeFull: 'Полный',
@@ -231,6 +241,16 @@ const STRINGS = {
     statMastered: 'Mastered',
     statTotal: 'Total',
     libDiffLabel: 'Difficulty',
+
+    // Teacher dashboard
+    teacherHeading: 'Teacher Dashboard',
+    teacherRefresh: '↻ Refresh',
+    teacherLoginPrompt: 'Sign in with Google to see student progress.',
+    teacherDenied: 'This account does not have teacher dashboard access.',
+    teacherColStudent: 'Student',
+    teacherColStreak: 'Streak',
+    teacherColLast: 'Last active',
+    teacherEmpty: 'No student has synced progress yet.',
 
     // Student page
     srsPrompt: 'How well did you remember?',

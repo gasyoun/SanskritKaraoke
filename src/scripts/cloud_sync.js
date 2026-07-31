@@ -208,6 +208,8 @@ async function loadFirebaseRuntime() {
         doc: firestoreModule.doc,
         getDoc: firestoreModule.getDoc,
         setDoc: firestoreModule.setDoc,
+        collection: firestoreModule.collection,
+        getDocs: firestoreModule.getDocs,
         onAuthStateChanged: authModule.onAuthStateChanged,
         getRedirectResult: authModule.getRedirectResult,
         signInWithRedirect: authModule.signInWithRedirect,
@@ -220,6 +222,24 @@ async function loadFirebaseRuntime() {
     });
   }
   return firebaseRuntime;
+}
+
+// Student profile doc — a top-level `users/{uid}` document (distinct from the
+// per-datatype docs under `users/{uid}/data/*`) so a teacher can list students
+// via a `collection(db, 'users')` query. Written on every login.
+async function syncUserProfile(user) {
+  if (!cloudEnabled || !user) return;
+  try {
+    const runtime = await loadFirebaseRuntime();
+    const docRef = runtime.doc(runtime.db, 'users', user.uid);
+    await runtime.setDoc(docRef, {
+      email: user.email || '',
+      displayName: user.displayName || '',
+      updated_at: new Date().toISOString()
+    }, { merge: true });
+  } catch (e) {
+    console.warn('Profile sync failed:', e);
+  }
 }
 
 async function startAuthListener() {
@@ -236,6 +256,7 @@ async function startAuthListener() {
     if (window.onAuthUpdate) window.onAuthUpdate(user);
 
     if (user) {
+      await syncUserProfile(user);
       await migrateLocalDataToCloud(user.uid);
     } else {
       emitCloudSyncStatus('signed-out');
@@ -349,8 +370,46 @@ export async function migrateLocalDataToCloud(uid = window.currentUser && window
   refreshLocalViews();
 }
 
+// Teacher dashboard: read every student's profile + srs_v1 + progress_meta.
+// Firestore rules only grant this to emails listed in window.TEACHER_EMAILS
+// (see src/scripts/teacher-config.js) — a non-teacher query fails with
+// permission-denied, which the caller should treat as "not authorized".
+export async function fetchAllStudents() {
+  if (!cloudEnabled) return [];
+
+  const runtime = await loadFirebaseRuntime();
+  const usersSnap = await runtime.getDocs(runtime.collection(runtime.db, 'users'));
+
+  const students = await Promise.all(usersSnap.docs.map(async (userDoc) => {
+    const uid = userDoc.id;
+    const profile = userDoc.data() || {};
+    const [srsSnap, metaSnap] = await Promise.all([
+      runtime.getDoc(runtime.doc(runtime.db, 'users', uid, 'data', 'srs_v1')),
+      runtime.getDoc(runtime.doc(runtime.db, 'users', uid, 'data', 'progress_meta'))
+    ]);
+    const srs = srsSnap.exists() ? (srsSnap.data().payload || []) : [];
+    const meta = metaSnap.exists() ? (metaSnap.data().payload || {}) : {};
+    const mastered = srs.filter(r => (Number(r.interval) || 0) >= 21).length;
+
+    return {
+      uid,
+      email: profile.email || uid,
+      displayName: profile.displayName || '',
+      streak: Number(meta.streak) || 0,
+      lastPlayed: meta.lastPlayed || null,
+      total: srs.length,
+      learning: srs.length - mastered,
+      mastered
+    };
+  }));
+
+  students.sort((a, b) => b.streak - a.streak || b.mastered - a.mastered);
+  return students;
+}
+
 window.cloudLogin = login;
 window.cloudLogout = logout;
 window.syncToCloud = syncToCloud;
 window.syncFromCloud = syncFromCloud;
 window.migrateLocalDataToCloud = migrateLocalDataToCloud;
+window.fetchAllStudents = fetchAllStudents;
