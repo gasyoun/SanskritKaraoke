@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.9] - 2026-08-01
+
+### Changed
+- Docs-only maintenance release: `MY_ROADMAP.md` Phase 2 deliverable `agents/teaching_pipeline/` — LangGraph multi-agent project — ticked as shipped (was already built and merged via commit `ad09b87`, just never marked done); re-verified 01-08-2026: `pytest agents/teaching_pipeline/` and `python agents/teaching_pipeline/test_simulation.py` both run clean end-to-end. No application changes — the in-browser version intentionally remains v1.4.8.
+
 ## [1.4.8] - 2026-07-12
 
 ### Added
@@ -43,7 +48,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release of SanskritKaraoke
 
-[Unreleased]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.8...HEAD
+[Unreleased]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.9...HEAD
+[1.4.9]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.8...v1.4.9
 [1.4.8]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.7...v1.4.8
 [1.4.7]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.6...v1.4.7
 [1.4.6]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.2...v1.4.6

@@ -1,6 +1,6 @@
 # My Agent Engineering Roadmap
 
-_Created: 12-05-2026 · Last updated: 31-07-2026_
+_Created: 12-05-2026 · Last updated: 01-08-2026_
 
 *Personalized from https://github.com/codejunkie99/agent-roadmap-2026 on 2026-05-12.*  
 *Practice vehicle: Sanskrit Karaoke edutech platform.*
@@ -83,7 +83,7 @@ Rebuild the same agent using Claude Agent SDK. Note what the SDK provides vs. wh
 **Persistence:** PostgresSaver via LangGraph — the pipeline remembers which verses are in-progress, which need translation, which students are due for review.
 
 **Deliverable:**
-- [ ] `agents/teaching_pipeline/` — LangGraph multi-agent project
+- [x] `agents/teaching_pipeline/` — LangGraph multi-agent project — shipped (commit `ad09b87`, four-node graph: VerseCurator/ContentEnricher/QualityGate/StudentAnalyzer, `PostgresSaver`-backed with `SqliteSaver`/`MemorySaver` fallback); re-verified 01-08-2026 (A02): `pytest agents/teaching_pipeline/` passes, `python agents/teaching_pipeline/test_simulation.py` runs a full curation+analysis simulation end-to-end
 - [ ] LangSmith trace URL showing a full verse-to-catalogue run
 - [ ] `agents/teaching_pipeline/README.md` — architecture diagram
 
