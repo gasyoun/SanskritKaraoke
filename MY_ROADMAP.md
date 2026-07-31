@@ -1,6 +1,6 @@
 # My Agent Engineering Roadmap
 
-_Created: 12-05-2026 · Last updated: 02-07-2026_
+_Created: 12-05-2026 · Last updated: 31-07-2026_
 
 *Personalized from https://github.com/codejunkie99/agent-roadmap-2026 on 2026-05-12.*  
 *Practice vehicle: Sanskrit Karaoke edutech platform.*
@@ -59,9 +59,9 @@ The agent's task: given raw Sanskrit text and source info, produce a complete, v
 Rebuild the same agent using Claude Agent SDK. Note what the SDK provides vs. what you wrote manually. Write the post-mortem as a comment in the code.
 
 **Deliverable:**
-- [ ] `agents/verse_agent_raw.py` — raw SDK version (~200 lines)
-- [ ] `agents/verse_agent_sdk.py` — Claude Agent SDK version (~80 lines)
-- [ ] `agents/POSTMORTEM.md` — what the harness gave you for free
+- [x] `agents/verse_agent_raw.py` — raw SDK version (~200 lines) — shipped, later relocated to [docs/history/verse_agent_raw.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/history/verse_agent_raw.py) (commit `8eca6ec`)
+- [x] `agents/verse_agent_sdk.py` — Claude Agent SDK version (~80 lines) — shipped, later relocated to [docs/history/verse_agent_sdk.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/history/verse_agent_sdk.py) (commit `8eca6ec`)
+- [x] `agents/POSTMORTEM.md` — what the harness gave you for free — shipped, later relocated to [docs/history/POSTMORTEM.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/history/POSTMORTEM.md) (commit `8eca6ec`)
 
 **Key resource:** https://docs.anthropic.com/en/docs/agents (Claude Agent SDK docs)
 
