@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-08-01
+
 ### Added
 - **Teacher dashboard (`teacher.html`, v1.5.0)** — ROADMAP.md Phase 1 deliverable "кто из студентов что изучал, какой streak". A teacher signs in with the same Google/Firebase login used elsewhere in the app and sees a table of every student's email, streak, mastered/learning/total verse counts, and last-active date. Data model: a new top-level `users/{uid}` Firestore profile doc (email/displayName, written on every login via `syncUserProfile()` in `src/scripts/cloud_sync.js`) lets the dashboard enumerate students with `collection(db, 'users')`, then reads each student's existing `srs_v1`/`progress_meta` docs. Client-side allowlist in `src/scripts/teacher-config.js` (`window.TEACHER_EMAILS`) drives the UI gate; the actual enforcement is a matching `isTeacher()` email allowlist added to `firestore.rules`. **Owner residual:** the updated `firestore.rules` need `firebase deploy --only firestore:rules` run manually against the live `sanskritkaraoke` project (no CI wiring exists for rules deploys) before the dashboard can read other students' data in production — until then a teacher sees only their own row.
 
@@ -51,7 +53,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release of SanskritKaraoke
 
-[Unreleased]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.9...HEAD
+[Unreleased]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.9...v1.5.0
 [1.4.9]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.8...v1.4.9
 [1.4.8]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.7...v1.4.8
 [1.4.7]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.6...v1.4.7
