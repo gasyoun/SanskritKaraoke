@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanskrit Karaoke — v1.5.0 — Teacher Dashboard</title>
+<link rel="stylesheet" href="src/style.css">
+<style>
+  body { padding: clamp(12px, 4vw, 40px); }
+  .container { max-width: 960px; margin: 0 auto; background: var(--card); padding: clamp(18px, 4vw, 30px); border-radius: 8px; border: 1px solid var(--border); }
+  .header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; border-bottom: 2px solid var(--gold); padding-bottom: 14px; margin-bottom: 20px; flex-wrap: wrap; }
+  .header-main { display:flex; align-items:center; gap:15px; flex-wrap:wrap; min-width:0; }
+  .header h1 { margin: 0; overflow-wrap: anywhere; }
+  .version-badge { font-size:.75rem; font-weight:400; color:#aaa; letter-spacing:0; text-transform:none; font-family:'JetBrains Mono',monospace; }
+  .sync-button { font-size:.65rem; font-family:'JetBrains Mono',monospace; padding:5px 10px; border:1px solid var(--border); border-radius:4px; background:transparent; color:var(--ink2); cursor:pointer; white-space:nowrap; }
+  .table-wrap { width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; min-width: 640px; }
+  th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); color: var(--ink); }
+  th { font-family: 'JetBrains Mono', monospace; font-size: .8rem; text-transform: uppercase; color: var(--ink2); }
+  .streak-chip { font-weight: bold; }
+  .empty-msg, .gate-msg { color: var(--ink2); padding: 30px 0; text-align: center; }
+  .gate-msg strong { color: var(--ink); }
+  @media (max-width: 720px) {
+    body { padding: 0; }
+    .container { min-height: 100dvh; border: 0; border-radius: 0; padding: 16px; }
+    .table-wrap { overflow:visible; }
+    table { min-width:0; display:block; }
+    thead { display:none; }
+    tbody { display:block; }
+    tr { display:block; border:1px solid var(--border); border-radius:8px; margin:0 0 12px; padding:8px 10px; background:var(--bg2); }
+    td { display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px solid var(--border); text-align:right; }
+    td:last-child { border-bottom:0; }
+    td::before { content:attr(data-label); flex:0 0 45%; text-align:left; color:var(--ink2); font-family:'JetBrains Mono',monospace; font-size:.72rem; text-transform:uppercase; }
+    td:first-child { display:block; text-align:left; }
+    td:first-child::before { display:block; margin-bottom:4px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="header-main">
+      <h1 data-i18n="teacherHeading">Кабинет учителя</h1>
+      <span class="version-badge">v1.5.0</span>
+      <a href="index.html" style="font-size:.65rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);text-decoration:none;border:1px solid var(--border);border-radius:4px;padding:3px 9px;white-space:nowrap" title="Открыть редактор">✎ Редактор</a>
+      <button id="btn-cloud" class="sync-button" onclick="handleCloudClick()" title="Войти через Google, чтобы увидеть прогресс студентов.">☁ Войти</button>
+      <button id="btn-lang" onclick="setLang(typeof LANG!=='undefined'&&LANG==='ru'?'en':'ru')" style="font-size:.65rem;font-family:'JetBrains Mono',monospace;padding:4px 10px;border:1px solid var(--border);border-radius:4px;background:transparent;color:var(--ink2);cursor:pointer;">🌐 RU</button>
+    </div>
+    <button id="btn-refresh" class="sync-button" onclick="loadTeacherDashboard()" style="display:none" data-i18n="teacherRefresh">↻ Обновить</button>
+  </div>
+
+  <script src="src/scripts/firebase-config.js?v=1.5.0-firebase-config"></script>
+  <script src="src/scripts/teacher-config.js?v=1.5.0-teacher-config"></script>
+  <script type="module" src="src/scripts/cloud_sync.js?v=1.5.0-cloud-redirect"></script>
+  <script>
+    function handleCloudClick() {
+      if (typeof window.cloudLogin !== 'function' || typeof window.cloudLogout !== 'function') {
+        alert('Cloud sync is still loading. Please try again.');
+        return;
+      }
+      if (window.currentUser) {
+        if (confirm('Выйти?')) window.cloudLogout();
+      } else {
+        window.cloudLogin();
+      }
+    }
+
+    const _oldAuthUpdate = window.onAuthUpdate;
+    window.onAuthUpdate = (user) => {
+      if (_oldAuthUpdate) _oldAuthUpdate(user);
+      const btn = document.getElementById('btn-cloud');
+      if (btn) {
+        btn.textContent = user ? `☁ ${user.email.split('@')[0]}` : '☁ Войти';
+        btn.style.color = user ? 'var(--laghu)' : 'var(--ink2)';
+        btn.style.borderColor = user ? 'var(--laghu)' : 'var(--border)';
+      }
+      document.getElementById('btn-refresh').style.display = user ? '' : 'none';
+      loadTeacherDashboard();
+    };
+  </script>
+
+  <div id="gate-msg" class="gate-msg">
+    <p data-i18n="teacherLoginPrompt">Войдите через Google, чтобы увидеть прогресс студентов.</p>
+  </div>
+
+  <div id="dashboard-wrap" style="display:none">
+    <div class="table-wrap">
+    <table id="students-table">
+      <thead>
+        <tr>
+          <th data-i18n="teacherColStudent">Студент</th>
+          <th data-i18n="teacherColStreak">Streak</th>
+          <th data-i18n="statMastered">Освоено</th>
+          <th data-i18n="statLearning">Учу</th>
+          <th data-i18n="statTotal">Всего</th>
+          <th data-i18n="teacherColLast">Последний раз</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    </div>
+    <p id="empty-msg" class="empty-msg" style="display:none" data-i18n="teacherEmpty">Пока ни один студент не синхронизировал прогресс.</p>
+  </div>
+</div>
+
+<script src="src/scripts/strings.js"></script>
+<script>
+function isAllowedTeacher(user) {
+  if (!user || !user.email) return false;
+  const list = Array.isArray(window.TEACHER_EMAILS) ? window.TEACHER_EMAILS : [];
+  return list.includes(user.email);
+}
+
+async function loadTeacherDashboard() {
+  const gateMsg = document.getElementById('gate-msg');
+  const wrap = document.getElementById('dashboard-wrap');
+  const user = window.currentUser;
+
+  if (!user) {
+    gateMsg.style.display = '';
+    wrap.style.display = 'none';
+    gateMsg.innerHTML = `<p data-i18n="teacherLoginPrompt">${(typeof t === 'function') ? t('teacherLoginPrompt') : 'Войдите через Google, чтобы увидеть прогресс студентов.'}</p>`;
+    return;
+  }
+
+  if (!isAllowedTeacher(user)) {
+    gateMsg.style.display = '';
+    wrap.style.display = 'none';
+    const denied = (typeof t === 'function') ? t('teacherDenied') : 'У этого аккаунта нет доступа к кабинету учителя.';
+    gateMsg.innerHTML = `<p><strong>${denied}</strong></p>`;
+    return;
+  }
+
+  gateMsg.style.display = 'none';
+  wrap.style.display = '';
+
+  if (typeof window.fetchAllStudents !== 'function') {
+    setTimeout(loadTeacherDashboard, 300);
+    return;
+  }
+
+  let students = [];
+  try {
+    students = await window.fetchAllStudents();
+  } catch (e) {
+    console.error('Failed to load students:', e);
+    gateMsg.style.display = '';
+    wrap.style.display = 'none';
+    gateMsg.innerHTML = `<p><strong>${(typeof t === 'function') ? t('teacherDenied') : 'У этого аккаунта нет доступа к кабинету учителя.'}</strong></p>`;
+    return;
+  }
+
+  const tbody = document.querySelector('#students-table tbody');
+  const emptyMsg = document.getElementById('empty-msg');
+  tbody.innerHTML = '';
+
+  if (students.length === 0) {
+    emptyMsg.style.display = '';
+    return;
+  }
+  emptyMsg.style.display = 'none';
+
+  students.forEach(s => {
+    const tr = document.createElement('tr');
+    const name = s.displayName ? `${s.displayName}<br><small style="color:var(--ink2)">${s.email}</small>` : s.email;
+    const last = s.lastPlayed || '-';
+    tr.innerHTML = `
+      <td data-label="Студент"><strong>${name}</strong></td>
+      <td data-label="Streak"><span class="streak-chip">🔥 ${s.streak}</span></td>
+      <td data-label="Освоено">${s.mastered}</td>
+      <td data-label="Учу">${s.learning}</td>
+      <td data-label="Всего">${s.total}</td>
+      <td data-label="Последний раз">${last}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (typeof initStrings === 'function') initStrings();
+  loadTeacherDashboard();
+});
+</script>
+</body>
+</html>

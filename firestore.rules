@@ -6,6 +6,15 @@ service cloud.firestore {
       return request.auth != null && request.auth.uid == uid;
     }
 
+    // Teacher dashboard allowlist — Google account emails allowed to read
+    // every student's profile + progress. Keep in sync with the client-side
+    // list in src/scripts/teacher-config.js (that copy is UI-only; this is
+    // the actual enforcement).
+    function isTeacher() {
+      return request.auth != null &&
+        request.auth.token.email in ['gasyoun@gmail.com'];
+    }
+
     function isCloudSyncDoc(docId) {
       return docId in ['srs_v1', 'telemetry', 'progress_meta'];
     }
@@ -16,8 +25,23 @@ service cloud.firestore {
         && request.resource.data.updated_at is string;
     }
 
+    function hasProfileShape() {
+      return request.resource.data.keys().hasAll(['email', 'updated_at'])
+        && request.resource.data.keys().hasOnly(['email', 'displayName', 'updated_at'])
+        && request.resource.data.updated_at is string;
+    }
+
+    // Top-level per-student profile (email/displayName) — lets a teacher
+    // enumerate students via collection(db, 'users'); the per-datatype SRS
+    // documents stay nested below.
+    match /users/{uid} {
+      allow read: if isOwner(uid) || isTeacher();
+      allow create, update: if isOwner(uid) && hasProfileShape();
+      allow delete: if false;
+    }
+
     match /users/{uid}/data/{docId} {
-      allow read: if isOwner(uid) && isCloudSyncDoc(docId);
+      allow read: if (isOwner(uid) || isTeacher()) && isCloudSyncDoc(docId);
       allow create, update: if isOwner(uid) && isCloudSyncDoc(docId) && hasCloudSyncShape();
       allow delete: if false;
     }

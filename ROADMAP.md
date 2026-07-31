@@ -1,6 +1,6 @@
 # Sanskrit Karaoke — Product Roadmap
 
-_Created: 14-05-2026 · Last updated: 29-07-2026_
+_Created: 14-05-2026 · Last updated: 01-08-2026_
 
 **Vision:** двуликий инструмент — authoring-студия для учителя и интерактивный курс для студента,
 живущий на samskrtam.ru, с платящей аудиторией уже сейчас.
@@ -23,7 +23,7 @@ cross-page auth-wiring консолидация (три страницы по-р
 - [x] Подключить Firebase / Supabase: auth + Firestore/realtime DB
 - [x] Перенести SRS-состояние (streak, intervals, ratings) из localStorage в облако
 - [x] Google-логин на student/progress/catalogue страницах (live acceptance test still pending — blocked on M.G. at password/2FA, see `.ai_state.md`)
-- [ ] Teacher dashboard: кто из студентов что изучал, какой streak
+- [x] Teacher dashboard: кто из студентов что изучал, какой streak ([PR #56](https://github.com/gasyoun/SanskritKaraoke/pull/56) — `teacher.html`; Firestore `firestore.rules` deploy is an owner residual, see PR body)
 
 **Технические решения:** Firebase Auth + Firestore (бессерверный, бесплатный тариф покрывает сотни студентов).
 
