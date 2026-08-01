@@ -59,9 +59,10 @@ The agent's task: given raw Sanskrit text and source info, produce a complete, v
 Rebuild the same agent using Claude Agent SDK. Note what the SDK provides vs. what you wrote manually. Write the post-mortem as a comment in the code.
 
 **Deliverable:**
-- [x] `agents/verse_agent_raw.py` — raw SDK version (~200 lines) — shipped, later relocated to [docs/history/verse_agent_raw.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/history/verse_agent_raw.py) (commit `8eca6ec`)
+- [x] `agents/verse_agent_raw.py` — raw SDK version (~200 lines) — live dry-run CLI restored 01-08-2026 (H2101): `python agents/verse_agent_raw.py --dry-run` exit 0 over `verses/`; historical educational copy remains at [docs/history/verse_agent_raw.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/history/verse_agent_raw.py) (commit `8eca6ec`)
 - [x] `agents/verse_agent_sdk.py` — Claude Agent SDK version (~80 lines) — shipped, later relocated to [docs/history/verse_agent_sdk.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/history/verse_agent_sdk.py) (commit `8eca6ec`)
 - [x] `agents/POSTMORTEM.md` — what the harness gave you for free — shipped, later relocated to [docs/history/POSTMORTEM.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/history/POSTMORTEM.md) (commit `8eca6ec`)
+- [x] `agents/README.md` — usage for raw agent + layout pointer (H2101)
 
 **Key resource:** https://docs.anthropic.com/en/docs/agents (Claude Agent SDK docs)
 
