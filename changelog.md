@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.1] - 2026-08-01
 ### Added
 - **`agents/verse_agent_raw.py` live dry-run path (H2101)** — Phase 1 raw SDK verse-library agent restored under `agents/` with `--help` / default `--dry-run` (catalogue list → read one verse → schema validate; no paid API, no write). Paid meter/translate stays behind `--live`. Minimal [`agents/README.md`](https://github.com/gasyoun/SanskritKaraoke/blob/main/agents/README.md). Historical pre-CLI copy unchanged at `docs/history/verse_agent_raw.py`.
 
