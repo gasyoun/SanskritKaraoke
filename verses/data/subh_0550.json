@@ -1,6 +1,6 @@
 {
   "id": "subh_0550",
-  "version": 1,
+  "version": 2,
   "title": {
     "ru": "Субхашита №550 (ayaṃ nijaḥ paro…)",
     "en": "Subhāṣita №550 (ayaṃ nijaḥ paro…)"
@@ -13,6 +13,7 @@
   "meter": "anushtubh",
   "difficulty": 2,
   "language_tags": [
+    "ru",
     "de"
   ],
   "encoding": "DEV",
@@ -21,11 +22,20 @@
   "s1dev": "अयं निजः परो वेति गणना लघुचेतसाम्।",
   "s2dev": "उदारचरितानां तु वसुधैव कुटुम्बकम्॥",
   "translation": {
+    "ru": "«Этот — свой, а тот — чужой» — так судят мелкие душой; для благородных же вся земля — одна семья.",
     "de": "«Dieser ist Einer von den Unsrigen oder ein Fremder», so rechnen Menschen von niederem Sinne; Männer von edler Handlungsweise dagegen betrachten die ganze Erde als ihre Familie.",
     "provenance": {
+      "ru": "claude",
       "de": "public-domain"
     },
     "rights": {
+      "ru": {
+        "rights_holder": "Sanskrit Karaoke project — original Russian rendering (Claude Fable 5, claude-fable-5, ed. M. Gasūns)",
+        "source": "Rendered from the Sanskrit of Böhtlingk, Indische Sprüche №550 (2nd ed., St. Petersburg 1870–1873); Böhtlingk's German used as a check",
+        "license": "own-work",
+        "status": "own-work",
+        "attribution": "пер. с санскрита: Sanskrit Karaoke, 2026 · по Бётлингку, Indische Sprüche №550"
+      },
       "de": {
         "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
         "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
@@ -41,7 +51,7 @@
     "bhartrhari"
   ],
   "created_at": "2026-07-02",
-  "updated_at": "2026-07-02",
+  "updated_at": "2026-08-04",
   "import_meta": {
     "source_db": "VisualDCS/src/DCS-data-2026/archive.sqlite",
     "source_table": "subhashita",

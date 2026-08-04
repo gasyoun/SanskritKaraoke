@@ -66,6 +66,16 @@ def lang_cleared(verse, lang):
     return status in PUBLISHABLE, status
 
 
+def attrib_for(verse, lang):
+    """Per-verse attribution from translation.rights.<lang>.attribution, falling
+    back to the legacy Bhagavad-Gita constants for verses without one."""
+    rights = (verse.get("translation") or {}).get("rights") or {}
+    custom = (rights.get(lang) or {}).get("attribution")
+    if custom:
+        return f"— {custom}"
+    return EN_ATTRIB if lang == "en" else RU_ATTRIB
+
+
 def publish_gates(verse):
     """Return a list of human-readable reasons the verse is NOT ready to publish."""
     gates = []
@@ -95,7 +105,7 @@ def build_caption(verse, lang, base_url, campaign):
     s1 = verse.get("s1dev") or verse.get("s1", "")
     s2 = verse.get("s2dev") or verse.get("s2", "")
     melody = (verse.get("author") or {}).get("melody", "")
-    attrib = EN_ATTRIB if lang == "en" else RU_ATTRIB
+    attrib = attrib_for(verse, lang)
     # Telegram link in-body; the manifest carries the per-platform variants.
     cta = cta_url(base_url, "telegram", campaign, verse["id"])
     melody_line = (f"Melody & chanting: {melody}" if lang == "en"
@@ -117,6 +127,13 @@ def build_caption(verse, lang, base_url, campaign):
         hashtags_for(verse),
     ]
     return "\n".join(lines)
+
+
+def _ru_credit(verse):
+    """RU-translation credit for the manifest, from the verse's own rights block."""
+    rights = ((verse.get("translation") or {}).get("rights") or {}).get("ru") or {}
+    name = rights.get("attribution") or rights.get("rights_holder") or "V. S. Sementsov"
+    return name if lang_cleared(verse, "ru")[0] else f"{name} (license pending — withheld)"
 
 
 def write_kit(verse, base_url, campaign, out_root):
@@ -171,7 +188,7 @@ def write_kit(verse, base_url, campaign, out_root):
             "melody": (verse.get("author") or {}).get("melody", ""),
             "audio_license": (verse.get("audio") or {}).get("license", ""),
             "en_translation": "K. T. Telang (1882), public domain",
-            "ru_translation": "V. S. Sementsov" if lang_cleared(verse, "ru")[0] else "V. S. Sementsov (license pending — withheld)",
+            "ru_translation": _ru_credit(verse),
         },
     }
     with open(os.path.join(out_dir, "manifest.json"), "w", encoding="utf-8") as f:
