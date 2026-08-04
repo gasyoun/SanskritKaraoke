@@ -11,6 +11,7 @@
         "source":         { "type": "string", "description": "Bibliographic citation of the translation source" },
         "license":        { "type": "string", "description": "Agreement number (SK-LIC-YYYY-NNN), SPDX id, or 'public-domain'" },
         "permission_ref": { "type": "string", "description": "Agreement reference, e.g. SK-LIC-2026-002/SEM-2026-001" },
+        "attribution":    { "type": "string", "description": "Ready-to-print credit line for captions/manifests, e.g. 'пер. с санскрита: Sanskrit Karaoke, 2026 · по Бётлингку, Indische Sprüche №550'; overrides the tool defaults" },
         "status":         { "type": "string", "enum": ["public-domain","own-work","cleared","license-pending","unknown"],
                             "description": "Publication clearance — only public-domain/own-work/cleared may be published" }
       }

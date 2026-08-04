@@ -1,6 +1,6 @@
 {
   "id": "subh_1249",
-  "version": 1,
+  "version": 2,
   "title": {
     "ru": "Субхашита №1249 (udyamena hi sidhyanti…)",
     "en": "Subhāṣita №1249 (udyamena hi sidhyanti…)"
@@ -13,6 +13,7 @@
   "meter": "anushtubh",
   "difficulty": 1,
   "language_tags": [
+    "ru",
     "de"
   ],
   "encoding": "DEV",
@@ -21,11 +22,20 @@
   "s1dev": "उद्यमेन हि सिध्यन्ति कार्याणि न मनोरथैः।",
   "s2dev": "नहि सुप्तस्य सिंहस्य प्रविशन्ति मुखे मृगाः॥",
   "translation": {
+    "ru": "Усилием вершатся дела, а не мечтаниями: газели сами не войдут в пасть спящего льва.",
     "de": "Durch Anstrengung kommen ja Werke zu Stande, nicht durch Wünsche: es laufen ja die Gazellen nicht in den Rachen eines schlafenden Löwen.",
     "provenance": {
+      "ru": "claude",
       "de": "public-domain"
     },
     "rights": {
+      "ru": {
+        "rights_holder": "Sanskrit Karaoke project — original Russian rendering (Claude Fable 5, claude-fable-5, ed. M. Gasūns)",
+        "source": "Rendered from the Sanskrit of Böhtlingk, Indische Sprüche №1249 (2nd ed., St. Petersburg 1870–1873); Böhtlingk's German used as a check",
+        "license": "own-work",
+        "status": "own-work",
+        "attribution": "пер. с санскрита: Sanskrit Karaoke, 2026 · по Бётлингку, Indische Sprüche №1249"
+      },
       "de": {
         "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
         "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
@@ -41,7 +51,7 @@
     "pancatantra"
   ],
   "created_at": "2026-07-02",
-  "updated_at": "2026-07-02",
+  "updated_at": "2026-08-04",
   "import_meta": {
     "source_db": "VisualDCS/src/DCS-data-2026/archive.sqlite",
     "source_table": "subhashita",

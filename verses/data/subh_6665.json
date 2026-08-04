@@ -1,6 +1,6 @@
 {
   "id": "subh_6665",
-  "version": 1,
+  "version": 2,
   "title": {
     "ru": "Субхашита №6665 (saṅkṣepātkathyate dharmo janāḥ…)",
     "en": "Subhāṣita №6665 (saṅkṣepātkathyate dharmo janāḥ…)"
@@ -13,6 +13,7 @@
   "meter": "anushtubh",
   "difficulty": 2,
   "language_tags": [
+    "ru",
     "de"
   ],
   "encoding": "DEV",
@@ -21,11 +22,20 @@
   "s1dev": "संक्षेपात्कथ्यते धर्मो जनाः किं विस्तरेण वः।",
   "s2dev": "परोपकारः पुण्याय पापाय परपीडनम्॥",
   "translation": {
+    "ru": "Вкратце скажу, в чём дхарма, — к чему вам, люди, многословие? Помощь другим — к заслуге, притеснение других — ко греху.",
     "de": "In Kürze — und wozu bedürftet ihr vieler Worte? — lautet, o Leute, das Gesetz: Andern zu helfen bringt Verdienst, Andere zu peinigen — Sünde.",
     "provenance": {
+      "ru": "claude",
       "de": "public-domain"
     },
     "rights": {
+      "ru": {
+        "rights_holder": "Sanskrit Karaoke project — original Russian rendering (Claude Fable 5, claude-fable-5, ed. M. Gasūns)",
+        "source": "Rendered from the Sanskrit of Böhtlingk, Indische Sprüche №6665 (2nd ed., St. Petersburg 1870–1873); Böhtlingk's German used as a check",
+        "license": "own-work",
+        "status": "own-work",
+        "attribution": "пер. с санскрита: Sanskrit Karaoke, 2026 · по Бётлингку, Indische Sprüche №6665"
+      },
       "de": {
         "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
         "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
@@ -41,7 +51,7 @@
     "pancatantra"
   ],
   "created_at": "2026-07-02",
-  "updated_at": "2026-07-02",
+  "updated_at": "2026-08-04",
   "import_meta": {
     "source_db": "VisualDCS/src/DCS-data-2026/archive.sqlite",
     "source_table": "subhashita",

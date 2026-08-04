@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.2] - 2026-08-04
+
+### Added
+- **Russian renderings for all ten Böhtlingk subhāṣitas (H1858)** — every `subh_*` verse now carries `translation.ru` rendered from the Sanskrit (Böhtlingk's German used as a check only), with honest provenance (`provenance.ru: "claude"` — Claude Fable 5, `claude-fable-5`) and cleared rights (`rights.ru.status: "own-work"`, source + ready-to-print attribution citing the Indische Sprüche number). `tools/post_kit.py` now emits real `caption_ru.txt` for these verses — zero `caption_ru.BLOCKED.txt` placeholders remain; the only surviving publish gate is missing audio. `language_tags` gain `ru`; `verses/index.json` regenerated.
+
+### Fixed
+- **`tools/post_kit.py` no longer hardcodes the RU caption credit to В. С. Семенцов** — the caption attribution line and the manifest's `ru_translation` credit now come from the verse's own `translation.rights.ru.attribution`/`rights_holder` (new optional `attribution` field documented in `verses/schema/verse.schema.json`), falling back to the legacy Bhagavad-Gita constants. Before this, a subhāṣita caption would have falsely credited the Gita translator.
+
 ## [1.5.1] - 2026-08-01
 ### Added
 - **`agents/verse_agent_raw.py` live dry-run path (H2101)** — Phase 1 raw SDK verse-library agent restored under `agents/` with `--help` / default `--dry-run` (catalogue list → read one verse → schema validate; no paid API, no write). Paid meter/translate stays behind `--live`. Minimal [`agents/README.md`](https://github.com/gasyoun/SanskritKaraoke/blob/main/agents/README.md). Historical pre-CLI copy unchanged at `docs/history/verse_agent_raw.py`.
@@ -57,7 +65,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release of SanskritKaraoke
 
-[Unreleased]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.2...HEAD
+[1.5.2]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.1...v1.5.2
+[1.5.1]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.0...v1.5.1
 [1.5.0]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.9...v1.5.0
 [1.4.9]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.8...v1.4.9
 [1.4.8]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.7...v1.4.8
