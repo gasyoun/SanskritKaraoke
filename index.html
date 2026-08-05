@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Sanskrit Karaoke — v1.5.2</title>
+<title>Sanskrit Karaoke — v1.5.4</title>
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded', () => {
 <header>
   <div style="display:flex;align-items:baseline;gap:2ch">
     <h1 data-i18n="mainTitle">Волновая нотация санскрита</h1>
-    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.5.2</span>
+    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.5.4</span>
   </div>
   <div id="msg-header" style="display:none;font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:3px;margin-left:16px;align-self:center"></div>
   <div style="display:flex;align-items:center;gap:14px">
@@ -428,6 +428,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   <p class="help-sec">Шаг 3 — Построить диаграмму</p>
   <p class="help-body">Нажмите <b>Построить диаграмму</b>. Появятся волновые диаграммы для обеих строф — каждый слог отмечен шариком на одном из пяти рядов (1=верх, 5=низ).</p>
+
+  <p class="help-sec">Запись слогов — почему IAST</p>
+  <p class="help-body">Слоги на шариках, в караоке-видео и в субтитрах всегда записываются <b>латиницей IAST</b> строчными буквами — это стандарт приложения для поющих (ADR-0005). Один шарик = один пропеваемый слог, а деванагари так не делится: лигатуры разрывают слог (кар-ма поётся <i>kar|ma</i>, но «р» прячется в лигатуре र्म). Долгота гласного — сама мелодия: чёрточка над буквой (ā, ī, ū) показывает долгий слог. Деванагари остаётся сплошной строкой над диаграммой и доступно на шариках кнопкой <b>देव</b> — как режим просмотра, не как стандарт. Русская транскрипция не используется: она теряет долготу и церебральные — с неё поют неверные длительности.</p>
 
   <p class="help-sec">Шаг 4 — Шпаргалка мелодии</p>
   <p class="help-body">Раскройте шпаргалку под строфой (клик на заголовок). Здесь слоги и номера рядов. Измените цифру — шарик переместится. Кликните на слог — отредактируйте его текст.</p>

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.4] - 2026-08-05
+
+### Added
+- **ADR-0005: transliteration display ruling for singers (H1870)** — [docs/adr/0005-transliteration-display-for-singers.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0005-transliteration-display-for-singers.md): lowercase full-diacritic IAST is the canonical per-syllable display on every singer-facing surface (balls, karaoke/story frames, WebVTT cues, feed highlight line, quizzes); Devanāgarī only as a continuous reference line or the explicit देव opt-in; Cyrillic transcription and ASCII input schemes (HK/SLP1/ITRANS/Velthuis/WX) display-banned. Codifies the shipped defaults — no behavior change, no data migration. Applied live: new «Запись слогов — почему IAST» section in the help modal (`index.html`) and ADR-referencing tooltips on the देव/IAST toggle (`src/scripts/app.js`, 3 sites).
+
 ## [1.5.3] - 2026-08-05
 
 ### Added
@@ -70,7 +75,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release of SanskritKaraoke
 
-[Unreleased]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.3...HEAD
+[Unreleased]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.4...HEAD
+[1.5.4]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.3...v1.5.4
 [1.5.3]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.2...v1.5.3
 [1.5.2]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.1...v1.5.2
 [1.5.1]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.0...v1.5.1

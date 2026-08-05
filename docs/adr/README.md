@@ -5,10 +5,11 @@ Each ADR records *why*, so future sessions (any model, any account) inherit the 
 
 | ADR | Title | Status |
 |---|---|---|
-| [0001](0001-rendering-core-extraction.md) | Extract a DOM-free rendering core from app.js | Accepted |
-| [0002](0002-headless-batch-renderer.md) | Headless batch renderer: Puppeteer first, node-canvas if needed | Accepted |
-| [0003](0003-auto-alignment-cli.md) | Auto-alignment as a Python CLI port of the proven in-browser algorithm | Superseded in algorithm/QA by 0004 |
-| [0004](0004-approved-timing-corpus-alignment.md) | Speaker-calibrated constrained alignment from approved timing pairs | Accepted |
+| [0001](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0001-rendering-core-extraction.md) | Extract a DOM-free rendering core from app.js | Accepted |
+| [0002](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0002-headless-batch-renderer.md) | Headless batch renderer: Puppeteer first, node-canvas if needed | Accepted |
+| [0003](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0003-auto-alignment-cli.md) | Auto-alignment as a Python CLI port of the proven in-browser algorithm | Superseded in algorithm/QA by 0004 |
+| [0004](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0004-approved-timing-corpus-alignment.md) | Speaker-calibrated constrained alignment from approved timing pairs | Accepted |
+| [0005](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0005-transliteration-display-for-singers.md) | Transliteration display for singers: IAST per syllable, everywhere | Accepted |
 
 Convention: `Status` is Proposed → Accepted → Superseded-by-NNNN. Never edit an accepted ADR's decision retroactively — write a superseding one.
 Source audit baseline: `app.js` @ v1.4.2, 7,763 lines (full read 2026-06-12, Fable 5 session).
