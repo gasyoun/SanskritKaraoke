@@ -371,7 +371,7 @@ function render() {
     const devToggle = document.createElement('button');
     devToggle.id = 'dev-toggle-' + key;
     devToggle.textContent = SHOW_DEV ? 'IAST' : 'देव';
-    devToggle.title = SHOW_DEV ? 'Переключить на IAST' : 'Переключить на деванагари';
+    devToggle.title = SHOW_DEV ? 'Вернуть IAST — стандарт записи для пения (ADR-0005)' : 'Показать деванагари (режим просмотра; стандарт для пения — IAST, ADR-0005)';
     devToggle.style.cssText = 'font-size:.78rem;padding:0px 7px;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--ink2);cursor:pointer;margin-left:10px;font-family:"Sanskrit 2003","Siddhanta",serif';
     devToggle.onclick = e => {
       e.stopPropagation();
@@ -379,7 +379,7 @@ function render() {
       // Update all toggle buttons across both blocks
       document.querySelectorAll('[id^=dev-toggle-]').forEach(btn => {
         btn.textContent = SHOW_DEV ? 'IAST' : 'देव';
-        btn.title = SHOW_DEV ? 'Переключить на IAST' : 'Переключить на деванагари';
+        btn.title = SHOW_DEV ? 'Вернуть IAST — стандарт записи для пения (ADR-0005)' : 'Показать деванагари (режим просмотра; стандарт для пения — IAST, ADR-0005)';
       });
       // Rebuild both wave diagrams and translit lines
       ['s1','s2'].forEach(k => {
@@ -2337,7 +2337,7 @@ function _applySession(state) {
         SHOW_DEV = !!s.showDev;
         document.querySelectorAll('[id^=dev-toggle-]').forEach(btn => {
           btn.textContent = SHOW_DEV ? 'IAST' : 'देव';
-          btn.title = SHOW_DEV ? 'Переключить на IAST' : 'Переключить на деванагари';
+          btn.title = SHOW_DEV ? 'Вернуть IAST — стандарт записи для пения (ADR-0005)' : 'Показать деванагари (режим просмотра; стандарт для пения — IAST, ADR-0005)';
         });
       }
 
