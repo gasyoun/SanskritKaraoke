@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.3] - 2026-08-05
+
+### Added
+- **Russian anuṣṭubh recitation методичка (H1869)** — [docs/METODICHKA_ANUSHTUBH_RECITATION_RU_2026.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/METODICHKA_ANUSHTUBH_RECITATION_RU_2026.md) (+ sibling `.meta.md`): print-first student guide to reciting the śloka without a teacher — pāda structure, guru/laghu weight rules, pathyā vs vipulā cadences (with the app's own `detectAndMarkVipula` patterns), pause hierarchy tied to the timing editor's pāda bounds, 2:1 mora timing as used by the aligner, and worked examples from the library (bhg_2_47 pathyā, subh_6087 na-vipulā, subh_3981 ma-vipulā). Includes a machine-computed cadence census of all 13 library verses (22 pathyā / 2 ma-vipulā / 2 na-vipulā odd pādas, zero even-pāda exceptions) via `src/core/translit.js` strict syllabification, plus 4 exercises with an answer key (⟦MG-viza⟧ gate pending). Recitation melody explicitly attributed to Уша Санка's style, not presented as a neutral standard.
+
 ## [1.5.2] - 2026-08-04
 
 ### Added
@@ -65,7 +70,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release of SanskritKaraoke
 
-[Unreleased]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.2...HEAD
+[Unreleased]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.3...HEAD
+[1.5.3]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.2...v1.5.3
 [1.5.2]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.1...v1.5.2
 [1.5.1]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.0...v1.5.1
 [1.5.0]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.9...v1.5.0
