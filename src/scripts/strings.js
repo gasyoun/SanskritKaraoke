@@ -117,6 +117,7 @@ const STRINGS = {
 
     // Student page
     srsPrompt: 'Как хорошо вы запомнили?',
+    startMeterQuizBtn: 'Начать квиз: размер стиха',
     modeFull: 'Полный',
     modeDots: 'Кружки',
     modeBlind: 'Вслепую',
@@ -254,6 +255,7 @@ const STRINGS = {
 
     // Student page
     srsPrompt: 'How well did you remember?',
+    startMeterQuizBtn: 'Start quiz: verse metre',
     modeFull: 'Full',
     modeDots: 'Dots',
     modeBlind: 'Blind',
