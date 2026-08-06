@@ -209,6 +209,12 @@ function triggerQuizCycle() {
   localStorage.setItem('shloka_quiz_type', (currentQuizType + 1) % 3);
 }
 
+function startMeterOnlyQuiz() {
+  document.getElementById('srs-panel').style.display = 'none';
+  document.getElementById('quiz-panel').style.display = 'block';
+  startMeterQuiz();
+}
+
 function endQuiz() {
   document.getElementById('quiz-panel').style.display = 'none';
   document.getElementById('srs-panel').style.display = 'block';

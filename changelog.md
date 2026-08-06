@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.5] - 2026-08-06
+
+### Added
+- **Week-4 metre-only quiz path (H2114)** — [docs/WEEK4_METRE_ONLY_QUIZ_PATH_2026.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/WEEK4_METRE_ONLY_QUIZ_PATH_2026.md): documents the 5 pinned `has_audio: false` verses (`bhg_2_47`, `bhg_2_48`, `bhg_2_49`, `subh_1249`, `subh_6087`) used by the «Старт чтения» pilot Week 4. Fixes a real gap, not just docs: `triggerQuizCycle()` only ever fired from the `<audio>` element's `ended` event, so no verse without audio could reach *any* quiz. Added `startMeterOnlyQuiz()` (`src/scripts/quizzes.js`) plus a conditionally-shown `#btn-start-meter-quiz` button (`tools/templates/student.html` → regenerated `student.html`) that opens the existing meter quiz directly when a verse has no audio — fill-in/beat-tap stay audio-gated as before. No changes to alignment, rendering, or the audio-drop pipeline.
+
 ## [1.5.4] - 2026-08-05
 
 ### Added
@@ -75,7 +80,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release of SanskritKaraoke
 
-[Unreleased]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.4...HEAD
+[Unreleased]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.5...HEAD
+[1.5.5]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.4...v1.5.5
 [1.5.4]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.3...v1.5.4
 [1.5.3]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.2...v1.5.3
 [1.5.2]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.5.1...v1.5.2

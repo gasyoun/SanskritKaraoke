@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sanskrit Karaoke — v1.5.4</title>
+<title>Sanskrit Karaoke — v1.5.5</title>
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -88,7 +88,7 @@ window.addEventListener('DOMContentLoaded', () => {
 <header>
   <div style="display:flex;align-items:baseline;gap:2ch">
     <h1 data-i18n="mainTitle">Волновая нотация санскрита</h1>
-    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.5.4</span>
+    <span style="font-size:.75rem;font-weight:400;color:#aaa;letter-spacing:normal;text-transform:none;font-family:'JetBrains Mono',monospace">v1.5.5</span>
   </div>
   <div id="msg-header" style="display:none;font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:3px;margin-left:16px;align-self:center"></div>
   <div style="display:flex;align-items:center;gap:14px">
@@ -149,6 +149,8 @@ window.addEventListener('DOMContentLoaded', () => {
     </div>
     <div id="translation-box" class="collapsed" onclick="this.classList.toggle('collapsed')" style="font-size:1.1rem; line-height:1.5; padding:15px; background:var(--card); border-radius:8px; border:1px solid var(--border); display:none;"></div>
     
+    <button id="btn-start-meter-quiz" onclick="startMeterOnlyQuiz()" style="display:none; margin:10px auto 20px; padding:10px 20px; font-size:1rem; cursor:pointer; background:var(--accent,#357bdd); color:#fff; border:none; border-radius:6px;" data-i18n="startMeterQuizBtn">Начать квиз: размер стиха</button>
+
     <div id="quiz-panel" style="display:none;">
       <div id="quiz-content"></div>
     </div>
@@ -187,7 +189,7 @@ window.addEventListener('DOMContentLoaded', () => {
   <div class="ctx-item sep"       onclick="ctxDelete()">✕ Убрать из ячейки</div>
 </div>
 
-<script src="src/scripts/strings.js?v=1.5.4"></script>
+<script src="src/scripts/strings.js?v=1.5.5"></script>
 <script type="module" src="src/scripts/app.js"></script>
 
 <!-- ══ SETTINGS MODAL ══ -->
@@ -636,9 +638,16 @@ async function loadStudentData() {
       const audioEl = document.getElementById('audio-preview');
       audioEl.src = audioUrl;
       audioEl.style.display = 'block';
-      
+
       // Note: Audio caching is not done in localStorage due to size limits.
       // Relies on browser's native HTTP cache.
+    } else {
+      // No audio: onVerseEnded() (wired to the <audio> "ended" event) never
+      // fires, so triggerQuizCycle() is otherwise unreachable. Surface a
+      // direct meter-only entry point instead of the fill-in/beat-tap cycle,
+      // both of which require audio playback.
+      const meterBtn = document.getElementById('btn-start-meter-quiz');
+      if (meterBtn) meterBtn.style.display = 'inline-block';
     }
 
     updateTranslation();
