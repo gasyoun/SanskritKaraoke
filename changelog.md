@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **H2820 — CLAUDE.md truth-pass** (Grok 4.6 `grok-4.6`, 16-08-2026). What this
+  repo is (śloka wave-diagram SPA), how to run (`http.server`, validators,
+  `make_student.py`), five-locus version bump, do-not-touch (`student.html`
+  generated). Slimmed architecture dump. AGENTS.md twin regenerated.
+
 ## [1.5.5] - 2026-08-06
 
 ### Added
