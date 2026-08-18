@@ -1,6 +1,14 @@
 # Karaoke Product Roadmap — batch-drop funnel edition
 
-_Created: 12-06-2026 · Last updated: 29-07-2026_
+_Created: 12-06-2026 · Last updated: 18-08-2026_
+
+> **Truth-pass 18-08-2026 (H3000).** Still the canonical product roadmap — not
+> superseded. One warning for anyone working it top-down: **Phase 0's first unit
+> is a legal act**, a written agreement with Уша Санка, and no agent at any tier
+> can clear it. Reading the phases in order therefore stops at item one and makes
+> the repo look dead. It is not: seven items are genuinely unblocked today. See
+> [docs/PLAN_SANSKRITKARAOKE_AUDIO_GATE_RESIDUAL_2026H2.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/PLAN_SANSKRITKARAOKE_AUDIO_GATE_RESIDUAL_2026H2.md) for the gate/lane split, and
+> [docs/ROADMAP_SANSKRITKARAOKE_AUDIO_GATE_RESIDUAL_2026H2.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/ROADMAP_SANSKRITKARAOKE_AUDIO_GATE_RESIDUAL_2026H2.md) for the per-item lane table.
 
 Decided 2026-06-12 (with M.G.):
 - **Audio**: Уша Санка recordings, with written permission — license metadata required per verse.

@@ -1,6 +1,16 @@
 # Sanskrit Karaoke — Product Roadmap
 
-_Created: 14-05-2026 · Last updated: 01-08-2026_
+_Created: 14-05-2026 · Last updated: 18-08-2026_
+
+> **Truth-pass 18-08-2026 (H3000).** This file is a *product vision* roadmap and
+> its phases stay as written. What it cannot show is that the product is not
+> stalled on engineering: the app shipped at **v1.4.8** and every remaining
+> product step waits on Уша Санка's written permission and her chapter audio —
+> two artefacts only a human can supply. Phase 2's first open unit (TTS) is
+> deliberately **not** scheduled: generating synthetic audio while waiting for a
+> named reciter's recordings is a product-premise decision, not a drain unit.
+> Open items sorted by what actually blocks them:
+> [docs/ROADMAP_SANSKRITKARAOKE_AUDIO_GATE_RESIDUAL_2026H2.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/ROADMAP_SANSKRITKARAOKE_AUDIO_GATE_RESIDUAL_2026H2.md).
 
 **Vision:** двуликий инструмент — authoring-студия для учителя и интерактивный курс для студента,
 живущий на samskrtam.ru, с платящей аудиторией уже сейчас.

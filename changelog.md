@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Residual `/ask` set: the repo's open work sorted by blocker, not by phase (H3000)** (Opus 5 `claude-opus-5`, 18-08-2026). This repo had **four roadmaps and zero planning documents**, and all three living roadmaps are phase-ordered — so a reader working them top-down stops at
+  [docs/KARAOKE_PRODUCT_ROADMAP.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/KARAOKE_PRODUCT_ROADMAP.md) Phase 0 item 1, which is *a written agreement with Уша Санка*: a legal act no agent at any tier can perform. The repo reads dead; it is not. The new six-doc set
+  ([PLAN](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/PLAN_SANSKRITKARAOKE_AUDIO_GATE_RESIDUAL_2026H2.md) · [ROADMAP](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/ROADMAP_SANSKRITKARAOKE_AUDIO_GATE_RESIDUAL_2026H2.md) · ARCHITECTURE · IMPLEMENTATION · VERIFICATION · metadoc)
+  re-sorts every open item across the roadmaps and [.ai_state.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/.ai_state.md) into three lanes by **who can unblock it**: **Lane A — seven items agent-doable today** (rights/provenance schema fields + backfill, `drive`→`drive.file` OAuth narrowing, shared `auth-state.js` across the three pages that each wire Firebase differently, four new metres, the Telang/Sementsov text check for BG 2.48–2.49, tapping mode, Drive file replacement); **Lane B — three items fully specified and waiting on an artefact** (chapter audio, ADR-0004 calibration, Telegram credentials); **Lane C — one human legal act**. Scope was deliberately not invented: every item is cited to the roadmap or journal line it came from. Two standing rulings are written down rather than left implicit — [MY_ROADMAP.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/MY_ROADMAP.md) is a personal agent-engineering curriculum and **must not be counted as product backlog**, and TTS integration stays unscheduled because generating synthetic audio while waiting for a named reciter's recordings is a product-premise decision, not a drain unit. Programme parent: [H3000](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3000-Opus_multi_stale-roadmap-s2-tier0-ask-replan_17.08.26.md).
+
+### Changed
+
+- **`GEMINI_ROADMAP.md` archived for real, not merely bannered (H3000)** (Opus 5 `claude-opus-5`, 18-08-2026). It has carried an `АРХИВ` banner since 29-07-2026 (H1879) because its bug list targets `make_student.py` code paths that no longer exist — but it stayed at a live path, where every census that counts files rather than reading them kept scoring it as a fourth live roadmap. Moved to [archive/GEMINI_ROADMAP.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/archive/GEMINI_ROADMAP.md) with a tombstone at the old path. The three living roadmaps each gained a dated truth-pass banner stating what actually blocks them.
+
 ### Changed
 
 - **H2820 — CLAUDE.md truth-pass** (Grok 4.6 `grok-4.6`, 16-08-2026). What this

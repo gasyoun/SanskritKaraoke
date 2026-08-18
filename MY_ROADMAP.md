@@ -1,6 +1,11 @@
 # My Agent Engineering Roadmap
 
-_Created: 12-05-2026 · Last updated: 01-08-2026_
+_Created: 12-05-2026 · Last updated: 18-08-2026_
+
+> **Truth-pass 18-08-2026 (H3000).** This is a **personal agent-engineering
+> curriculum** that uses this repo as its practice vehicle. It is **not product
+> backlog**: its open checkboxes must not be counted in any product census, and
+> no drain or `/fruit` run should pick a unit from here as repo work.
 
 *Personalized from https://github.com/codejunkie99/agent-roadmap-2026 on 2026-05-12.*  
 *Practice vehicle: Sanskrit Karaoke edutech platform.*
