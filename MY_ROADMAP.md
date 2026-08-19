@@ -1,6 +1,6 @@
 # My Agent Engineering Roadmap
 
-_Created: 12-05-2026 · Last updated: 18-08-2026_
+_Created: 12-05-2026 · Last updated: 19-08-2026_
 
 > **Truth-pass 18-08-2026 (H3000).** This is a **personal agent-engineering
 > curriculum** that uses this repo as its practice vehicle. It is **not product
@@ -90,8 +90,8 @@ Rebuild the same agent using Claude Agent SDK. Note what the SDK provides vs. wh
 
 **Deliverable:**
 - [x] `agents/teaching_pipeline/` — LangGraph multi-agent project — shipped (commit `ad09b87`, four-node graph: VerseCurator/ContentEnricher/QualityGate/StudentAnalyzer, `PostgresSaver`-backed with `SqliteSaver`/`MemorySaver` fallback); re-verified 01-08-2026 (A02): `pytest agents/teaching_pipeline/` passes, `python agents/teaching_pipeline/test_simulation.py` runs a full curation+analysis simulation end-to-end
-- [ ] LangSmith trace URL showing a full verse-to-catalogue run
-- [ ] `agents/teaching_pipeline/README.md` — architecture diagram
+- [ ] LangSmith trace URL showing a full verse-to-catalogue run — **skipped 19-08-2026 (Sonnet 5 `claude-sonnet-5`, via `/drain`): blocked prerequisite**, no `LANGSMITH_API_KEY`/`LANGCHAIN_API_KEY` anywhere in this repo (checked `.env.example`, no `.env` file, no env var) — needs a human to provision a LangSmith account/key before this can run.
+- [x] `agents/teaching_pipeline/README.md` — architecture diagram — **already shipped** (truth-pass 19-08-2026, Sonnet 5 `claude-sonnet-5`): [`agents/teaching_pipeline/README.md`](https://github.com/gasyoun/SanskritKaraoke/blob/main/agents/teaching_pipeline/README.md) carries a Mermaid graph of all four nodes + two routers, a node-by-node description table, and test/eval run instructions.
 
 **Key resource:** https://langchain-ai.github.io/langgraph/ (LangGraph 1.0 docs)
 
