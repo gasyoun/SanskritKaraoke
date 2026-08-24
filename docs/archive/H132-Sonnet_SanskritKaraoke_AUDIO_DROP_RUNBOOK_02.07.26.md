@@ -96,7 +96,7 @@ each is hard-gated on its own env credentials — no creds, no network call. Gat
 ## Step 5 — Close the loop (agent, same session)
 
 - Commit updated verse JSONs (timings) + `schedule.yaml`; bump
-  [changelog.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/changelog.md).
+  [CHANGELOG.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/CHANGELOG.md).
 - Record the run in [.ai_state.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/.ai_state.md)
   and check off the Phase 6 deliverable in
   [MY_ROADMAP.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/MY_ROADMAP.md).

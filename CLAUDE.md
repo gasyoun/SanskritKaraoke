@@ -39,7 +39,7 @@ Bump **all** of these together:
    — same two places plus `strings.js?v=`; then `python tools/make_student.py`.
 3. [`sw.js`](https://github.com/gasyoun/SanskritKaraoke/blob/main/sw.js)
    — `CACHE_NAME` (invalidates the service-worker cache).
-4. [`changelog.md`](https://github.com/gasyoun/SanskritKaraoke/blob/main/changelog.md)
+4. [`CHANGELOG.md`](https://github.com/gasyoun/SanskritKaraoke/blob/main/CHANGELOG.md)
    — `[Unreleased]`.
 5. Syntax-check `app.js`.
 

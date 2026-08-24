@@ -4,7 +4,7 @@ _Created: 12-05-2026 · Last updated: 11-07-2026_
 
 ## Wave-notation visualiser and karaoke exporter for Sanskrit verse
 
-[**Live app →**](https://gasyoun.github.io/SanskritKaraoke/) · [v1.4.6](https://gasyoun.github.io/SanskritKaraoke/) · [changelog](https://github.com/gasyoun/SanskritKaraoke/blob/main/changelog.md)
+[**Live app →**](https://gasyoun.github.io/SanskritKaraoke/) · [v1.4.6](https://gasyoun.github.io/SanskritKaraoke/) · [changelog](https://github.com/gasyoun/SanskritKaraoke/blob/main/CHANGELOG.md)
 
 > **If the app doesn't reflect the latest version after an update, do a hard refresh to clear the cache:**
 > Edge, Firefox, Opera — `Ctrl+F5` · Chrome — `Ctrl+Shift+R` · Safari (Mac) — `Cmd+Shift+R` or `Cmd+Option+R`
