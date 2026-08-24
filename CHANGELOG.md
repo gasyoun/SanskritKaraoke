@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.6] - 2026-08-24
+
+
 ### Added
 
 - **Residual `/ask` set: the repo's open work sorted by blocker, not by phase (H3000)** (Opus 5 `claude-opus-5`, 18-08-2026). This repo had **four roadmaps and zero planning documents**, and all three living roadmaps are phase-ordered — so a reader working them top-down stops at
@@ -24,7 +27,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   repo is (śloka wave-diagram SPA), how to run (`http.server`, validators,
   `make_student.py`), five-locus version bump, do-not-touch (`student.html`
   generated). Slimmed architecture dump. AGENTS.md twin regenerated.
-
 ## [1.5.5] - 2026-08-06
 
 ### Added
