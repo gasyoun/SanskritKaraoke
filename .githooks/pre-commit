@@ -43,4 +43,38 @@ if [ "$norm_toplevel" = "$norm_canonical" ]; then
     exit 1
 fi
 
+# ── Verse-validation gate (MY_ROADMAP.md Phase 3 harness unit) ────────────────
+# Any commit staging verses/** runs tools/validate_library.py first, binding
+# Claude Code, Codex and bare git identically. Real validation failures BLOCK;
+# a machine whose python lacks jsonschema degrades to a loud WARNING so env
+# drift never blocks unrelated machines — run the validate-verse skill instead.
+# Solo escape hatch: ALLOW_VALIDATE_SKIP=1 git commit ...
+
+if [ -z "${ALLOW_VALIDATE_SKIP:-}" ]; then
+    staged_verses="$(git diff --cached --name-only --diff-filter=ACMR -- verses)"
+    if [ -n "$staged_verses" ]; then
+        PY=""
+        for cand in python3 python; do
+            if command -v "$cand" >/dev/null 2>&1; then PY="$cand"; break; fi
+        done
+        if [ -n "$PY" ]; then
+            if ! "$PY" -c "import jsonschema" >/dev/null 2>&1; then
+                echo "WARNING: $PY lacks jsonschema — staged verses were NOT validated." >&2
+                echo "         Run the validate-verse skill (tools/validate_library.py)" >&2
+                echo "         or a venv-installed python before pushing." >&2
+            else
+                echo "pre-commit: staged verses/ changes → tools/validate_library.py"
+                if ! "$PY" tools/validate_library.py; then
+                    echo "" >&2
+                    echo "BLOCKED: verse validation failed — fix verses/ and re-commit." >&2
+                    echo "Solo escape: ALLOW_VALIDATE_SKIP=1 git commit ..." >&2
+                    exit 1
+                fi
+            fi
+        else
+            echo "WARNING: no python interpreter found — staged verses NOT validated." >&2
+        fi
+    fi
+fi
+
 exit 0
