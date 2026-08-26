@@ -24,7 +24,8 @@ phase number. Source phases are cited so this table can be checked against them.
 > `window.onAuthUpdate`, identical script tags on student/progress/teacher
 > since v1.4.2). A6 verified as already implemented in `METER_DATA.samavritta`
 > with a committed headless test. A3 carries a hidden product gate — see its
-> row. Remaining truly open Lane-A work: A5, A7.
+> row. **A5 closed later the same day (26-08-2026)** — see its row. Remaining
+> truly open Lane-A work: A7.
 
 | # | Item | Source | Note |
 |---|---|---|---|
@@ -32,9 +33,9 @@ phase number. Source phases are cited so this table can be checked against them.
 | A2 | ✅ Add `translation.provenance: human\|gemini-flash\|claude` per language — **SHIPPED** (same commit; present in all 13 verse JSONs) | Product roadmap Phase 0 | DH norm and increasingly platform policy. Machine translations must be marked |
 | A3 | ⛔ Narrow OAuth scope `drive` → `drive.file` — **GATED, not agent-doable** (re-verdict 26-08-2026) | Product roadmap Phase 0 | The load path (`gdriveLoad`, app.js:6190+) lists a shared folder and downloads files OTHERS created (`session.json` + reciter audio); under `drive.file`, `files.list` returns nothing for non-app-owned files — narrowing breaks the documented teacher workflow («пользователи видят расшаренную папку», WAVE spec:80 «не drive.file!»). A function-preserving narrowing means migrating file pickup to the Google Picker API — which needs an owner Cloud-Console act (enable Picker API) plus a live acceptance test at the 2FA screen. Not "the cheapest security win" as originally scoped |
 | A4 | ✅ Consolidate Firebase auth into shared auth-state — **ALREADY DONE**: [`src/scripts/cloud_sync.js`](https://github.com/gasyoun/SanskritKaraoke/blob/main/src/scripts/cloud_sync.js) is that module (verified 26-08-2026); row was stale, citing pre-v1.4.2 `.ai_state.md` text | `.ai_state.md` Architecture | index.html intentionally has no Firebase wiring |
-| A5 | Verify the Telang wording of BG 2.48 and 2.49 against SBE vol. 8, and settle whether the RU lines are verbatim Sementsov or paraphrase (attribution «пер.» vs «по мотивам») | `.ai_state.md` Data/schema | 2.47 is already fetch-confirmed. A text-critical check, not a code change. Still open |
+| A5 | ✅ Verify the Telang wording of BG 2.48/2.49 vs SBE vol. 8 + settle RU attribution — **DONE 26-08-2026**: EN 2.47/2.48 verbatim Telang; EN 2.49 corrected to true print wording (`bhg_2_49.json`); RU lines are pereložénija, not verbatim → all three verses carry `rights.ru.attribution` «по мотивам перевода В. С. Семенцова». Evidence: IA scans [`bhagavadgtwi00tela`](https://archive.org/details/bhagavadgtwi00tela) / [`bhagavadgtwithsa00tela`](https://archive.org/details/bhagavadgtwithsa00tela) / [`Bhagavadiita_Sementsov`](https://archive.org/details/Bhagavadiita_Sementsov); validator 13/13 | `.ai_state.md` Data/schema | Text-critical check executed against primary sources this pass |
 | A6 | ✅ Extend the metre detector: Mālinī, Śārdūlavikrīḍita, Vasantatilaka, Sragdharā — **VERIFIED ALREADY IMPLEMENTED** (26-08-2026): all four registered in `METER_DATA.samavritta`, round-trip + unique identification asserted by [tools/test_meter_detector.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/test_meter_detector.py) | `ROADMAP.md` Phase 4 | Checkbox ticked in ROADMAP.md with evidence |
-| A7 | Restore tapping mode (temporarily disabled) and fix Drive file replacement (old file is not deleted) | `ROADMAP.md` Backlog | Two small, well-understood defects. Still open — next agent-doable unit after A5/A6 |
+| A7 | Restore tapping mode (temporarily disabled) and fix Drive file replacement (old file is not deleted) | `ROADMAP.md` Backlog | Two small, well-understood defects. Still open — the last open Lane-A unit |
 
 ## Lane B — specified, waiting on an artefact (G2/G3)
 
