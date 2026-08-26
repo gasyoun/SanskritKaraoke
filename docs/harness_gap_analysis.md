@@ -1,6 +1,20 @@
 # Harness Gap Analysis: Claude Code vs. Teaching Pipeline
 
+_Created: 14-05-2026 · Last updated: 27-08-2026_
+
 This document analyzes the architectural gaps between the current development harness (Claude Code) and the requirements for the production **Sanskrit Karaoke Teaching Pipeline**.
+
+Provenance and prior art: originally authored by Gemini Flash alongside the
+Phase-2 LangGraph deliverable (commit `ad09b87`, 14-05-2026); Phase-3 truth-pass
+tick and §3 closure shipped 26-08-2026; this dated/bylined header contract was
+completed 27-08-2026 during the [H3263](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3263-Grok_SanskritKaraoke_harness-gap-analysis-doc_21.08.26.md)
+execution (OxAlpha override by explicit MG run-anyway order — the file existed,
+the contract did not). Prior art within the repo: companion mental-model audit
+[docs/harness_mental_model.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/harness_mental_model.md);
+curriculum anchor [MY_ROADMAP.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/MY_ROADMAP.md)
+Phase 3 deliverable (both checkboxes ticked 26-08-2026); its automation half
+lives in [.githooks/pre-commit](https://github.com/gasyoun/SanskritKaraoke/blob/main/.githooks/pre-commit)
+plus [.claude/skills/validate-verse/SKILL.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/.claude/skills/validate-verse/SKILL.md) — see §3 below.
 
 ## 1. Audit Table: The Ten Components
 
@@ -39,3 +53,5 @@ Shipped 26-08-2026 (OxAlpha, via `/drain`):
 - Automatic enforcement: [`.githooks/pre-commit`](https://github.com/gasyoun/SanskritKaraoke/blob/main/.githooks/pre-commit) runs `tools/validate_library.py` on every commit staging `verses/**`; data defects block the commit, missing tooling degrades to a loud warning, `ALLOW_VALIDATE_SKIP=1` is the solo escape.
 
 Still open after this closure (from §2): HITL teacher breakpoint, LangSmith observability (blocked on a human-provisioned key), FastAPI UI↔pipeline bridge.
+
+_Dr. Mārcis Gasūns_
