@@ -27,7 +27,7 @@
   "s2dev": "बुद्धौ शरणमन्विच्छ कृपणाः फलहेतवः॥",
   "translation": {
     "ru": "Воистину, действие намного ниже йоги разума, о Дхананджая.",
-    "en": "For action is far inferior to the devotion of the mind, O Dhanañjaya! Have recourse (then) to (this) devotion. Wretched are they whose motive (to action) is the fruit (of action).",
+    "en": "Action, O Dhanañjaya! is far inferior to the devotion of the mind. In that devotion seek shelter. Wretched are those whose motive (to action) is the fruit (of action).",
     "provenance": {
       "ru": "licensed",
       "en": "public-domain"
@@ -38,6 +38,7 @@
         "source": "Семенцов В. С., «Бхагавадгита в традиции и в современной научной критике», Москва: Наука, 1985",
         "license": "permission letter from the translator's daughter (heir); to be formalized as SK-LIC-2026-002",
         "permission_ref": "SK-LIC-2026-002/SEM-2026-003",
+        "attribution": "по мотивам перевода В. С. Семенцова (переложение; не дословный текст перевода)",
         "status": "cleared"
       },
       "en": {
@@ -64,7 +65,7 @@
     "intermediate"
   ],
   "created_at": "2026-05-12",
-  "updated_at": "2026-06-12",
+  "updated_at": "2026-08-26",
   "glosses": [
     {
       "slp1": "dUreRa",
