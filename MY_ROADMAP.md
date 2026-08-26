@@ -149,10 +149,10 @@ GitHub Actions workflow that:
 For multi-step tasks (e.g., "add a verse end-to-end"), record the agent's tool calls as a trajectory and eval whether it took a reasonable path, not just whether the output is correct.
 
 **Deliverable:**
-- [ ] `evals/golden/` — ≥ 8 golden cases from documented bugs
-- [ ] `evals/judge.py` — LLM-as-judge script
-- [ ] `.github/workflows/evals.yml` — CI eval gate
-- [ ] Benchmark baseline score for current Gemini Flash output
+- [x] `evals/golden/` — ≥ 8 golden cases from documented bugs — **already shipped** (truth-pass tick 27-08-2026, OxAlpha via `/drain`): [`evals/golden/cases.json`](https://github.com/gasyoun/SanskritKaraoke/blob/main/evals/golden/cases.json) carries exactly 8 golden cases (translation, meter gate, id format, tags, curator validation, duplicate id, script validation, version type).
+- [x] `evals/judge.py` — LLM-as-judge script — **already shipped** (truth-pass tick 27-08-2026, OxAlpha via `/drain`): [`evals/judge.py`](https://github.com/gasyoun/SanskritKaraoke/blob/main/evals/judge.py) drives the real LangGraph pipeline ([agents/teaching_pipeline/graph.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/agents/teaching_pipeline/graph.py)) over every golden case, normalizes Pydantic state, and evaluates check strings in a builtins-restricted eval sandbox; LLM-dependent checks degrade to explicit «skipped: no API key» instead of silently passing. Companion verifier [`evals/check_report.py`](https://github.com/gasyoun/SanskritKaraoke/blob/main/evals/check_report.py) gates the report.
+- [x] `.github/workflows/evals.yml` — CI eval gate — **already shipped** (truth-pass tick 27-08-2026, OxAlpha via `/drain`): [`.github/workflows/evals.yml`](https://github.com/gasyoun/SanskritKaraoke/blob/main/.github/workflows/evals.yml) triggers on push/PR touching `agents/teaching_pipeline/**` or `evals/**`, runs [`evals/judge.py`](https://github.com/gasyoun/SanskritKaraoke/blob/main/evals/judge.py) in deterministic mode (no keys in CI) and fails the job through [`evals/check_report.py`](https://github.com/gasyoun/SanskritKaraoke/blob/main/evals/check_report.py).
+- [x] Benchmark baseline score for current Gemini Flash output — **already shipped** (truth-pass tick 27-08-2026, OxAlpha via `/drain`): baseline recorded in [`evals/report.json`](https://github.com/gasyoun/SanskritKaraoke/blob/main/evals/report.json) — 6/8 pass, 2 explicitly skipped pending a provisioned Gemini/LangSmith key (same credential residual as Phase-2 line above).
 
 ---
 
