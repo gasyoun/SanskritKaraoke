@@ -224,11 +224,11 @@ Daily streak, "verses mastered" count (SRS interval ≥ 21 days), and a progress
 
 ### Re-enable tapping mode
 
-Real-time tap-along for rough timing capture — the button is present but hidden while the feature is being refined.
+✅ **Done 26-08-2026** (commit `0e2f6a4`): the tapping block is restored under the Timing Editor button — rate select, «⏺ Тэппинг», reset, and the play/stop pair, with i18n keys in ru+en.
 
 ### Fix Google Drive file replacement
 
-When saving an updated session, the old file can persist on Drive. Needs a delete-then-upload sequence that works within the current OAuth scope.
+✅ **Fixed 26-08-2026** (commit `0e2f6a4`): saving a session now looks up every same-name file in the target folder (not just the picker-selected one), uploads the replacement first, then deletes the stale copies; failed deletes surface a visible warning instead of being swallowed.
 
 ### Apte prosody cross-check
 
