@@ -52,6 +52,11 @@ const STRINGS = {
     detectMeterBtn: 'Определить метр',
     meterInfoBtn: 'Инфо о метре',
     timingEditorBtn: 'Редактор тайминга',
+    tapRateLabel: 'Скорость:',
+    tapBtn: '⏺ Тэппинг',
+    tapResetBtn: '↺ Сброс',
+    karaokePlayBtn: '▶ Воспроизвести',
+    karaokeStopBtn: '■ Стоп',
     autoBtn: 'Авто',
     
     // Section labels
@@ -189,6 +194,11 @@ const STRINGS = {
     detectMeterBtn: 'Detect Meter',
     meterInfoBtn: 'Meter Info',
     timingEditorBtn: 'Timing Editor',
+    tapRateLabel: 'Speed:',
+    tapBtn: '⏺ Tap',
+    tapResetBtn: '↺ Reset',
+    karaokePlayBtn: '▶ Play',
+    karaokeStopBtn: '■ Stop',
     autoBtn: 'Auto',
     
     // Section labels

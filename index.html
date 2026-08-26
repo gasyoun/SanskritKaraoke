@@ -127,7 +127,25 @@ window.addEventListener('DOMContentLoaded', () => {
 
   <div id="tap-block" style="display:none;margin-bottom:8px">
     <button class="btn btn-p" style="width:100%;font-size:.75rem" onclick="openTimingEditor()" data-i18n="timingEditorBtn">✎ Указать пады / Редактор тайминга</button>
+    <!-- Tapping mode restored 26-08-2026 (A7): manual beat entry as an alternative to the Timing Editor -->
+    <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+      <span style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);white-space:nowrap" data-i18n="tapRateLabel">Скорость:</span>
+      <select id="tap-rate" style="font-size:.72rem;font-family:'JetBrains Mono',monospace;border:1px solid var(--border);border-radius:3px;padding:2px 6px;background:var(--card);color:var(--ink);cursor:pointer;flex:1;min-width:0"
+              onchange="TAP.playRate=parseFloat(this.value)">
+        <option value="0.5">0.5×</option>
+        <option value="0.75" selected>0.75×</option>
+        <option value="1.0">1.0×</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:6px;margin-top:6px">
+      <button class="btn btn-s" style="flex:1;font-size:.75rem" onclick="startTapping()" data-i18n="tapBtn">⏺ Тэппинг</button>
+      <button class="btn btn-s" style="flex:1;font-size:.75rem" onclick="resetTapping()" data-i18n="tapResetBtn">↺ Сброс</button>
+    </div>
     <div id="te-padas-info" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);margin-top:3px;min-height:1em"></div>
+    <div style="display:flex;gap:6px;margin-top:6px">
+      <button class="btn btn-s" style="flex:1;font-size:.75rem" id="btn-karaoke-play" onclick="karaokePlay()" disabled data-i18n="karaokePlayBtn">▶ Воспроизвести</button>
+      <button class="btn btn-s" style="flex:1;font-size:.75rem" id="btn-karaoke-stop" onclick="karaokeStop()" disabled data-i18n="karaokeStopBtn">■ Стоп</button>
+    </div>
     <div id="tap-status" style="font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);margin-top:2px;min-height:1.2em"></div>
     <canvas id="waveform-canvas" height="48" style="display:none;width:100%;border-radius:3px;cursor:default;margin-top:2px;border:1px solid var(--border);pointer-events:none"></canvas>
   </div>
