@@ -1,6 +1,6 @@
 # Sanskrit Karaoke — Product Roadmap
 
-_Created: 14-05-2026 · Last updated: 18-08-2026_
+_Created: 14-05-2026 · Last updated: 26-08-2026_
 
 > **Truth-pass 18-08-2026 (H3000).** This file is a *product vision* roadmap and
 > its phases stay as written. What it cannot show is that the product is not
@@ -73,7 +73,10 @@ cross-page auth-wiring консолидация (три страницы по-р
 - [ ] Curriculum path: последовательность шлок по уровням (начальный / средний / продвинутый)
 - [ ] Assignments: учитель назначает шлоку группе студентов с дедлайном
 - [ ] Certificate of completion (PDF) за прохождение уровня
-- [ ] Расширить детектор метров: Mālinī, Śārdūlavikrīḍita, Vasantatilaka, Sragdharā
+- [x] Расширить детектор метров: Mālinī, Śārdūlavikrīḍita, Vasantatilaka, Sragdharā
+  (уже было реализовано в `METER_DATA.samavritta` — `app.js:2668`; проверено headless-тестом
+  [tools/test_meter_detector.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/test_meter_detector.py):
+  все четыре метра зарегистрированы, round-trip и уникально распознаются; 26-08-2026)
 
 ---
 

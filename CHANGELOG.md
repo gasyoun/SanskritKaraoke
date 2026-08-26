@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Metre-detector coverage test + Lane-A truth-pass of the residual roadmap** (OxAlpha `stealth/ox-alpha`, 26-08-2026, bare `/drain` pick). [tools/test_meter_detector.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/test_meter_detector.py) extracts `METER_DATA` live from `src/scripts/app.js` and hard-asserts that ROADMAP Phase 4's four metres (Mālinī, Śārdūlavikrīḍita, Vasantatilakā, Sragdharā) are registered, round-trip through the gaṇa abbreviation, and identify uniquely; per-verse anuṣṭubh scans of the library run as diagnostics (stored metres are hand-labelled authoring data, not detector output). The truth-pass re-verdicted [Lane A](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/ROADMAP_SANSKRITKARAOKE_AUDIO_GATE_RESIDUAL_2026H2.md): A1/A2 shipped in commit [`3a31711`](https://github.com/gasyoun/SanskritKaraoke/commit/3a31711), A4 already consolidated by [`src/scripts/cloud_sync.js`](https://github.com/gasyoun/SanskritKaraoke/blob/main/src/scripts/cloud_sync.js) since v1.4.2, A6 verified done and ticked in [ROADMAP.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/ROADMAP.md); A3 (`drive`→`drive.file`) re-verdicted **gated** — the load path browses a shared folder for files others created, which `drive.file` cannot serve, so narrowing requires a Picker-API migration with an owner Cloud-Console act and a live 2FA acceptance test. Remaining open Lane-A work: A5 (Telang wording) and A7 (tapping mode + Drive file replacement).
+
 ## [1.5.6] - 2026-08-24
 
 
