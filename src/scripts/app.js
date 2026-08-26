@@ -94,6 +94,12 @@ const TAP = {
 };
 let karaokeRaf = null;  // requestAnimationFrame handle for playback highlight
 
+// Null-safe кнопка enable/disable (student.html headless-мост не содержит этих кнопок)
+function setBtnDisabled(id, dis) {
+  const el = document.getElementById(id);
+  if (el) el.disabled = dis;
+}
+
 function readAudioFile(file, resetState = true) {
   audioMime = file.type || 'audio/mp4';
   audioFile = file;
@@ -3414,8 +3420,8 @@ function startTapping() {
   // Remove focus from button so spacebar doesn't re-trigger it
   if (document.activeElement) document.activeElement.blur();
 
-  document.getElementById('btn-karaoke-play').disabled = true;
-  document.getElementById('btn-karaoke-stop').disabled = true;
+  setBtnDisabled('btn-karaoke-play', true);
+  setBtnDisabled('btn-karaoke-stop', true);
 
   // Draw waveform
   _waveformPcm = null; // force redecode
@@ -3432,8 +3438,8 @@ function resetTapping() {
   if (preview) { preview.pause(); preview.playbackRate = 1.0; }
   karaokeStop();
   _clearKaraokeHighlight();
-  document.getElementById('btn-karaoke-play').disabled = true;
-  document.getElementById('btn-karaoke-stop').disabled = true;
+  setBtnDisabled('btn-karaoke-play', true);
+  setBtnDisabled('btn-karaoke-stop', true);
   document.getElementById('tap-status').textContent = '';
   // Сброс границ пад
   _padaBounds = null;
@@ -3493,7 +3499,7 @@ document.addEventListener('keydown', e => {
     TAP.active = false;
     preview.pause();
     preview.playbackRate = 1.0;
-    document.getElementById('btn-karaoke-play').disabled = false;
+    setBtnDisabled('btn-karaoke-play', false);
     const _etb = document.getElementById('edit-timing-block'); if (_etb) _etb.style.display = '';
     document.getElementById('tap-status').textContent = '✓ Тэппинг завершён';
     drawWaveform();
@@ -3510,8 +3516,8 @@ function karaokePlay() {
   preview.playbackRate = 1.0;
   preview.currentTime = 0;
   preview.play();
-  document.getElementById('btn-karaoke-play').disabled = true;
-  document.getElementById('btn-karaoke-stop').disabled = false;
+  setBtnDisabled('btn-karaoke-play', true);
+  setBtnDisabled('btn-karaoke-stop', false);
   _karaokeLoop();
 }
 
@@ -3519,8 +3525,8 @@ function karaokeStop() {
   if (karaokeRaf) { cancelAnimationFrame(karaokeRaf); karaokeRaf = null; }
   const preview = document.getElementById('audio-preview');
   if (preview) preview.pause();
-  document.getElementById('btn-karaoke-play').disabled = false;
-  document.getElementById('btn-karaoke-stop').disabled = true;
+  setBtnDisabled('btn-karaoke-play', false);
+  setBtnDisabled('btn-karaoke-stop', true);
   _clearKaraokeHighlight();
 }
 
@@ -6265,7 +6271,7 @@ async function gdriveSave() {
       showMsg('Google Drive: сохранение…', 'ok');
       try {
         await _gdriveWithRetry(async () => {
-          async function uploadFile(name, blob, mimeType, parentId, oldFileId) {
+          async function uploadFile(name, blob, mimeType, parentId) {
             // Всегда создаём новый файл (избегаем проблем с правами на PATCH чужих файлов)
             const form = new FormData();
             form.append('metadata', new Blob([JSON.stringify({
@@ -6282,20 +6288,46 @@ async function gdriveSave() {
               e.status = uploadResp.status;
               throw e;
             }
-            const newFile = await uploadResp.json();
-            // Удаляем старый файл после успешной загрузки нового
-            if (oldFileId) {
-              await fetch(`https://www.googleapis.com/drive/v3/files/${oldFileId}`,
-                { method: 'DELETE', headers: { Authorization: 'Bearer ' + GDRIVE.accessToken } }
-              ).catch(() => {}); // игнорируем ошибку удаления
-            }
-            return newFile;
+            return await uploadResp.json();
           }
 
+          // A7 (26-08-2026): замена файла с тем же именем — старые копии удаляются.
+          // Раньше удалялся только файл, выбранный в диалоге; сохранение по имени
+          // в папку плодило дубликаты («старый файл не удаляется»).
           const sessionBlob = new Blob([JSON.stringify(_buildSessionState(), null, 2)], { type: 'application/json' });
           const saveFileName = selectedFile ? selectedFile.name : 'session.json';
-          const saveFileId   = selectedFile ? selectedFile.id  : null;
-          await uploadFile(saveFileName, sessionBlob, 'application/json', folderId, saveFileId);
+          let staleIds = selectedFile ? [selectedFile.id] : [];
+          try {
+            const qNameEsc = saveFileName.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+            const qStale = `'${folderId}' in parents and trashed=false and name='${qNameEsc}'`;
+            const staleResp = await fetch(
+              `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(qStale)}&fields=files(id,name)&pageSize=10`,
+              { headers: { Authorization: 'Bearer ' + GDRIVE.accessToken } }
+            );
+            if (staleResp.ok) {
+              for (const f of ((await staleResp.json()).files || [])) {
+                if (!staleIds.includes(f.id)) staleIds.push(f.id);
+              }
+            }
+          } catch(e) { /* поиск старых копий — best effort */ }
+
+          await uploadFile(saveFileName, sessionBlob, 'application/json', folderId);
+
+          // Удаляем старые копии ПОСЛЕ успешной загрузки нового (не молча)
+          let deleteFailed = [];
+          for (const fid of staleIds) {
+            try {
+              const delResp = await fetch(`https://www.googleapis.com/drive/v3/files/${fid}`,
+                { method: 'DELETE', headers: { Authorization: 'Bearer ' + GDRIVE.accessToken } });
+              // 404 — файл уже удалён/в корзине, это не ошибка замены
+              if (!delResp.ok && delResp.status !== 404) deleteFailed.push(fid + ' (' + delResp.status + ')');
+            } catch(e) {
+              deleteFailed.push(fid);
+            }
+          }
+          if (deleteFailed.length) {
+            showMsg('⚠️ Старый файл на Drive не удалён (нет прав?): ' + deleteFailed.join(', '), 'err');
+          }
 
           if (typeof audioFile !== 'undefined' && audioFile instanceof File && audioFile.size > 0) {
             // Запрашиваем содержимое папки для поиска аудио-файлов
@@ -6318,7 +6350,7 @@ async function gdriveSave() {
               showMsg(`✓ Сохранено «${saveFileName}» в «${folderName}» (аудио не загружено — уже есть «${existingAudio.name}»)`, 'ok');
             } else {
               const ext = audioFile.name.includes('.') ? audioFile.name.split('.').pop() : 'mp3';
-              await uploadFile('audio.' + ext, audioFile, audioFile.type || 'audio/mpeg', folderId, null);
+              await uploadFile('audio.' + ext, audioFile, audioFile.type || 'audio/mpeg', folderId);
               showMsg(`✓ Сохранено «${saveFileName}» в «${folderName}» + audio`, 'ok');
             }
           } else {

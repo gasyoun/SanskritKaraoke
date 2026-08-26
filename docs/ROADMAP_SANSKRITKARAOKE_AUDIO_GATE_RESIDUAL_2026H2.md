@@ -24,8 +24,10 @@ phase number. Source phases are cited so this table can be checked against them.
 > `window.onAuthUpdate`, identical script tags on student/progress/teacher
 > since v1.4.2). A6 verified as already implemented in `METER_DATA.samavritta`
 > with a committed headless test. A3 carries a hidden product gate — see its
-> row. **A5 closed later the same day (26-08-2026)** — see its row. Remaining
-> truly open Lane-A work: A7.
+> row. **A5 closed later the same day (26-08-2026)** — see its row. **A7 closed
+> 26-08-2026** (commit [`0e2f6a4`](https://github.com/gasyoun/SanskritKaraoke/commit/0e2f6a4))
+> — see its row. Lane A is now fully drained: its only residual is A3's owner
+> Cloud-Console act + Picker-API migration.
 
 | # | Item | Source | Note |
 |---|---|---|---|
@@ -35,7 +37,7 @@ phase number. Source phases are cited so this table can be checked against them.
 | A4 | ✅ Consolidate Firebase auth into shared auth-state — **ALREADY DONE**: [`src/scripts/cloud_sync.js`](https://github.com/gasyoun/SanskritKaraoke/blob/main/src/scripts/cloud_sync.js) is that module (verified 26-08-2026); row was stale, citing pre-v1.4.2 `.ai_state.md` text | `.ai_state.md` Architecture | index.html intentionally has no Firebase wiring |
 | A5 | ✅ Verify the Telang wording of BG 2.48/2.49 vs SBE vol. 8 + settle RU attribution — **DONE 26-08-2026**: EN 2.47/2.48 verbatim Telang; EN 2.49 corrected to true print wording (`bhg_2_49.json`); RU lines are pereložénija, not verbatim → all three verses carry `rights.ru.attribution` «по мотивам перевода В. С. Семенцова». Evidence: IA scans [`bhagavadgtwi00tela`](https://archive.org/details/bhagavadgtwi00tela) / [`bhagavadgtwithsa00tela`](https://archive.org/details/bhagavadgtwithsa00tela) / [`Bhagavadiita_Sementsov`](https://archive.org/details/Bhagavadiita_Sementsov); validator 13/13 | `.ai_state.md` Data/schema | Text-critical check executed against primary sources this pass |
 | A6 | ✅ Extend the metre detector: Mālinī, Śārdūlavikrīḍita, Vasantatilaka, Sragdharā — **VERIFIED ALREADY IMPLEMENTED** (26-08-2026): all four registered in `METER_DATA.samavritta`, round-trip + unique identification asserted by [tools/test_meter_detector.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/test_meter_detector.py) | `ROADMAP.md` Phase 4 | Checkbox ticked in ROADMAP.md with evidence |
-| A7 | Restore tapping mode (temporarily disabled) and fix Drive file replacement (old file is not deleted) | `ROADMAP.md` Backlog | Two small, well-understood defects. Still open — the last open Lane-A unit |
+| A7 | ✅ Restore tapping mode + fix Drive file replacement — **DONE 26-08-2026** (commit [`0e2f6a4`](https://github.com/gasyoun/SanskritKaraoke/commit/0e2f6a4)): tapping block restored under the Timing Editor button (`⏺ Тэппинг` / `↺ Сброс`, playback-rate select, `▶ Воспроизвести` / `■ Стоп` pair, i18n keys `tapBtn`… in ru+en, null-safe button guards) — functions were never deleted in `app.js`, only their UI entry points (removed by `7da6f15`); Drive fix: `gdriveSave` now resolves **all** same-name files in the target folder via `files.list` (`name='session.json'`-style query), uploads the replacement first and deletes every stale copy afterwards — previously only the picker-selected file was replaced, so folder-save accumulated duplicates; failed deletes are no longer silently swallowed (⚠️ message with id + HTTP status). Verified: `node --check` green, headless-Chrome DOM load with zero console errors, restored controls present post-i18n | `ROADMAP.md` Backlog | Lane A residual is now only A3's owner act |
 
 ## Lane B — specified, waiting on an artefact (G2/G3)
 
