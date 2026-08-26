@@ -107,8 +107,8 @@ Instead of building a 1,500-line harness from scratch, study the Claude Code har
 - Write a gap analysis: what would you need to add to Claude Code to support the Sanskrit Karaoke teaching pipeline fully?
 
 **Deliverable:**
-- [ ] `docs/harness_gap_analysis.md` — ten-component audit of Claude Code vs. teaching pipeline needs
-- [ ] At least one custom hook or skill added to the project (e.g., a `validate-verse` skill that runs `validate_library.py` before every commit)
+- [x] `docs/harness_gap_analysis.md` — ten-component audit of Claude Code vs. teaching pipeline needs — **already shipped** (truth-pass tick 26-08-2026, OxAlpha `stealth/ox-alpha`, via `/drain`): authored by Gemini Flash in commit `ad09b87` alongside the Phase-2 LangGraph deliverable but never ticked. [`docs/harness_gap_analysis.md`](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/harness_gap_analysis.md) carries the full ten-component table (Loop Control, Tool Dispatch, Context, Persistence, Orchestration, Skills, Hooks, Observability, Sandboxing, Auth) plus three critical-gap sections (HITL breakpoint, observability, FastAPI UI↔pipeline bridge); companion mental model in [`docs/harness_mental_model.md`](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/harness_mental_model.md).
+- [x] At least one custom hook or skill added to the project — **shipped** (OxAlpha `stealth/ox-alpha`, 26-08-2026, via `/drain`): project skill [`.claude/skills/validate-verse/SKILL.md`](https://github.com/gasyoun/SanskritKaraoke/blob/main/.claude/skills/validate-verse/SKILL.md) (single-file + full-library validation, jsonschema ergonomics, warning-baseline interpretation) AND the automation half of this example realised — [`.githooks/pre-commit`](https://github.com/gasyoun/SanskritKaraoke/blob/main/.githooks/pre-commit) now runs `tools/validate_library.py` whenever `verses/**` is staged: real failures BLOCK the commit, a python-without-jsonschema machine degrades to a loud WARNING, `ALLOW_VALIDATE_SKIP=1` is the solo escape. Closes the *Skills* row of the gap analysis ("needs a `validate-verse` hook").
 
 ---
 

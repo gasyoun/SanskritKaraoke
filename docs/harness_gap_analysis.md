@@ -31,5 +31,11 @@ While I can run the simulation and show you the output, there is no dashboard fo
 Currently, the authoring tool (`index.html`) and the teaching pipeline (`agents/`) are disconnected. The teacher has to manually run a Python script.
 **Solution:** Create a lightweight FastAPI bridge that allows the UI to trigger the LangGraph pipeline via a simple POST request.
 
-## 3. Next Step: Custom Skill Implementation
-To bridge the **Skills** gap, I will now implement a `validate-verse` skill that ensures 100% data integrity for the library.
+## 3. Skills-gap closure: `validate-verse`
+
+Shipped 26-08-2026 (OxAlpha, via `/drain`):
+
+- Project skill: [.claude/skills/validate-verse/SKILL.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/.claude/skills/validate-verse/SKILL.md) — single-file (`tools/validate_verse.py`) and full-library (`tools/validate_library.py`) validation with warning-baseline guidance.
+- Automatic enforcement: [`.githooks/pre-commit`](https://github.com/gasyoun/SanskritKaraoke/blob/main/.githooks/pre-commit) runs `tools/validate_library.py` on every commit staging `verses/**`; data defects block the commit, missing tooling degrades to a loud warning, `ALLOW_VALIDATE_SKIP=1` is the solo escape.
+
+Still open after this closure (from §2): HITL teacher breakpoint, LangSmith observability (blocked on a human-provisioned key), FastAPI UI↔pipeline bridge.
