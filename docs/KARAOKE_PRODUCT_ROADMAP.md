@@ -2,9 +2,11 @@
 
 _Created: 12-06-2026 · Last updated: 27-08-2026_
 
-> **Truth-pass 18-08-2026 (H3000).** Still the canonical product roadmap — not
+> **Human-gate 27-08-2026** (Grok 4.6 `grok-4.6`). The next open checkbox is a human act — written permission from Уша Санкар — not `/roadmap-item-exec` for an agent. Do not tick the box. Do not fetch audio or rewrite git history.
+
+> **Truth-pass 18-08-2026.** Still the canonical product roadmap — not
 > superseded. One warning for anyone working it top-down: **Phase 0's first unit
-> is a legal act**, a written agreement with Уша Санка, and no agent at any tier
+> is a legal act**, a written agreement with Уша Санкар, and no agent at any tier
 > can clear it. Reading the phases in order therefore stops at item one and makes
 > the repo look dead. It is not: seven items are genuinely unblocked today. See
 > [docs/PLAN_SANSKRITKARAOKE_AUDIO_GATE_RESIDUAL_2026H2.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/PLAN_SANSKRITKARAOKE_AUDIO_GATE_RESIDUAL_2026H2.md) for the gate/lane split, and
