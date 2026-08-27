@@ -273,6 +273,43 @@ Detailed workflows for both audiences — maintainers (developers, drop producer
 
 ---
 
+## How this repo is wired
+
+Sanskrit Karaoke is one repo in a ~85-repo Sanskrit-lexicon workspace. This section is the
+one-click map out of it — read it before building anything here that another repo may already own.
+
+**What this repo produces that other repos consume**
+
+| Asset | Who consumes it |
+|---|---|
+| [`tools/export_captions.mjs`](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/export_captions.mjs) — verse-timing JSON → SRT/VTT captions | Registered as **shared-code family 27**: the canonical caption emitter for any repo showing timed Sanskrit verse. Import `exportCaptions(verse, timing)` or run the CLI; do not write a second SRT/VTT emitter. |
+| [`verses/data/*.json`](https://github.com/gasyoun/SanskritKaraoke/tree/main/verses/data) — verse records with metre, timing, rights and word-aligned RU glosses | The player, the student build, and the drop pipeline; `rv_verse_seeds.json` is a seed/lookup table joined against the Rigveda metrical data, **not** a karaoke verse record. |
+
+**What this repo consumes from elsewhere** — RU word-glosses are baked in by
+[`tools/build_glosses.py`](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/build_glosses.py)
+from the 1.09 M-row Sa→Ru corpus alignment lexicon owned by
+[SanskritLexicography/RussianTranslation](https://github.com/gasyoun/SanskritLexicography/tree/master/RussianTranslation).
+Query that lexicon; never re-align or re-translate here.
+
+**Where to record a gotcha you find here** — infra and process go to
+[Uprava/FINDINGS.md](https://github.com/gasyoun/Uprava/blob/main/FINDINGS.md); anything about Sanskrit
+data, encodings or transliteration goes to
+[SanskritLexicography/FINDINGS.md](https://github.com/gasyoun/SanskritLexicography/blob/master/FINDINGS.md).
+This repo deliberately keeps no registries of its own.
+
+**The four hubs, one click each**
+
+- [PROJECT_INTERLINKS.md](https://github.com/gasyoun/Uprava/blob/main/PROJECT_INTERLINKS.md) — who already owns a data edge, before you derive one.
+- [SHARED_CODE.md](https://github.com/gasyoun/github-spine/blob/main/SHARED_CODE.md) — the one canonical source per shared concern, before you write a helper.
+- [FEATURES_INDEX.md](https://github.com/gasyoun/SanskritLexicography/blob/master/FEATURES_INDEX.md) — what already exists across the workspace.
+- [GTD_NEXT_ACTIONS.md](https://github.com/gasyoun/Uprava/blob/main/GTD_NEXT_ACTIONS.md) — what is next and who decides.
+
+Org-wide conventions live in the spine
+[CLAUDE.md](https://github.com/gasyoun/github-spine/blob/main/CLAUDE.md); encodings and corpus traps
+in the [Sanskrit context primer](https://github.com/gasyoun/github-spine/blob/main/SANSKRIT_CONTEXT_PRIMER.md).
+
+---
+
 ## License
 
 Apache 2.0 — see [LICENSE](https://github.com/gasyoun/SanskritKaraoke/blob/main/LICENSE).

@@ -10,6 +10,11 @@ wave diagrams, with audio timing and karaoke MP4 export. Live:
 Org conventions live in [`../CLAUDE.md`](https://github.com/gasyoun/github-spine/blob/main/CLAUDE.md).
 Before encodings or corpus data, read the
 [Sanskrit context primer](https://github.com/gasyoun/github-spine/blob/main/SANSKRIT_CONTEXT_PRIMER.md).
+Gotchas from this repo: infra and process →
+[Uprava/FINDINGS.md](https://github.com/gasyoun/Uprava/blob/main/FINDINGS.md);
+Sanskrit data →
+[SanskritLexicography/FINDINGS.md](https://github.com/gasyoun/SanskritLexicography/blob/master/FINDINGS.md).
+This repo keeps no registries of its own (ruling F1).
 
 ## How to run
 
