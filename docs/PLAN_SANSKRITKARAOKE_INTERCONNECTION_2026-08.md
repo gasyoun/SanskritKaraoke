@@ -1,6 +1,6 @@
 # Plan — SanskritKaraoke interconnection, 2026-08
 
-_Created: 26-08-2026 · Last updated: 26-08-2026_
+_Created: 26-08-2026 · Last updated: 27-08-2026_
 
 SanskritKaraoke's slice of the spine-interconnection programme. Programme index:
 [PLAN_SPINE_INTERCONNECTION_2026H2.md](https://github.com/gasyoun/Uprava/blob/main/docs/PLAN_SPINE_INTERCONNECTION_2026H2.md).
@@ -12,8 +12,8 @@ all fourteen repos and live once in Uprava:
 - [IMPLEMENTATION_SPINE_INTERCONNECTION_W1.md](https://github.com/gasyoun/Uprava/blob/main/docs/IMPLEMENTATION_SPINE_INTERCONNECTION_W1.md) — execution order, per-handoff steps, isolation, risks
 - [VERIFICATION_SPINE_INTERCONNECTION.md](https://github.com/gasyoun/Uprava/blob/main/docs/VERIFICATION_SPINE_INTERCONNECTION.md) — the five gates and what "done" means
 
-**Nothing here has executed.** The handoff below is 🟡 queued and runs only when a human
-launches it.
+**Executed 27-08-2026** by Opus 5 (`claude-opus-5`) — see *Outcome* below. The plan is kept as the
+record of what was intended and what actually happened.
 
 ## Why SanskritKaraoke is in scope
 
@@ -54,7 +54,19 @@ Full rulings table with every fork:
 
 ## Handoff
 
-- [H3570 (Opus 5) — interconnect karaoke timing caption family](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3570-Opus_SanskritKaraoke_interconnect-karaoke-timing-caption-family_26.08.26.md) · medium · 🟡 queued
+- [H3570 (Opus 5, 🟡2 medium) — SanskritKaraoke verse-timing to SRT/VTT exporter registered as a SHARED_CODE family](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3570-Opus_SanskritKaraoke_interconnect-karaoke-timing-caption-family_26.08.26.md) · medium · ✅ done 27-08-2026
+
+## Outcome — 27-08-2026
+
+Two of the three intended changes landed as planned; the third turned out to be already done by a sibling handoff.
+
+| Planned | What happened |
+|---|---|
+| Register the exporter as an F8 SHARED_CODE family | **Already landed** as row 28 by [H3561](https://github.com/gasyoun/github-spine/pull/127), which a human launched ahead of the wave-2 handoffs. The duplicate row authored here was dropped at rebase — the keep-both rule covers adjacent rows, not two rows for the same canonical source. Only the fact row 28 lacked was contributed: the committed timing fixture is synthetic even onsets, never citable as attested alignment ([#128](https://github.com/gasyoun/github-spine/pull/128), v1.84.1). |
+| Ruling-F1 `CLAUDE.md` pointer line, no registry files | Shipped ([#106](https://github.com/gasyoun/SanskritKaraoke/pull/106)). |
+| Default-F11 README wiring section | Shipped ([#106](https://github.com/gasyoun/SanskritKaraoke/pull/106)); the Gate-4 cold read caught it naming family 27 instead of 28, fixed in [#108](https://github.com/gasyoun/SanskritKaraoke/pull/108). |
+
+The plan's own instruction to **check prior art first** is what kept a second SRT/VTT exporter from being written: `hub_grep` returned no hits, but a handoff-filename scan and this repo's `git log` both found [H3261](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3261-Grok_SanskritKaraoke_captions-srt-vtt-export_21.08.26.md) already merged as [#105](https://github.com/gasyoun/SanskritKaraoke/pull/105) hours earlier.
 
 ## Autonomy contract
 
