@@ -213,6 +213,7 @@ End to end, from a chapter's audio to scheduled posts:
 | `python tools/build_chapter.py <audio_dir>` | **Full pipeline:** align → render → post-kit (`--dry-run` to preview) |
 | `python tools/align_chapter.py <audio_dir> --write` | Auto-timing → verse JSON `timing` field |
 | `node tools/render_chapter.js <audio_dir>` | Render `feed_v1` MP4 + `.srt`/`.vtt` → `dist/` |
+| `node tools/export_captions.mjs <verse.json> [--timing timing.json] [--out dir]` | Sidecar `.srt`/`.vtt` only (no MP4; H3261) |
 | `python tools/post_kit.py --all` | Captions + hashtags + per-platform UTM CTAs → `drop/` |
 | `python tools/schedule_drops.py --config schedule.yaml` | Posting plan → `drop/schedule_plan.json` |
 | `python tools/make_student.py` | Regenerate `student.html` from the template |

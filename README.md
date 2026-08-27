@@ -1,6 +1,6 @@
 # Sanskrit Karaoke
 
-_Created: 12-05-2026 · Last updated: 11-07-2026_
+_Created: 12-05-2026 · Last updated: 27-08-2026_
 
 ## Wave-notation visualiser and karaoke exporter for Sanskrit verse
 
@@ -26,6 +26,7 @@ Sanskrit Karaoke turns a Sanskrit śloka into an interactive wave diagram that s
   - *Pada mode*: drag eight boundary lines to mark the start/end of each pada
   - *Syllable mode*: fine-tune timing per syllable with keyboard shortcuts
 - **Karaoke MP4 export** — renders the wave diagram with the audio track and an animated highlight dot
+- **Sidecar captions** — `node tools/export_captions.mjs <verse.json> [--timing timing.json]` writes `.srt`/`.vtt` from syllable timing without rendering video
 - **PNG export** — 1920 × 1080 image with Devanagari, IAST transliteration, and footer metadata
 - **Google Drive** — save and load sessions (JSON + audio) to a shared Drive folder
 - **Mobile & touch** — full touch drag in the Timing Editor; on-screen navigation bar (◀ ▶ −0.01 +0.01 ⌂) on touch devices; iOS-specific export overlays for PNG and MP4; iPhone safe-area support

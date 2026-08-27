@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-_Created: 12-05-2026 · Last updated: 16-08-2026_
+_Created: 12-05-2026 · Last updated: 27-08-2026_
 
 **Sanskrit Karaoke** (Волновая нотация санскрита) is a single-page web app
 that visualises the metrical structure of Sanskrit ślokas as interactive
@@ -20,6 +20,9 @@ python tools/validate_verse.py <file_path>
 python tools/validate_library.py
 python tools/build_index.py
 python tools/make_student.py
+node tools/export_captions.mjs verses/data/bhg_2_47.json --timing tools/fixtures/bhg_2_47_timing.json --out dist
+node tools/test_core_modules.mjs
+pytest tests/test_export_captions.py
 ```
 
 No bundler and no unit-test suite — QA is in-browser. Evals

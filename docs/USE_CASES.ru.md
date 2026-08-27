@@ -212,6 +212,7 @@
 | `python tools/build_chapter.py <папка>` | **Весь конвейер:** align → render → post-kit (`--dry-run` для предпросмотра) |
 | `python tools/align_chapter.py <папка> --write` | Авто-тайминг → поле `timing` в JSON шлоки |
 | `node tools/render_chapter.js <папка>` | Рендер `feed_v1` MP4 + `.srt`/`.vtt` → `dist/` |
+| `node tools/export_captions.mjs <verse.json> [--timing timing.json] [--out dir]` | Только sidecar `.srt`/`.vtt` (без MP4; H3261) |
 | `python tools/post_kit.py --all` | Подписи + хэштеги + UTM-CTA по площадкам → `drop/` |
 | `python tools/schedule_drops.py --config schedule.yaml` | План постов → `drop/schedule_plan.json` |
 | `python tools/make_student.py` | Пере-генерация `student.html` из шаблона |

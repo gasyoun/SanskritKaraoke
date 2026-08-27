@@ -1,6 +1,6 @@
 # Karaoke Product Roadmap — batch-drop funnel edition
 
-_Created: 12-06-2026 · Last updated: 18-08-2026_
+_Created: 12-06-2026 · Last updated: 27-08-2026_
 
 > **Truth-pass 18-08-2026 (H3000).** Still the canonical product roadmap — not
 > superseded. One warning for anyone working it top-down: **Phase 0's first unit
@@ -75,7 +75,7 @@ Replace "browser tab, one verse at a time, 10 fps" with one command per chapter.
   - huge Devanagari + IAST line with karaoke-fill or bouncing-dot highlight (the wave diagram becomes a *secondary* strip, not the whole frame);
   - dark/gradient background option; progress bar; your handle watermark;
   - end-card CTA: course link / Telegram channel (this is the funnel — make it a template parameter, A/B-testable).
-- [ ] **Captions export**: emit `.srt`/`.vtt` per verse from the timing JSON (trivial — the data already exists). Burned-in for Reels/TikTok, sidecar for YouTube. This is also the DH win: your alignments become a portable timed-text resource instead of app-locked data.
+- [x] **Captions export** (H3261, 27-08-2026): `node tools/export_captions.mjs <verse.json> [--timing timing.json] [--out dir]` emits sidecar `.srt`/`.vtt` from timing arrays via `src/core/karaoke-frame.js` (`buildCues`/`toSrt`/`toVtt`). Does **not** render MP4 — that stays `render_chapter.js`. Golden: `tools/fixtures/bhg_2_47.{timing.json,srt,vtt}`. `pytest tests/test_export_captions.py`. Burned-in captions for Reels/TikTok remain the renderer path; this is the YouTube/DH sidecar.
 - [ ] Batch entry point: `python tools/render_chapter.py bhg_2 --template feed_v1` → folder of MP4s + VTTs + thumbnail PNGs.
 
 ## Phase 3 — Distribution & funnel (~1–2 weeks)
