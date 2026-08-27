@@ -282,7 +282,7 @@ one-click map out of it — read it before building anything here that another r
 
 | Asset | Who consumes it |
 |---|---|
-| [`tools/export_captions.mjs`](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/export_captions.mjs) — verse-timing JSON → SRT/VTT captions | Registered as **shared-code family 27**: the canonical caption emitter for any repo showing timed Sanskrit verse. Import `exportCaptions(verse, timing)` or run the CLI; do not write a second SRT/VTT emitter. |
+| [`tools/export_captions.mjs`](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/export_captions.mjs) — verse-timing JSON → SRT/VTT captions | Registered as **shared-code family 28**: the canonical caption emitter for any repo showing timed Sanskrit verse. Import `exportCaptions(verse, timing)` or run the CLI; do not write a second SRT/VTT emitter. |
 | [`verses/data/*.json`](https://github.com/gasyoun/SanskritKaraoke/tree/main/verses/data) — verse records with metre, timing, rights and word-aligned RU glosses | The player, the student build, and the drop pipeline; `rv_verse_seeds.json` is a seed/lookup table joined against the Rigveda metrical data, **not** a karaoke verse record. |
 
 **What this repo consumes from elsewhere** — RU word-glosses are baked in by
