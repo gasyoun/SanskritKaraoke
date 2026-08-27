@@ -32,6 +32,17 @@ const scaled = await timing.corpusScaleTiming({
 assert.deepEqual(scaled, { s1: [0, 2], s2: [4, 6] });
 assert.equal(frame.currentSylIndex([0.2, 0.7, 1.4], 0.9), 1);
 
+const cues = frame.buildCues(
+  { s1: [{ syl: 'ka' }, { syl: 'rma' }], s2: [{ syl: 'ṇi' }] },
+  { s1: [0.0, 0.4], s2: [1.0] },
+);
+assert.equal(cues.length, 3);
+assert.equal(cues[0].text, 'ka');
+const srt = frame.toSrt(cues);
+const vtt = frame.toVtt(cues);
+assert.match(srt, /^1\n00:00:00,000 --> 00:00:00,400\nka/);
+assert.match(vtt, /^WEBVTT\n\n1\n00:00:00\.000 --> 00:00:00\.400\nka/);
+
 const camera = frame.updateCamera(
   { camX: 100, camY: 100 },
   { s1: { 0: { x: 300, y: 200, r: 8 } }, s2: {} },

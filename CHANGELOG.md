@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **H3261 — sidecar SRT/VTT export from verse timing JSON** (Grok 4.6 `grok-4.6`, 27-08-2026). New `node tools/export_captions.mjs <verse.json> [--timing timing.json] [--out dir]` writes `<id>.srt` + `<id>.vtt` using existing `buildCues`/`toSrt`/`toVtt` in [`src/core/karaoke-frame.js`](https://github.com/gasyoun/SanskritKaraoke/blob/main/src/core/karaoke-frame.js); it does not launch Puppeteer or emit MP4. Committed fixture + goldens [`tools/fixtures/bhg_2_47_timing.json`](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/fixtures/bhg_2_47_timing.json) / `.srt` / `.vtt` (synthetic even onsets for BG 2.47, 16+16 syllables). Prove: `pytest tests/test_export_captions.py` and `node tools/test_core_modules.mjs`. Roadmap tick: [docs/KARAOKE_PRODUCT_ROADMAP.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/KARAOKE_PRODUCT_ROADMAP.md) Phase 2 captions export.
+
 ### Changed
 
 - **H3263 executed — `docs/harness_gap_analysis.md` header contract completed** (OxAlpha (`z-ai/glm-5.3-flash`) override run by explicit MG run-anyway order, 27-08-2026): the audit file existed since 14-05-2026 (Gemini Flash, commit `ad09b87`) but shipped without its dated/bylined md-hygiene contract — `_Created/Last updated_` header added with real git creation date, provenance + in-repo prior-art paragraph ([docs/harness_mental_model.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/harness_mental_model.md), MY_ROADMAP Phase 3 anchor) and `_Dr. Mārcis Gasūns_` footer appended; no content restructured, ten-component table intact.
