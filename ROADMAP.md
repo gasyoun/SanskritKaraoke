@@ -1,6 +1,6 @@
 # Sanskrit Karaoke — Product Roadmap
 
-_Created: 14-05-2026 · Last updated: 26-08-2026_
+_Created: 14-05-2026 · Last updated: 28-08-2026_
 
 > **Truth-pass 18-08-2026 (H3000).** This file is a *product vision* roadmap and
 > its phases stay as written. What it cannot show is that the product is not
@@ -45,11 +45,25 @@ cross-page auth-wiring консолидация (три страницы по-р
 Сейчас каждая шлока требует ручной разметки тайминга в Timing Editor. Это узкое горлышко роста контента.
 
 - [ ] Интеграция TTS (Google Cloud TTS Sanskrit / ElevenLabs) для генерации аудио
-- [ ] Forced-alignment pipeline: text + audio → per-syllable timestamps автоматически
-  - Вариант A: Whisper + CTC alignment (локально/дешево)
-  - Вариант B: Assembly AI forced alignment API
-- [ ] Verse agent: на входе текст шлоки → на выходе готовый JSON с таймингом для проверки учителем
-- [ ] UI-режим "проверка авто-тайминга": учитель слышит + видит авто-разметку, правит только расхождения
+  (см. баннер выше — deliberately not scheduled, K5)
+- [x] Forced-alignment pipeline: text + audio → per-syllable timestamps автоматически
+  (уже реализовано, verified 28-08-2026: [tools/align_chapter.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/align_chapter.py) —
+  CLI-порт проверенного браузерного алгоритма по [ADR-0003](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0003-auto-alignment-cli.md)
+  (pada-границы RMS 10 ms, моро-пропорциональное распределение, онсеты, phoneme rules, snap+confidence);
+  gold-харнесс [tools/eval_alignment.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/eval_alignment.py)
+  (критерий ≥90 % слогов в ±50 ms); алгоритм и QA заменены [ADR-0004](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0004-approved-timing-corpus-alignment.md) —
+  approved-timing corpus alignment)
+  - Вариант A: Whisper + CTC alignment (локально/дешево) — только Phase B cross-check, вне MVP (ADR-0003 §5)
+  - Вариант B: Assembly AI forced alignment API (не выбран)
+- [x] Verse agent: на входе текст шлоки → на выходе готовый JSON с таймингом для проверки учителем
+  (repo-половина готова, verified 28-08-2026: батч-конвейер [tools/build_chapter.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/build_chapter.py)
+  — align (`align_chapter.py --write` пишет `timing` в verse JSON) → render → post-kit с readiness-сводкой;
+  проверка учителем — существующий Timing Editor (оранжевые флаги + Tab). Живой прогон ожидает главу
+  аудио от Уша Санка (Lane B1, gate G2) — repo done / owner residual)
+- [x] UI-режим "проверка авто-тайминга": учитель слышит + видит авто-разметку, правит только расхождения
+  (уже реализовано, verified 28-08-2026: one-button auto `teAutoTimingAndSwitch` (app.js:4336),
+  оранжевые флаги confidence < 0.5, Tab/Shift-Tab к следующему сомнительному слогу
+  `_teJumpToNextUncertain` (app.js:5161) — учитель правит только расхождения)
 
 **Связь с AGENTS.md:** это следующий шаг агентного pipeline после `verse_agent_raw.py`.
 
