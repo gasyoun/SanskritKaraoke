@@ -58,6 +58,19 @@ Verify that nodes do not mutate state in-place (essential for LangGraph persiste
 python agents/teaching_pipeline/test_deepcopy.py
 ```
 
+## LangSmith tracing
+
+Phase 2 of [MY_ROADMAP.md](../../MY_ROADMAP.md) asks for a LangSmith trace of a full
+verse-to-catalogue run. Tracing is env-native — LangChain reads `LANGSMITH_*`:
+
+1. Copy `.env.example` → `.env` and fill the `LANGSMITH` section (free token:
+   [smith.langchain.com](https://smith.langchain.com) → Settings → Personal Access Tokens).
+2. `python agents/teaching_pipeline/trace_probe.py` — checks the environment, runs the
+   simulation once, and reports whether tracing is ACTIVE.
+3. Open the project in LangSmith, copy the trace URL, paste it into the Phase 2 checklist.
+
+Without `.env` values the probe reports exactly what to set and exits 0.
+
 ## Evals
 The pipeline is continuously evaluated using a **Golden Dataset** (8 cases) in `evals/judge.py`.
 
