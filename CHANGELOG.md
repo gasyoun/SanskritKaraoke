@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.7] - 2026-08-30
 ### Added
 
 - **LangSmith tracing — repo-side half of the Phase-2 trace checkbox** (OxAlpha `z-ai/glm-5.3-flash`, 29-08-2026, bare `/drain` auto-split Bucket-A pick on [MY_ROADMAP.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/MY_ROADMAP.md)). The row was ruled human-gated on 19-08-2026 (no `LANGSMITH_API_KEY` anywhere); this pass ships the plumbing so a provisioned key alone unblocks it: [`agents/teaching_pipeline/trace_probe.py`](https://github.com/gasyoun/SanskritKaraoke/blob/main/agents/teaching_pipeline/trace_probe.py) (verifies `LANGSMITH_*` from repo `.env`, runs [`test_simulation.py`](https://github.com/gasyoun/SanskritKaraoke/blob/main/agents/teaching_pipeline/test_simulation.py) once, points to the trace; exits 0 with exact setup steps when unset), `.env.example` §LangSmith (token steps + `LANGSMITH_TRACING/PROJECT`), and a [README tracing section](https://github.com/gasyoun/SanskritKaraoke/blob/main/agents/teaching_pipeline/README.md). Tracing itself is env-native (LangChain reads `LANGSMITH_*`; no code changes to the pipeline). **Residual — owner (≈10 min):** free token → `.env` §LangSmith → run the probe → paste the trace URL into the MY_ROADMAP Phase 2 row.
