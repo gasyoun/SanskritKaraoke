@@ -1,6 +1,6 @@
 # My Agent Engineering Roadmap
 
-_Created: 12-05-2026 · Last updated: 19-08-2026_
+_Created: 12-05-2026 · Last updated: 02-09-2026_
 
 > **Truth-pass 18-08-2026 (H3000).** This is a **personal agent-engineering
 > curriculum** that uses this repo as its practice vehicle. It is **not product
@@ -198,12 +198,19 @@ live Telegram posts — with the human touching only QA sign-off.
 - **Cost discipline** (Phase 5 payoff): per-verse end-to-end cost measured against the
   < $0.10 target.
 
+**Gate check 02-09-2026 (Sonnet 5 `claude-sonnet-5`, H3776):** all five boxes below share ONE
+named gate — Уша Санка's chapter audio has not been recorded/supplied yet (`.ai_state.md`
+§ Current WIP: "gated on M.G., not on code" — batch audio + Telegram credentials). No box here
+is mechanically actionable; none was ticked or fabricated. See
+[docs/archive/H132-Sonnet_SanskritKaraoke_AUDIO_DROP_RUNBOOK_02.07.26.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/archive/H132-Sonnet_SanskritKaraoke_AUDIO_DROP_RUNBOOK_02.07.26.md)
+for the runbook that fires the moment audio lands.
+
 **Deliverable:**
-- [ ] First real `build_chapter.py` run on session audio — MP4s + post-kits produced
-- [ ] Alignment eval report on real audio (`eval_alignment.py`)
-- [ ] Run trajectory log + post-run judge assessment in `logs/`
-- [ ] ≥1 live post published via `schedule_drops.py --live` (Telegram)
-- [ ] Postmortem: measured cost/verse and human-minutes/verse vs the **<1 min** QA target
+- [ ] First real `build_chapter.py` run on session audio — MP4s + post-kits produced — **gate: chapter audio (human:MG/Уша Санка)**
+- [ ] Alignment eval report on real audio (`eval_alignment.py`) — **gate: chapter audio (human:MG/Уша Санка)**
+- [ ] Run trajectory log + post-run judge assessment in `logs/` — **gate: chapter audio (human:MG/Уша Санка)**
+- [ ] ≥1 live post published via `schedule_drops.py --live` (Telegram) — **gate: chapter audio + Telegram credentials (human:MG)**
+- [ ] Postmortem: measured cost/verse and human-minutes/verse vs the **<1 min** QA target — **gate: chapter audio (human:MG/Уша Санка)**
 
 **Pre-work done before audio lands (02-07-2026):** runbook written; `npm install --prefix tools`
 executed for the first time; dry-run path verified earlier (2026-06-14).
@@ -237,7 +244,7 @@ executed for the first time; dry-run path verified earlier (2026-06-14).
 - [x] **Phase 3** — `docs/harness_gap_analysis.md` + one custom skill/hook
 - [x] **Phase 4** — golden dataset (8 cases) + LLM-as-judge + CI eval gate
 - [x] **Phase 5** — cost logging + student session observability + Drive fallback + Cloud Sync
-- [ ] **Phase 6** — autonomous chapter-drop run + trajectory judge + cost postmortem (gated on audio)
+- [ ] **Phase 6** — autonomous chapter-drop run + trajectory judge + cost postmortem — **gate: chapter audio (human:MG/Уша Санка)**
 
 ---
 
