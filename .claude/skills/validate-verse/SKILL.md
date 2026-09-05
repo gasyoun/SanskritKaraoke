@@ -1,3 +1,5 @@
+_Created: 26-08-2026 · Last updated: 05-09-2026_
+
 ---
 name: validate-verse
 description: Validate verse JSON data against the project schema before committing, publishing, or building indexes — runs tools/validate_verse.py for a single file or tools/validate_library.py for the whole catalogue. Use whenever a verses/** file or verses/schema was edited, before any commit that includes verse data, and before drop/publish flows that consume the catalogue.
@@ -37,3 +39,5 @@ Requires `jsonschema` (quick path: `pip install langgraph langchain-anthropic go
 Install once per clone: `git config core.hooksPath .githooks`.
 
 Run this skill after editing verse JSON or the schema, before committing any staged `verses/**` change (the hook should catch it first), and before publish flows (drop runbook step: validate → build indexes → render).
+
+_Dr. Mārcis Gasūns_

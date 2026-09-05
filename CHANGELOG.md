@@ -1,3 +1,5 @@
+_Created: 12-05-2026 · Last updated: 05-09-2026_
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -142,3 +144,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.4.7]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.6...v1.4.7
 [1.4.6]: https://github.com/gasyoun/SanskritKaraoke/compare/v1.4.2...v1.4.6
 [1.4.2]: https://github.com/gasyoun/SanskritKaraoke/releases/tag/v1.4.2
+
+_Dr. Mārcis Gasūns_

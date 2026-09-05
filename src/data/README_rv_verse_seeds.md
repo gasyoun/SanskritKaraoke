@@ -1,10 +1,10 @@
 # rv_verse_seeds.json — Rig-Veda verse-selection seed table
 
-_Created: 08-07-2026 · Last updated: 08-07-2026_
+_Created: 08-07-2026 · Last updated: 05-09-2026_
 
-[`rv_verse_seeds.json`](rv_verse_seeds.json) is a **seed/lookup table for verse
+[`rv_verse_seeds.json`](https://github.com/gasyoun/SanskritKaraoke/blob/main/src/data/rv_verse_seeds.json) is a **seed/lookup table for verse
 selection**, not karaoke-ready content — it is not part of the
-[`verses/`](../../verses/README.md) catalogue and carries no `has_audio`/`has_session`
+[`verses/`](https://github.com/gasyoun/SanskritKaraoke/blob/main/verses/README.md) catalogue and carries no `has_audio`/`has_session`
 gate itself. It exists so a future editorial pass choosing new Rig-Veda stanzas for
 Sanskrit Karaoke can pick by meter without re-deriving scansion from scratch.
 
@@ -20,7 +20,7 @@ Sanskrit Karaoke can pick by meter without re-deriving scansion from scratch.
 
 ## Source & method
 
-Built by [`tools/build_rv_verse_seeds.py`](../../tools/build_rv_verse_seeds.py), joining
+Built by [`tools/build_rv_verse_seeds.py`](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/build_rv_verse_seeds.py), joining
 two VedaWeb 2.0 exports already landed in the sibling `VisualDCS` repo on the shared
 `location` key:
 

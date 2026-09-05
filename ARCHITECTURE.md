@@ -1,3 +1,5 @@
+_Created: 14-05-2026 · Last updated: 05-09-2026_
+
 # Sanskrit Karaoke — Architecture
 
 Документ описывает текущее состояние и целевую архитектуру по каждой фазе из ROADMAP.md.
@@ -174,7 +176,7 @@ systemd unit: sanskrit-api.service
 `automatic-before JSON` ↔ `human-approved-after JSON` + оригинальное аудио. Профиль
 калибруется под стабильную запись Уши (тот же голос, микрофон и условия). Шлоки,
 прозаические сутры и ведийский материал проверяются раздельно. Подробности и измеренный
-baseline: [ADR-0004](docs/adr/0004-approved-timing-corpus-alignment.md). Старый independent
+baseline: [ADR-0004](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0004-approved-timing-corpus-alignment.md). Старый independent
 RMS snap / равное деление на четыре части больше не является plan of record.
 
 ---
@@ -273,3 +275,5 @@ CREATE TABLE assignments (
 Неделя 10-11: Leaderboard + профили + share-карточки
 Неделя 12+:   Структура курса
 ```
+
+_Dr. Mārcis Gasūns_

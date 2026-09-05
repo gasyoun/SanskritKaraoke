@@ -1,3 +1,5 @@
+_Created: 11-05-2026 · Last updated: 05-09-2026_
+
 # Инструкция для продолжения работы над проектом Sanskrit Wave
 
 ## Проект
@@ -244,3 +246,5 @@ with open('/home/claude/project/src/scripts/app.js', 'wb') as f:
 1. Обновить `<title>` и `>v1.NNN<` в index.html
 2. Дописать строку в ver_info.txt
 3. `cd /home/claude/project && zip -r /mnt/user-data/outputs/html_vNNN.zip . --exclude "src/scripts/app.js.bak"`
+
+_Dr. Mārcis Gasūns_

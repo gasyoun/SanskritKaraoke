@@ -1,3 +1,5 @@
+_Created: 12-06-2026 · Last updated: 05-09-2026_
+
 # ADR-0001: Extract a DOM-free rendering core from app.js
 
 **Status:** Accepted · 2026-06-12
@@ -82,3 +84,5 @@ WebCodecs encoder loops (browser keeps its in-app export buttons), DOCX export.
   deploy simplicity is a feature.
 - **Keep monolith, drive headless via the existing page only** — workable short-term (ADR-0002
   stage 1 does exactly this) but leaves the student player's fake-DOM hack and blocks template v2.
+
+_Dr. Mārcis Gasūns_

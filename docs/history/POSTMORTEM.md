@@ -1,3 +1,5 @@
+_Created: 14-05-2026 · Last updated: 05-09-2026_
+
 # Post-Mortem: Raw SDK vs. Claude Agent SDK
 
 This document compares two implementations of the **Verse Library Agent** for Phase 1 of the Sanskrit Karaoke roadmap.
@@ -37,3 +39,5 @@ While the SDK saves on harness logic, it still requires:
 The **Claude Agent SDK** shifts the developer's job from **"writing a loop"** to **"designing an interface."** 
 
 In the raw SDK, I was an engineer building a remote-controlled car (telling it exactly when to turn). In the Agent SDK, I was a city planner building the roads and signs (the tools and descriptions) and letting the self-driving car (the agent) navigate the task autonomously. For a project like the **Sanskrit Karaoke Teaching Pipeline**, the SDK approach is significantly more scalable as the number of specialized tools grows.
+
+_Dr. Mārcis Gasūns_

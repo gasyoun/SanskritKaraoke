@@ -1,3 +1,5 @@
+_Created: 12-05-2026 · Last updated: 05-09-2026_
+
 # Harness Mental Model: Claude Code Audit
 
 This document analyzes the **Claude Code** harness through the lens of the ten essential components of an agentic system, specifically how they are represented in this repository via `CLAUDE.md`.
@@ -51,3 +53,5 @@ This document analyzes the **Claude Code** harness through the lens of the ten e
 
 ### Gap Analysis
 The current harness setup is excellent at **Context Management** but currently lacks **Observability** (no trajectory logs or cost tracking) and **Automated Hooks** (no pre-commit validation logic). These gaps are the primary focus of the upcoming Phase 4 (Evals) and Phase 5 (Production Hardening) of the roadmap.
+
+_Dr. Mārcis Gasūns_

@@ -1,6 +1,8 @@
+_Created: 12-06-2026 · Last updated: 05-09-2026_
+
 # Architecture Decision Records
 
-Durable design decisions for the karaoke product pipeline (see [../KARAOKE_PRODUCT_ROADMAP.md](../KARAOKE_PRODUCT_ROADMAP.md)).
+Durable design decisions for the karaoke product pipeline (see [../KARAOKE_PRODUCT_ROADMAP.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/KARAOKE_PRODUCT_ROADMAP.md)).
 Each ADR records *why*, so future sessions (any model, any account) inherit the reasoning instead of re-deriving it.
 
 | ADR | Title | Status |
@@ -13,3 +15,5 @@ Each ADR records *why*, so future sessions (any model, any account) inherit the 
 
 Convention: `Status` is Proposed → Accepted → Superseded-by-NNNN. Never edit an accepted ADR's decision retroactively — write a superseding one.
 Source audit baseline: `app.js` @ v1.4.2, 7,763 lines (full read 2026-06-12, Fable 5 session).
+
+_Dr. Mārcis Gasūns_

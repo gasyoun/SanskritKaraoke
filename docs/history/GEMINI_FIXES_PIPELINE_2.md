@@ -1,3 +1,5 @@
+_Created: 14-05-2026 · Last updated: 05-09-2026_
+
 # Pipeline Fix — Part 2 of 3: Deepcopy + Unit Test
 ## For Gemini Flash
 
@@ -194,3 +196,5 @@ TEST: content_enricher does not mutate input state
 **FAIL if** any check prints `False` or an `AssertionError` is raised.
 
 When Part 2 passes, proceed to `GEMINI_FIXES_PIPELINE_3.md`.
+
+_Dr. Mārcis Gasūns_

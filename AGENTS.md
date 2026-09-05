@@ -1,3 +1,5 @@
+_Created: 12-05-2026 · Last updated: 05-09-2026_
+
 # AGENTS.md — Sanskrit Karaoke
 
 This file is loaded by AI agent harnesses (Claude Code, Codex, Cursor, Copilot) to orient
@@ -12,7 +14,7 @@ on this project.
 
 **Next action:**
 > The drop is gated on chapter audio from Уша Санка. The moment audio exists,
-> execute [docs/archive/H132-Sonnet_SanskritKaraoke_AUDIO_DROP_RUNBOOK_02.07.26.md](docs/archive/H132-Sonnet_SanskritKaraoke_AUDIO_DROP_RUNBOOK_02.07.26.md) end-to-end
+> execute [docs/archive/H132-Sonnet_SanskritKaraoke_AUDIO_DROP_RUNBOOK_02.07.26.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/archive/H132-Sonnet_SanskritKaraoke_AUDIO_DROP_RUNBOOK_02.07.26.md) end-to-end
 > (align → render → post-kit → schedule). Pre-flight is green: Puppeteer
 > installed 02-07-2026, dry-run verified.
 
@@ -40,7 +42,7 @@ blocker; resume opportunistically.
 | Done | Phase 4 — `evals/golden/` + `evals/judge.py` (MY_ROADMAP.md) |
 | Done | Phase 3 — `docs/harness_gap_analysis.md` (Custom skill audit) |
 | Done | Auto-alignment implementation (GEMINI_ALIGNMENT_PLAN.md — Gemini Flash) |
-| Next | Gold-pair alignment v2 ([ADR-0004](docs/adr/0004-approved-timing-corpus-alignment.md)): waiting for original audio + automatic-before/human-approved-after JSONs; target <1 minute human review |
+| Next | Gold-pair alignment v2 ([ADR-0004](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0004-approved-timing-corpus-alignment.md)): waiting for original audio + automatic-before/human-approved-after JSONs; target <1 minute human review |
 | Backlog | Firebase auth + cloud SRS (ROADMAP.md Phase 1) |
 | Done | Phase 0 — `docs/harness_mental_model.md` (ten-component audit) |
 | Done | Phase 1 raw SDK — `docs/history/verse_agent_raw.py` |
@@ -50,7 +52,7 @@ blocker; resume opportunistically.
 ## Shared org context (generated — H1393 layer)
 
 - Encodings / key1/key2 / transcoder traps: [Sanskrit context primer](https://github.com/gasyoun/github-spine/blob/main/SANSKRIT_CONTEXT_PRIMER.md).
-- Task routing: [CLAUDE.md](CLAUDE.md) — matching section, not end-to-end.
+- Task routing: [CLAUDE.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/CLAUDE.md) — matching section, not end-to-end.
 - Danger facts (destroy-work-if-missed; full text + sources in [DANGER_FACTS.md](https://github.com/gasyoun/Uprava/blob/main/DANGER_FACTS.md)):
   - Check estate surfaces before building: kosha datasets.json (registry), DATA_LAYERS_CENSUS.md (unregistered data), PROJECT_INTERLINKS.md + interlinks_edges.tsv (edges), FEATURES_INDEX.md (inventory), REUSE_INDEX.md (reuse) - query memory_recall / /context first, build only the gap.
   - pdftotext blanks Cyrillic while returning plausibly-shaped output - never poppler on Russian PDFs.
@@ -60,3 +62,5 @@ blocker; resume opportunistically.
 - Off-git assets: [shadow-assets registry](https://github.com/gasyoun/Uprava/blob/main/SHADOW_ASSETS_POINTERS.md).
 
 [/generated-block]
+
+_Dr. Mārcis Gasūns_

@@ -1,3 +1,5 @@
+_Created: 14-05-2026 · Last updated: 05-09-2026_
+
 # Pipeline Fix — Part 1 of 3: Reducer + Short-Circuit
 ## For Gemini Flash
 
@@ -123,3 +125,5 @@ Look at SCENARIO 1 output. You should see three nodes: `curator`, `enricher`,
 **FAIL if** errors grow between STEP 1 and STEP 2 — reducer fix not working.
 
 When Part 1 passes, proceed to `GEMINI_FIXES_PIPELINE_2.md`.
+
+_Dr. Mārcis Gasūns_

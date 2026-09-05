@@ -1,3 +1,5 @@
+_Created: 18-07-2026 · Last updated: 05-09-2026_
+
 # ADR-0004: Speaker-calibrated constrained alignment from approved timing pairs
 
 **Status:** Accepted · 2026-07-18
@@ -5,7 +7,7 @@
 **Supersedes:** ADR-0003's “port, don't redesign” algorithm choice and ≤2 minute QA target. The
 CLI/batch interface from ADR-0003 remains valid.
 
-**User rulings:** [Alignment decisions D1–D4](../DECISIONS_ALIGNMENT.md)
+**User rulings:** [Alignment decisions D1–D4](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/DECISIONS_ALIGNMENT.md)
 
 ## Context
 
@@ -144,3 +146,5 @@ silently evaluated against a different recording.
   structure, so the final dot clears during pauses.
 - The old current-constant tuning loop is no longer the plan of record.
 - Human edits become reusable evidence rather than discarded correction work.
+
+_Dr. Mārcis Gasūns_

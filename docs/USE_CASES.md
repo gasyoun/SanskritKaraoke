@@ -1,3 +1,5 @@
+_Created: 15-05-2026 · Last updated: 05-09-2026_
+
 # Use Case Scenarios — Sanskrit Karaoke
 
 The project serves **two audiences**, and this document is organised around them:
@@ -297,3 +299,5 @@ skipped with no network call. Without `--live` (or without creds) every entry sh
 1. `WP_BASE_URL` = site root, e.g. `https://samskrtam.ru` (no trailing slash).
 2. WP Admin → **Users → Profile → Application Passwords** → name it → "Add New Application Password" → copy → `WP_APP_PASSWORD` (WordPress 5.6+ over HTTPS).
 3. `WP_USER` = your WordPress login.
+
+_Dr. Mārcis Gasūns_

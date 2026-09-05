@@ -1,3 +1,5 @@
+_Created: 12-05-2026 · Last updated: 05-09-2026_
+
 # Sanskrit Karaoke — Edutech Platform PRD
 ## Handoff document for Gemini Flash
 
@@ -363,3 +365,5 @@ Quiz results stored alongside SRS state.
 - Google Drive authentication flow
 - `mp4-muxer` karaoke / story export functions
 - Existing session JSON format (student player must consume it as-is via `_applySession`)
+
+_Dr. Mārcis Gasūns_

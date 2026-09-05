@@ -1,6 +1,8 @@
+_Created: 12-06-2026 · Last updated: 05-09-2026_
+
 # ADR-0003: Auto-alignment as a Python CLI port of the proven in-browser algorithm
 
-**Status:** Superseded in algorithm and QA by [ADR-0004](0004-approved-timing-corpus-alignment.md) · 2026-07-18
+**Status:** Superseded in algorithm and QA by [ADR-0004](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0004-approved-timing-corpus-alignment.md) · 2026-07-18
 
 **Retained:** the Python CLI and batch interface remain valid.
 **Replaces as plan-of-record:** `GEMINI_ALIGNMENT_PLAN.md`, `docs/auto_alignment_spec.md`
@@ -80,3 +82,5 @@ present. Batch drops need it to run over a folder of audio files unattended.
 - **GitHub Actions auto-alignment on push** (spec Phase B): clever, but audio isn't in the repo
   (rights/size), secrets handling for Drive adds friction, and local CLI fits the batch-drop
   workflow (teacher has the audio locally on recording day).
+
+_Dr. Mārcis Gasūns_

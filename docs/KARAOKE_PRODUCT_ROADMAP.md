@@ -1,6 +1,6 @@
 # Karaoke Product Roadmap — batch-drop funnel edition
 
-_Created: 12-06-2026 · Last updated: 27-08-2026_
+_Created: 12-06-2026 · Last updated: 05-09-2026_
 
 > **Human-gate 27-08-2026** (Grok 4.6 `grok-4.6`). The next open checkbox is a human act — written permission from Уша Санкар — not `/roadmap-item-exec` for an agent. Do not tick the box. Do not fetch audio or rewrite git history.
 
@@ -23,9 +23,9 @@ The strategic consequence: the product is not the web app — it is the **pipeli
 Everything below serves that pipeline.
 
 **Technical design is locked in ADRs** (full-monolith audit, 2026-06-12):
-[adr/0001](adr/0001-rendering-core-extraction.md) — DOM-free core extraction map for app.js;
-[adr/0002](adr/0002-headless-batch-renderer.md) — Puppeteer-driven batch renderer + template v1;
-[adr/0003](adr/0003-auto-alignment-cli.md) — `align_chapter.py` as a port of the proven in-browser algorithm.
+[adr/0001](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0001-rendering-core-extraction.md) — DOM-free core extraction map for app.js;
+[adr/0002](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0002-headless-batch-renderer.md) — Puppeteer-driven batch renderer + template v1;
+[adr/0003](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0003-auto-alignment-cli.md) — `align_chapter.py` as a port of the proven in-browser algorithm.
 
 ---
 
@@ -58,7 +58,7 @@ Manual tapping, dragging, and repeated listening is incompatible with chapter-si
 The approved 15.7-second sample took about 10 minutes; the binding target is **<1 minute of human
 review per clip** with cursor behavior matching that sample.
 
-- [ ] Implement [ADR-0004](adr/0004-approved-timing-corpus-alignment.md): comparison corpus =
+- [ ] Implement [ADR-0004](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0004-approved-timing-corpus-alignment.md): comparison corpus =
   original audio + automatic-before JSON + human-approved-after JSON; learn Uṣā-specific onset
   offsets and evaluate on held-out recordings.
 - [ ] Approach: automatic phrase/pause segmentation + existing Taylor-derived chandas constraints

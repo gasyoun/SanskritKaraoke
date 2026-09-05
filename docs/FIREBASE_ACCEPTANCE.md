@@ -1,3 +1,5 @@
+_Created: 03-06-2026 · Last updated: 05-09-2026_
+
 # Firebase Cloud Sync Acceptance
 
 ## Current Status
@@ -78,3 +80,5 @@ Rules source:
 ```text
 firestore.rules
 ```
+
+_Dr. Mārcis Gasūns_

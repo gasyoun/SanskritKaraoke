@@ -1,3 +1,5 @@
+_Created: 15-05-2026 · Last updated: 05-09-2026_
+
 # Sanskrit Karaoke — Teaching Pipeline
 
 This directory contains the server-side agentic pipeline for verse curation and student analysis, built using **LangGraph 1.0** and **Pydantic**.
@@ -60,7 +62,7 @@ python agents/teaching_pipeline/test_deepcopy.py
 
 ## LangSmith tracing
 
-Phase 2 of [MY_ROADMAP.md](../../MY_ROADMAP.md) asks for a LangSmith trace of a full
+Phase 2 of [MY_ROADMAP.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/MY_ROADMAP.md) asks for a LangSmith trace of a full
 verse-to-catalogue run. Tracing is env-native — LangChain reads `LANGSMITH_*`:
 
 1. Copy `.env.example` → `.env` and fill the `LANGSMITH` section (free token:
@@ -77,3 +79,5 @@ The pipeline is continuously evaluated using a **Golden Dataset** (8 cases) in `
 ```bash
 python evals/judge.py
 ```
+
+_Dr. Mārcis Gasūns_

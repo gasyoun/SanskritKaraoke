@@ -1,3 +1,5 @@
+_Created: 14-05-2026 · Last updated: 05-09-2026_
+
 # Gemini Flash — Auto-Alignment Implementation Plan
 
 **Repo:** https://github.com/gasyoun/SanskritKaraoke  
@@ -650,3 +652,5 @@ Add a small button "↓ Тайминг JSON" in the Library Export section of th
 
 **Do NOT modify:** `student.html`, `progress.html`, `catalogue.html`, `src/scripts/srs.js`,
 `src/scripts/quizzes.js` — these are not part of this task.
+
+_Dr. Mārcis Gasūns_

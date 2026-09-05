@@ -257,3 +257,5 @@ as the Phase 6 run. Until then: keep pre-flight green (Puppeteer installed, vali
 ---
 
 *Duration math: Phase 0 (1w SPEEDRUN) + Phase 1 (6w NORMAL) + Phase 2 (9w NORMAL) + Phase 3 (4w SPEEDRUN) + Phase 4 (10w DEEP) = 30 weeks at 5 h/week. Phase 5 is ongoing.*
+
+_Dr. Mārcis Gasūns_

@@ -1,3 +1,5 @@
+_Created: 12-05-2026 · Last updated: 05-09-2026_
+
 # Sanskrit Karaoke
 
 ## Волновая нотация санскрита — визуализатор и экспортер карaoке
@@ -9,7 +11,7 @@
 
 ---
 
-[![Sanskrit Karaoke Video](https://img.shields.io/badge/Video-Sample-red)](src/bhg_2_3-shloka-sample.mp4)
+[![Sanskrit Karaoke Video](https://img.shields.io/badge/Video-Sample-red)](https://github.com/gasyoun/SanskritKaraoke/blob/main/src/bhg_2_3-shloka-sample.mp4)
 
 Sanskrit Karaoke превращает санскритскую шлоку в интерактивную волновую диаграмму, которая показывает метрический вес каждого слога (гуру / лагху), позволяет задать тайминг по аудио и экспортировать карaoке-видео или изображения высокого разрешения.
 
@@ -85,7 +87,7 @@ python -m http.server 8000
 
 Слой 2026 года: из пакетной аудиозаписи **целой главы** получаются готовые к публикации
 вертикальные карaoке-видео с воронкой к платному курсу. Роли и пошаговые процессы —
-в [docs/USE_CASES.ru.md](docs/USE_CASES.ru.md).
+в [docs/USE_CASES.ru.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/USE_CASES.ru.md).
 
 - **Одна команда:** `python tools/build_chapter.py <папка_с_аудио>` — авто-тайминг
   (`align_chapter.py`) → рендер `feed_v1` (вертикальный MP4 9:16 @ 30 к/с + субтитры
@@ -102,7 +104,7 @@ python -m http.server 8000
 - **Расписание и постинг:** `python tools/schedule_drops.py --config schedule.yaml` строит
   план постов из файла каденции; флаг `--live` постит через публикаторы для **Telegram, VK,
   Facebook, Instagram и WordPress** — каждый срабатывает только там, где заданы учетные
-  данные площадки в окружении (см. Приложение D в [docs/USE_CASES.ru.md](docs/USE_CASES.ru.md)).
+  данные площадки в окружении (см. Приложение D в [docs/USE_CASES.ru.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/USE_CASES.ru.md)).
   Для Telegram достаточно токена от @BotFather; без `--live` и ключей ничего не отправляется.
 - **Единственный барьер к первому дропу:** записи Уша Санка (аудио). Весь остальной
   конвейер уже построен.
@@ -116,7 +118,7 @@ audio_dir/<id>.m4a ─▶ align_chapter.py ─▶ render_chapter.js ─▶ post_
 ```
 
 Полный **справочник команд**, **чек-лист первого дропа** и **глоссарий** —
-в [docs/USE_CASES.ru.md](docs/USE_CASES.ru.md) (Приложения A–C).
+в [docs/USE_CASES.ru.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/USE_CASES.ru.md) (Приложения A–C).
 
 ---
 
@@ -174,7 +176,7 @@ audio_dir/<id>.m4a ─▶ align_chapter.py ─▶ render_chapter.js ─▶ post_
 
 ## Сценарии использования
 
-Подробные рабочие процессы для разных ролей (учителя, студенты, кураторы и оффлайн-практика) задокументированы в файле [**docs/USE_CASES.ru.md**](docs/USE_CASES.ru.md).
+Подробные рабочие процессы для разных ролей (учителя, студенты, кураторы и оффлайн-практика) задокументированы в файле [**docs/USE_CASES.ru.md**](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/USE_CASES.ru.md).
 
 ### Краткий обзор ролей:
 
@@ -195,3 +197,5 @@ audio_dir/<id>.m4a ─▶ align_chapter.py ─▶ render_chapter.js ─▶ post_
 ## Лицензия
 
 Apache 2.0 — см. [LICENSE](LICENSE).
+
+_Dr. Mārcis Gasūns_

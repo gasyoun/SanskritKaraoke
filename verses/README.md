@@ -1,3 +1,5 @@
+_Created: 12-05-2026 · Last updated: 05-09-2026_
+
 # Sanskrit Karaoke Verse Library
 
 This directory contains the file-based catalogue for Sanskrit Karaoke verses.
@@ -64,3 +66,5 @@ To build index:
 ```bash
 python tools/build_index.py
 ```
+
+_Dr. Mārcis Gasūns_

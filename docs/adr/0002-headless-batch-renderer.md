@@ -1,3 +1,5 @@
+_Created: 12-06-2026 · Last updated: 05-09-2026_
+
 # ADR-0002: Headless batch renderer — Puppeteer first, node-canvas only if needed
 
 **Status:** Accepted · 2026-06-12
@@ -73,3 +75,5 @@ the scene code is shared. Do not build this speculatively.
   WebCodecs), already the legacy path's weakness, and broken on iOS.
 - **Keep manual per-verse export** — incompatible with chapter-sized batch drops; this is the
   bottleneck the roadmap exists to remove.
+
+_Dr. Mārcis Gasūns_

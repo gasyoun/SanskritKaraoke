@@ -1,3 +1,5 @@
+_Created: 18-07-2026 · Last updated: 05-09-2026_
+
 # Alignment decisions
 
 Append-only record of product and scholarly rulings for Sanskrit karaoke timing.
@@ -98,3 +100,5 @@ diagnostic, while human approval time under one minute is the product acceptance
 ---
 
 Decisions elicited and recorded 18-07-2026 by Codex, GPT-5 (exact service build not exposed).
+
+_Dr. Mārcis Gasūns_
