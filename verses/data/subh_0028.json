@@ -1,0 +1,53 @@
+{
+  "id": "subh_0028",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №28 (akīrtiṃ vinayo hanti hantyanarthaṃ…)",
+    "en": "Subhāṣita №28 (akīrtiṃ vinayo hanti hantyanarthaṃ…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 28,
+    "attribution": "Böhtlingk, Indische Sprüche №28"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "अकीर्तिं विनयो हन्ति हन्त्यनर्थं पराक्रमः ।",
+  "s2": "हन्ति नित्यं क्षमा क्रोधमाचारो हन्त्यलक्षणम् ॥",
+  "s1dev": "अकीर्तिं विनयो हन्ति हन्त्यनर्थं पराक्रमः ।",
+  "s2dev": "हन्ति नित्यं क्षमा क्रोधमाचारो हन्त्यलक्षणम् ॥",
+  "translation": {
+    "de": "(3374.) Gutes Betragen hält Schande/fern, muthiges Auftreten hält Schaden/fern, Nachsicht hält stets den Zorn/fern, Beobachtung der Sitte hält Unglück/verheissende Zeichen fern.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-06",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 28",
+    "page": "Page 1.6",
+    "iast_reference": "akīrtiṃ vinayo hanti hantyanarthaṃ parākramaḥ |/hanti nityaṃ kṣamā krodhamācāro hantyalakṣaṇam ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  }
+}

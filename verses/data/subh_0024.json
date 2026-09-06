@@ -1,0 +1,53 @@
+{
+  "id": "subh_0024",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №24 (akāle kṛtyamārabdhaṃ karturnārthāya kalpate…)",
+    "en": "Subhāṣita №24 (akāle kṛtyamārabdhaṃ karturnārthāya kalpate…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 24,
+    "attribution": "Böhtlingk, Indische Sprüche №24"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "अकाले कृत्यमारब्धं कर्तुर्नार्थाय कल्पते ।",
+  "s2": "तदेव काल आरब्धं महते ऽर्थाय कल्पते ॥",
+  "s1dev": "अकाले कृत्यमारब्धं कर्तुर्नार्थाय कल्पते ।",
+  "s2dev": "तदेव काल आरब्धं महते ऽर्थाय कल्पते ॥",
+  "translation": {
+    "de": "(3370.) Ein zur Unzeit begonnenes/Werk bringt dem Thäter keinen Nutzen",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-06",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 24",
+    "page": "Page 1.5",
+    "iast_reference": "akāle kṛtyamārabdhaṃ karturnārthāya kalpate |/tadeva kāla ārabdhaṃ mahate 'rthāya kalpate ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  }
+}

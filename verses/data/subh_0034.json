@@ -1,0 +1,53 @@
+{
+  "id": "subh_0034",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №34 (akulīno 'pi mūrkho 'pi…)",
+    "en": "Subhāṣita №34 (akulīno 'pi mūrkho 'pi…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 34,
+    "attribution": "Böhtlingk, Indische Sprüche №34"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "अकुलीनो ऽपि मूर्खो ऽपि भूपालं यो ऽत्र सेवते ।",
+  "s2": "अपि संमानहीनो ऽपि स सर्वत्र प्रपूज्यते ॥",
+  "s1dev": "अकुलीनो ऽपि मूर्खो ऽपि भूपालं यो ऽत्र सेवते ।",
+  "s2dev": "अपि संमानहीनो ऽपि स सर्वत्र प्रपूज्यते ॥",
+  "translation": {
+    "de": "(7.) Wer hier einem Fürsten dient,/wird überall geehrt, selbst wenn er von/niedriger Herkunft, ein Thor und der/Ehre nicht würdig ist.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-06",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 34",
+    "page": "Page 1.7",
+    "iast_reference": "akulīno 'pi mūrkho 'pi bhūpālaṃ yo 'tra sevate |/api saṃmānahīno 'pi sa sarvatra prapūjyate ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  }
+}

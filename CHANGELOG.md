@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+
+- **JSONL batch subhāṣita import — first repo-side consumer of the tracked `indische-sprueche` dataset (H4178 wiring, 06-09-2026, OxAlpha `zai-coding-plan/glm-5.3-flash`).** [`tools/import_subhashita_jsonl.py`](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/import_subhashita_jsonl.py) reads the tracked mirror (`SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl`, kosha manifest row `indische-sprueche`, 7,537 public-domain sayings) read-only from the sibling checkout — the curated first drop was hand-embedded and never consumed the dataset — and auto-screens sayings for clean anuṣṭubh shape (2 lines × 16 akṣaras, machine IAST count; 4,422/7,537 pass). First drop landed: **25 new text-only verses** (`verses/data/subh_00{01…34}.json`, skipping the 10 curated nums), Sanskrit + Böhtlingk's German verbatim public domain, **no Russian translation fabricated** (`language_tags: ["de"]`), `import_meta` records the auto-screened provenance + source pin (file-level commit, no per-verse human curation claim). `tools/build_index.py` regenerated the catalogue (38 verses), `tools/validate_library.py` all-38-valid, `tools/test_meter_detector.py` ALL CHECKS PASSED.
 
 ## [1.5.7] - 2026-08-30
 ### Added

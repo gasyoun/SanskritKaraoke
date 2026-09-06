@@ -1,0 +1,53 @@
+{
+  "id": "subh_0025",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №25 (akiñcanaḥ paripatansukhamāsvādayiṣyasi akiñcanaḥ sukhaṃ…)",
+    "en": "Subhāṣita №25 (akiñcanaḥ paripatansukhamāsvādayiṣyasi akiñcanaḥ sukhaṃ…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 25,
+    "attribution": "Böhtlingk, Indische Sprüche №25"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "अकिंचनः परिपतन्सुखमास्वादयिष्यसि ।",
+  "s2": "अकिंचनः सुखं शेते समुत्तिष्ठति चैव ह ॥",
+  "s1dev": "अकिंचनः परिपतन्सुखमास्वादयिष्यसि ।",
+  "s2dev": "अकिंचनः सुखं शेते समुत्तिष्ठति चैव ह ॥",
+  "translation": {
+    "de": "(3371.) Bist du arm, so wirst du/dich tummeln und dein Mahl mit/Wohlbehagen verzehren",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-06",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 25",
+    "page": "Page 1.5",
+    "iast_reference": "akiñcanaḥ paripatansukhamāsvādayiṣyasi |/akiñcanaḥ sukhaṃ śete samuttiṣṭhati caiva ha ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  }
+}

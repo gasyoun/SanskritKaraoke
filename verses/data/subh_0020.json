@@ -1,0 +1,53 @@
+{
+  "id": "subh_0020",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №20 (akāryāṇyapi paryāpya kṛtvāpi vṛjinārjanam…)",
+    "en": "Subhāṣita №20 (akāryāṇyapi paryāpya kṛtvāpi vṛjinārjanam…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 20,
+    "attribution": "Böhtlingk, Indische Sprüche №20"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "अकार्याण्यपि पर्याप्य कृत्वापि वृजिनार्जनम् ।",
+  "s2": "विधीयते हितं यस्य स देहः कस्य सुस्थिरः ॥",
+  "s1dev": "अकार्याण्यपि पर्याप्य कृत्वापि वृजिनार्जनम् ।",
+  "s2dev": "विधीयते हितं यस्य स देहः कस्य सुस्थिरः ॥",
+  "translation": {
+    "de": "(3368.) Wessen Leib möchte wohl/bestehen, wenn man ihm Gutes erwiese,/trotzdem dass er zuvor Ungebührliches/vollbrachte und Sünde einsammelte?",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-06",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 20",
+    "page": "Page 1.4",
+    "iast_reference": "akāryāṇyapi paryāpya kṛtvāpi vṛjinārjanam |/vidhīyate hitaṃ yasya sa dehaḥ kasya susthiraḥ ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  }
+}

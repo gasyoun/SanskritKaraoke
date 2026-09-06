@@ -1,0 +1,53 @@
+{
+  "id": "subh_0009",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №9 (akasmādeva tanvaṅgī jahāsa yadiyaṃ…)",
+    "en": "Subhāṣita №9 (akasmādeva tanvaṅgī jahāsa yadiyaṃ…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 9,
+    "attribution": "Böhtlingk, Indische Sprüche №9"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "अकस्मादेव तन्वङ्गी जहास यदियं पुनः ।",
+  "s2": "नूनं प्रसूनबाणो ऽस्यां स्वाराज्यमधितिष्ठति ॥",
+  "s1dev": "अकस्मादेव तन्वङ्गी जहास यदियं पुनः ।",
+  "s2dev": "नूनं प्रसूनबाणो ऽस्यां स्वाराज्यमधितिष्ठति ॥",
+  "translation": {
+    "de": "(2.) Da diese Schlankgliederige zu/wiederholten Malen ohne alle/Veranlassung auflachte, so wird gewiss/der Gott, welcher Blumen als Pfeile/gebraucht, in ihr das Regiment/unumschränkt führen.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-06",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 9",
+    "page": "Page 1.2",
+    "iast_reference": "akasmādeva tanvaṅgī jahāsa yadiyaṃ punaḥ |/nūnaṃ prasūnabāṇo 'syāṃ svārājyamadhitiṣṭhati ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  }
+}

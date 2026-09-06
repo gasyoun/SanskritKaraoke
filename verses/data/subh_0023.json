@@ -1,0 +1,53 @@
+{
+  "id": "subh_0023",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №23 (akālasahamatyalpaṃ mūrkhavyasanināyakam aguptaṃ bhīruyodhaṃ…)",
+    "en": "Subhāṣita №23 (akālasahamatyalpaṃ mūrkhavyasanināyakam aguptaṃ bhīruyodhaṃ…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 23,
+    "attribution": "Böhtlingk, Indische Sprüche №23"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "अकालसहमत्यल्पं मूर्खव्यसनिनायकम् ।",
+  "s2": "अगुप्तं भीरुयोधं च दुर्गव्यसनमुच्यते ॥",
+  "s1dev": "अकालसहमत्यल्पं मूर्खव्यसनिनायकम् ।",
+  "s2dev": "अगुप्तं भीरुयोधं च दुर्गव्यसनमुच्यते ॥",
+  "translation": {
+    "de": "(3369.) Wenn eine Burg sich nicht/lange zu halten vermag, gar zu klein/ist, einen dummen oder lasterhaften/Befehlshaber hat, nicht gehörig bewacht/ist und von feigen Kriegern vertheidigt/wird, so nennt man dieses die Mängel/einer Burg.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-06",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 23",
+    "page": "Page 1.5",
+    "iast_reference": "akālasahamatyalpaṃ mūrkhavyasanināyakam |/aguptaṃ bhīruyodhaṃ ca durgavyasanamucyate ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  }
+}
