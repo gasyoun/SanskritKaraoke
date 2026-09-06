@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>pilot-01-five-encodings</title>
+<!-- H4265 short pilot · data: infographics №9 five-encodings-2026-08-29 (kṛṣṇa via sanskrit-util) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Serif+Devanagari:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#101216;--ink:#F2F5F9;--sub:#9AA6B5;--accent:#FF8A70;--card:#1A1F26;--neon:#6FE3C1;
+--font-display:'Comfortaa',system-ui,sans-serif;--font-body:'Nunito',system-ui,sans-serif;
+--dev:'Noto Serif Devanagari','Noto Sans Devanagari',serif}
+html,body{background:var(--bg)}
+body{width:1080px;height:1920px;overflow:hidden;font-family:var(--font-body);color:var(--ink)}
+.canvas{position:relative;width:1080px;height:1920px;overflow:hidden;
+background:radial-gradient(1200px 800px at 50% -10%, #1B2334 0%, var(--bg) 55%)}
+.kicker{position:absolute;left:64px;top:96px;font:700 26px/1.3 var(--font-body);
+letter-spacing:.18em;text-transform:uppercase;color:var(--sub)}
+.scene{position:absolute;inset:0;will-change:opacity,transform}
+#bigword{position:absolute;left:0;right:0;top:560px;text-align:center;
+font:700 300px/1 var(--dev);color:var(--ink)}
+#hooktitle{position:absolute;left:64px;right:64px;top:980px;text-align:center;
+font:700 72px/1.12 var(--font-display);color:var(--ink)}
+#hooktitle b{color:var(--accent)}
+.card{position:absolute;left:64px;width:952px;background:var(--card);border-radius:24px;
+padding:26px 40px;border:3px solid transparent;transition:none}
+.card .tag{font:800 24px var(--font-body);color:var(--accent);letter-spacing:.12em;text-transform:uppercase}
+.card .word{font:700 80px var(--dev);margin-top:10px}
+.card .note{font:600 30px var(--font-body);color:var(--sub);margin-top:8px}
+.card.active{border-color:var(--accent);box-shadow:0 0 60px rgba(255,138,112,.18)}
+.card.dim{opacity:.22}
+.subtitle{position:absolute;left:64px;top:168px;font:600 30px var(--font-body);color:var(--sub)}
+.dots{position:absolute;left:0;right:0;top:232px;display:flex;gap:18px;justify-content:center}
+.dots span{width:18px;height:18px;border-radius:50%;background:#2A3140}
+.dots span.on{background:var(--accent)}
+#outrotitle{position:absolute;left:64px;right:64px;top:760px;text-align:center;
+font:700 68px/1.18 var(--font-display)}
+#outrotitle b{color:var(--neon)}
+.src{position:absolute;left:64px;right:64px;top:1810px;text-align:center;
+font:400 22px/1.4 var(--font-body);color:var(--sub)}
+.caps{position:absolute;left:40px;right:40px;bottom:200px;text-align:center;pointer-events:none;z-index:9}
+.cap{display:none;font:800 46px/1.25 var(--font-body);color:#fff;width:max-content;max-width:1000px;
+margin:0 auto;background:rgba(8,10,14,.5);border-radius:18px;padding:16px 30px;
+text-shadow:0 2px 10px rgba(0,0,0,.8)}
+.cap.on{display:block}
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="kicker">Санскрит · за 30 секунд</div>
+
+  <div class="scene" id="s-hook">
+    <div id="bigword">कृष्ण</div>
+    <div id="hooktitle">Одно слово.<br><b>Пять кодировок.</b></div>
+  </div>
+
+  <div class="scene" id="s-cards">
+    <div class="subtitle">Имя kṛṣṇa в пяти системах письма:</div>
+    <div class="card" style="top:300px"  data-i="0"><div class="tag">Devanagari</div><div class="word">कृष्ण</div><div class="note">как пишут в Индии</div></div>
+    <div class="card" style="top:560px"  data-i="1"><div class="tag">IAST</div><div class="word">kṛṣṇa</div><div class="note">латиница учёных</div></div>
+    <div class="card" style="top:820px"  data-i="2"><div class="tag">SLP1</div><div class="word">kfzRa</div><div class="note">машинный ключ словарей</div></div>
+    <div class="card" style="top:1080px" data-i="3"><div class="tag">Harvard-Kyoto</div><div class="word">kRSNa</div><div class="note">печать словарей XX века</div></div>
+    <div class="card" style="top:1340px" data-i="4"><div class="tag">WX</div><div class="word">kqRNa</div><div class="note">ещё один машинный ключ</div></div>
+    <div class="dots"><span data-i="0"></span><span data-i="1"></span><span data-i="2"></span><span data-i="3"></span><span data-i="4"></span></div>
+  </div>
+
+  <div class="scene" id="s-outro">
+    <div id="outrotitle">Пять написаний — <b>одно имя</b>.<br>За всеми ключами — один и тот же словарь.</div>
+    <div class="src">Данные: инфографика «Одно слово — пять кодировок» (№9) · gasyoun.github.io · 2026</div>
+  </div>
+
+  <div class="caps" id="caps"></div>
+</div>
+
+<script>
+const CAPTIONS = [
+  { t0: 0.0,  t1: 4.5,  text: 'Перед вами одно слово — имя Кришна' },
+  { t0: 4.5,  t1: 9.3,  text: 'Деванагари — так его пишут в Индии' },
+  { t0: 9.3,  t1: 14.1, text: 'IAST — латиница с чёрточками, язык учёных' },
+  { t0: 14.1, t1: 18.9, text: 'SLP1 — как слово хранит компьютер' },
+  { t0: 18.9, t1: 23.7, text: 'Harvard-Kyoto — так его печатали словари XX века' },
+  { t0: 23.7, t1: 28.0, text: 'WX — ещё один машинный ключ' },
+  { t0: 28.0, t1: 34.0, text: 'Пять ключей открывают одну и ту же древнюю дверь' },
+];
+window.__meta = { id: 'pilot-01-five-encodings', title: 'Одно слово — пять кодировок', duration: 34, captions: CAPTIONS };
+
+const clamp01 = p => Math.max(0, Math.min(1, p));
+const ease = p => p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+
+const cards = [...document.querySelectorAll('.card')];
+const dots = [...document.querySelectorAll('.dots span')];
+const capsBox = document.getElementById('caps');
+CAPTIONS.forEach(c => {
+  const d = document.createElement('div');
+  d.className = 'cap'; d.textContent = c.text; capsBox.appendChild(d);
+});
+const capEls = [...capsBox.children];
+
+window.__seek = function (t) {
+  const hook = document.getElementById('s-hook');
+  const cardsScene = document.getElementById('s-cards');
+  const outro = document.getElementById('s-outro');
+
+  // hook 0–4.5 · cards 4.5–28 · outro 28–34
+  const inHook = t < 4.5, inCards = t >= 4.5 && t < 28, inOutro = t >= 28;
+
+  hook.style.opacity = inHook ? '1' : '0';
+  const hp = clamp01(t / 1.1);
+  document.getElementById('bigword').style.transform = `scale(${0.92 + 0.08 * ease(hp)})`;
+  document.getElementById('bigword').style.opacity = String(clamp01(t / 0.6));
+  document.getElementById('hooktitle').style.opacity = String(clamp01((t - 0.7) / 0.9));
+
+  cardsScene.style.opacity = inCards ? '1' : '0';
+  if (inCards) {
+    const active = Math.min(4, Math.floor((t - 4.5) / 4.7));
+    const local = clamp01((t - 4.5 - active * 4.7) / 0.45);
+    cards.forEach((c, i) => {
+      c.classList.toggle('active', i === active);
+      c.classList.toggle('dim', i !== active);
+      c.style.transform = i === active ? `scale(${1 + 0.02 * ease(local)})` : 'scale(1)';
+    });
+    dots.forEach((d, i) => d.classList.toggle('on', i <= active));
+  }
+
+  outro.style.opacity = inOutro ? String(ease(clamp01((t - 28) / 0.8))) : '0';
+  if (inOutro) {
+    outro.style.transform = `translateY(${(1 - ease(clamp01((t - 28) / 1.2))) * 40}px)`;
+    outro.style.pointerEvents = 'none';
+  }
+
+  capEls.forEach((el, i) => {
+    const c = CAPTIONS[i];
+    const on = t >= c.t0 && t < c.t1;
+    el.classList.toggle('on', on);
+    if (on) el.style.opacity = String(Math.min(1, (t - c.t0) / 0.3, (c.t1 - t) / 0.3));
+  });
+};
+
+document.fonts.ready.then(() => { window.__ready = true; });
+setTimeout(() => { window.__ready = true; }, 12000);
+</script>
+</body>
+</html>
