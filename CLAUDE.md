@@ -1,10 +1,11 @@
 # CLAUDE.md
 
-_Created: 12-05-2026 · Last updated: 27-08-2026_
+_Created: 12-05-2026 · Last updated: 13-09-2026_
 
-**Sanskrit Karaoke** (Волновая нотация санскрита) is a single-page web app
-that visualises the metrical structure of Sanskrit ślokas as interactive
-wave diagrams, with audio timing and karaoke MP4 export. Live:
+This repo is **Sanskrit Karaoke** (Волновая нотация санскрита) — a
+single-page web app that visualises the metrical structure of Sanskrit
+ślokas as interactive wave diagrams, with audio timing and karaoke MP4
+export. Live:
 [gasyoun.github.io/SanskritKaraoke](https://gasyoun.github.io/SanskritKaraoke/).
 
 Org conventions live in [`../CLAUDE.md`](https://github.com/gasyoun/github-spine/blob/main/CLAUDE.md).
@@ -30,12 +31,14 @@ node tools/test_core_modules.mjs
 pytest tests/test_export_captions.py
 ```
 
-No bundler and no unit-test suite — QA is in-browser. Evals
-(`python evals/judge.py`) need API keys in a root `.env`
-(`ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, optional `OPENROUTER_API_KEY`).
-Push to `main` deploys GitHub Pages via `pages.yml`. A flaky deploy is
-re-dispatched with `gh workflow run pages.yml` — never rerun only the
-failed job.
+No bundler. QA is scripted — the verse validators, `pytest
+tests/test_export_captions.py`, `node tools/test_core_modules.mjs` — plus
+in-browser review. CI on `main`: verse-library validation + `verses/index.json`
+rebuild (`verses.yml`), student-page generator (`student.yml`),
+teaching-pipeline evals (`evals.yml`), Pages deploy (`pages.yml`). A flaky
+Pages deploy is re-dispatched with `gh workflow run pages.yml` — never rerun
+only the failed job. Evals (`python evals/judge.py`) need API keys in a root
+`.env` (`ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, optional `OPENROUTER_API_KEY`).
 
 ## Version string — five places
 
@@ -61,7 +64,9 @@ Bump **all** of these together:
 | `src/scripts/app.js` | Application logic (UTF-8; open/write with explicit encoding) |
 | `src/core/*.js` | ADR-0001 strangler-fig modules — no DOM/globals |
 | `src/scripts/srs.js` · `quizzes.js` · `strings.js` | Student SRS / quizzes / i18n |
+| `src/scripts/cloud_sync.js` · `firebase-config.js` · `teacher-config.js` | Cloud-sync + Firebase/teacher config |
 | `src/data/apte_meters.json` | Lazy-loaded Apte prosody |
+| `shorts/` | Vertical 9:16 video-pilot kit (storyboard renderer + clips) |
 
 `app.js` is a monolith; extracted pure modules live under `src/core/`. Do
 not re-inline them.
@@ -70,7 +75,6 @@ not re-inline them.
 
 - `student.html` — regenerate, do not hand-edit.
 - Do not leave the five version loci drifted.
-- Do not treat `ver_info.txt` as current — it no longer exists.
 - Google Drive `clientId` / `apiKey` in `app.js` are public OAuth client
   credentials for the browser app, not org secrets; do not rotate them
   here without a product change.
