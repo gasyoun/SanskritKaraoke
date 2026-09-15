@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-_Created: 12-05-2026 · Last updated: 13-09-2026_
+_Created: 12-05-2026 · Last updated: 15-09-2026_
 
 This repo is **Sanskrit Karaoke** (Волновая нотация санскрита) — a
 single-page web app that visualises the metrical structure of Sanskrit
@@ -85,5 +85,9 @@ and the generated block of
 [AGENTS.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/AGENTS.md).
 Hand-authored content above the generated block in AGENTS.md is the
 agent-engineering phase note — keep it outside the markers.
+
+## Memory store
+
+This repo keeps a committed memory store at [`.claude/projects/SanskritKaraoke/memory/`](https://github.com/gasyoun/SanskritKaraoke/tree/main/.claude/projects/SanskritKaraoke/memory) per the org Memory-routing rule ([`/danger-memory`](https://github.com/gasyoun/claude-config/blob/main/commands/danger-memory.md)) — write dangerous/durable facts there and index each in its `MEMORY.md` (H4547).
 
 _Dr. Mārcis Gasūns_
