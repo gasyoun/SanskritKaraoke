@@ -68,71 +68,165 @@
   "updated_at": "2026-08-26",
   "glosses": [
     {
-      "slp1": "yogasTaH",
-      "sa": "yogasthaḥ",
-      "ru": "в йоге стоек"
+      "sa": "yoga-sthaḥ",
+      "ru": "уравновешенный",
+      "gloss_en": "who stays in yoga",
+      "lemma": "yoga-stha",
+      "dev": "योगस्थः",
+      "morph": {
+        "code": "1n.1 m.",
+        "root": "√yuj",
+        "stem_end": "a",
+        "gender": "m"
+      }
     },
     {
-      "slp1": "kuru",
       "sa": "kuru",
-      "ru": "свершай"
+      "ru": "выполняй",
+      "gloss_en": "do",
+      "lemma": "√kṛ",
+      "dev": "कुरु",
+      "morph": {
+        "code": "2v.1",
+        "tense": "Imperat P",
+        "root": "√kṛ"
+      }
     },
     {
-      "slp1": "karmARi",
       "sa": "karmāṇi",
-      "ru": "деянья"
+      "ru": "обязанности",
+      "gloss_en": "activities",
+      "lemma": "karman",
+      "dev": "कर्माणि",
+      "morph": {
+        "code": "2n.3 n.",
+        "root": "√kṛ",
+        "stem_end": "an",
+        "gender": "n"
+      }
     },
     {
-      "slp1": "saNgam",
       "sa": "saṅgam",
-      "ru": "привязанность"
+      "ru": "привязанность",
+      "gloss_en": "clinging, contact, relation, desire, attachment",
+      "lemma": "saṅga",
+      "dev": "सङ्गम्",
+      "morph": {
+        "code": "2n.1m.",
+        "root": "√gam",
+        "stem_end": "a",
+        "gender": "m",
+        "rule": "m"
+      }
     },
     {
-      "slp1": "tyaktvA",
       "sa": "tyaktvā",
-      "ru": "отбросив"
+      "ru": "отвергнув",
+      "gloss_en": "after abandoning",
+      "lemma": "√tyaj",
+      "dev": "त्यक्त्वा",
+      "morph": {
+        "tense": "absol.",
+        "root": "√tyaj"
+      }
     },
     {
-      "slp1": "DanaYjaya",
-      "sa": "dhanañjaya",
-      "ru": "Дхананджая"
+      "sa": "dhanaṁjaya",
+      "ru": "о Арджуна",
+      "gloss_en": "O winner of wealth, O Dhanaṁjaya",
+      "lemma": "dhanaṁ-jaya",
+      "dev": "धनञ्जय​",
+      "morph": {
+        "code": "8n.1 m.",
+        "root": "√ji",
+        "stem_end": "a",
+        "gender": "m"
+      }
     },
     {
-      "slp1": "sidDyasidDyoH",
-      "sa": "siddhyasiddhyoḥ",
-      "ru": "удачи и неудачи"
+      "sa": "siddhy-asiddhyoḥ",
+      "ru": "в успехе и неудаче",
+      "gloss_en": "in success and failure",
+      "lemma": "siddhy-asiddhi",
+      "dev": "सिद्ध्यसिद्ध्योः",
+      "morph": {
+        "code": "7n.2 f.",
+        "root": "√sidh",
+        "stem_end": "i",
+        "gender": "f"
+      }
     },
     {
-      "slp1": "samaH",
       "sa": "samaḥ",
-      "ru": "равный"
+      "ru": "уравновешенный",
+      "gloss_en": "the same, equal, equivalent",
+      "lemma": "sama",
+      "dev": "समः",
+      "morph": {
+        "code": "1n.1 m.",
+        "tense": "sn.",
+        "stem_end": "a",
+        "gender": "m",
+        "rule": "h3"
+      }
     },
     {
-      "slp1": "BUtvA",
       "sa": "bhūtvā",
-      "ru": "став"
+      "ru": "став",
+      "gloss_en": "after becoming",
+      "lemma": "√bhū",
+      "dev": "भूत्वा",
+      "morph": {
+        "tense": "absol.",
+        "root": "√bhū"
+      }
     },
     {
-      "slp1": "samatvam",
       "sa": "samatvam",
-      "ru": "ровность"
+      "ru": "самообладание",
+      "gloss_en": "equality, tranquility",
+      "lemma": "samatva",
+      "dev": "समत्वम्",
+      "morph": {
+        "code": "1n.1 n.",
+        "tense": "abst.",
+        "stem_end": "a",
+        "gender": "n",
+        "rule": "m"
+      }
     },
     {
-      "slp1": "yogaH",
       "sa": "yogaḥ",
-      "ru": "йогой"
+      "ru": "йога",
+      "gloss_en": "yoga, yoking, application, a means, one of the schools of Hindu philosophy",
+      "lemma": "yoga",
+      "dev": "योगः",
+      "morph": {
+        "code": "1n.1 m.",
+        "root": "√yuj",
+        "stem_end": "a",
+        "gender": "m",
+        "rule": "h1"
+      }
     },
     {
-      "slp1": "ucyate",
       "sa": "ucyate",
-      "ru": "называется"
+      "ru": "называется.",
+      "gloss_en": "it is said",
+      "lemma": "√vac",
+      "dev": "उच्यते",
+      "morph": {
+        "code": "1v.1",
+        "tense": "Praes. pass.",
+        "root": "√vac"
+      }
     }
   ],
   "gloss_source": {
-    "corpus": "SanskritLexicography/RussianTranslation/src/corpus_lexicon.jsonl",
-    "work": "bhagavadgita-sementsov",
+    "corpus": "kosha/data/gita/gita_gold_master.tsv",
+    "work": "gita-gold-master",
     "passage": "2.48",
-    "provenance": "corpus-align",
-    "rights_note": "Word-level RU glosses are a machine word-alignment over the source translation; they inherit that translation's rights (see translation.rights)."
+    "provenance": "gita-gold-hand-curated",
+    "rights_note": "Word-level glosses + morphology from the hand-curated Gita gold master (Dr. Mārcis Gasūns, Gita.xlsm), distributed as kosha dataset gita-gold-master (CC BY-SA 4.0)."
   }
 }
