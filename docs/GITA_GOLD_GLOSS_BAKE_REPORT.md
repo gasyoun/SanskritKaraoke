@@ -42,9 +42,10 @@ differently and carried weaker RU).
 | subh_0001 | (gloss-box hidden) | (gloss-box hidden) | canary: unchanged ✓ |
 | subh_0550 | (gloss-box hidden) | (gloss-box hidden) | canary: unchanged ✓ |
 
-Full before/after dumps: `gloss_before.txt` / `gloss_after.txt` (this diff is
-reproducible via `git stash` + `tools/render_gloss_diff.py bhg_2_47 bhg_2_48
-bhg_2_49 subh_0001 subh_0550`).
+Full before/after dumps (committed):
+[docs/evidence/H4734_gloss_render_diff_before.txt](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/evidence/H4734_gloss_render_diff_before.txt) /
+[docs/evidence/H4734_gloss_render_diff_after.txt](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/evidence/H4734_gloss_render_diff_after.txt);
+the after dump is reproducible via `python tools/render_gloss_diff.py bhg_2_47 bhg_2_48 bhg_2_49 subh_0001 subh_0550`.
 
 ## Checks
 

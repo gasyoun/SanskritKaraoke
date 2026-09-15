@@ -1,0 +1,45 @@
+### bhg_2_47 (13 words, corpus-align)
+karmaṇi — на действие
+eva — лишь
+adhikāraḥ — направлен
+te — твой
+mā — не
+phaleṣu — на плоды
+kadācana — когда-либо
+karmaphalahetuḥ — причиной плодов
+bhūḥ — будь
+te — твоя
+saṅgaḥ — привязанность
+astu — будет
+akarmaṇi — к бездействию
+
+### bhg_2_48 (12 words, corpus-align)
+yogasthaḥ — в йоге стоек
+kuru — свершай
+karmāṇi — деянья
+saṅgam — привязанность
+tyaktvā — отбросив
+dhanañjaya — Дхананджая
+siddhyasiddhyoḥ — удачи и неудачи
+samaḥ — равный
+bhūtvā — став
+samatvam — ровность
+yogaḥ — йогой
+ucyate — называется
+
+### bhg_2_49 (8 words, corpus-align)
+dūreṇa — превосходит
+avara — низшее
+karman — действия
+buddhiyoga — йогой мысли
+buddhi — мысль
+śaraṇa — цель
+kṛpaṇa — жалок
+phalahetu — кто к плодам устремляется
+
+### subh_0001 (0 words, -)
+(gloss-box hidden)
+
+### subh_0550 (0 words, -)
+(gloss-box hidden)
+
