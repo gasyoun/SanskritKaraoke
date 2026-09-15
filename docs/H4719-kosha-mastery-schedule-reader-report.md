@@ -2,7 +2,7 @@
 
 _Created: 15-09-2026 · Last updated: 15-09-2026_
 
-_Handoff: [H4719](https://github.com/gasyoun/Uprava/blob/main/handoffs/H4719-OxAlpha_SanskritKaraoke_xwalk-a15-mastery-schedule-reader_14.09.26.md) · Executor: OxAlpha (opencode/z-ai/glm-5.3-flash) · Effort: trivial_
+_Handoff: [H4719](https://github.com/gasyoun/Uprava/blob/main/handoffs/H4719-OxAlpha_SanskritKaraoke_xwalk-a15-mastery-schedule-reader_14.09.26.md) · Executor: OxAlpha (opencode/zai-coding-plan/glm-5.3-flash) · Effort: trivial_
 
 ## GATE 0 — data probe verdict
 
@@ -29,6 +29,10 @@ as tier `public`, CC BY-SA 4.0, 35 517 rows, and lives at
   («🗺 Карта мастерства» chip). Cross-links the campus map (gasyoun.github.io/mastery/, H4262).
 - **Offline tests** [tests/test_mastery_layer.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/tests/test_mastery_layer.py) —
   fixture aggregates, determinism, ease-range guard.
+- **Deploy integration** (paired-verifier catch, DeepSeek, 15-09-2026): `mastery.html` added to the
+  [pages.yml](https://github.com/gasyoun/SanskritKaraoke/blob/main/.github/workflows/pages.yml) `_site` copy
+  whitelist (was missing → the page would 404 on live Pages while the deployed progress.html chip linked to it)
+  and to `sw.js` `ASSETS` + `HTML_ASSETS` precache lists.
 - **Edge registered** — kosha → SanskritKaraoke `feeds` row in Uprava `interlinks_edges.tsv` + prose.
 
 Digest aggregates (derived, not stored): sandhi 0.78 / samasa 0.54 / morphology 0.71 / vocab 0.70 / thematic_vocab 0.75 mean ease; every family's `due` horizon = epoch 2026-09-01 (H3742 baseline, single start date).
@@ -41,12 +45,13 @@ Digest aggregates (derived, not stored): sandhi 0.78 / samasa 0.54 / morphology 
 | Unit tests | `python3 -m pytest tests/ -q` | PASS (4 passed, incl. 3 new) |
 | UI smoke, mastery.html | `python3 -m http.server` + headless browser | PASS — 5 family cards render, numbers match digest, console clean |
 | UI smoke, progress.html | same | PASS — new chip present, no new console errors |
+| Deploy whitelist | `grep mastery.html .github/workflows/pages.yml` + `grep mastery.html sw.js` | PASS — `_site` copy, `ASSETS`, `HTML_ASSETS` all carry the page |
 | Library regression | `tools/validate_library.py` | N/A here — pre-existing missing `jsonschema` in system python; untouched verses/data (CI env has it) |
 
 ## Delivery (five fields)
 
-- **Changed:** `mastery.html` (new), `progress.html` (one nav chip), `verses/mastery/schedule_summary.json` (new digest), `tools/build_mastery_layer.py` (new), `tests/test_mastery_layer.py` (new), CHANGELOG.
-- **Unchanged:** verse data, catalogue/student/teacher pages, pipeline, CI, version (v1.5.5).
+- **Changed:** `mastery.html` (new), `progress.html` (one nav chip), `verses/mastery/schedule_summary.json` (new digest), `tools/build_mastery_layer.py` (new), `tests/test_mastery_layer.py` (new), `.github/workflows/pages.yml` (+1 filename), `sw.js` (+1 asset ×2 lists), CHANGELOG.
+- **Unchanged:** verse data, catalogue/student/teacher pages, SRS logic, version (v1.5.5).
 - **Checks:** see table above — all green except pre-existing unrelated `jsonschema` env gap.
 - **Risks:** digest snapshots today's kosha main; refresh = rerun the generator (or wire into CI later). Only aggregates are shipped — no personal data, no per-student state.
 - **Inspect:** open `mastery.html` first; digest `verses/mastery/schedule_summary.json` second; generator `tools/build_mastery_layer.py` third.

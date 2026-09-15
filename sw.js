@@ -3,6 +3,7 @@ const ASSETS = [
   'catalogue.html',
   'student.html',
   'progress.html',
+  'mastery.html',
   'index.html',
   'src/style.css',
   'src/scripts/app.js',
@@ -12,7 +13,7 @@ const ASSETS = [
   'verses/index.json',
   'manifest.json'
 ];
-const HTML_ASSETS = new Set(['', 'catalogue.html', 'student.html', 'progress.html', 'index.html']);
+const HTML_ASSETS = new Set(['', 'catalogue.html', 'student.html', 'progress.html', 'mastery.html', 'index.html']);
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
