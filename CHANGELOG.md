@@ -1,4 +1,4 @@
-_Created: 12-05-2026 · Last updated: 06-09-2026_
+_Created: 12-05-2026 · Last updated: 15-09-2026_
 
 # Changelog
 
@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+
+- **Gita gold word-by-word gloss+morphology layer baked into Gita verses (H4734, 15-09-2026, OxAlpha `zai-coding-plan/glm-5.3-flash`).** [tools/build_glosses.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/build_glosses.py) now prefers the hand-curated kosha `gita-gold-master` ([data/gita/gita_gold_master.tsv](https://github.com/gasyoun/kosha/blob/main/data/gita/gita_gold_master.tsv), 9,092 gold words, CC BY-SA 4.0) for Gita verses (`--gold`/`KARAOKE_GITA_GOLD` override, `--no-gold` legacy mode; corpus-align path unchanged for everything else and degrades to a warning when the sibling corpus clone is absent). Gold words carry IAST+Devanagari+RU+EN gloss, lemma and 13 verbatim morphology columns; `gloss_source.provenance` = `gita-gold-hand-curated`. Rebuilt: `bhg_2_47` (13→15 words), `bhg_2_48` (12, richer RU), `bhg_2_49` (8 fused → 11 words). Schema: `glosses[]` `slp1` no longer required, optional `sa/gloss_en/dev/lemma/morph` props added. Verified: `tools/validate_library.py` all-38-valid; 5-verse render diff (3 bhg improved + 2 subh hidden-box canaries unchanged) via new [tools/render_gloss_diff.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/render_gloss_diff.py); headless-browser receipt byte-matches. Report: [docs/GITA_GOLD_GLOSS_BAKE_REPORT.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/GITA_GOLD_GLOSS_BAKE_REPORT.md).
 
 - **CLAUDE.md truth refresh (H4574, STALE_17d → fresh, 13-09-2026, OxAlpha `zai-coding-plan/glm-5.3-flash`).** Every claim re-verified vs the live clone: version loci at v1.5.5, env-key names in `evals/judge.py`, live URL HTTP 200, external hub links, CI workflow names. Fixed the false "no unit-test suite" line (repo has `pytest tests/test_export_captions.py` + `node tools/test_core_modules.mjs`), named the four `main` CI workflows (`verses.yml` / `student.yml` / `evals.yml` / `pages.yml`), added missing key-file rows (`src/scripts/cloud_sync.js` / `firebase-config.js` / `teacher-config.js`, `shorts/`), dropped the dead `ver_info.txt` guard (file confirmed absent). AGENTS.md: stale `Version: v1.4.2` → v1.5.5; generated block regenerated to upstream hash `56e610362f`. Docs-only pass, no code changed.
 

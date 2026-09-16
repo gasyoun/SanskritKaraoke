@@ -68,51 +68,151 @@
   "updated_at": "2026-08-26",
   "glosses": [
     {
-      "slp1": "dUreRa",
       "sa": "dūreṇa",
-      "ru": "превосходит"
+      "ru": "далеко (отбрось)",
+      "gloss_en": "by far",
+      "lemma": "dūreṇa",
+      "dev": "दूरेण​",
+      "morph": {
+        "tense": "av."
+      }
     },
     {
-      "slp1": "avara",
-      "sa": "avara",
-      "ru": "низшее"
+      "sa": "hi",
+      "ru": "безусловно",
+      "gloss_en": "because, just, indeed, surely",
+      "lemma": "hi",
+      "dev": "हि",
+      "morph": {
+        "tense": "av.",
+        "rule": "v7"
+      }
     },
     {
-      "slp1": "karman",
-      "sa": "karman",
-      "ru": "действия"
+      "sa": "avaram",
+      "ru": "порочную",
+      "gloss_en": "low, mean, younger, inferior",
+      "lemma": "avara",
+      "dev": "अवरम्",
+      "morph": {
+        "code": "1n.1 n.",
+        "root": "√vṛ",
+        "stem_end": "a",
+        "gender": "n"
+      }
     },
     {
-      "slp1": "budDiyoga",
-      "sa": "buddhiyoga",
-      "ru": "йогой мысли"
+      "sa": "karma",
+      "ru": "деятельность",
+      "gloss_en": "activity and its result",
+      "lemma": "karman",
+      "dev": "कर्म​",
+      "morph": {
+        "code": "1n.1 n.",
+        "root": "√kṛ",
+        "stem_end": "an",
+        "gender": "n",
+        "rule": "m"
+      }
     },
     {
-      "slp1": "budDi",
-      "sa": "buddhi",
-      "ru": "мысль"
+      "sa": "buddhi-yogād",
+      "ru": "благодаря деятельности в сознании Кришны",
+      "gloss_en": "than yoga evolved from intelligence",
+      "lemma": "buddhi-yoga",
+      "dev": "बुद्धियोगाद्",
+      "morph": {
+        "code": "5n.1 m.",
+        "root": "√budh",
+        "stem_end": "a",
+        "gender": "m",
+        "compound": "TP"
+      }
     },
     {
-      "slp1": "SaraRa",
-      "sa": "śaraṇa",
-      "ru": "цель"
+      "sa": "dhanaṁjaya",
+      "ru": "о завоеватель богатств",
+      "gloss_en": "O winner of wealth, O Dhanaṁjaya",
+      "lemma": "dhanaṁ-jaya",
+      "dev": "धनञ्जय​",
+      "morph": {
+        "code": "8n.1 m.",
+        "root": "√ji",
+        "stem_end": "a",
+        "gender": "m"
+      }
     },
     {
-      "slp1": "kfpaRa",
-      "sa": "kṛpaṇa",
-      "ru": "жалок"
+      "sa": "buddhau",
+      "ru": "в таком сознании",
+      "gloss_en": "in intelligence, in thought, in understanding, in knowledge, in an idea",
+      "lemma": "buddhi",
+      "dev": "बुद्धौ",
+      "morph": {
+        "code": "7n.1 f.",
+        "root": "√budh",
+        "stem_end": "i",
+        "gender": "f"
+      }
     },
     {
-      "slp1": "Palahetu",
-      "sa": "phalahetu",
-      "ru": "кто к плодам устремляется"
+      "sa": "śaraṇam",
+      "ru": "к полной преданности",
+      "gloss_en": "shelter, refuge, protection",
+      "lemma": "śaraṇa",
+      "dev": "शरणम्",
+      "morph": {
+        "code": "2n.1 n.",
+        "root": "√śri",
+        "stem_end": "a",
+        "gender": "n"
+      }
+    },
+    {
+      "sa": "anviccha",
+      "ru": "стремись",
+      "gloss_en": "seek, desire",
+      "lemma": "anu-√iṣ",
+      "dev": "अन्विच्छ​",
+      "morph": {
+        "code": "2v.1",
+        "tense": "Imperat. P",
+        "root": "√iṣ"
+      }
+    },
+    {
+      "sa": "kṛpaṇāḥ",
+      "ru": "скупцы",
+      "gloss_en": "who are pitiable, miserable, poor",
+      "lemma": "kṛpaṇa",
+      "dev": "कृपणाः",
+      "morph": {
+        "code": "1n.3 m.",
+        "root": "√kṛp",
+        "stem_end": "a",
+        "gender": "m"
+      }
+    },
+    {
+      "sa": "phala-hetavaḥ",
+      "ru": "те, кто стремится к плодам своего труда.",
+      "gloss_en": "who are the cause of the results",
+      "lemma": "phala-hetu",
+      "dev": "फलहेतवः",
+      "morph": {
+        "code": "1n.3 m.",
+        "root": "√phal",
+        "stem_end": "u",
+        "gender": "m",
+        "compound": "BV"
+      }
     }
   ],
   "gloss_source": {
-    "corpus": "SanskritLexicography/RussianTranslation/src/corpus_lexicon.jsonl",
-    "work": "bhagavadgita-sementsov",
+    "corpus": "kosha/data/gita/gita_gold_master.tsv",
+    "work": "gita-gold-master",
     "passage": "2.49",
-    "provenance": "corpus-align",
-    "rights_note": "Word-level RU glosses are a machine word-alignment over the source translation; they inherit that translation's rights (see translation.rights)."
+    "provenance": "gita-gold-hand-curated",
+    "rights_note": "Word-level glosses + morphology from the hand-curated Gita gold master (Dr. Mārcis Gasūns, Gita.xlsm), distributed as kosha dataset gita-gold-master (CC BY-SA 4.0)."
   }
 }

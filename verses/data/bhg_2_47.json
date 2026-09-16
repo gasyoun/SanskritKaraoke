@@ -68,76 +68,195 @@
   "updated_at": "2026-08-26",
   "glosses": [
     {
-      "slp1": "karmaRi",
       "sa": "karmaṇi",
-      "ru": "на действие"
+      "ru": "в предписанных обязанностях",
+      "gloss_en": "in activity",
+      "lemma": "karman",
+      "dev": "कर्मणि",
+      "morph": {
+        "code": "7n.1 n.",
+        "root": "√kṛ",
+        "stem_end": "an",
+        "gender": "n",
+        "rule": "v7"
+      }
     },
     {
-      "slp1": "eva",
       "sa": "eva",
-      "ru": "лишь"
+      "ru": "безусловно",
+      "gloss_en": "certainly, just, merely",
+      "lemma": "eva",
+      "dev": "एव​",
+      "morph": {
+        "tense": "av.",
+        "stem_end": "a",
+        "rule": "v1"
+      }
     },
     {
-      "slp1": "aDikAraH",
       "sa": "adhikāraḥ",
-      "ru": "направлен"
+      "ru": "право",
+      "gloss_en": "authority, right, privilege",
+      "lemma": "adhikāra",
+      "dev": "अधिकारः",
+      "morph": {
+        "code": "1n.1 m.",
+        "root": "√kṛ",
+        "stem_end": "a",
+        "gender": "m",
+        "rule": "h5"
+      }
     },
     {
-      "slp1": "te",
       "sa": "te",
-      "ru": "твой"
+      "ru": "тебя",
+      "gloss_en": "your",
+      "lemma": "yuṣmat",
+      "dev": "ते",
+      "morph": {
+        "code": "6n.1",
+        "tense": "sn.",
+        "stem_end": "t"
+      }
     },
     {
-      "slp1": "mA",
       "sa": "mā",
-      "ru": "не"
+      "ru": "не",
+      "gloss_en": "not!",
+      "lemma": "mā",
+      "dev": "मा",
+      "morph": {
+        "tense": "av."
+      }
     },
     {
-      "slp1": "Palezu",
       "sa": "phaleṣu",
-      "ru": "на плоды"
+      "ru": "в плодах",
+      "gloss_en": "in fruits, in results",
+      "lemma": "phala",
+      "dev": "फलेषु",
+      "morph": {
+        "code": "7n.3 n.",
+        "root": "√phal",
+        "stem_end": "a",
+        "gender": "n"
+      }
     },
     {
-      "slp1": "kadAcana",
-      "sa": "kadācana",
-      "ru": "когда-либо"
+      "sa": "kadā-cana",
+      "ru": "когда бы то ни было",
+      "gloss_en": "whenever, at any time",
+      "lemma": "kadā-cana",
+      "dev": "कदाचन​",
+      "morph": {
+        "tense": "av.",
+        "stem_end": "a"
+      }
     },
     {
-      "slp1": "karmaPalahetuH",
-      "sa": "karmaphalahetuḥ",
-      "ru": "причиной плодов"
+      "sa": "mā",
+      "ru": "не",
+      "gloss_en": "not!",
+      "lemma": "mā",
+      "dev": "मा",
+      "morph": {
+        "tense": "av."
+      }
     },
     {
-      "slp1": "BUH",
+      "sa": "karma-phala-hetuḥ",
+      "ru": "результатами деятельности-побуждаемый",
+      "gloss_en": "whose work is a cause of results",
+      "lemma": "karma-phala-hetu",
+      "dev": "कर्मफलहेतुः",
+      "morph": {
+        "code": "1n.1 m.",
+        "root": "√kṛ",
+        "stem_end": "u",
+        "gender": "m",
+        "compound": "BV",
+        "rule": "h4"
+      }
+    },
+    {
       "sa": "bhūḥ",
-      "ru": "будь"
+      "ru": "будь",
+      "gloss_en": "used with particle mā loses prefix ‘a-’ and makes the imperative: do not be!",
+      "lemma": "√bhū",
+      "dev": "भूः",
+      "morph": {
+        "code": "2v.1",
+        "tense": "Aor. P",
+        "root": "√bhū"
+      }
     },
     {
-      "slp1": "te",
+      "sa": "mā",
+      "ru": "не",
+      "gloss_en": "not!",
+      "lemma": "mā",
+      "dev": "मा",
+      "morph": {
+        "tense": "av."
+      }
+    },
+    {
       "sa": "te",
-      "ru": "твоя"
+      "ru": "тебя",
+      "gloss_en": "your",
+      "lemma": "yuṣmat",
+      "dev": "ते",
+      "morph": {
+        "code": "6n.1",
+        "tense": "sn.",
+        "stem_end": "t"
+      }
     },
     {
-      "slp1": "saNgaH",
       "sa": "saṅgaḥ",
-      "ru": "привязанность"
+      "ru": "привязанность",
+      "gloss_en": "clinging, contact, relation, desire, attachment",
+      "lemma": "saṅga",
+      "dev": "सङ्गः",
+      "morph": {
+        "code": "1n.1m.",
+        "root": "√gam",
+        "stem_end": "a",
+        "gender": "m",
+        "rule": "h2"
+      }
     },
     {
-      "slp1": "astu",
       "sa": "astu",
-      "ru": "будет"
+      "ru": "пусть будет",
+      "gloss_en": "it should be",
+      "lemma": "√as",
+      "dev": "अस्तु",
+      "morph": {
+        "code": "1v.1",
+        "tense": "Imperat. P",
+        "root": "√as"
+      }
     },
     {
-      "slp1": "akarmaRi",
       "sa": "akarmaṇi",
-      "ru": "к бездействию"
+      "ru": "в отказе от выполнения своего долга.",
+      "gloss_en": "in inactivity",
+      "lemma": "a-karman",
+      "dev": "अकर्मणि",
+      "morph": {
+        "code": "7n.1 n.",
+        "root": "√kṛ",
+        "stem_end": "an",
+        "gender": "n"
+      }
     }
   ],
   "gloss_source": {
-    "corpus": "SanskritLexicography/RussianTranslation/src/corpus_lexicon.jsonl",
-    "work": "bhagavadgita-sementsov",
+    "corpus": "kosha/data/gita/gita_gold_master.tsv",
+    "work": "gita-gold-master",
     "passage": "2.47",
-    "provenance": "corpus-align",
-    "rights_note": "Word-level RU glosses are a machine word-alignment over the source translation; they inherit that translation's rights (see translation.rights)."
+    "provenance": "gita-gold-hand-curated",
+    "rights_note": "Word-level glosses + morphology from the hand-curated Gita gold master (Dr. Mārcis Gasūns, Gita.xlsm), distributed as kosha dataset gita-gold-master (CC BY-SA 4.0)."
   }
 }
