@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "dataset": "kosha-mastery-schedule",
+  "epoch": "2026-09-01T00:00:00Z",
+  "total_items": 35517,
+  "mean_ease": 0.6934,
+  "families": {
+    "morphology": {
+      "label": "Морфология",
+      "count": 12000,
+      "mean_ease": 0.7131,
+      "ease_buckets": {
+        "0-0.25": 0,
+        "0.25-0.5": 1680,
+        "0.5-0.75": 5162,
+        "0.75-1": 5158
+      },
+      "mean_stability_days": 4.57,
+      "due_min": "2026-09-01T00:00:00Z",
+      "due_max": "2026-09-01T00:00:00Z"
+    },
+    "samasa": {
+      "label": "Композиты (самасы)",
+      "count": 3865,
+      "mean_ease": 0.5372,
+      "ease_buckets": {
+        "0-0.25": 0,
+        "0.25-0.5": 2806,
+        "0.5-0.75": 300,
+        "0.75-1": 759
+      },
+      "mean_stability_days": 3.69,
+      "due_min": "2026-09-01T00:00:00Z",
+      "due_max": "2026-09-01T00:00:00Z"
+    },
+    "sandhi": {
+      "label": "Сандхи",
+      "count": 396,
+      "mean_ease": 0.7826,
+      "ease_buckets": {
+        "0-0.25": 0,
+        "0.25-0.5": 0,
+        "0.5-0.75": 81,
+        "0.75-1": 315
+      },
+      "mean_stability_days": 4.91,
+      "due_min": "2026-09-01T00:00:00Z",
+      "due_max": "2026-09-01T00:00:00Z"
+    },
+    "thematic_vocab": {
+      "label": "Тематический словарь",
+      "count": 5922,
+      "mean_ease": 0.745,
+      "ease_buckets": {
+        "0-0.25": 0,
+        "0.25-0.5": 574,
+        "0.5-0.75": 2318,
+        "0.75-1": 3030
+      },
+      "mean_stability_days": 4.72,
+      "due_min": "2026-09-01T00:00:00Z",
+      "due_max": "2026-09-01T00:00:00Z"
+    },
+    "vocab": {
+      "label": "Словарь",
+      "count": 13334,
+      "mean_ease": 0.6954,
+      "ease_buckets": {
+        "0-0.25": 0,
+        "0.25-0.5": 2224,
+        "0.5-0.75": 5736,
+        "0.75-1": 5374
+      },
+      "mean_stability_days": 4.48,
+      "due_min": "2026-09-01T00:00:00Z",
+      "due_max": "2026-09-01T00:00:00Z"
+    }
+  },
+  "_provenance": {
+    "source_repo": "https://github.com/gasyoun/kosha",
+    "source_path": "data/mastery/combined_schedule.json",
+    "source_sha256": "232de6d3cb0d0235182795976eeb9682a151ec00e59d9766a511f5ffe0496eea",
+    "source_rows": 35517,
+    "generator": "tools/build_mastery_layer.py",
+    "note": "ease is the shared 0..1 mastery weight (higher = easier); see kosha data/MASTERY_WEIGHTS_SPEC.md"
+  }
+}
