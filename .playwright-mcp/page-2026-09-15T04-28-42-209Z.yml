@@ -1,0 +1,465 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e2]:
+    - generic [ref=f3e3]:
+      - generic [ref=f3e4]:
+        - heading "Обучение и Прогресс" [level=1] [ref=f3e5]
+        - generic [ref=f3e6]: v1.4.2
+        - link "✎ Редактор" [ref=f3e7] [cursor=pointer]:
+          - /url: index.html
+        - link "🗺 Карта мастерства" [ref=f3e8] [cursor=pointer]:
+          - /url: mastery.html
+        - button "☁ Войти для синхронизации" [ref=f3e9] [cursor=pointer]
+        - button "🌐 RU" [ref=f3e10] [cursor=pointer]
+      - generic [ref=f3e11]: 🔥 0 дней подряд
+    - generic [ref=f3e12]:
+      - generic [ref=f3e13]:
+        - strong [ref=f3e14]: "0"
+        - generic [ref=f3e15]: Повторить
+      - generic [ref=f3e16]:
+        - strong [ref=f3e17]: "0"
+        - generic [ref=f3e18]: Учу
+      - generic [ref=f3e19]:
+        - strong [ref=f3e20]: "0"
+        - generic [ref=f3e21]: Освоено
+      - generic [ref=f3e22]:
+        - strong [ref=f3e23]: "38"
+        - generic [ref=f3e24]: Всего
+    - heading "Изучать сегодня" [level=2] [ref=f3e25]
+    - paragraph [ref=f3e27]: ✨ На сегодня всё! Вы молодец.
+    - generic [ref=f3e28]:
+      - heading "Каталог Шлок" [level=2] [ref=f3e29]
+      - button "📊 Экспорт телеметрии" [ref=f3e30] [cursor=pointer]
+    - table [ref=f3e32]:
+      - rowgroup [ref=f3e33]:
+        - row [ref=f3e34]:
+          - columnheader "Шлока" [ref=f3e35]
+          - columnheader "Метр" [ref=f3e36]
+          - columnheader "Сложность" [ref=f3e37]
+          - columnheader "Статус" [ref=f3e38]
+          - columnheader "Следующее повт." [ref=f3e39]
+          - columnheader "Действие" [ref=f3e40]
+      - rowgroup [ref=f3e41]:
+        - row [ref=f3e42]:
+          - cell [ref=f3e43]:
+            - strong [ref=f3e44]: Бхагавад-гита 2.48
+            - text: bhg_2_48
+          - cell "anushtubh" [ref=f3e45]
+          - cell "1" [ref=f3e46]
+          - cell "Новое" [ref=f3e47]
+          - cell "-" [ref=f3e49]
+          - cell [ref=f3e50]:
+            - link "Открыть" [ref=f3e51] [cursor=pointer]:
+              - /url: student.html?id=bhg_2_48
+        - row [ref=f3e52]:
+          - cell [ref=f3e53]:
+            - strong [ref=f3e54]: Бхагавад-гита 2.47
+            - text: bhg_2_47
+          - cell "anushtubh" [ref=f3e55]
+          - cell "1" [ref=f3e56]
+          - cell "Новое" [ref=f3e57]
+          - cell "-" [ref=f3e59]
+          - cell [ref=f3e60]:
+            - link "Открыть" [ref=f3e61] [cursor=pointer]:
+              - /url: student.html?id=bhg_2_47
+        - row [ref=f3e62]:
+          - cell [ref=f3e63]:
+            - strong [ref=f3e64]: Субхашита №6087 (vidyā dadāti vinayaṃ…)
+            - text: subh_6087
+          - cell "anushtubh" [ref=f3e65]
+          - cell "1" [ref=f3e66]
+          - cell "Новое" [ref=f3e67]
+          - cell "-" [ref=f3e69]
+          - cell [ref=f3e70]:
+            - link "Открыть" [ref=f3e71] [cursor=pointer]:
+              - /url: student.html?id=subh_6087
+        - row [ref=f3e72]:
+          - cell [ref=f3e73]:
+            - strong [ref=f3e74]: Субхашита №1249 (udyamena hi sidhyanti…)
+            - text: subh_1249
+          - cell "anushtubh" [ref=f3e75]
+          - cell "1" [ref=f3e76]
+          - cell "Новое" [ref=f3e77]
+          - cell "-" [ref=f3e79]
+          - cell [ref=f3e80]:
+            - link "Открыть" [ref=f3e81] [cursor=pointer]:
+              - /url: student.html?id=subh_1249
+        - row [ref=f3e82]:
+          - cell [ref=f3e83]:
+            - strong [ref=f3e84]: Бхагавад-гита 2.49
+            - text: bhg_2_49
+          - cell "anushtubh" [ref=f3e85]
+          - cell "2" [ref=f3e86]
+          - cell "Новое" [ref=f3e87]
+          - cell "-" [ref=f3e89]
+          - cell [ref=f3e90]:
+            - link "Открыть" [ref=f3e91] [cursor=pointer]:
+              - /url: student.html?id=bhg_2_49
+        - row [ref=f3e92]:
+          - cell [ref=f3e93]:
+            - strong [ref=f3e94]: Субхашита №6665 (saṅkṣepātkathyate dharmo janāḥ…)
+            - text: subh_6665
+          - cell "anushtubh" [ref=f3e95]
+          - cell "2" [ref=f3e96]
+          - cell "Новое" [ref=f3e97]
+          - cell "-" [ref=f3e99]
+          - cell [ref=f3e100]:
+            - link "Открыть" [ref=f3e101] [cursor=pointer]:
+              - /url: student.html?id=subh_6665
+        - row [ref=f3e102]:
+          - cell [ref=f3e103]:
+            - strong [ref=f3e104]: Субхашита №2852 (durjanaḥ priyavādī ca…)
+            - text: subh_2852
+          - cell "anushtubh" [ref=f3e105]
+          - cell "2" [ref=f3e106]
+          - cell "Новое" [ref=f3e107]
+          - cell "-" [ref=f3e109]
+          - cell [ref=f3e110]:
+            - link "Открыть" [ref=f3e111] [cursor=pointer]:
+              - /url: student.html?id=subh_2852
+        - row [ref=f3e112]:
+          - cell [ref=f3e113]:
+            - strong [ref=f3e114]: Субхашита №3981 (paropakāraḥ kartavyaḥ prāṇaiḥ…)
+            - text: subh_3981
+          - cell "anushtubh" [ref=f3e115]
+          - cell "2" [ref=f3e116]
+          - cell "Новое" [ref=f3e117]
+          - cell "-" [ref=f3e119]
+          - cell [ref=f3e120]:
+            - link "Открыть" [ref=f3e121] [cursor=pointer]:
+              - /url: student.html?id=subh_3981
+        - row [ref=f3e122]:
+          - cell [ref=f3e123]:
+            - strong [ref=f3e124]: Субхашита №550 (ayaṃ nijaḥ paro…)
+            - text: subh_0550
+          - cell "anushtubh" [ref=f3e125]
+          - cell "2" [ref=f3e126]
+          - cell "Новое" [ref=f3e127]
+          - cell "-" [ref=f3e129]
+          - cell [ref=f3e130]:
+            - link "Открыть" [ref=f3e131] [cursor=pointer]:
+              - /url: student.html?id=subh_0550
+        - row [ref=f3e132]:
+          - cell [ref=f3e133]:
+            - strong [ref=f3e134]: Субхашита №648 (alpānāmapi vastūnāṃ saṃhatiḥ…)
+            - text: subh_0648
+          - cell "anushtubh" [ref=f3e135]
+          - cell "2" [ref=f3e136]
+          - cell "Новое" [ref=f3e137]
+          - cell "-" [ref=f3e139]
+          - cell [ref=f3e140]:
+            - link "Открыть" [ref=f3e141] [cursor=pointer]:
+              - /url: student.html?id=subh_0648
+        - row [ref=f3e142]:
+          - cell [ref=f3e143]:
+            - strong [ref=f3e144]: Субхашита №4 (akarmaṇāṃ vai bhūtānāṃ vṛttiḥ…)
+            - text: subh_0004
+          - cell "anushtubh" [ref=f3e145]
+          - cell "2" [ref=f3e146]
+          - cell "Новое" [ref=f3e147]
+          - cell "-" [ref=f3e149]
+          - cell [ref=f3e150]:
+            - link "Открыть" [ref=f3e151] [cursor=pointer]:
+              - /url: student.html?id=subh_0004
+        - row [ref=f3e152]:
+          - cell [ref=f3e153]:
+            - strong [ref=f3e154]: Субхашита №30 (akīrtiryasya gīyeta loke bhūtasya…)
+            - text: subh_0030
+          - cell "anushtubh" [ref=f3e155]
+          - cell "2" [ref=f3e156]
+          - cell "Новое" [ref=f3e157]
+          - cell "-" [ref=f3e159]
+          - cell [ref=f3e160]:
+            - link "Открыть" [ref=f3e161] [cursor=pointer]:
+              - /url: student.html?id=subh_0030
+        - row [ref=f3e162]:
+          - cell [ref=f3e163]:
+            - strong [ref=f3e164]: Субхашита №14 (akāmasya kriyā kāciddṛśyate neha…)
+            - text: subh_0014
+          - cell "anushtubh" [ref=f3e165]
+          - cell "2" [ref=f3e166]
+          - cell "Новое" [ref=f3e167]
+          - cell "-" [ref=f3e169]
+          - cell [ref=f3e170]:
+            - link "Открыть" [ref=f3e171] [cursor=pointer]:
+              - /url: student.html?id=subh_0014
+        - row [ref=f3e172]:
+          - cell [ref=f3e173]:
+            - strong [ref=f3e174]: Субхашита №29 (akīrtirnindyate devaiḥ kīrtirlokeṣu pūjyate…)
+            - text: subh_0029
+          - cell "anushtubh" [ref=f3e175]
+          - cell "2" [ref=f3e176]
+          - cell "Новое" [ref=f3e177]
+          - cell "-" [ref=f3e179]
+          - cell [ref=f3e180]:
+            - link "Открыть" [ref=f3e181] [cursor=pointer]:
+              - /url: student.html?id=subh_0029
+        - row [ref=f3e182]:
+          - cell [ref=f3e183]:
+            - strong [ref=f3e184]: Субхашита №9 (akasmādeva tanvaṅgī jahāsa yadiyaṃ…)
+            - text: subh_0009
+          - cell "anushtubh" [ref=f3e185]
+          - cell "2" [ref=f3e186]
+          - cell "Новое" [ref=f3e187]
+          - cell "-" [ref=f3e189]
+          - cell [ref=f3e190]:
+            - link "Открыть" [ref=f3e191] [cursor=pointer]:
+              - /url: student.html?id=subh_0009
+        - row [ref=f3e192]:
+          - cell [ref=f3e193]:
+            - strong [ref=f3e194]: Субхашита №33 (akulānāṃ kule bhāvaṃ kulīnānāṃ…)
+            - text: subh_0033
+          - cell "anushtubh" [ref=f3e195]
+          - cell "2" [ref=f3e196]
+          - cell "Новое" [ref=f3e197]
+          - cell "-" [ref=f3e199]
+          - cell [ref=f3e200]:
+            - link "Открыть" [ref=f3e201] [cursor=pointer]:
+              - /url: student.html?id=subh_0033
+        - row [ref=f3e202]:
+          - cell [ref=f3e203]:
+            - strong [ref=f3e204]: Субхашита №13 (akāṇḍapātajātānāmārdrāṇāṃ marmabhedinām gāḍhaśokaprahārāṇāmacintaiva mahauṣadham…)
+            - text: subh_0013
+          - cell "anushtubh" [ref=f3e205]
+          - cell "2" [ref=f3e206]
+          - cell "Новое" [ref=f3e207]
+          - cell "-" [ref=f3e209]
+          - cell [ref=f3e210]:
+            - link "Открыть" [ref=f3e211] [cursor=pointer]:
+              - /url: student.html?id=subh_0013
+        - row [ref=f3e212]:
+          - cell [ref=f3e213]:
+            - strong [ref=f3e214]: Субхашита №15 (akāmāṃ kāmayānasya śarīramupatapyate icchatīṃ…)
+            - text: subh_0015
+          - cell "anushtubh" [ref=f3e215]
+          - cell "2" [ref=f3e216]
+          - cell "Новое" [ref=f3e217]
+          - cell "-" [ref=f3e219]
+          - cell [ref=f3e220]:
+            - link "Открыть" [ref=f3e221] [cursor=pointer]:
+              - /url: student.html?id=subh_0015
+        - row [ref=f3e222]:
+          - cell [ref=f3e223]:
+            - strong [ref=f3e224]: Субхашита №26 (akiñcanasya dāntasya śāntasya samacetasaḥ…)
+            - text: subh_0026
+          - cell "anushtubh" [ref=f3e225]
+          - cell "2" [ref=f3e226]
+          - cell "Новое" [ref=f3e227]
+          - cell "-" [ref=f3e229]
+          - cell [ref=f3e230]:
+            - link "Открыть" [ref=f3e231] [cursor=pointer]:
+              - /url: student.html?id=subh_0026
+        - row [ref=f3e232]:
+          - cell [ref=f3e233]:
+            - strong [ref=f3e234]: Субхашита №34 (akulīno 'pi mūrkho 'pi…)
+            - text: subh_0034
+          - cell "anushtubh" [ref=f3e235]
+          - cell "2" [ref=f3e236]
+          - cell "Новое" [ref=f3e237]
+          - cell "-" [ref=f3e239]
+          - cell [ref=f3e240]:
+            - link "Открыть" [ref=f3e241] [cursor=pointer]:
+              - /url: student.html?id=subh_0034
+        - row [ref=f3e242]:
+          - cell [ref=f3e243]:
+            - strong [ref=f3e244]: Субхашита №24 (akāle kṛtyamārabdhaṃ karturnārthāya kalpate…)
+            - text: subh_0024
+          - cell "anushtubh" [ref=f3e245]
+          - cell "2" [ref=f3e246]
+          - cell "Новое" [ref=f3e247]
+          - cell "-" [ref=f3e249]
+          - cell [ref=f3e250]:
+            - link "Открыть" [ref=f3e251] [cursor=pointer]:
+              - /url: student.html?id=subh_0024
+        - row [ref=f3e252]:
+          - cell [ref=f3e253]:
+            - strong [ref=f3e254]: Субхашита №25 (akiñcanaḥ paripatansukhamāsvādayiṣyasi akiñcanaḥ sukhaṃ…)
+            - text: subh_0025
+          - cell "anushtubh" [ref=f3e255]
+          - cell "2" [ref=f3e256]
+          - cell "Новое" [ref=f3e257]
+          - cell "-" [ref=f3e259]
+          - cell [ref=f3e260]:
+            - link "Открыть" [ref=f3e261] [cursor=pointer]:
+              - /url: student.html?id=subh_0025
+        - row [ref=f3e262]:
+          - cell [ref=f3e263]:
+            - strong [ref=f3e264]: Субхашита №1 (aṃśo 'pi duṣṭadiṣṭānāṃ pareṣāṃ…)
+            - text: subh_0001
+          - cell "anushtubh" [ref=f3e265]
+          - cell "2" [ref=f3e266]
+          - cell "Новое" [ref=f3e267]
+          - cell "-" [ref=f3e269]
+          - cell [ref=f3e270]:
+            - link "Открыть" [ref=f3e271] [cursor=pointer]:
+              - /url: student.html?id=subh_0001
+        - row [ref=f3e272]:
+          - cell [ref=f3e273]:
+            - strong [ref=f3e274]: Субхашита №28 (akīrtiṃ vinayo hanti hantyanarthaṃ…)
+            - text: subh_0028
+          - cell "anushtubh" [ref=f3e275]
+          - cell "2" [ref=f3e276]
+          - cell "Новое" [ref=f3e277]
+          - cell "-" [ref=f3e279]
+          - cell [ref=f3e280]:
+            - link "Открыть" [ref=f3e281] [cursor=pointer]:
+              - /url: student.html?id=subh_0028
+        - row [ref=f3e282]:
+          - cell [ref=f3e283]:
+            - strong [ref=f3e284]: Субхашита №16 (akāmānkāmayati yaḥ kāmayānānparityajet balavantaṃ…)
+            - text: subh_0016
+          - cell "anushtubh" [ref=f3e285]
+          - cell "2" [ref=f3e286]
+          - cell "Новое" [ref=f3e287]
+          - cell "-" [ref=f3e289]
+          - cell [ref=f3e290]:
+            - link "Открыть" [ref=f3e291] [cursor=pointer]:
+              - /url: student.html?id=subh_0016
+        - row [ref=f3e292]:
+          - cell [ref=f3e293]:
+            - strong [ref=f3e294]: Субхашита №32 (akurvanto 'pi pāpāni śucayaḥ…)
+            - text: subh_0032
+          - cell "anushtubh" [ref=f3e295]
+          - cell "2" [ref=f3e296]
+          - cell "Новое" [ref=f3e297]
+          - cell "-" [ref=f3e299]
+          - cell [ref=f3e300]:
+            - link "Открыть" [ref=f3e301] [cursor=pointer]:
+              - /url: student.html?id=subh_0032
+        - row [ref=f3e302]:
+          - cell [ref=f3e303]:
+            - strong [ref=f3e304]: Субхашита №8 (akasmādeva kupyanti prasīdantyanimittataḥ śīlametadasādhūnāmabhraṃ…)
+            - text: subh_0008
+          - cell "anushtubh" [ref=f3e305]
+          - cell "2" [ref=f3e306]
+          - cell "Новое" [ref=f3e307]
+          - cell "-" [ref=f3e309]
+          - cell [ref=f3e310]:
+            - link "Открыть" [ref=f3e311] [cursor=pointer]:
+              - /url: student.html?id=subh_0008
+        - row [ref=f3e312]:
+          - cell [ref=f3e313]:
+            - strong [ref=f3e314]: Субхашита №6 (akasmātprakriyā nṝṇāmakasmāccāpakarṣaṇam śubhāśubhe mahattvaṃ…)
+            - text: subh_0006
+          - cell "anushtubh" [ref=f3e315]
+          - cell "2" [ref=f3e316]
+          - cell "Новое" [ref=f3e317]
+          - cell "-" [ref=f3e319]
+          - cell [ref=f3e320]:
+            - link "Открыть" [ref=f3e321] [cursor=pointer]:
+              - /url: student.html?id=subh_0006
+        - row [ref=f3e322]:
+          - cell [ref=f3e323]:
+            - strong [ref=f3e324]: Субхашита №20 (akāryāṇyapi paryāpya kṛtvāpi vṛjinārjanam…)
+            - text: subh_0020
+          - cell "anushtubh" [ref=f3e325]
+          - cell "2" [ref=f3e326]
+          - cell "Новое" [ref=f3e327]
+          - cell "-" [ref=f3e329]
+          - cell [ref=f3e330]:
+            - link "Открыть" [ref=f3e331] [cursor=pointer]:
+              - /url: student.html?id=subh_0020
+        - row [ref=f3e332]:
+          - cell [ref=f3e333]:
+            - strong [ref=f3e334]: Субхашита №31 (akīrteḥ kāraṇaṃ yoṣidyoṣidvairasya kāraṇam…)
+            - text: subh_0031
+          - cell "anushtubh" [ref=f3e335]
+          - cell "2" [ref=f3e336]
+          - cell "Новое" [ref=f3e337]
+          - cell "-" [ref=f3e339]
+          - cell [ref=f3e340]:
+            - link "Открыть" [ref=f3e341] [cursor=pointer]:
+              - /url: student.html?id=subh_0031
+        - row [ref=f3e342]:
+          - cell [ref=f3e343]:
+            - strong [ref=f3e344]: Субхашита №7 (akasmādiha yaḥ kaścidarthaṃ prāpnoti…)
+            - text: subh_0007
+          - cell "anushtubh" [ref=f3e345]
+          - cell "2" [ref=f3e346]
+          - cell "Новое" [ref=f3e347]
+          - cell "-" [ref=f3e349]
+          - cell [ref=f3e350]:
+            - link "Открыть" [ref=f3e351] [cursor=pointer]:
+              - /url: student.html?id=subh_0007
+        - row [ref=f3e352]:
+          - cell [ref=f3e353]:
+            - strong [ref=f3e354]: Субхашита №10 (akasmādeva yaḥ kopādabhīkṣṇaṃ bahu…)
+            - text: subh_0010
+          - cell "anushtubh" [ref=f3e355]
+          - cell "2" [ref=f3e356]
+          - cell "Новое" [ref=f3e357]
+          - cell "-" [ref=f3e359]
+          - cell [ref=f3e360]:
+            - link "Открыть" [ref=f3e361] [cursor=pointer]:
+              - /url: student.html?id=subh_0010
+        - row [ref=f3e362]:
+          - cell [ref=f3e363]:
+            - strong [ref=f3e364]: Субхашита №19 (akāryamasakṛtkṛtvā dṛśyante hyadhamā narāḥ…)
+            - text: subh_0019
+          - cell "anushtubh" [ref=f3e365]
+          - cell "2" [ref=f3e366]
+          - cell "Новое" [ref=f3e367]
+          - cell "-" [ref=f3e369]
+          - cell [ref=f3e370]:
+            - link "Открыть" [ref=f3e371] [cursor=pointer]:
+              - /url: student.html?id=subh_0019
+        - row [ref=f3e372]:
+          - cell [ref=f3e373]:
+            - strong [ref=f3e374]: Субхашита №12 (akāṇḍakopino bharturanyāsakteśca yoṣitaḥ praśāntiścetasaḥ…)
+            - text: subh_0012
+          - cell "anushtubh" [ref=f3e375]
+          - cell "2" [ref=f3e376]
+          - cell "Новое" [ref=f3e377]
+          - cell "-" [ref=f3e379]
+          - cell [ref=f3e380]:
+            - link "Открыть" [ref=f3e381] [cursor=pointer]:
+              - /url: student.html?id=subh_0012
+        - row [ref=f3e382]:
+          - cell [ref=f3e383]:
+            - strong [ref=f3e384]: Субхашита №23 (akālasahamatyalpaṃ mūrkhavyasanināyakam aguptaṃ bhīruyodhaṃ…)
+            - text: subh_0023
+          - cell "anushtubh" [ref=f3e385]
+          - cell "2" [ref=f3e386]
+          - cell "Новое" [ref=f3e387]
+          - cell "-" [ref=f3e389]
+          - cell [ref=f3e390]:
+            - link "Открыть" [ref=f3e391] [cursor=pointer]:
+              - /url: student.html?id=subh_0023
+        - row [ref=f3e392]:
+          - cell [ref=f3e393]:
+            - strong [ref=f3e394]: Субхашита №6678 (saṅghātavānyathā veṇurnibiḍaḥ kaṇṭakairvṛtaḥ…)
+            - text: subh_6678
+          - cell "anushtubh" [ref=f3e395]
+          - cell "3" [ref=f3e396]
+          - cell "Новое" [ref=f3e397]
+          - cell "-" [ref=f3e399]
+          - cell [ref=f3e400]:
+            - link "Открыть" [ref=f3e401] [cursor=pointer]:
+              - /url: student.html?id=subh_6678
+        - row [ref=f3e402]:
+          - cell [ref=f3e403]:
+            - strong [ref=f3e404]: Субхашита №1794 (kutsitasya śarīrasya sāramasti…)
+            - text: subh_1794
+          - cell "anushtubh" [ref=f3e405]
+          - cell "3" [ref=f3e406]
+          - cell "Новое" [ref=f3e407]
+          - cell "-" [ref=f3e409]
+          - cell [ref=f3e410]:
+            - link "Открыть" [ref=f3e411] [cursor=pointer]:
+              - /url: student.html?id=subh_1794
+        - row [ref=f3e412]:
+          - cell [ref=f3e413]:
+            - strong [ref=f3e414]: Субхашита №6876 (saṃpatsu mahatāṃ cittaṃ…)
+            - text: subh_6876
+          - cell "anushtubh" [ref=f3e415]
+          - cell "3" [ref=f3e416]
+          - cell "Новое" [ref=f3e417]
+          - cell "-" [ref=f3e419]
+          - cell [ref=f3e420]:
+            - link "Открыть" [ref=f3e421] [cursor=pointer]:
+              - /url: student.html?id=subh_6876
+  - contentinfo [ref=f3e422]:
+    - link "Записаться на курс санскрита →" [ref=f3e423] [cursor=pointer]:
+      - /url: https://samskrtam.ru/usha-sanka?utm_source=karaoke&utm_medium=cta&utm_campaign=progress
+    - generic [ref=f3e424]: Можно в записи и в своём темпе
+    - link "Задать вопрос в Telegram" [ref=f3e425] [cursor=pointer]:
+      - /url: https://t.me/rusamskrtam

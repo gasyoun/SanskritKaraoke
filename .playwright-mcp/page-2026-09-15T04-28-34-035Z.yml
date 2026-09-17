@@ -1,0 +1,105 @@
+- generic [ref=f2e2]:
+  - generic [ref=f2e3]:
+    - generic [ref=f2e4]:
+      - heading "Карта мастерства" [level=1] [ref=f2e5]
+      - text: v1.5.5 · mastery layer
+    - generic [ref=f2e6]:
+      - link "← Прогресс" [ref=f2e7] [cursor=pointer]:
+        - /url: progress.html
+      - link "✎ Редактор" [ref=f2e8] [cursor=pointer]:
+        - /url: index.html
+      - link "Каталог" [ref=f2e9] [cursor=pointer]:
+        - /url: catalogue.html
+  - generic [ref=f2e10]:
+    - generic [ref=f2e11]:
+      - strong [ref=f2e12]: 35 517
+      - generic [ref=f2e13]: Drill-единиц всего
+    - generic [ref=f2e14]:
+      - strong [ref=f2e15]: "0.69"
+      - generic [ref=f2e16]: Средняя лёгкость (0..1)
+    - generic [ref=f2e17]:
+      - strong [ref=f2e18]: "5"
+      - generic [ref=f2e19]: Drill-семей
+  - generic [ref=f2e20]:
+    - generic [ref=f2e21]:
+      - generic [ref=f2e22]:
+        - heading "Сандхи" [level=2] [ref=f2e23]
+        - generic [ref=f2e24]: 396 ед. · лёгкость 0.78 · стабильность 4.91 дн.
+      - 'img "Сандхи: распределение лёгкости" [ref=f2e25]':
+        - 'generic "новое: 0"'
+        - 'generic "трудное: 0"'
+        - 'generic "в процессе: 81" [ref=f2e26]'
+        - 'generic "освоено: 315" [ref=f2e27]'
+      - generic [ref=f2e28]:
+        - generic [ref=f2e29]: новое 0
+        - generic [ref=f2e31]: трудное 0
+        - generic [ref=f2e33]: в процессе 81
+        - generic [ref=f2e35]: освоено 315
+    - generic [ref=f2e37]:
+      - generic [ref=f2e38]:
+        - heading "Композиты (самасы)" [level=2] [ref=f2e39]
+        - generic [ref=f2e40]: 3 865 ед. · лёгкость 0.54 · стабильность 3.69 дн.
+      - 'img "Композиты (самасы): распределение лёгкости" [ref=f2e41]':
+        - 'generic "новое: 0"'
+        - 'generic "трудное: 2 806" [ref=f2e42]'
+        - 'generic "в процессе: 300" [ref=f2e43]'
+        - 'generic "освоено: 759" [ref=f2e44]'
+      - generic [ref=f2e45]:
+        - generic [ref=f2e46]: новое 0
+        - generic [ref=f2e48]: трудное 2 806
+        - generic [ref=f2e50]: в процессе 300
+        - generic [ref=f2e52]: освоено 759
+    - generic [ref=f2e54]:
+      - generic [ref=f2e55]:
+        - heading "Морфология" [level=2] [ref=f2e56]
+        - generic [ref=f2e57]: 12 000 ед. · лёгкость 0.71 · стабильность 4.57 дн.
+      - 'img "Морфология: распределение лёгкости" [ref=f2e58]':
+        - 'generic "новое: 0"'
+        - 'generic "трудное: 1 680" [ref=f2e59]'
+        - 'generic "в процессе: 5 162" [ref=f2e60]'
+        - 'generic "освоено: 5 158" [ref=f2e61]'
+      - generic [ref=f2e62]:
+        - generic [ref=f2e63]: новое 0
+        - generic [ref=f2e65]: трудное 1 680
+        - generic [ref=f2e67]: в процессе 5 162
+        - generic [ref=f2e69]: освоено 5 158
+    - generic [ref=f2e71]:
+      - generic [ref=f2e72]:
+        - heading "Словарь" [level=2] [ref=f2e73]
+        - generic [ref=f2e74]: 13 334 ед. · лёгкость 0.70 · стабильность 4.48 дн.
+      - 'img "Словарь: распределение лёгкости" [ref=f2e75]':
+        - 'generic "новое: 0"'
+        - 'generic "трудное: 2 224" [ref=f2e76]'
+        - 'generic "в процессе: 5 736" [ref=f2e77]'
+        - 'generic "освоено: 5 374" [ref=f2e78]'
+      - generic [ref=f2e79]:
+        - generic [ref=f2e80]: новое 0
+        - generic [ref=f2e82]: трудное 2 224
+        - generic [ref=f2e84]: в процессе 5 736
+        - generic [ref=f2e86]: освоено 5 374
+    - generic [ref=f2e88]:
+      - generic [ref=f2e89]:
+        - heading "Тематический словарь" [level=2] [ref=f2e90]
+        - generic [ref=f2e91]: 5 922 ед. · лёгкость 0.74 · стабильность 4.72 дн.
+      - 'img "Тематический словарь: распределение лёгкости" [ref=f2e92]':
+        - 'generic "новое: 0"'
+        - 'generic "трудное: 574" [ref=f2e93]'
+        - 'generic "в процессе: 2 318" [ref=f2e94]'
+        - 'generic "освоено: 3 030" [ref=f2e95]'
+      - generic [ref=f2e96]:
+        - generic [ref=f2e97]: новое 0
+        - generic [ref=f2e99]: трудное 574
+        - generic [ref=f2e101]: в процессе 2 318
+        - generic [ref=f2e103]: освоено 3 030
+  - generic [ref=f2e105]:
+    - text: "Источник: датасет"
+    - code [ref=f2e106]: kosha-mastery-schedule
+    - text: (H3742) —
+    - link "kosha · data/mastery/combined_schedule.json" [ref=f2e107] [cursor=pointer]:
+      - /url: https://github.com/gasyoun/kosha/blob/main/data/mastery/combined_schedule.json
+    - text: ", одна строка на drill-единицу пяти семей, ease 0..1 (выше = легче), CC BY-SA 4.0. Дайджест собран"
+    - code [ref=f2e108]: tools/build_mastery_layer.py
+    - text: "; sha256 источника зафиксирован в самом дайджесте. Живая версия кампусной карты:"
+    - link "Карта мастерства кампуса" [ref=f2e109] [cursor=pointer]:
+      - /url: https://gasyoun.github.io/mastery/
+    - text: .
