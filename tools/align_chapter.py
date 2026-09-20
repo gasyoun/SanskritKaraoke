@@ -11,7 +11,7 @@ With --write, writes the timing field directly into the verse JSONs.
 
 Dependencies: ffmpeg (binary on PATH), numpy.
 """
-import sys, os, json, argparse, subprocess, math
+import sys, os, json, argparse, subprocess, math, re
 
 import numpy as np
 
@@ -578,7 +578,7 @@ def whisper_word_times(clip_f32, sr, model_name='small'):
     """
     Transcribe the verse-region audio with faster_whisper word timestamps
     (optional dependency — lazy import). Input: float32 mono at sr Hz.
-    Returns ordered [(start_s, end_s), ...] position anchors, or None when
+    Returns ordered [(iast_word, start_s, end_s), ...], or None when
     faster_whisper is unavailable / too few words.
     """
     try:
@@ -595,7 +595,10 @@ def whisper_word_times(clip_f32, sr, model_name='small'):
         words = []
         for seg in segments:
             for w in (seg.words or []):
-                words.append((float(w.start), float(w.end)))
+                wt_text = re.sub(r'[^a-zāīūṛḷṝḹṅñṭḍṇśṣḥṃ]',
+                                 '', dev_to_iast(w.word).lower())
+                if wt_text:
+                    words.append((wt_text, float(w.start), float(w.end)))
     except Exception:
         return None
     return words if len(words) >= 3 else None
@@ -610,41 +613,118 @@ def whisper_warp_times(syls_s1, syls_s2, word_times):
     is honoured where the uniform mora base lags. Returns {'s1': [...], 's2':
     [...]} or None when unusable.
     """
-    if not word_times or len(word_times) < 3:
-        return None
-    starts = [s for s, _e in word_times]
-    ends   = [e for _s, e in word_times]
-    t0, t1 = starts[0], ends[-1]
-    if t1 - t0 <= 0.2:
-        return None
-    n = len(word_times)
+def _verse_word_tokens(verse):
+    """Whitespace/hyphen word tokens of s1+s2 (transliterated to IAST),
+    lowercased, punctuation-stripped."""
+    text = dev_to_iast(f"{verse.get('s1', '')} {verse.get('s2', '')}")
+    toks = [t for t in re.split(r'[\s\-–—|/]+', text) if t]
+    out = []
+    for t in toks:
+        t = re.sub(r'[।॥.,;:!?]', '', t).lower()
+        if t:
+            out.append(t)
+    return out
 
-    syls    = list(syls_s1) + list(syls_s2)
-    weights = [2 if s['type'] == 'guru' else 1 for s in syls]
-    total_w = sum(weights)
-    if total_w <= 0:
+
+def whisper_token_windows(verse_tokens, heard_words):
+    """
+    Monotonic text-aware alignment of heard (whisper) words to verse word
+    tokens. Each heard word maps to a run of 1..3 consecutive verse tokens
+    (scored by string similarity — whisper merges like «सन्त्यज्यगज्च्छती» =
+    saṃtyajya+gacchati are handled) or to noise (small penalty); every verse
+    token is covered exactly once. Returns per-verse-token (start_s, end_s)
+    windows (heard spans split proportionally by token char length), or None.
+    """
+    import difflib
+    N, M = len(heard_words), len(verse_tokens)
+    if N < 2 or M < 2:
         return None
-    cum, acc = [0.0], 0.0
-    for w in weights:
-        acc += w
-        cum.append(acc / total_w)
+    INF = float('-inf')
+    dp = [[INF] * (M + 1) for _ in range(N + 1)]
+    back = [[None] * (M + 1) for _ in range(N + 1)]
+    dp[0][0] = 0.0
+    for i in range(1, N + 1):
+        h = heard_words[i - 1][0]
+        for j in range(M + 1):
+            if dp[i - 1][j] == INF:
+                continue
+            if dp[i][j] < dp[i - 1][j] - 0.05:  # noise: no verse tokens
+                dp[i][j] = dp[i - 1][j] - 0.05
+                back[i][j] = (i - 1, j, j)
+            for j2 in range(j + 1, min(M, j + 3) + 1):
+                v = ''.join(verse_tokens[j:j2])
+                sc = difflib.SequenceMatcher(None, h, v).ratio()
+                val = dp[i - 1][j] + sc
+                if val > dp[i][j2]:
+                    dp[i][j2] = val
+                    back[i][j2] = (i - 1, j, j2)
+    if dp[N][M] == INF:
+        return None
 
-    anchor_f = [k / n for k in range(n + 1)]
-    anchor_t = [t0] + ends
+    spans = [None] * M
+    i, j = N, M
+    while i > 0:
+        if back[i][j] is None:
+            return None
+        pi, pj, j2 = back[i][j]
+        j_prev = pj
+        if j2 > pj:
+            hs, he = heard_words[i - 1][1], heard_words[i - 1][2]
+            toks = verse_tokens[pj:j]
+            total_chars = sum(len(t) for t in toks) or 1
+            acc = hs
+            for t in toks:
+                d = (he - hs) * (len(t) / total_chars)
+                spans[pj] = (acc, acc + d)
+                acc += d
+                pj += 1
+        i, j = pi, j_prev
+    if any(s is None for s in spans):
+        return None
+    return spans
 
-    def warp(f):
-        f = min(max(f, 0.0), 1.0)
-        for k in range(1, n + 1):
-            if f <= anchor_f[k]:
-                span = anchor_f[k] - anchor_f[k - 1]
-                u = 0.0 if span <= 0 else (f - anchor_f[k - 1]) / span
-                return anchor_t[k - 1] + u * (anchor_t[k] - anchor_t[k - 1])
-        return anchor_t[-1]
+
+def distribute_by_token_windows(syls_s1, syls_s2, verse_tokens, token_windows):
+    """
+    Distribute flat syllable onsets over per-token windows: tokens sized by
+    char length (mapped to flat syllable indices proportionally), syllables
+    inside a token window spaced by mora weight (guru=2, laghu=1).
+    Returns {'s1': [...], 's2': [...]}.
+    """
+    syls = list(syls_s1) + list(syls_s2)
+    M = len(syls)
+    n_tok = len(verse_tokens)
+    approx = [max(1, len(t)) for t in verse_tokens]
+    total_a = sum(approx)
+
+    cuts = [0]
+    acc = 0.0
+    for k in range(n_tok):
+        acc += approx[k]
+        cuts.append(min(M, int(round(acc / total_a * M))))
+    cuts[-1] = M
 
     times = {'s1': [], 's2': []}
-    for i in range(len(syls)):
-        t = warp(cum[i])
-        (times['s1'] if i < len(syls_s1) else times['s2']).append(t)
+    n1 = len(syls_s1)
+    for k in range(n_tok):
+        i0, i1 = cuts[k], cuts[k + 1]
+        if i1 <= i0:
+            continue
+        ws, we = token_windows[k]
+        span = max(we - ws, 0.05)
+        seg = syls[i0:i1]
+        weights, acc_w = [], 0.0
+        for s in seg:
+            w = 2 if s['type'] == 'guru' else 1
+            weights.append(w)
+            acc_w += w
+        c = 0.0
+        for off, s in enumerate(seg):
+            frac = (c / acc_w) if acc_w else 0.0
+            t = ws + span * frac
+            gi = i0 + off
+            (times['s1'] if gi < n1 else times['s2']).append(t)
+            c += weights[off]
     return times
 
 # ── Mora-proportional timing ──────────────────────────────────────────────────
@@ -857,11 +937,16 @@ def align_verse(audio_path, verse, verses_dir, params=None, verbose=False,
     warped = None
     if whisper_cal:
         wt = whisper_word_times(verse_data, sr)
-        warped = whisper_warp_times(syls_s1, syls_s2, wt) if wt else None
+        if wt:
+            verse_tokens = _verse_word_tokens(verse)
+            token_windows = whisper_token_windows(verse_tokens, wt)
+            if token_windows:
+                warped = distribute_by_token_windows(
+                    syls_s1, syls_s2, verse_tokens, token_windows)
         if warped:
             times = {k: [t + region_start for t in v] for k, v in warped.items()}
             if verbose:
-                print(f'  whisper word-warp applied ({len(wt)} words)', file=sys.stderr)
+                print(f'  whisper token-alignment applied ({len(wt)} heard words)', file=sys.stderr)
 
     # Layer 2: Corpus scaling (overwrite linear with scaled corpus timings if available).
     # Skipped when a lead word was stripped or the whisper warp applied — both
