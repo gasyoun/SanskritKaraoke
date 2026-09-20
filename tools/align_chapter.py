@@ -341,7 +341,9 @@ def detect_onsets(data, sr, params=None):
 def detect_pada_bounds(data, sr, params=None):
     """
     Detect 4 pada boundaries (4 x [t0, t1]) by iterative silence-threshold search.
-    Returns list of [t0, t1] pairs, or None if detection fails (fallback to caller).
+    Operates on the VERSE-ONLY audio region — the caller strips a spoken header
+    word first (see detect_lead_end) and shifts returned times back.
+    Returns ([t0,t1] pairs, used_thresh) or (None, None) on failure.
     """
     if params is None:
         params = _load_params()['pada_detection']
@@ -349,10 +351,9 @@ def detect_pada_bounds(data, sr, params=None):
     frame_size = round(sr * params['frame_ms'] * 0.001)
     num_frames = len(data) // frame_size
     if num_frames < 8:
-        return None
+        return None, None
 
     frame_dur = frame_size / sr
-    duration  = len(data) / sr
 
     # RMS per 10 ms frame
     rms = np.array([
@@ -362,9 +363,10 @@ def detect_pada_bounds(data, sr, params=None):
 
     max_rms = rms.max()
     if max_rms == 0:
-        return None
+        return None, None
     norm = rms / max_rms
 
+    duration  = len(data) / sr
     min_pada_dur = duration * params['min_pada_fraction']
 
     def try_thresh(thresh):
@@ -426,6 +428,72 @@ def detect_pada_bounds(data, sr, params=None):
     if padas:
         return [[p[0], p[1]] for p in padas], used_thresh
     return None, None
+
+
+def detect_lead_end(data, sr, params=None):
+    """
+    Detect the end of a spoken header word before pada 1 (e.g. Usha reciting
+    «subhāṣitam» first): the first silence gap ≥ lead_gap_min_ms whose start
+    lies within the first lead_max_fraction of the audio; micro-pauses inside
+    the header word itself are shorter and are skipped. The silence-threshold
+    range is scanned and the MEDIAN candidate gap-end is returned (robust to
+    threshold jitter). Returns seconds, or None when no candidate exists.
+    """
+    if params is None:
+        params = _load_params()['pada_detection']
+
+    lead_gap_min_s = params.get('lead_gap_min_ms', 120) / 1000.0
+
+    frame_size = round(sr * params['frame_ms'] * 0.001)
+    num_frames = len(data) // frame_size
+    if num_frames < 8:
+        return None
+
+    frame_dur = frame_size / sr
+    duration  = len(data) / sr
+    lead_gap_max_start = duration * params.get('lead_max_fraction', 0.25)
+
+    rms = np.array([
+        math.sqrt(np.sum(data[f*frame_size : (f+1)*frame_size] ** 2) / frame_size)
+        for f in range(num_frames)
+    ])
+    max_rms = rms.max()
+    if max_rms == 0:
+        return None
+    norm = rms / max_rms
+
+    candidates = []
+    t = params['silence_thresh_min']
+    t_max = params['silence_thresh_max']
+    t_step = params['silence_thresh_step']
+    while t <= t_max + 1e-9:
+        sil = norm < t
+        first = 0
+        while first < num_frames and sil[first]:
+            first += 1
+        last = num_frames - 1
+        while last >= 0 and sil[last]:
+            last -= 1
+        if first < last:
+            i = first
+            while i <= last:
+                if sil[i]:
+                    s = i
+                    while i <= last and sil[i]:
+                        i += 1
+                    gap_len  = (i - s) * frame_dur
+                    gap_start = s * frame_dur
+                    if gap_len >= lead_gap_min_s and gap_start <= lead_gap_max_start:
+                        candidates.append((i - 1) * frame_dur)  # gap end = verse start
+                        break
+                else:
+                    i += 1
+        t = round(t + t_step, 6)
+
+    if not candidates:
+        return None
+    candidates.sort()
+    return candidates[len(candidates) // 2]
 
 # ── Mora-proportional timing ──────────────────────────────────────────────────
 # Port of calcAutoTiming (app.js:4480).
@@ -556,9 +624,12 @@ def snap_confidence(dist, params=None):
     return values[-1]
 
 # ── Full alignment pipeline ───────────────────────────────────────────────────
-def align_verse(audio_path, verse, verses_dir, params=None, verbose=False):
+def align_verse(audio_path, verse, verses_dir, params=None, verbose=False,
+                lead_strip=False, lead_word=''):
     """
     Run the full 4-layer alignment pipeline for a single verse.
+    lead_strip: skip a spoken header word (e.g. «subhāṣitam») before pada 1 —
+    the verse's speech region starts after the first in-speech silence gap.
     Returns {'timing': {...}, 'confidence': {...}, 'used_thresh': float, 'meta': {...}}
     or raises RuntimeError on failure (e.g. pada detection failed with no fallback).
     """
@@ -583,23 +654,39 @@ def align_verse(audio_path, verse, verses_dir, params=None, verbose=False):
     if not syls_s1 and not syls_s2:
         raise RuntimeError('No syllables found in verse text')
 
+    # Layer 0: spoken header word (e.g. «subhāṣitam») before pada 1 — detect
+    # where the verse actually starts, then align only the verse-only region.
+    lead_end = detect_lead_end(data, sr, params['pada_detection']) if lead_strip else None
+    region_start = lead_end or 0.0
+    verse_data = data[int(region_start * sr):] if region_start > 0 else data
+    verse_dur  = len(verse_data) / sr
+
+    if verbose and lead_end:
+        print(f'  lead word stripped: verse starts at {lead_end:.2f}s', file=sys.stderr)
+
     # Layer 1: Mora-proportional base (needs pada bounds first)
-    pada_result, used_thresh = detect_pada_bounds(data, sr, params['pada_detection'])
+    pada_result, used_thresh = detect_pada_bounds(verse_data, sr, params['pada_detection'])
 
     fallback_used = False
     if pada_result is None:
-        # Fallback: uniform division (same as browser fallback)
+        # Fallback: uniform division over the VERSE span (same as browser fallback)
         fallback_used = True
-        pada_result = [[duration * i / 4, duration * (i + 1) / 4] for i in range(4)]
+        pada_result = [[region_start + verse_dur * i / 4,
+                        region_start + verse_dur * (i + 1) / 4] for i in range(4)]
         used_thresh = None
         if verbose:
-            print('  WARNING: pada detection failed, using uniform fallback', file=sys.stderr)
+            print('  WARNING: pada detection failed, using uniform fallback over the verse span', file=sys.stderr)
+    elif region_start > 0:
+        pada_result = [[p0 + region_start, p1 + region_start] for p0, p1 in pada_result]
 
     times = calc_auto_timing(syls_s1, syls_s2, pada_result, params=params['mora'])
 
-    # Layer 2: Corpus scaling (overwrite linear with scaled corpus timings if available)
+    # Layer 2: Corpus scaling (overwrite linear with scaled corpus timings if available).
+    # Skipped when a lead word was stripped — corpus timings are proportional to
+    # the full duration and would ignore the header offset.
     meter = verse.get('meter', '')
-    scaled = corpus_scale_timing(meter, len(syls_s1), len(syls_s2), duration, verses_dir)
+    scaled = None if lead_end else corpus_scale_timing(
+        meter, len(syls_s1), len(syls_s2), duration, verses_dir)
     if scaled:
         times = scaled
         if verbose:
@@ -661,6 +748,9 @@ def align_verse(audio_path, verse, verses_dir, params=None, verbose=False):
             'uncertain_count':  uncertain_count,
             'total_syllables':  len(all_conf),
             'duration_s':       round(duration, 3),
+            'lead_stripped':    bool(lead_strip and lead_end is not None),
+            'lead_end_s':       round(lead_end, 3) if lead_end is not None else None,
+            'lead_word':        lead_word or None,
         },
     }
 
@@ -678,6 +768,10 @@ def main():
                         help='Write timing directly into verse JSON (default: sidecar patch)')
     parser.add_argument('--verbose', '-v', action='store_true',
                         help='Verbose output')
+    parser.add_argument('--lead-word', default='',
+                        help='Spoken header word before pada 1 (e.g. "subhāṣitam"). '
+                             'Any non-empty value strips the leading header-word '
+                             'speech block before pada detection.')
     args = parser.parse_args()
 
     audio_dir  = args.audio_dir
@@ -725,7 +819,10 @@ def main():
             print(file=sys.stderr)
 
         try:
-            result = align_verse(audio_path, verse, verses_dir, params=params, verbose=args.verbose)
+            result = align_verse(audio_path, verse, verses_dir, params=params,
+                                 verbose=args.verbose,
+                                 lead_strip=bool(args.lead_word),
+                                 lead_word=args.lead_word)
         except Exception as e:
             print(f'ERROR: {e}', file=sys.stderr)
             failed.append(verse_id)
@@ -737,10 +834,11 @@ def main():
         fallback = result['fallback']
 
         status = 'FALLBACK' if fallback else f'thresh={result["used_thresh"]:.2f}'
+        lead_note = (f'  lead@{meta["lead_end_s"]:.2f}s' if meta.get('lead_stripped') else '')
         print(
             f'conf={meta["mean_confidence"]:.2f}  '
             f'uncertain={meta["uncertain_count"]}/{meta["total_syllables"]}  '
-            f'{status}'
+            f'{status}{lead_note}'
         )
 
         if fallback:
