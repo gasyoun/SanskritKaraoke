@@ -1,0 +1,131 @@
+{
+  "id": "subh_0605",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №605 (arthānāmarjane duḥkhamarjitānāṃ ca rakṣaṇe…)",
+    "en": "Subhāṣita №605 (arthānāmarjane duḥkhamarjitānāṃ ca rakṣaṇe…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 605,
+    "attribution": "Böhtlingk, Indische Sprüche №605"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "अर्थानामर्जने दुःखमर्जितानां च रक्षणे ।",
+  "s2": "आये व्यये महद्दुःखं कथमर्थाः सुखावहाः ॥",
+  "s1dev": "अर्थानामर्जने दुःखमर्जितानां च रक्षणे ।",
+  "s2dev": "आये व्यये महद्दुःखं कथमर्थाः सुखावहाः ॥",
+  "translation": {
+    "de": "(219.) Leiden beim Erwerben von/Reichthümern, so auch beim Erhalten der/erworbenen",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-20",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 605",
+    "page": "Page 1.112",
+    "iast_reference": "arthānāmarjane duḥkhamarjitānāṃ ca rakṣaṇe |/āye vyaye mahadduḥkhaṃ kathamarthāḥ sukhāvahāḥ ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  },
+  "timing": {
+    "s1": [
+      0.021950113378684806,
+      0.7146355685131195,
+      1.339920634920635,
+      2.1439067055393584,
+      2.858542274052478,
+      3.2158600583090378,
+      3.9304956268221574,
+      4.517732426303855,
+      5.09937641723356,
+      5.643174603174603,
+      6.156860282574568,
+      6.967131519274377,
+      7.568798185941043,
+      8.081632653061224,
+      8.887800453514739,
+      9.235290423861851
+    ],
+    "s2": [
+      10.004897959183673,
+      10.713650793650794,
+      11.461950113378684,
+      11.799183673469388,
+      12.606315192743764,
+      12.994467120181406,
+      13.57807580174927,
+      14.267573696145124,
+      14.987936507936508,
+      15.371065759637188,
+      15.78908163265306,
+      16.674829931972788,
+      17.50857142857143,
+      17.925442176870746,
+      18.74140589569161,
+      19.176054421768704
+    ],
+    "confidence": {
+      "s1": [
+        1.0,
+        0.2,
+        0.4,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.15,
+        0.4,
+        0.15,
+        0.2,
+        0.7,
+        0.15,
+        1.0,
+        0.7,
+        0.2
+      ],
+      "s2": [
+        0.2,
+        1.0,
+        1.0,
+        1.0,
+        0.4,
+        0.15,
+        0.2,
+        1.0,
+        1.0,
+        0.7,
+        0.7,
+        0.2,
+        0.2,
+        0.2,
+        1.0,
+        0.2
+      ]
+    },
+    "auto_generated": true,
+    "generator": "cli-v1"
+  }
+}

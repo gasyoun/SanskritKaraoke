@@ -1,0 +1,131 @@
+{
+  "id": "subh_5909",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №5909 (vajrādapi kaṭhorāṇi mṛdū ni…)",
+    "en": "Subhāṣita №5909 (vajrādapi kaṭhorāṇi mṛdū ni…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 5909,
+    "attribution": "Böhtlingk, Indische Sprüche №5909"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "वज्रादपि कठोराणि मृदू नि कुसुमादपि ।",
+  "s2": "लोकोत्तराणां चेतांसि को नु विज्ञातुमर्हति ॥",
+  "s1dev": "वज्रादपि कठोराणि मृदू नि कुसुमादपि ।",
+  "s2dev": "लोकोत्तराणां चेतांसि को नु विज्ञातुमर्हति ॥",
+  "translation": {
+    "de": "(2705.) Wer vermag die Herzen/ungewöhnlicher Menschen zu ergründen,/die noch härter als der Diamant und noch/weicher als Blumen sind?",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-20",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 5909",
+    "page": "Page 3.259",
+    "iast_reference": "vajrādapi kaṭhorāṇi mṛdū ni kusumādapi |/lokottarāṇāṃ cetāṃsi ko nu vijñātumarhati ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  },
+  "timing": {
+    "s1": [
+      0.0,
+      0.7477551020408163,
+      1.456689342403628,
+      1.7759637188208617,
+      2.243265306122449,
+      2.7317913832199547,
+      3.366349206349206,
+      4.132607709750567,
+      4.496746031746032,
+      4.96671201814059,
+      5.877607709750567,
+      6.237823129251701,
+      6.766621315192744,
+      7.170668934240363,
+      8.075755102040816,
+      8.524408163265306
+    ],
+    "s2": [
+      8.969614512471656,
+      9.594195011337868,
+      10.270657596371882,
+      10.57795918367347,
+      11.190566893424036,
+      11.857259475218658,
+      12.49819241982507,
+      13.168072562358276,
+      13.569160997732427,
+      14.16078231292517,
+      14.544943310657596,
+      15.277256235827664,
+      16.076734693877547,
+      16.450612244897957,
+      17.212879818594104,
+      17.56408163265306
+    ],
+    "confidence": {
+      "s1": [
+        0.2,
+        0.2,
+        0.7,
+        0.4,
+        0.2,
+        0.4,
+        1.0,
+        1.0,
+        1.0,
+        0.7,
+        0.7,
+        0.7,
+        0.7,
+        1.0,
+        0.2,
+        0.2
+      ],
+      "s2": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.2,
+        0.2,
+        1.0,
+        0.4,
+        0.7,
+        0.7,
+        0.7,
+        0.2,
+        0.2,
+        1.0,
+        1.0
+      ]
+    },
+    "auto_generated": true,
+    "generator": "cli-v1"
+  }
+}

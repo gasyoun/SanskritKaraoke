@@ -1,0 +1,131 @@
+{
+  "id": "subh_4488",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №4488 (boddhāro matsaragrastāḥ prabhavaḥ smayadūṣitāḥ…)",
+    "en": "Subhāṣita №4488 (boddhāro matsaragrastāḥ prabhavaḥ smayadūṣitāḥ…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 4488,
+    "attribution": "Böhtlingk, Indische Sprüche №4488"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "बोद्धारो मत्सरग्रस्ताः प्रभवः स्मयदूषिताः ।",
+  "s2": "अबोधोपहताश्चान्ये जीर्णमङ्गे सुभाषितम् ॥",
+  "s1dev": "बोद्धारो मत्सरग्रस्ताः प्रभवः स्मयदूषिताः ।",
+  "s2dev": "अबोधोपहताश्चान्ये जीर्णमङ्गे सुभाषितम् ॥",
+  "translation": {
+    "de": "(1988.) Die Kenner werden von/Neid verzehrt, die Gebieter sind mit/Hochmuth befleckt, die Uebrigen mit/Dummheit geschlagen: die schönen Worte/habe ich im eigenen Leibe verdaut (so v./a. unterdrückt).",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-20",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 4488",
+    "page": "Page 2.470",
+    "iast_reference": "boddhāro matsaragrastāḥ prabhavaḥ smayadūṣitāḥ |/abodhopahatāścānye jīrṇamaṅge subhāṣitam ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  },
+  "timing": {
+    "s1": [
+      0.0,
+      0.6086530612244897,
+      1.2252154195011338,
+      1.825959183673469,
+      2.532244897959184,
+      2.7397732426303856,
+      3.346394557823129,
+      3.9430385487528343,
+      4.535691609977325,
+      4.958730158730159,
+      5.397732426303855,
+      6.224860853432282,
+      6.652879818594104,
+      7.006077097505669,
+      7.90204081632653,
+      8.223310657596372
+    ],
+    "s2": [
+      9.129795918367346,
+      9.480941915227628,
+      10.190839002267573,
+      10.94312925170068,
+      11.258412698412698,
+      11.607619047619048,
+      12.323990929705216,
+      12.992401883830453,
+      13.666938775510204,
+      14.425215419501134,
+      14.841235827664399,
+      15.534693877551021,
+      16.152715855572996,
+      16.50386185243328,
+      17.30267573696145,
+      17.510204081632654
+    ],
+    "confidence": {
+      "s1": [
+        0.2,
+        0.2,
+        1.0,
+        0.2,
+        0.4,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.2,
+        1.0,
+        0.7,
+        1.0,
+        0.4
+      ],
+      "s2": [
+        0.2,
+        0.2,
+        1.0,
+        0.7,
+        1.0,
+        1.0,
+        0.7,
+        0.2,
+        1.0,
+        1.0,
+        0.4,
+        0.4,
+        0.2,
+        0.2,
+        0.4,
+        0.7
+      ]
+    },
+    "auto_generated": true,
+    "generator": "cli-v1"
+  }
+}

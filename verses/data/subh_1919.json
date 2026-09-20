@@ -1,0 +1,131 @@
+{
+  "id": "subh_1919",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №1919 (kokilānāṃ svaro rūpaṃ nārīrūpaṃ…)",
+    "en": "Subhāṣita №1919 (kokilānāṃ svaro rūpaṃ nārīrūpaṃ…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 1919,
+    "attribution": "Böhtlingk, Indische Sprüche №1919"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "कोकिलानां स्वरो रूपं नारीरूपं पतिव्रतम् ।",
+  "s2": "विद्या रूपं कुरूपाणां क्षमा रूपं तपस्विनाम् ॥",
+  "s1dev": "कोकिलानां स्वरो रूपं नारीरूपं पतिव्रतम् ।",
+  "s2dev": "विद्या रूपं कुरूपाणां क्षमा रूपं तपस्विनाम् ॥",
+  "translation": {
+    "de": "(741.) Bei den Kokila vertritt/die Stimme die Stelle der Schönheit, bei/Weibern die Treue gegen Gatten, bei/Hässlichen das Wissen, bei Asketen die/Geduld.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-20",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 1919",
+    "page": "Page 1.371",
+    "iast_reference": "kokilānāṃ svaro rūpaṃ nārīrūpaṃ pativratam |/vidyā rūpaṃ kurūpāṇāṃ kṣamā rūpaṃ tapasvinām ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  },
+  "timing": {
+    "s1": [
+      0.021950113378684806,
+      0.6623906705539359,
+      0.9997278911564625,
+      1.6559766763848396,
+      2.3606349206349204,
+      2.5561904761904763,
+      3.3244444444444445,
+      3.9743440233236154,
+      4.548628117913832,
+      5.303945578231293,
+      6.072199546485261,
+      6.597006802721088,
+      7.2862973760932945,
+      7.617492711370263,
+      8.205351473922903,
+      8.708208616780045
+    ],
+    "s2": [
+      9.137233560090703,
+      9.909478458049886,
+      10.514104308390023,
+      11.132698412698412,
+      11.671473922902495,
+      12.104489795918367,
+      12.80689342403628,
+      13.291972789115647,
+      13.910204081632653,
+      14.266875981161695,
+      14.983945578231292,
+      15.7102947845805,
+      16.406907378335948,
+      16.76357927786499,
+      17.480272108843536,
+      17.83359497645212
+    ],
+    "confidence": {
+      "s1": [
+        1.0,
+        0.2,
+        1.0,
+        0.2,
+        0.7,
+        0.4,
+        1.0,
+        0.2,
+        0.4,
+        1.0,
+        0.4,
+        1.0,
+        0.2,
+        0.2,
+        0.4,
+        0.4
+      ],
+      "s2": [
+        0.15,
+        1.0,
+        1.0,
+        1.0,
+        0.4,
+        0.7,
+        0.15,
+        0.2,
+        0.2,
+        0.2,
+        1.0,
+        1.0,
+        0.2,
+        0.2,
+        1.0,
+        0.2
+      ]
+    },
+    "auto_generated": true,
+    "generator": "cli-v1"
+  }
+}

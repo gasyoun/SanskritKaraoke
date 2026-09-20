@@ -1,0 +1,131 @@
+{
+  "id": "subh_0292",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №292 (anityāni śarīrāṇi vibhavo naiva…)",
+    "en": "Subhāṣita №292 (anityāni śarīrāṇi vibhavo naiva…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 292,
+    "attribution": "Böhtlingk, Indische Sprüche №292"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "अनित्यानि शरीराणि विभवो नैव शाश्वतः ।",
+  "s2": "नित्यं संनिहितो मृत्युः कर्तव्यो धर्मसंग्रहः ॥",
+  "s1dev": "अनित्यानि शरीराणि विभवो नैव शाश्वतः ।",
+  "s2dev": "नित्यं संनिहितो मृत्युः कर्तव्यो धर्मसंग्रहः ॥",
+  "translation": {
+    "de": "(11.) Die Leiber sind nicht von/Bestand, Reichthümer währen nicht ewig,/der Tod ist beständig in der Nähe",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-20",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 292",
+    "page": "Page 1.54",
+    "iast_reference": "anityāni śarīrāṇi vibhavo naiva śāśvataḥ |/nityaṃ saṃnihito mṛtyuḥ kartavyo dharmasaṅgrahaḥ ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  },
+  "timing": {
+    "s1": [
+      0.0,
+      0.3787755102040817,
+      1.1434013605442177,
+      1.8938775510204084,
+      2.27265306122449,
+      2.645986394557823,
+      3.4002721088435375,
+      4.080725623582766,
+      4.553650793650793,
+      4.986666666666666,
+      5.160272108843538,
+      6.071167800453515,
+      6.8244897959183675,
+      7.241541950113379,
+      7.912018140589569,
+      8.366984126984127
+    ],
+    "s2": [
+      9.09061224489796,
+      9.833650793650794,
+      10.326530612244898,
+      10.993979591836734,
+      11.37015873015873,
+      11.69342403628118,
+      12.205226757369614,
+      13.02639455782313,
+      13.591111111111111,
+      14.257596371882086,
+      14.954013605442176,
+      15.592562358276645,
+      16.2332361516035,
+      16.55790087463557,
+      17.22684807256236,
+      17.488253968253968
+    ],
+    "confidence": {
+      "s1": [
+        0.2,
+        0.2,
+        1.0,
+        0.2,
+        0.2,
+        1.0,
+        1.0,
+        0.4,
+        1.0,
+        0.7,
+        0.15,
+        1.0,
+        1.0,
+        0.7,
+        0.7,
+        0.7
+      ],
+      "s2": [
+        0.2,
+        0.4,
+        0.7,
+        1.0,
+        1.0,
+        1.0,
+        0.4,
+        0.7,
+        0.7,
+        1.0,
+        1.0,
+        1.0,
+        0.2,
+        0.2,
+        1.0,
+        0.7
+      ]
+    },
+    "auto_generated": true,
+    "generator": "cli-v1"
+  }
+}

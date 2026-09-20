@@ -206,7 +206,8 @@ is mechanically actionable; none was ticked or fabricated. See
 for the runbook that fires the moment audio lands.
 
 **Deliverable:**
-- [ ] First real `build_chapter.py` run on session audio — MP4s + post-kits produced — **gate: chapter audio (human:MG/Уша Санка)**
+- [x] First real `build_chapter.py` run on session audio — MP4s + post-kits produced — **gate: chapter audio (human:MG/Уша Санка)**
+  **RAN 19-09-2026 (OxAlpha `zai-coding-plan/glm-5.3-flash`) — gate lifted by MG:** «Аудио глав Уша Санки — начни с субхашит» — the H4474 yadisk batch (`Kochergina-Subhashitas` / `Subhashitas-Systematic`) is Уша Санка's recordings. Chain: importer `--nums` → 22 of 31 high-confidence sayings pass the anuṣṭubh screen (library 35→60); 22 mp3 via Yandex WebDAV; `align_chapter.py` 22/22 — ⚠ **all FALLBACK uniform timing** (pada detection failed, conf 0.47–0.75); `render_chapter.js` **22/22 MP4s** 1080×1920 ~19 s (local `dist/`, gitignored); `post_kit.py` → 22 kits under `drop/`. **Split note:** publish row below stays gated (signed Уша agreement + Telegram credentials); `audio.drive_file_id`/`canonical_url` still TODO; alignment eval / judge / postmortem rows stay open; follow-up queue = 9 failed-screen nums + 46 medium-confidence manifest rows.
 - [ ] Alignment eval report on real audio (`eval_alignment.py`) — **gate: chapter audio (human:MG/Уша Санка)**
 - [ ] Run trajectory log + post-run judge assessment in `logs/` — **gate: chapter audio (human:MG/Уша Санка)**
 - [ ] ≥1 live post published via `schedule_drops.py --live` (Telegram) — **gate: chapter audio + Telegram credentials (human:MG)**

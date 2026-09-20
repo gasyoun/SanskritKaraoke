@@ -1,0 +1,131 @@
+{
+  "id": "subh_4156",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №4156 (pustakasthā ca yā vidyā…)",
+    "en": "Subhāṣita №4156 (pustakasthā ca yā vidyā…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 4156,
+    "attribution": "Böhtlingk, Indische Sprüche №4156"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "पुस्तकस्था च या विद्या परहस्ते च यद्धनम् ।",
+  "s2": "कार्यकाले समुत्पन्ने न सा विद्या न तद्धनम् ॥",
+  "s1dev": "पुस्तकस्था च या विद्या परहस्ते च यद्धनम् ।",
+  "s2dev": "कार्यकाले समुत्पन्ने न सा विद्या न तद्धनम् ॥",
+  "translation": {
+    "de": "(1809.) Wenn die Zeit zum Handeln/da ist, dann ist Wissen, das nur im/Buche steht, kein Wissen, und Geld, das/in fremden Händen sich befindet, kein/Geld.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-20",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 4156",
+    "page": "Page 2.399",
+    "iast_reference": "pustakasthā ca yā vidyā parahaste ca yaddhanam |/kāryakāle samutpanne na sā vidyā na taddhanam ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  },
+  "timing": {
+    "s1": [
+      0.021950113378684806,
+      0.7622675736961452,
+      0.9219047619047619,
+      1.6653061224489796,
+      2.3127437641723354,
+      2.6779138321995464,
+      3.4461678004535146,
+      3.9949206349206348,
+      4.647437641723356,
+      5.054512471655329,
+      5.4399999999999995,
+      6.227845804988662,
+      7.0679365079365075,
+      7.389206349206349,
+      8.16,
+      8.548571428571428
+    ],
+    "s2": [
+      9.264943310657596,
+      9.987301587301587,
+      10.324897959183673,
+      10.989024943310657,
+      11.657142857142858,
+      11.897925170068026,
+      12.778956916099773,
+      13.322448979591837,
+      13.967222222222222,
+      14.39328798185941,
+      14.920090702947846,
+      15.786122448979592,
+      16.49934065934066,
+      16.858021978021977,
+      17.575384615384614,
+      17.934065934065934
+    ],
+    "confidence": {
+      "s1": [
+        1.0,
+        0.4,
+        0.4,
+        0.2,
+        1.0,
+        1.0,
+        0.4,
+        1.0,
+        1.0,
+        1.0,
+        0.2,
+        1.0,
+        0.4,
+        1.0,
+        0.2,
+        0.2
+      ],
+      "s2": [
+        0.7,
+        1.0,
+        0.2,
+        1.0,
+        0.2,
+        0.4,
+        0.15,
+        0.2,
+        1.0,
+        0.7,
+        0.15,
+        1.0,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    "auto_generated": true,
+    "generator": "cli-v1"
+  }
+}

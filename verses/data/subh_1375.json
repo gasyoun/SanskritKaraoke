@@ -1,0 +1,131 @@
+{
+  "id": "subh_1375",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №1375 (ekavarṇaṃ yathā dugdhaṃ bahuvarṇāsu…)",
+    "en": "Subhāṣita №1375 (ekavarṇaṃ yathā dugdhaṃ bahuvarṇāsu…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 1375,
+    "attribution": "Böhtlingk, Indische Sprüche №1375"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "एकवर्णं यथा दुग्धं बहुवर्णासु धेनुषु ।",
+  "s2": "तथा धर्मस्य वैचित्र्ये तत्त्वमेकं परं पुनः ॥",
+  "s1dev": "एकवर्णं यथा दुग्धं बहुवर्णासु धेनुषु ।",
+  "s2dev": "तथा धर्मस्य वैचित्र्ये तत्त्वमेकं परं पुनः ॥",
+  "translation": {
+    "de": "Wie alle Milch, so/verschiedenfarbig auch die Kühe sind,/immer dieselbe Farbe hat, so giebt es/bei aller Mannichfaltigkeit der Pflicht/nur eine oberste Wahrheit.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-20",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 1375",
+    "page": "Page 1.262",
+    "iast_reference": "ekavarṇaṃ yathā dugdhaṃ bahuvarṇāsu dhenuṣu |/tathā dharmasya vaicitrye tattvamekaṃ paraṃ punaḥ ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  },
+  "timing": {
+    "s1": [
+      0.0,
+      0.756281179138322,
+      1.017687074829932,
+      1.707288629737609,
+      2.516281179138322,
+      2.7118367346938776,
+      3.4381859410430837,
+      4.097492711370262,
+      4.7831292517006805,
+      5.218140589569161,
+      5.643174603174603,
+      6.662857142857143,
+      7.343310657596372,
+      7.8421768707482995,
+      8.699195011337867,
+      9.149206349206349
+    ],
+    "s2": [
+      9.496417233560091,
+      9.902274052478134,
+      10.589931972789115,
+      11.267358276643991,
+      11.946848072562359,
+      12.30204081632653,
+      13.074285714285715,
+      13.644988662131519,
+      14.423219954648527,
+      15.105668934240363,
+      15.421916099773242,
+      16.189206349206348,
+      16.93750566893424,
+      17.300680272108842,
+      18.018461538461537,
+      18.3861852433281
+    ],
+    "confidence": {
+      "s1": [
+        0.2,
+        0.4,
+        1.0,
+        0.2,
+        0.15,
+        1.0,
+        1.0,
+        0.2,
+        1.0,
+        1.0,
+        1.0,
+        0.15,
+        0.7,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "s2": [
+        0.7,
+        0.2,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.4,
+        1.0,
+        0.4,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.2,
+        0.2
+      ]
+    },
+    "auto_generated": true,
+    "generator": "cli-v1"
+  }
+}

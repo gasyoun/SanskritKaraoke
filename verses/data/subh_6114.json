@@ -1,0 +1,131 @@
+{
+  "id": "subh_6114",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №6114 (vidvāneva vijānāti vidvajjanapariśramam nahi…)",
+    "en": "Subhāṣita №6114 (vidvāneva vijānāti vidvajjanapariśramam nahi…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 6114,
+    "attribution": "Böhtlingk, Indische Sprüche №6114"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "विद्वानेव विजानाति विद्वज्जनपरिश्रमम् ।",
+  "s2": "नहि वन्ध्या विजानाति गुर्वीं प्रसववेदनाम् ॥",
+  "s1dev": "विद्वानेव विजानाति विद्वज्जनपरिश्रमम् ।",
+  "s2dev": "नहि वन्ध्या विजानाति गुर्वीं प्रसववेदनाम् ॥",
+  "translation": {
+    "de": "(1806.) Nur ein Gelehrter kennt/die ermüdende Arbeit des Gelehrten: eine/Unfruchtbare kennt ja nicht die heftige/Schmerzen bei der Geburt.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-20",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 6114",
+    "page": "Page 3.304",
+    "iast_reference": "vidvāneva vijānāti vidvajjanapariśramam |/nahi vandhyā vijānāti gurvīṃ prasavavedanām ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  },
+  "timing": {
+    "s1": [
+      0.0,
+      0.7675981161695448,
+      1.5155215419501136,
+      2.3027943485086344,
+      2.6865934065934067,
+      3.0969614512471657,
+      3.8083106575963717,
+      4.663401360544218,
+      4.988662131519274,
+      5.820770975056689,
+      6.6525170068027215,
+      7.188628117913833,
+      7.524897959183673,
+      7.910022675736961,
+      8.742131519274377,
+      9.15017006802721
+    ],
+    "s2": [
+      9.958333333333332,
+      10.512108843537415,
+      10.810340136054423,
+      11.627573696145125,
+      12.445714285714285,
+      12.90267573696145,
+      13.679875283446712,
+      14.552380952380954,
+      14.968163265306124,
+      15.824036281179138,
+      16.636190476190475,
+      17.031292517006804,
+      17.462312925170068,
+      17.875374149659866,
+      18.683537414965986,
+      19.125986394557824
+    ],
+    "confidence": {
+      "s1": [
+        0.2,
+        0.2,
+        1.0,
+        0.2,
+        0.2,
+        1.0,
+        1.0,
+        0.7,
+        1.0,
+        1.0,
+        0.2,
+        0.15,
+        0.7,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "s2": [
+        1.0,
+        0.4,
+        0.2,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.2,
+        0.2,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.2
+      ]
+    },
+    "auto_generated": true,
+    "generator": "cli-v1"
+  }
+}

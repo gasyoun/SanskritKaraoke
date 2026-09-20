@@ -1,0 +1,131 @@
+{
+  "id": "subh_4172",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №4172 (pūrvajanmakṛtaṃ karma taddaivamiti kathyate…)",
+    "en": "Subhāṣita №4172 (pūrvajanmakṛtaṃ karma taddaivamiti kathyate…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 4172,
+    "attribution": "Böhtlingk, Indische Sprüche №4172"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "पूर्वजन्मकृतं कर्म तद्दैवमिति कथ्यते ।",
+  "s2": "तस्मात्पुरुषकारेण यत्नं कर्यादतन्द्रितः ॥",
+  "s1dev": "पूर्वजन्मकृतं कर्म तद्दैवमिति कथ्यते ।",
+  "s2dev": "तस्मात्पुरुषकारेण यत्नं कर्यादतन्द्रितः ॥",
+  "translation": {
+    "de": "(1817.) Die Werke, die man in/einem frühern Leben vollbracht hat,/heissen Schicksal",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-20",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 4172",
+    "page": "Page 2.402",
+    "iast_reference": "pūrvajanmakṛtaṃ karma taddaivamiti kathyate |/tasmātpuruṣakāreṇa yatnaṃ karyādatandritaḥ ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  },
+  "timing": {
+    "s1": [
+      0.0,
+      0.7804081632653062,
+      1.1706122448979592,
+      1.9625056689342404,
+      2.3412244897959185,
+      2.7314285714285713,
+      3.5339682539682538,
+      4.3011904761904765,
+      4.659410430839002,
+      5.495510204081633,
+      6.243265306122449,
+      6.671802721088436,
+      7.002086167800454,
+      7.3113832199546485,
+      8.205351473922903,
+      8.448798185941044
+    ],
+    "s2": [
+      9.34875283446712,
+      10.14530612244898,
+      10.913197278911564,
+      11.324263038548754,
+      11.663492063492063,
+      12.11047619047619,
+      12.86077097505669,
+      13.676916099773242,
+      14.047346938775512,
+      14.591802721088435,
+      15.534693877551021,
+      16.069478458049886,
+      16.7459410430839,
+      17.009342403628118,
+      17.679818594104308,
+      18.060874635568513
+    ],
+    "confidence": {
+      "s1": [
+        0.2,
+        0.2,
+        0.2,
+        1.0,
+        0.2,
+        0.2,
+        1.0,
+        1.0,
+        1.0,
+        0.7,
+        0.2,
+        0.7,
+        1.0,
+        0.4,
+        1.0,
+        0.15
+      ],
+      "s2": [
+        1.0,
+        0.2,
+        1.0,
+        1.0,
+        0.7,
+        1.0,
+        1.0,
+        1.0,
+        0.2,
+        0.4,
+        0.15,
+        1.0,
+        1.0,
+        0.7,
+        0.7,
+        0.2
+      ]
+    },
+    "auto_generated": true,
+    "generator": "cli-v1"
+  }
+}

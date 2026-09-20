@@ -121,9 +121,23 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--limit", type=int, default=20,
                         help="max new verses to emit (default 20)")
+    parser.add_argument("--nums", type=str, default="",
+                        help="comma/space-separated Böhtlingk nums to import "
+                             "exclusively (e.g. --nums 192,1584,2805). When "
+                             "given, --limit is ignored and the report lists "
+                             "wanted nums that were not found or failed the "
+                             "screen — used to import exactly the sayings a "
+                             "recording batch covers (H4474 audio manifest).")
     parser.add_argument("--dry-run", action="store_true",
                         help="screen and report, write nothing")
     args = parser.parse_args()
+
+    wanted: set[int] = set()
+    for tok in re.split(r"[,\s]+", args.nums.strip()):
+        if tok:
+            if not tok.isdigit():
+                raise SystemExit(f"--nums: not a number: {tok!r}")
+            wanted.add(int(tok))
 
     jsonl = github_root() / JSONL_REL
     if not jsonl.is_file():
@@ -132,6 +146,7 @@ def main() -> None:
 
     seen = existing_nums()
     emitted, passed, scanned = [], 0, 0
+    wanted_emitted: set[int] = set()
     for line in jsonl.open(encoding="utf-8"):
         line = line.strip()
         if not line:
@@ -144,12 +159,17 @@ def main() -> None:
         num = record.get("num")
         if not isinstance(num, int) or num in seen:
             continue
+        if wanted and num not in wanted:
+            continue
         lines = screen(record)
         if lines is None:
             continue
-        passed += 1
-        if passed > args.limit:
-            continue
+        if wanted:
+            wanted_emitted.add(num)
+        else:
+            passed += 1
+            if passed > args.limit:
+                continue
 
         vid = f"subh_{num:04d}"
         verse = {
@@ -195,6 +215,13 @@ def main() -> None:
 
     print(f"scanned {scanned} sayings; passed anuṣṭubh screen: {passed}; "
           f"emitting: {len(emitted)} (already in library: {len(seen)})")
+
+    if wanted:
+        in_library = wanted & seen
+        missing = sorted(wanted - wanted_emitted - in_library)
+        print(f"--nums mode: wanted {len(wanted)}; already in library: "
+              f"{len(in_library)}; emitted: {len(wanted_emitted)}; "
+              f"not found or failed screen: {len(missing)} -> {missing}")
 
     if args.dry_run:
         for vid, verse in emitted:

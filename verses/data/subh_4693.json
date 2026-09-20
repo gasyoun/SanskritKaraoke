@@ -1,0 +1,131 @@
+{
+  "id": "subh_4693",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №4693 (manasyekaṃ vacasyekaṃ karmaṇyekaṃ mahātmanām…)",
+    "en": "Subhāṣita №4693 (manasyekaṃ vacasyekaṃ karmaṇyekaṃ mahātmanām…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 4693,
+    "attribution": "Böhtlingk, Indische Sprüche №4693"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "मनस्येकं वचस्येकं कर्मण्येकं महात्मनाम् ।",
+  "s2": "मनस्यन्यद्वचस्यन्यत्कर्मण्यन्यद्दुरात्मनाम् ॥",
+  "s1dev": "मनस्येकं वचस्येकं कर्मण्येकं महात्मनाम् ।",
+  "s2dev": "मनस्यन्यद्वचस्यन्यत्कर्मण्यन्यद्दुरात्मनाम् ॥",
+  "translation": {
+    "de": "(2107.) Bei edlen Menschen/stimmen Gedanken, Worte und Thaten/vollkommen überein",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-20",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 4693",
+    "page": "Page 3.10",
+    "iast_reference": "manasyekaṃ vacasyekaṃ karmaṇyekaṃ mahātmanām |/manasyanyadvacasyanyatkarmaṇyanyaddurātmanām ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  },
+  "timing": {
+    "s1": [
+      0.0,
+      0.35591836734693877,
+      1.079546485260771,
+      1.7480272108843538,
+      2.54421768707483,
+      2.8016326530612243,
+      3.5718820861678005,
+      4.2503401360544215,
+      5.012607709750567,
+      5.69469387755102,
+      6.411428571428571,
+      7.13578231292517,
+      7.9429138321995465,
+      8.179410430839003,
+      8.945668934240363,
+      9.387630385487528
+    ],
+    "s2": [
+      9.965714285714286,
+      10.33547619047619,
+      11.064852607709751,
+      11.747301587301587,
+      12.383854875283447,
+      12.768979591836734,
+      13.524897959183676,
+      14.233650793650794,
+      14.946031746031746,
+      15.671349206349205,
+      16.29297052154195,
+      17.089160997732428,
+      17.79591836734694,
+      18.15183673469388,
+      18.877097505668935,
+      19.227267573696146
+    ],
+    "confidence": {
+      "s1": [
+        0.2,
+        0.2,
+        1.0,
+        0.7,
+        0.7,
+        0.7,
+        1.0,
+        1.0,
+        1.0,
+        0.2,
+        1.0,
+        1.0,
+        0.15,
+        1.0,
+        0.7,
+        0.15
+      ],
+      "s2": [
+        0.2,
+        1.0,
+        0.7,
+        1.0,
+        0.4,
+        0.7,
+        0.2,
+        1.0,
+        1.0,
+        1.0,
+        0.4,
+        1.0,
+        0.2,
+        0.2,
+        1.0,
+        1.0
+      ]
+    },
+    "auto_generated": true,
+    "generator": "cli-v1"
+  }
+}

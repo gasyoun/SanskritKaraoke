@@ -1,0 +1,131 @@
+{
+  "id": "subh_5883",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №5883 (lobhātkrodhaḥ prabhavati lobhātkāmaḥ pravartate…)",
+    "en": "Subhāṣita №5883 (lobhātkrodhaḥ prabhavati lobhātkāmaḥ pravartate…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 5883,
+    "attribution": "Böhtlingk, Indische Sprüche №5883"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "लोभात्क्रोधः प्रभवति लोभात्कामः प्रवर्तते ।",
+  "s2": "लोभान्मोहश्च माया च मानः स्तम्भः परासुता ॥",
+  "s1dev": "लोभात्क्रोधः प्रभवति लोभात्कामः प्रवर्तते ।",
+  "s2dev": "लोभान्मोहश्च माया च मानः स्तम्भः परासुता ॥",
+  "translation": {
+    "de": "(4960.) Aus der Habsucht entsteht/der Zorn, aus der Habsucht geht das/Verlangen hervor, aus der Habsucht/entspringen Verblendung, Betrug,/Hochmuth, anspruchvolles Wesen und/Untergang.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-20",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 5883",
+    "page": "Page 3.254",
+    "iast_reference": "lobhātkrodhaḥ prabhavati lobhātkāmaḥ pravartate |/lobhānmohaśca māyā ca mānaḥ stambhaḥ parāsutā ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  },
+  "timing": {
+    "s1": [
+      0.0,
+      0.8281179138321996,
+      1.7219047619047618,
+      2.57015873015873,
+      3.4122448979591837,
+      3.893151927437642,
+      4.312199546485261,
+      4.7811337868480726,
+      5.166258503401361,
+      5.903673469387755,
+      6.712743764172336,
+      7.3562471655328805,
+      8.01578231292517,
+      8.480725623582767,
+      9.199092970521543,
+      9.5762358276644
+    ],
+    "s2": [
+      10.331428571428571,
+      11.05687074829932,
+      11.72831065759637,
+      12.681179138321996,
+      13.325714285714286,
+      13.737743764172334,
+      14.390204081632653,
+      15.115646258503402,
+      15.513707482993198,
+      16.341825396825396,
+      16.951473922902494,
+      17.711020408163265,
+      18.448979591836732,
+      18.899047619047618,
+      19.515646258503402,
+      19.924897959183674
+    ],
+    "confidence": {
+      "s1": [
+        0.2,
+        0.7,
+        0.2,
+        1.0,
+        0.7,
+        1.0,
+        1.0,
+        0.7,
+        1.0,
+        0.2,
+        0.4,
+        1.0,
+        0.4,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "s2": [
+        0.2,
+        1.0,
+        0.7,
+        0.15,
+        0.7,
+        0.4,
+        0.2,
+        1.0,
+        0.7,
+        0.15,
+        1.0,
+        0.2,
+        0.2,
+        0.4,
+        0.7,
+        0.2
+      ]
+    },
+    "auto_generated": true,
+    "generator": "cli-v1"
+  }
+}

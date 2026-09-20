@@ -1,0 +1,131 @@
+{
+  "id": "subh_1221",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №1221 (utsave vyasane caiva durbhikṣe…)",
+    "en": "Subhāṣita №1221 (utsave vyasane caiva durbhikṣe…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 1221,
+    "attribution": "Böhtlingk, Indische Sprüche №1221"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "उत्सवे व्यसने चैव दुर्भिक्षे शत्रुसंकटे ।",
+  "s2": "राजद्वारे श्मशाने च यस्तिष्ठति स बान्धवः ॥",
+  "s1dev": "उत्सवे व्यसने चैव दुर्भिक्षे शत्रुसंकटे ।",
+  "s2dev": "राजद्वारे श्मशाने च यस्तिष्ठति स बान्धवः ॥",
+  "translation": {
+    "de": "(458.) Wer bei Festen und im/Unglück, bei Hungersnoth, im Gedränge/mit dem Feinde, am Thore eines/fürstlichen Palastes und auf der/Leichenstätte uns treu zur Seite steht,/der ist ein Freund.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-20",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 1221",
+    "page": "Page 1.232",
+    "iast_reference": "utsave vyasane caiva durbhikṣe śatrusaṅkaṭe |/rājadvāre śmaśāne ca yastiṣṭhati sa bāndhavaḥ ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  },
+  "timing": {
+    "s1": [
+      0.0,
+      0.7847619047619047,
+      1.2252154195011338,
+      1.9535600907029478,
+      2.354285714285714,
+      2.746666666666666,
+      3.5639002267573696,
+      4.308208616780045,
+      4.727256235827665,
+      5.439637188208617,
+      6.053877551020408,
+      6.662857142857143,
+      7.385215419501134,
+      7.752380952380952,
+      8.380952380952381,
+      8.772063492063491
+    ],
+    "s2": [
+      9.420589569160997,
+      10.091065759637187,
+      10.765532879818593,
+      11.453968253968254,
+      12.220226757369614,
+      12.419773242630386,
+      13.085226757369615,
+      13.916371882086167,
+      14.127891156462585,
+      14.852244897959183,
+      15.702312925170068,
+      16.077460317460318,
+      16.446621315192743,
+      16.87238095238095,
+      17.632891156462584,
+      18.04498866213152
+    ],
+    "confidence": {
+      "s1": [
+        0.2,
+        0.2,
+        0.7,
+        1.0,
+        0.2,
+        0.2,
+        0.7,
+        1.0,
+        1.0,
+        0.7,
+        0.2,
+        0.7,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "s2": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.4,
+        1.0,
+        1.0,
+        0.15,
+        1.0,
+        0.7,
+        1.0,
+        1.0,
+        0.7,
+        0.2,
+        1.0,
+        1.0
+      ]
+    },
+    "auto_generated": true,
+    "generator": "cli-v1"
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "id": "subh_1584",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №1584 (kaviḥ karoti kāvyāni svādu…)",
+    "en": "Subhāṣita №1584 (kaviḥ karoti kāvyāni svādu…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 1584,
+    "attribution": "Böhtlingk, Indische Sprüche №1584"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "कविः करोति काव्यानि स्वादु जानाति पण्डितः ।",
+  "s2": "सुन्दर्या अपि लावण्यं पतिर्जानाति नो पिता ॥",
+  "s1dev": "कविः करोति काव्यानि स्वादु जानाति पण्डितः ।",
+  "s2dev": "सुन्दर्या अपि लावण्यं पतिर्जानाति नो पिता ॥",
+  "translation": {
+    "de": "Der Dichter verfasst die/Dichtwerke, der Gebildete aber erkennt/den Reiz derselben: auch einer Schönen/Anmuth erkennt der Gatte, nicht der/Vater.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-20",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 1584",
+    "page": "Page 1.303",
+    "iast_reference": "kaviḥ karoti kāvyāni svādu jānāti paṇḍitaḥ |/sundaryā api lāvaṇyaṃ patirjānāti no pitā ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  },
+  "timing": {
+    "s1": [
+      0.0,
+      0.312967032967033,
+      0.9079365079365079,
+      1.251156462585034,
+      1.877802197802198,
+      2.2109750566893425,
+      2.85750566893424,
+      3.5010090702947845,
+      4.070748299319728,
+      4.677369614512472,
+      5.007472527472528,
+      5.668083900226757,
+      6.2877097505668935,
+      6.600997732426304,
+      7.221587301587301,
+      7.530884353741497
+    ],
+    "s2": [
+      8.137142857142857,
+      8.815963718820862,
+      9.292879818594104,
+      9.913469387755102,
+      10.12498866213152,
+      10.579954648526076,
+      11.042902494331067,
+      11.6215873015873,
+      12.296054421768707,
+      12.543492063492064,
+      13.152108843537414,
+      13.653934240362812,
+      14.396483516483517,
+      14.70945054945055,
+      15.333151927437642,
+      15.648351648351648
+    ],
+    "confidence": {
+      "s1": [
+        0.2,
+        0.2,
+        0.7,
+        1.0,
+        0.2,
+        1.0,
+        0.7,
+        0.4,
+        1.0,
+        1.0,
+        0.2,
+        0.7,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "s2": [
+        0.2,
+        0.4,
+        1.0,
+        0.7,
+        0.7,
+        0.4,
+        1.0,
+        1.0,
+        0.4,
+        1.0,
+        1.0,
+        0.4,
+        0.2,
+        0.2,
+        1.0,
+        0.2
+      ]
+    },
+    "auto_generated": true,
+    "generator": "cli-v1"
+  }
+}

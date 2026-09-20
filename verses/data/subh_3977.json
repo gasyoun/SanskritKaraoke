@@ -1,0 +1,131 @@
+{
+  "id": "subh_3977",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №3977 (paraiḥ saṃbhujyate rājyaṃ svayaṃ…)",
+    "en": "Subhāṣita №3977 (paraiḥ saṃbhujyate rājyaṃ svayaṃ…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 3977,
+    "attribution": "Böhtlingk, Indische Sprüche №3977"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "परैः संभुज्यते राज्यं स्वयं पापस्य भाजनम् ।",
+  "s2": "धर्मातिक्रमतो राजा सिंहो हस्तिवधादिव ॥",
+  "s1dev": "परैः संभुज्यते राज्यं स्वयं पापस्य भाजनम् ।",
+  "s2dev": "धर्मातिक्रमतो राजा सिंहो हस्तिवधादिव ॥",
+  "translation": {
+    "de": "(1728.) Wenn ein König das Gesetz/übertritt, so ergeht es ihm wie dem/Löwen, wenn dieser einen Elephanten/tödtet: die Feinde ziehen den Nutzen von/seiner Herrschaft und er selbst wird zum/Gefäss der Sünde.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-20",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 3977",
+    "page": "Page 2.360",
+    "iast_reference": "paraiḥ saṃbhujyate rājyaṃ svayaṃ pāpasya bhājanam |/dharmātikramato rājā siṃho hastivadhādiva ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  },
+  "timing": {
+    "s1": [
+      0.0,
+      0.35965014577259474,
+      1.0875283446712019,
+      1.7982507288629737,
+      2.5175510204081633,
+      2.839546485260771,
+      3.581859410430839,
+      4.27827664399093,
+      5.010612244897959,
+      5.429659863945578,
+      6.197913832199546,
+      6.971679748822606,
+      7.740408163265307,
+      8.125532879818595,
+      8.889795918367346,
+      9.243956916099773
+    ],
+    "s2": [
+      10.073106575963719,
+      10.789504373177843,
+      11.481904761904762,
+      12.228208616780046,
+      12.587755102040816,
+      12.958548752834467,
+      13.664943310657597,
+      14.381315192743765,
+      15.10530612244898,
+      15.941768707482993,
+      16.741950113378685,
+      17.621950113378684,
+      18.04498866213152,
+      18.404172335600908,
+      19.158458049886622,
+      19.72081632653061
+    ],
+    "confidence": {
+      "s1": [
+        0.2,
+        0.2,
+        1.0,
+        0.2,
+        0.2,
+        0.7,
+        1.0,
+        0.7,
+        1.0,
+        1.0,
+        1.0,
+        0.2,
+        1.0,
+        1.0,
+        1.0,
+        0.7
+      ],
+      "s2": [
+        1.0,
+        0.2,
+        1.0,
+        1.0,
+        0.2,
+        1.0,
+        1.0,
+        1.0,
+        0.2,
+        1.0,
+        0.7,
+        1.0,
+        1.0,
+        0.7,
+        0.15,
+        0.2
+      ]
+    },
+    "auto_generated": true,
+    "generator": "cli-v1"
+  }
+}

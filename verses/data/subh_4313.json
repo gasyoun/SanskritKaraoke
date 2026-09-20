@@ -1,0 +1,131 @@
+{
+  "id": "subh_4313",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №4313 (prāṇā yathātmano 'bhīṣṭā bhūtānāmapi…)",
+    "en": "Subhāṣita №4313 (prāṇā yathātmano 'bhīṣṭā bhūtānāmapi…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 4313,
+    "attribution": "Böhtlingk, Indische Sprüche №4313"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "प्राणा यथात्मनो ऽभीष्टा भूतानामपि ते तथा ।",
+  "s2": "आत्मौपम्येन सर्वत्र दयां कुर्वन्ति साघवः ॥",
+  "s1dev": "प्राणा यथात्मनो ऽभीष्टा भूतानामपि ते तथा ।",
+  "s2dev": "आत्मौपम्येन सर्वत्र दयां कुर्वन्ति साघवः ॥",
+  "translation": {
+    "de": "(1895.) Wie dir selbst das Leben/lieb ist, so auch den übrigen/Geschöpfen: edle Menschen haben mit/Jedermann Mitleid, indem sie überall/sich selbst sehen.",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-20",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 4313",
+    "page": "Page 2.432",
+    "iast_reference": "prāṇā yathātmano 'bhīṣṭā bhūtānāmapi te tathā |/ātmaupamyena sarvatra dayāṃ kurvanti sāghavaḥ ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  },
+  "timing": {
+    "s1": [
+      0.0,
+      0.6819825072886297,
+      1.3688888888888888,
+      1.7049562682215744,
+      2.3606349206349204,
+      2.74672335600907,
+      3.340408163265306,
+      4.174512471655329,
+      4.75718820861678,
+      5.508320251177395,
+      6.256746031746032,
+      6.957154195011338,
+      7.339319727891157,
+      7.770340136054422,
+      8.498684807256236,
+      8.813312401883831
+    ],
+    "s2": [
+      9.55827664399093,
+      10.24671201814059,
+      10.967074829931972,
+      11.59764172335601,
+      12.253117913832199,
+      12.585396825396826,
+      13.265850340136055,
+      13.988208616780046,
+      14.369342403628117,
+      14.69061224489796,
+      15.432925170068026,
+      16.15328798185941,
+      16.892182103610676,
+      17.25940345368917,
+      18.035011337868482,
+      18.354285714285716
+    ],
+    "confidence": {
+      "s1": [
+        0.2,
+        0.2,
+        1.0,
+        0.2,
+        1.0,
+        0.7,
+        0.7,
+        0.4,
+        1.0,
+        0.2,
+        1.0,
+        1.0,
+        1.0,
+        0.7,
+        0.7,
+        0.2
+      ],
+      "s2": [
+        1.0,
+        1.0,
+        0.7,
+        1.0,
+        1.0,
+        0.7,
+        0.7,
+        1.0,
+        0.7,
+        1.0,
+        1.0,
+        1.0,
+        0.2,
+        0.2,
+        0.7,
+        1.0
+      ]
+    },
+    "auto_generated": true,
+    "generator": "cli-v1"
+  }
+}

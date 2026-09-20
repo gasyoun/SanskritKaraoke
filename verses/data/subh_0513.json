@@ -1,0 +1,131 @@
+{
+  "id": "subh_0513",
+  "version": 1,
+  "title": {
+    "ru": "Субхашита №513 (abhyāsāddhāryate vidyā kulaṃ śīlena…)",
+    "en": "Subhāṣita №513 (abhyāsāddhāryate vidyā kulaṃ śīlena…)"
+  },
+  "source": {
+    "text": "Indische Sprüche (Böhtlingk)",
+    "verse": 513,
+    "attribution": "Böhtlingk, Indische Sprüche №513"
+  },
+  "meter": "anushtubh",
+  "difficulty": 2,
+  "language_tags": [
+    "de"
+  ],
+  "encoding": "DEV",
+  "s1": "अभ्यासाद्धार्यते विद्या कुलं शीलेन धार्यते ।",
+  "s2": "गुणैर्मित्राणि धार्यन्ते अक्ष्णा क्रोधश्च धार्यते ॥",
+  "s1dev": "अभ्यासाद्धार्यते विद्या कुलं शीलेन धार्यते ।",
+  "s2dev": "गुणैर्मित्राणि धार्यन्ते अक्ष्णा क्रोधश्च धार्यते ॥",
+  "translation": {
+    "de": "Durch Studium wird das Wissen/bewahrt, durch gute Gemüthsart das/Geschlecht, durch Vorzüge werden Freunde/bewahrt und durch das Auge der Zorn (d./i. das Auge ist der Behälter, der/Verräther des Zornes).",
+    "provenance": {
+      "de": "public-domain"
+    },
+    "rights": {
+      "de": {
+        "rights_holder": "public domain (Otto von Böhtlingk, d. 1904)",
+        "source": "Böhtlingk, O., Indische Sprüche, 2nd ed., St. Petersburg 1870–1873",
+        "license": "public-domain",
+        "status": "public-domain"
+      }
+    }
+  },
+  "tags": [
+    "subhashita",
+    "bohtlingk",
+    "indische-sprueche"
+  ],
+  "created_at": "2026-09-20",
+  "import_meta": {
+    "source_jsonl": "SanskritLexicography/IndischeSprueche/data/indische_sprueche.jsonl",
+    "dataset": "kosha manifest id indische-sprueche (7,537 sayings, public domain)",
+    "source_file_commit": "0931fd737d8ceee6080255ebf13029b98a42cf3c",
+    "saying_id": "Saying 513",
+    "page": "Page 1.94",
+    "iast_reference": "abhyāsāddhāryate vidyā kulaṃ śīlena dhāryate |/guṇairmitrāṇi dhāryante akṣṇā krodhaśca dhāryate ||",
+    "screen": "auto: 2 lines x 16 akṣaras on IAST (machine count), deva line split matched; NO per-verse human curation yet — treat as auto-imported until hand-verified",
+    "note": "Text-only feed verse (no audio yet). Auto-batch import (H4178); unlike the curated first drop, no OCR corrections applied."
+  },
+  "timing": {
+    "s1": [
+      0.0,
+      0.6713469387755102,
+      1.3668934240362811,
+      2.0140408163265304,
+      2.7317913832199547,
+      2.941315192743764,
+      3.7075736961451247,
+      4.354104308390022,
+      5.010612244897959,
+      5.419682539682539,
+      6.207891156462585,
+      6.971679748822606,
+      7.675521541950114,
+      8.133514739229025,
+      8.909750566893424,
+      9.28689342403628
+    ],
+    "s2": [
+      10.107029478458049,
+      10.450249433106576,
+      11.149154518950438,
+      11.853061224489796,
+      12.457687074829932,
+      12.918639455782312,
+      13.680907029478458,
+      14.285532879818595,
+      15.10530612244898,
+      15.80607709750567,
+      16.526439909297054,
+      17.23482993197279,
+      17.96517006802721,
+      18.378231292517007,
+      19.07065759637188,
+      19.421107871720118
+    ],
+    "confidence": {
+      "s1": [
+        0.2,
+        0.2,
+        1.0,
+        0.2,
+        0.7,
+        0.4,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.2,
+        0.7,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "s2": [
+        0.7,
+        1.0,
+        0.2,
+        1.0,
+        0.15,
+        1.0,
+        1.0,
+        0.4,
+        0.2,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.7,
+        1.0,
+        0.2
+      ]
+    },
+    "auto_generated": true,
+    "generator": "cli-v1"
+  }
+}
