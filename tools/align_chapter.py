@@ -495,6 +495,75 @@ def detect_lead_end(data, sr, params=None):
     candidates.sort()
     return candidates[len(candidates) // 2]
 
+
+def detect_tail_start(data, sr, params=None):
+    """
+    Detect the start of a closing phrase after the last pada (e.g. Usha's
+    «śubhaṃ bhūyāt»): the LAST silence gap ≥ lead_gap_min_ms whose FOLLOWING
+    speech block is shorter than min_pada_dur — a tail phrase, not a pada.
+    The silence-threshold range is scanned and the MEDIAN candidate gap-start
+    is returned. Returns seconds, or None when no candidate exists.
+    """
+    if params is None:
+        params = _load_params()['pada_detection']
+
+    lead_gap_min_s = params.get('lead_gap_min_ms', 120) / 1000.0
+
+    frame_size = round(sr * params['frame_ms'] * 0.001)
+    num_frames = len(data) // frame_size
+    if num_frames < 8:
+        return None
+
+    frame_dur = frame_size / sr
+    duration  = len(data) / sr
+    min_pada_dur = duration * params['min_pada_fraction']
+
+    rms = np.array([
+        math.sqrt(np.sum(data[f*frame_size : (f+1)*frame_size] ** 2) / frame_size)
+        for f in range(num_frames)
+    ])
+    max_rms = rms.max()
+    if max_rms == 0:
+        return None
+    norm = rms / max_rms
+
+    candidates = []
+    t = params['silence_thresh_min']
+    t_max = params['silence_thresh_max']
+    t_step = params['silence_thresh_step']
+    while t <= t_max + 1e-9:
+        sil = norm < t
+        first = 0
+        while first < num_frames and sil[first]:
+            first += 1
+        last = num_frames - 1
+        while last >= 0 and sil[last]:
+            last -= 1
+        if first < last:
+            ranges = []
+            i = first
+            while i <= last:
+                if sil[i]:
+                    s = i
+                    while i <= last and sil[i]:
+                        i += 1
+                    ranges.append((s, i - 1, i - s))
+                else:
+                    i += 1
+            for r in reversed(ranges):
+                gap_len       = r[2] * frame_dur
+                speech_resume = (r[1] + 1) * frame_dur
+                speech_after  = duration - speech_resume
+                if gap_len >= lead_gap_min_s and speech_after < min_pada_dur:
+                    candidates.append(r[0] * frame_dur)  # gap start = verse end
+                    break
+        t = round(t + t_step, 6)
+
+    if not candidates:
+        return None
+    candidates.sort()
+    return candidates[len(candidates) // 2]
+
 # ── Mora-proportional timing ──────────────────────────────────────────────────
 # Port of calcAutoTiming (app.js:4480).
 def calc_auto_timing(syls_s1, syls_s2, pada_bounds, last_laghu_as_guru=False, params=None):
@@ -654,19 +723,39 @@ def align_verse(audio_path, verse, verses_dir, params=None, verbose=False,
     if not syls_s1 and not syls_s2:
         raise RuntimeError('No syllables found in verse text')
 
-    # Layer 0: spoken header word (e.g. «subhāṣitam») before pada 1 — detect
-    # where the verse actually starts, then align only the verse-only region.
-    lead_end = detect_lead_end(data, sr, params['pada_detection']) if lead_strip else None
+    # Layer 0: spoken frame phrases — «subhāṣitam» before pada 1 and (on some
+    # clips) «śubhaṃ bhūyāt» after the last pada. Detect both bounds, then
+    # align the verse-only region. Arbiter: prefer the tail-framed region;
+    # if pada detection fails there, retry without the tail — a false-positive
+    # tail must not truncate pada 4.
+    lead_end  = detect_lead_end(data, sr, params['pada_detection']) if lead_strip else None
+    tail_start = detect_tail_start(data, sr, params['pada_detection']) if lead_strip else None
     region_start = lead_end or 0.0
-    verse_data = data[int(region_start * sr):] if region_start > 0 else data
-    verse_dur  = len(verse_data) / sr
+
+    def _region_padas(t_end):
+        end_sample = int(t_end * sr) if t_end else len(data)
+        clip = data[int(region_start * sr): end_sample]
+        pr, ut = detect_pada_bounds(clip, sr, params['pada_detection'])
+        if pr:
+            pr = [[p0 + region_start, p1 + region_start] for p0, p1 in pr]
+        return pr, ut, clip
+
+    pada_result, used_thresh, verse_data = None, None, None
+    if tail_start and tail_start > region_start:
+        pada_result, used_thresh, verse_data = _region_padas(tail_start)
+    if pada_result is None:
+        tail_start = None
+        pada_result, used_thresh, verse_data = _region_padas(None)
+
+    verse_dur = len(verse_data) / sr
+    region_end = tail_start
 
     if verbose and lead_end:
         print(f'  lead word stripped: verse starts at {lead_end:.2f}s', file=sys.stderr)
+    if verbose and region_end:
+        print(f'  tail phrase stripped: verse ends at {region_end:.2f}s', file=sys.stderr)
 
     # Layer 1: Mora-proportional base (needs pada bounds first)
-    pada_result, used_thresh = detect_pada_bounds(verse_data, sr, params['pada_detection'])
-
     fallback_used = False
     if pada_result is None:
         # Fallback: uniform division over the VERSE span (same as browser fallback)
@@ -676,8 +765,6 @@ def align_verse(audio_path, verse, verses_dir, params=None, verbose=False,
         used_thresh = None
         if verbose:
             print('  WARNING: pada detection failed, using uniform fallback over the verse span', file=sys.stderr)
-    elif region_start > 0:
-        pada_result = [[p0 + region_start, p1 + region_start] for p0, p1 in pada_result]
 
     times = calc_auto_timing(syls_s1, syls_s2, pada_result, params=params['mora'])
 
