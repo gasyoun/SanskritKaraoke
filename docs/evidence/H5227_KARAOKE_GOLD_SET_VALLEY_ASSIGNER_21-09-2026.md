@@ -101,7 +101,9 @@ Five gold verses are not enough to show generalisation, and shipping the assigne
 2. **subh_0292 lead strip is wrong.** The verse starts at 2.49 s, but `detect_lead_end` returns 1.447 s: the «tam» of «subhāṣitam» is treated as verse. That is why 0292 is the worst verse for every design.
 3. **Whisper instability.** A fresh faster-whisper run on subh_4693 differs from the committed timing by 4.6 s. The committed timings are not reproducible from a re-run.
 
-## 7. A human should decide — the gate
+## 7. The gate — RULED 21-09-2026
+
+**Ruling (MG, 21-09-2026): «old rules do not work, let us try yes».** The recommended gate below is adopted and recorded as decision D5 in [docs/DECISIONS_ALIGNMENT.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/DECISIONS_ALIGNMENT.md). The whisper-window misplaced count is now a diagnostic only. The recommendation as it was put:
 
 Before any assigner ships, the ship gate needs a new definition. The recommended definition: "held-out gold mean ≤ 100 ms and max ≤ 250 ms, and on every non-gold verse no syllable moves more than 300 ms from v1.5.8 unless a spot-check confirms it." This drops the whisper-window count, which §5 shows penalises correct timing. It would be reversed if whisper windows are later shown to be right to within 100 ms on a larger gold set.
 
