@@ -1,0 +1,40 @@
+name: Tests
+
+# Runs the pytest suite (tests/, via pytest.ini testpaths) and the verse-library
+# validator on every PR, so handoff acceptance lines like "pytest must be green"
+# are enforced by CI rather than by the executor's word.
+#
+# Dependencies are only what tests/ and tools/validate_library.py import
+# (numpy, jsonschema); the full requirements.txt pulls the LangGraph teaching
+# pipeline, which no test touches. test_export_captions.py shells out to the
+# runner's preinstalled node.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pytest:
+    name: pytest + validate_library
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - name: Install test dependencies
+        run: python -m pip install pytest numpy jsonschema
+      - name: Run pytest
+        run: python -m pytest -q -m "not integration"
+      - name: Validate verse library
+        run: python tools/validate_library.py
