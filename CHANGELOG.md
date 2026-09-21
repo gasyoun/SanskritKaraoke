@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 <!-- entries land in changelog_queue/ -- appended via tools/changelog_queue_consume.py, consumed by cut_release.py at release-cut (H3355); direct bullets here are hook-blocked -->
 
+## [1.5.11] - 2026-09-21
+
 ### Fixed
 
 - **Bare `pytest` from the repo root runs green, and CI now runs it on every PR (21-09-2026, Claude Code Opus 5 `claude-opus-5`).** Found while verifying the H5235 close. Bare `python3 -m pytest -q` died at collection with INTERNALERROR: it picked up [tools/test_meter_detector.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/test_meter_detector.py), a standalone script that calls `sys.exit()` at import time. [pytest.ini](https://github.com/gasyoun/SanskritKaraoke/blob/main/pytest.ini) now sets `testpaths = tests`, so bare pytest collects 19 tests and passes, and the script still runs as-is. No workflow ran pytest before, so "pytest must be green" acceptance lines went unchecked by CI. New [.github/workflows/tests.yml](https://github.com/gasyoun/SanskritKaraoke/blob/main/.github/workflows/tests.yml) runs on every PR and push to `main`: ubuntu-latest, Python 3.13, `pytest -q -m "not integration"`, then `tools/validate_library.py` (58 valid, warnings only).
