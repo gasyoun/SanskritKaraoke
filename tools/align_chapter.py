@@ -684,6 +684,35 @@ def whisper_token_windows(verse_tokens, heard_words):
     return spans
 
 
+def token_syllable_cuts(verse_tokens, M):
+    """
+    Flat syllable-index boundaries [0, c1, …, M] of each verse word token
+    (H5224). Each token owns exactly as many syllables as it has vowel nuclei
+    — len(syllabify_iast(token)) — which is invariant to the cross-word
+    consonant resyllabification syllabify_iast performs on the whole line.
+    The earlier char-length proportional cut drifted one syllable late on
+    consonant-heavy tokens (subh_2745: «tā» of adātā fell into the
+    puruṣastyāgī window, «gī» into svadhanaṃ, «naṃ» into tyajya — MG 21-09:
+    «karaoke lags the voice from tā onward»). The char-length cut stays as
+    the fallback when the per-token counts do not sum to M.
+    """
+    counts = [len(syllabify_iast(t)) for t in verse_tokens]
+    if sum(counts) == M:
+        cuts = [0]
+        for c in counts:
+            cuts.append(cuts[-1] + c)
+        return cuts
+    approx = [max(1, len(t)) for t in verse_tokens]
+    total_a = sum(approx)
+    cuts = [0]
+    acc = 0.0
+    for a in approx:
+        acc += a
+        cuts.append(min(M, int(round(acc / total_a * M))))
+    cuts[-1] = M
+    return cuts
+
+
 def _flat_token_placements(syls_s1, syls_s2, verse_tokens, token_windows):
     """
     Shared mora-proportional intra-token placement arithmetic (H5223): token
@@ -695,15 +724,7 @@ def _flat_token_placements(syls_s1, syls_s2, verse_tokens, token_windows):
     syls = list(syls_s1) + list(syls_s2)
     M = len(syls)
     n_tok = len(verse_tokens)
-    approx = [max(1, len(t)) for t in verse_tokens]
-    total_a = sum(approx)
-
-    cuts = [0]
-    acc = 0.0
-    for k in range(n_tok):
-        acc += approx[k]
-        cuts.append(min(M, int(round(acc / total_a * M))))
-    cuts[-1] = M
+    cuts = token_syllable_cuts(verse_tokens, M)
 
     for k in range(n_tok):
         i0, i1 = cuts[k], cuts[k + 1]
