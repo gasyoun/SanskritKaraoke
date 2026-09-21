@@ -1,4 +1,4 @@
-_Created: 18-07-2026 · Last updated: 05-09-2026_
+_Created: 18-07-2026 · Last updated: 21-09-2026_
 
 # Alignment decisions
 
@@ -96,6 +96,39 @@ human review taking under one minute.
 training and held-out evaluation recordings separate. Confidence must be calibrated against
 approved timings, and a run with no gold cases must not pass. Retain ±50 ms onset accuracy as a
 diagnostic, while human approval time under one minute is the product acceptance gate.
+
+## D5 — Ship a timing change on the gold attack set, not on whisper word windows
+
+**Context.** H5224 gated alignment changes on a count of syllables lying more than 100 ms outside
+their own word's faster-whisper window, and required that count to stay 0 over the 20 subhāṣita
+clips. H5227 built a hand-read gold set of consonant attacks
+([tests/fixtures/h5227_gold_attacks.json](https://github.com/gasyoun/SanskritKaraoke/blob/main/tests/fixtures/h5227_gold_attacks.json)).
+Scored against it, the gold labels themselves are "misplaced" 25 times, because whisper's word
+bounds are off by up to about 1 s on these clips. The old gate therefore rejects correct timing
+and can never pass a real improvement
+([H5227 evidence §5](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/evidence/H5227_KARAOKE_GOLD_SET_VALLEY_ASSIGNER_21-09-2026.md)).
+
+**Options considered.**
+
+- Keep the whisper-window "misplaced = 0" gate.
+- Gate on the gold set only.
+- Gate on the gold set, plus a guard on verses outside it: an assigner that looked good on the
+  gold verses still moved subh_0513 pada 4 about 2 s early.
+
+**Ruling.** MG, 21-09-2026: «old rules do not work, let us try yes». A timing change ships only
+if all three of the following hold:
+
+1. Scored with each verse held out (tuned without it), the mean |Δ| on the gold set is ≤ 100 ms.
+2. On the same held-out scoring, the max |Δ| is ≤ 250 ms on every gold verse.
+3. On every verse outside the gold set, no syllable moves more than 300 ms from the previous
+   timing, unless a spot-check against the envelope or spectrogram confirms the move.
+
+The whisper-window misplaced count stays a diagnostic only.
+
+**Consequences.** [tools/eval_gold_attacks.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/eval_gold_attacks.py)
+is the acceptance scorer. The gold set grows before tuning widens (H5235 targets 10+ verses).
+Labels are read before any assigner output is visible. Reversal: if a larger gold set shows
+whisper windows accurate to within 100 ms, the window count may return as a gate.
 
 ---
 
