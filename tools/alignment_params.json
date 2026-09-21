@@ -26,6 +26,12 @@
     "no_candidate_confidence": 0.2,
     "_js_ref": "core/timing.js snapToNearest / snapConfidence"
   },
+  "onset_anchor": {
+    "eps_s": 0.05,
+    "reuse_penalty_s": 10.0,
+    "interpolate": true,
+    "_js_ref": "CLI-only (tools/align_chapter.py onset_anchor_token_windows, H5223) — no core/timing.js counterpart; do NOT mirror into src/core/timing.js. Candidate reuse is forbidden by the DP outright (strict monotonic assignment; D2: two syllables must never share one onset) — reuse_penalty_s documents the policy threshold only."
+  },
   "mora": {
     "guru": 2,
     "laghu": 1,
