@@ -433,11 +433,13 @@ def detect_pada_bounds(data, sr, params=None):
 def detect_lead_end(data, sr, params=None):
     """
     Detect the end of a spoken header word before pada 1 (e.g. Usha reciting
-    «subhāṣitam» first): the first silence gap ≥ lead_gap_min_ms whose start
-    lies within the first lead_max_fraction of the audio; micro-pauses inside
-    the header word itself are shorter and are skipped. The silence-threshold
-    range is scanned and the MEDIAN candidate gap-end is returned (robust to
-    threshold jitter). Returns seconds, or None when no candidate exists.
+    «subhāṣitam» first): the LONGEST silence gap ≥ lead_gap_min_ms whose start
+    lies within the first lead_max_fraction of the audio. Not the first such
+    gap: the header word can hold its own ≥120 ms closure (subh_0292: a
+    1.50–1.62 s gap before «tam», while the real lead gap is 1.66–2.50 s —
+    H5235). The silence-threshold range is scanned and the MEDIAN candidate
+    gap-end is returned (robust to threshold jitter). Returns seconds, or None
+    when no candidate exists.
     """
     if params is None:
         params = _load_params()['pada_detection']
@@ -475,6 +477,7 @@ def detect_lead_end(data, sr, params=None):
         while last >= 0 and sil[last]:
             last -= 1
         if first < last:
+            best = None  # (gap_len, gap_end)
             i = first
             while i <= last:
                 if sil[i]:
@@ -483,11 +486,14 @@ def detect_lead_end(data, sr, params=None):
                         i += 1
                     gap_len  = (i - s) * frame_dur
                     gap_start = s * frame_dur
-                    if gap_len >= lead_gap_min_s and gap_start <= lead_gap_max_start:
-                        candidates.append((i - 1) * frame_dur)  # gap end = verse start
+                    if gap_start > lead_gap_max_start:
                         break
+                    if gap_len >= lead_gap_min_s and (best is None or gap_len > best[0]):
+                        best = (gap_len, (i - 1) * frame_dur)  # gap end = verse start
                 else:
                     i += 1
+            if best is not None:
+                candidates.append(best[1])
         t = round(t + t_step, 6)
 
     if not candidates:
