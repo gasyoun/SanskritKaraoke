@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+<!-- entries land in changelog_queue/ -- appended via tools/changelog_queue_consume.py, consumed by cut_release.py at release-cut (H3355); direct bullets here are hook-blocked -->
+
+## [1.5.8] - 2026-09-21
 ### Fixed
 
 - **Karaoke lag from «tā» onward: token→syllable cuts by nucleus count, not char length (H5224, 21-09-2026, Claude Code Opus 5 `claude-opus-5`).** MG on v7 `subh_2745_9x16`: «dā» fine, highlight slower than the voice from «tā» onward. Root cause: `_flat_token_placements` in [tools/align_chapter.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/align_chapter.py) assigned syllables to whisper token windows by each token's share of *characters*. Consonant-heavy words over-claimed, and every later syllable slid one word late («tā» of adātā landed in the puruṣastyāgī window, «gī» in svadhanaṃ, «naṃ» in tyajya). New `token_syllable_cuts()` gives each token `len(syllabify_iast(token))` syllables (its vowel-nucleus count; the char cut stays as the fallback on a count mismatch). Re-aligned and re-rendered all 20 subhāṣita clips. Syllables outside their own word's audio window went from 39 (13 verses) to 0. subh_2745 against a hand-labelled audio reference: mean |Δ| 233 → 120 ms, max 946 → 533 ms, padas 1–2 now all within ±130 ms. **PARTIAL:** pada 3 «dātāraṃ kṛpaṇaṃ» still runs up to 533 ms early because of whisper's own word bounds; three attempts are recorded in [docs/evidence/H5224_KARAOKE_LAG_DRIFT_SUBH2745_21-09-2026.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/evidence/H5224_KARAOKE_LAG_DRIFT_SUBH2745_21-09-2026.md). Tests: [tests/test_token_syllable_cuts.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/tests/test_token_syllable_cuts.py) (4); pytest 14 passed, `validate_library.py` 58 valid.
