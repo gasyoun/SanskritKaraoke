@@ -26,6 +26,13 @@
     "no_candidate_confidence": 0.2,
     "_js_ref": "core/timing.js snapToNearest / snapConfidence"
   },
+  "onset_anchor": {
+    "search_radius_s": 0.40,
+    "window_slack_s": 0.02,
+    "min_anchor_gap_s": 0.03,
+    "interpolated_confidence": 0.4,
+    "_cli_only": "H5223 — Python CLI stage (whisper-warp path only); no JS mirror"
+  },
   "mora": {
     "guru": 2,
     "laghu": 1,

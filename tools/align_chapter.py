@@ -684,14 +684,10 @@ def whisper_token_windows(verse_tokens, heard_words):
     return spans
 
 
-def distribute_by_token_windows(syls_s1, syls_s2, verse_tokens, token_windows):
-    """
-    Distribute flat syllable onsets over per-token windows: tokens sized by
-    char length (mapped to flat syllable indices proportionally), syllables
-    inside a token window spaced by mora weight (guru=2, laghu=1).
-    Returns {'s1': [...], 's2': [...]}.
-    """
-    syls = list(syls_s1) + list(syls_s2)
+def _token_cut_indices(syls, verse_tokens):
+    """Token→flat-syllable cut indices, tokens sized by char length and mapped
+    to flat syllable indices proportionally. Shared by
+    distribute_by_token_windows and onset_anchor_warped_times."""
     M = len(syls)
     n_tok = len(verse_tokens)
     approx = [max(1, len(t)) for t in verse_tokens]
@@ -703,6 +699,24 @@ def distribute_by_token_windows(syls_s1, syls_s2, verse_tokens, token_windows):
         acc += approx[k]
         cuts.append(min(M, int(round(acc / total_a * M))))
     cuts[-1] = M
+    return cuts
+
+
+def distribute_by_token_windows(syls_s1, syls_s2, verse_tokens, token_windows):
+    """
+    Distribute flat syllable onsets over per-token windows: tokens sized by
+    char length (mapped to flat syllable indices proportionally), syllables
+    inside a token window spaced by mora weight (guru=2, laghu=1).
+
+    H5223 note: the result is the *predicted* mora curve inside real whisper
+    windows — interior points are still not anchored to sound-change onsets.
+    align_verse refines it afterwards with onset_anchor_warped_times.
+    Returns {'s1': [...], 's2': [...]}.
+    """
+    syls = list(syls_s1) + list(syls_s2)
+    M = len(syls)
+    n_tok = len(verse_tokens)
+    cuts = _token_cut_indices(syls, verse_tokens)
 
     times = {'s1': [], 's2': []}
     n1 = len(syls_s1)
@@ -726,6 +740,126 @@ def distribute_by_token_windows(syls_s1, syls_s2, verse_tokens, token_windows):
             (times['s1'] if gi < n1 else times['s2']).append(t)
             c += weights[off]
     return times
+
+
+def _rule_offset_s(syl, rules):
+    """Phoneme-rule time offset in seconds (e.g. nasals −15 ms before their
+    energy peak becomes audible)."""
+    rule = get_phoneme_rule(syl['syl'], rules)
+    return (rule.get('offset_ms', 0) or 0) / 1000.0
+
+
+def onset_anchor_warped_times(syls_s1, syls_s2, verse_tokens, token_windows,
+                              pred_times, onsets, peaks, rules, params=None):
+    """
+    H5223 — monotonic onset-anchored placement inside whisper token windows.
+
+    D2 contract (18-07-2026): a syllable timestamp targets the earliest
+    audible onset (the consonant attack), not a mora-proportional interior
+    point. Inside each token window:
+
+      1. the phoneme rule picks the target class per syllable (onset for
+         consonant attacks, peak for sonorant/vowel heads — phoneme_rules.json);
+      2. the nearest candidate INSIDE the syllable's token window (± slack)
+         and within a bounded search radius of the predicted mora time
+         becomes an anchor — window-constrained snap after the whisper warp;
+      3. syllables without an admissible candidate are re-interpolated
+         between their nearest kept anchors, proportionally by mora weight
+         (verse start / end token-window bounds act as edge pseudo-anchors);
+      4. a forward pass drops anchors that would break strict monotonicity.
+
+    Returns (times, confidence, stats) where stats reports
+    {'anchored', 'interpolated', 'total'}.
+    """
+    if params is None:
+        params = _load_params().get('onset_anchor', {})
+    radius_s  = params.get('search_radius_s', 0.40)
+    slack_s   = params.get('window_slack_s', 0.02)
+    min_gap_s = params.get('min_anchor_gap_s', 0.03)
+    interp_conf = params.get('interpolated_confidence', 0.4)
+
+    syls = list(syls_s1) + list(syls_s2)
+    M = len(syls)
+    n1 = len(syls_s1)
+    pred = list(pred_times['s1']) + list(pred_times['s2'])
+    cuts = _token_cut_indices(syls, verse_tokens)
+
+    # Per-syllable token window (already shifted to full-audio time by caller).
+    syl_win = []
+    for i in range(M):
+        k = max(k for k in range(len(cuts) - 1) if cuts[k] <= i)
+        syl_win.append(token_windows[k])
+
+    # 1+2. nearest admissible candidate per syllable (window ∩ radius).
+    cand = [None] * M
+    dist = [None] * M
+    for i, syl in enumerate(syls):
+        rule = get_phoneme_rule(syl['syl'], rules)
+        pool = peaks if rule.get('align_to') == 'peak' else onsets
+        ws, we = syl_win[i]
+        lo, hi = ws - slack_s, we + slack_s
+        best, best_d = None, None
+        for c in pool:
+            if c < lo or c > hi:
+                continue
+            d = abs(c - pred[i])
+            if d > radius_s:
+                continue
+            if best_d is None or d < best_d:
+                best, best_d = c, d
+        cand[i], dist[i] = best, best_d
+
+    # 4. forward pass: drop anchors that break strict monotonicity.
+    last = -1.0
+    for i in range(M):
+        if cand[i] is not None and cand[i] > last + min_gap_s:
+            last = cand[i]
+        else:
+            cand[i] = None
+
+    # 3. interpolate unanchored syllables between neighbouring kept anchors,
+    #    with the verse-region window bounds as edge pseudo-anchors.
+    #    Offsets: an unanchored syllable's onset sits after the moras of all
+    #    preceding syllables in the run (cumulative weight EXCLUDING itself);
+    #    a run's right bound is the next anchor's own onset, so its weight is
+    #    excluded from the denominator.
+    snap_params = _load_params()['snap']
+    anchor_idx = [-1] + [i for i in range(M) if cand[i] is not None] + [M]
+    final = [0.0] * M
+    conf = [0.0] * M
+    for a, b in zip(anchor_idx, anchor_idx[1:]):
+        t_a = syl_win[0][0] if a == -1 else cand[a] + _rule_offset_s(syls[a], rules)
+        t_b = syl_win[-1][1] if b == M else cand[b] + _rule_offset_s(syls[b], rules)
+        span = max(t_b - t_a, 0.0)
+        run = list(range(a + 1, b))
+        if a >= 0:
+            run.insert(0, a)
+        weights = [2 if syls[i]['type'] == 'guru' else 1 for i in run]
+        total_w = sum(weights) or 1
+        acc_w = 0.0
+        for j, i in enumerate(run):
+            if i != a:
+                final[i] = t_a + span * (acc_w / total_w)
+                conf[i] = interp_conf
+            acc_w += weights[j]
+        if a >= 0:
+            final[a] = t_a
+            conf[a] = snap_confidence(dist[a], snap_params)
+
+    times = {
+        's1': final[:n1],
+        's2': final[n1:],
+    }
+    confidence = {
+        's1': conf[:n1],
+        's2': conf[n1:],
+    }
+    stats = {
+        'anchored': sum(1 for c in cand if c is not None),
+        'interpolated': sum(1 for c in cand if c is None),
+        'total': M,
+    }
+    return times, confidence, stats
 
 # ── Mora-proportional timing ──────────────────────────────────────────────────
 # Port of calcAutoTiming (app.js:4480).
@@ -935,6 +1069,7 @@ def align_verse(audio_path, verse, verses_dir, params=None, verbose=False,
     # replaces the mora base when real word boundaries are usable; monotonic.
     # Word times are verse-region-relative — shifted back by region_start.
     warped = None
+    verse_tokens, token_windows = None, None
     if whisper_cal:
         wt = whisper_word_times(verse_data, sr)
         if wt:
@@ -964,37 +1099,55 @@ def align_verse(audio_path, verse, verses_dir, params=None, verbose=False,
     if verbose:
         print(f'  onsets: {len(onsets)}  peaks: {len(peaks)}', file=sys.stderr)
 
-    # Layer 4: Phoneme-rule snap
+    # Layer 4: Phoneme-rule snap (mora/corpus paths). When the whisper warp
+    # ran, H5223 onset-anchored refinement REPLACES it: syllables are anchored
+    # to real in-window onsets/peaks and mora-interpolated between anchors —
+    # window-constrained + monotonic. Re-snapping independently would destroy
+    # both the window constraint and monotonicity.
     rules      = load_phoneme_rules()
     snap_params = params['snap']
     window_s   = snap_params['window_s']
     no_cand_conf = snap_params.get('no_candidate_confidence', 0.2)
 
     confidence = {'s1': [], 's2': []}
+    anchored_stats = None
 
-    for key in ('s1', 's2'):
-        syls  = syllables[key]
-        tlist = times.get(key, [])
-        conf  = []
-        for i, syl in enumerate(syls):
-            t0   = tlist[i] if i < len(tlist) else 0.0
-            rule = get_phoneme_rule(syl['syl'], rules)
-            candidates = peaks if rule.get('align_to') == 'peak' else onsets
-            snapped, dist = snap_to_nearest(t0, candidates, window_s)
-            offset_s = (rule.get('offset_ms', 0) or 0) / 1000.0
-            if snapped is not None:
-                times[key][i] = snapped + offset_s
-                conf.append(snap_confidence(dist, snap_params))
-            else:
-                conf.append(no_cand_conf)
-        confidence[key] = conf
+    if warped:
+        shifted_windows = [(ws + region_start, we + region_start)
+                           for ws, we in token_windows]
+        times, confidence, anchored_stats = onset_anchor_warped_times(
+            syls_s1, syls_s2, verse_tokens, shifted_windows,
+            times, onsets, peaks, rules, params.get('onset_anchor'))
+        if verbose:
+            print(f"  onset-anchored: {anchored_stats['anchored']}/"
+                  f"{anchored_stats['total']} syllables anchored to real "
+                  f"onsets/peaks, {anchored_stats['interpolated']} interpolated",
+                  file=sys.stderr)
+    else:
+        for key in ('s1', 's2'):
+            syls  = syllables[key]
+            tlist = times.get(key, [])
+            conf  = []
+            for i, syl in enumerate(syls):
+                t0   = tlist[i] if i < len(tlist) else 0.0
+                rule = get_phoneme_rule(syl['syl'], rules)
+                candidates = peaks if rule.get('align_to') == 'peak' else onsets
+                snapped, dist = snap_to_nearest(t0, candidates, window_s)
+                offset_s = (rule.get('offset_ms', 0) or 0) / 1000.0
+                if snapped is not None:
+                    times[key][i] = snapped + offset_s
+                    conf.append(snap_confidence(dist, snap_params))
+                else:
+                    conf.append(no_cand_conf)
+            confidence[key] = conf
 
     timing = {
         's1': times['s1'],
         's2': times['s2'],
         'confidence': confidence,
         'auto_generated': True,
-        'generator': 'cli-v2-whisper' if warped else 'cli-v1',
+        'generator': ('cli-v3-onset-anchor' if anchored_stats
+                      else ('cli-v2-whisper' if warped else 'cli-v1')),
     }
 
     uncertain_count = sum(
@@ -1019,6 +1172,7 @@ def align_verse(audio_path, verse, verses_dir, params=None, verbose=False,
             'lead_end_s':       round(lead_end, 3) if lead_end is not None else None,
             'lead_word':        lead_word or None,
             'whisper_warped':   bool(warped),
+            'onset_anchor':     anchored_stats,
         },
     }
 
