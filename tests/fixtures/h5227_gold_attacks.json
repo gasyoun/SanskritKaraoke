@@ -1,0 +1,991 @@
+{
+ "_about": "H5227 gold set: per-syllable consonant-attack times (seconds, absolute clip time), hand-read from the 20 ms RMS envelope (5 ms hop) + spectrogram of each clip. Convention (same as the H5224 subh_2745 table): the attack is where the envelope starts rising out of the syllable-onset consonant dip — the stop/tap release, the end of a fricative, the release (not the prevoicing) of a voiced stop; vowel-initial syllables take the vowel onset. conf \"low\" = nasal/approximant continuum or an ambiguous consonant count; excluded from every summary. Syllable index = flat s1+s2 order of syllabify_verse(); the karaoke text is fixed, so a reciter's textual variant (subh_1375 pada 2-4) is labelled by syllable POSITION.",
+ "_audio": "faster_whisper audio batch, H5223: /tmp/opencode/h5223check/audio_batch/<id>.mp3",
+ "verses": {
+  "subh_2745": {
+   "audio": "subh_2745.mp3",
+   "labels": [
+    {
+     "i": 0,
+     "syl": "a",
+     "t": 2.5,
+     "conf": "high"
+    },
+    {
+     "i": 1,
+     "syl": "dā",
+     "t": 2.73,
+     "conf": "high"
+    },
+    {
+     "i": 2,
+     "syl": "tā",
+     "t": 3.18,
+     "conf": "high"
+    },
+    {
+     "i": 3,
+     "syl": "pu",
+     "t": 3.67,
+     "conf": "high"
+    },
+    {
+     "i": 4,
+     "syl": "ru",
+     "t": 3.85,
+     "conf": "high"
+    },
+    {
+     "i": 5,
+     "syl": "ṣas",
+     "t": 4.11,
+     "conf": "high"
+    },
+    {
+     "i": 6,
+     "syl": "tyā",
+     "t": 4.57,
+     "conf": "high"
+    },
+    {
+     "i": 7,
+     "syl": "gī",
+     "t": 5.08,
+     "conf": "high"
+    },
+    {
+     "i": 8,
+     "syl": "sva",
+     "t": 6.01,
+     "conf": "high"
+    },
+    {
+     "i": 9,
+     "syl": "dha",
+     "t": 6.09,
+     "conf": "high"
+    },
+    {
+     "i": 10,
+     "syl": "naṃ",
+     "t": 6.32,
+     "conf": "high"
+    },
+    {
+     "i": 11,
+     "syl": "tyaj",
+     "t": 6.8,
+     "conf": "high"
+    },
+    {
+     "i": 12,
+     "syl": "ya",
+     "t": 7.27,
+     "conf": "high"
+    },
+    {
+     "i": 13,
+     "syl": "gac",
+     "t": 7.75,
+     "conf": "high"
+    },
+    {
+     "i": 14,
+     "syl": "cha",
+     "t": 8.42,
+     "conf": "high"
+    },
+    {
+     "i": 15,
+     "syl": "ti",
+     "t": 8.74,
+     "conf": "high"
+    },
+    {
+     "i": 16,
+     "syl": "dā",
+     "t": 9.74,
+     "conf": "high"
+    },
+    {
+     "i": 17,
+     "syl": "tā",
+     "t": 10.25,
+     "conf": "high"
+    },
+    {
+     "i": 18,
+     "syl": "raṃ",
+     "t": 10.7,
+     "conf": "high"
+    },
+    {
+     "i": 19,
+     "syl": "kṛ",
+     "t": 11.17,
+     "conf": "high"
+    },
+    {
+     "i": 20,
+     "syl": "pa",
+     "t": 11.41,
+     "conf": "high"
+    },
+    {
+     "i": 21,
+     "syl": "ṇaṃ",
+     "t": 11.61,
+     "conf": "high"
+    },
+    {
+     "i": 22,
+     "syl": "man",
+     "t": 12.0,
+     "conf": "low"
+    },
+    {
+     "i": 23,
+     "syl": "ye",
+     "t": 12.47,
+     "conf": "low"
+    },
+    {
+     "i": 24,
+     "syl": "mṛ",
+     "t": 13.4,
+     "conf": "high"
+    },
+    {
+     "i": 25,
+     "syl": "to",
+     "t": 13.66,
+     "conf": "high"
+    },
+    {
+     "i": 26,
+     "syl": "pyar",
+     "t": 14.27,
+     "conf": "high"
+    },
+    {
+     "i": 27,
+     "syl": "thaṃ",
+     "t": 14.75,
+     "conf": "high"
+    },
+    {
+     "i": 28,
+     "syl": "na",
+     "t": 15.15,
+     "conf": "high"
+    },
+    {
+     "i": 29,
+     "syl": "muñ",
+     "t": 15.31,
+     "conf": "high"
+    },
+    {
+     "i": 30,
+     "syl": "ca",
+     "t": 15.83,
+     "conf": "high"
+    },
+    {
+     "i": 31,
+     "syl": "ti",
+     "t": 16.07,
+     "conf": "high"
+    }
+   ]
+  },
+  "subh_0292": {
+   "audio": "subh_0292.mp3",
+   "labels": [
+    {
+     "i": 0,
+     "syl": "a",
+     "t": 2.49,
+     "conf": "high"
+    },
+    {
+     "i": 1,
+     "syl": "nit",
+     "t": 2.64,
+     "conf": "high"
+    },
+    {
+     "i": 2,
+     "syl": "yā",
+     "t": 3.15,
+     "conf": "high"
+    },
+    {
+     "i": 3,
+     "syl": "ni",
+     "t": 3.66,
+     "conf": "high"
+    },
+    {
+     "i": 4,
+     "syl": "śa",
+     "t": 3.87,
+     "conf": "high"
+    },
+    {
+     "i": 5,
+     "syl": "rī",
+     "t": 4.08,
+     "conf": "high"
+    },
+    {
+     "i": 6,
+     "syl": "rā",
+     "t": 4.51,
+     "conf": "high"
+    },
+    {
+     "i": 7,
+     "syl": "ṇi",
+     "t": 5.08,
+     "conf": "low"
+    },
+    {
+     "i": 8,
+     "syl": "vi",
+     "t": 5.76,
+     "conf": "high"
+    },
+    {
+     "i": 9,
+     "syl": "bha",
+     "t": 6.18,
+     "conf": "high"
+    },
+    {
+     "i": 10,
+     "syl": "vo",
+     "t": 6.4,
+     "conf": "high"
+    },
+    {
+     "i": 11,
+     "syl": "nai",
+     "t": 6.85,
+     "conf": "low"
+    },
+    {
+     "i": 12,
+     "syl": "va",
+     "t": 7.26,
+     "conf": "high"
+    },
+    {
+     "i": 13,
+     "syl": "śā",
+     "t": 7.54,
+     "conf": "high"
+    },
+    {
+     "i": 14,
+     "syl": "śva",
+     "t": 8.07,
+     "conf": "high"
+    },
+    {
+     "i": 15,
+     "syl": "taḥ",
+     "t": 8.26,
+     "conf": "high"
+    },
+    {
+     "i": 16,
+     "syl": "nit",
+     "t": 9.38,
+     "conf": "high"
+    },
+    {
+     "i": 17,
+     "syl": "yaṃ",
+     "t": 9.82,
+     "conf": "high"
+    },
+    {
+     "i": 18,
+     "syl": "saṃ",
+     "t": 10.25,
+     "conf": "low"
+    },
+    {
+     "i": 19,
+     "syl": "ni",
+     "t": 10.34,
+     "conf": "high"
+    },
+    {
+     "i": 20,
+     "syl": "hi",
+     "t": 10.8,
+     "conf": "low"
+    },
+    {
+     "i": 21,
+     "syl": "to",
+     "t": 10.96,
+     "conf": "high"
+    },
+    {
+     "i": 22,
+     "syl": "mṛt",
+     "t": 11.18,
+     "conf": "high"
+    },
+    {
+     "i": 23,
+     "syl": "yuḥ",
+     "t": 11.66,
+     "conf": "high"
+    },
+    {
+     "i": 24,
+     "syl": "kar",
+     "t": 12.04,
+     "conf": "high"
+    },
+    {
+     "i": 25,
+     "syl": "tav",
+     "t": 13.03,
+     "conf": "high"
+    },
+    {
+     "i": 26,
+     "syl": "yo",
+     "t": 13.45,
+     "conf": "high"
+    },
+    {
+     "i": 27,
+     "syl": "dhar",
+     "t": 13.81,
+     "conf": "high"
+    },
+    {
+     "i": 28,
+     "syl": "ma",
+     "t": 14.29,
+     "conf": "high"
+    },
+    {
+     "i": 29,
+     "syl": "saṃ",
+     "t": 14.46,
+     "conf": "high"
+    },
+    {
+     "i": 30,
+     "syl": "gra",
+     "t": 14.96,
+     "conf": "high"
+    },
+    {
+     "i": 31,
+     "syl": "haḥ",
+     "t": 15.41,
+     "conf": "low"
+    }
+   ]
+  },
+  "subh_1375": {
+   "audio": "subh_1375.mp3",
+   "labels": [
+    {
+     "i": 0,
+     "syl": "e",
+     "t": 2.5,
+     "conf": "high"
+    },
+    {
+     "i": 1,
+     "syl": "ka",
+     "t": 3.03,
+     "conf": "high"
+    },
+    {
+     "i": 2,
+     "syl": "var",
+     "t": 3.3,
+     "conf": "high"
+    },
+    {
+     "i": 3,
+     "syl": "ṇaṃ",
+     "t": 3.62,
+     "conf": "low"
+    },
+    {
+     "i": 4,
+     "syl": "ya",
+     "t": 4.26,
+     "conf": "low"
+    },
+    {
+     "i": 5,
+     "syl": "thā",
+     "t": 4.55,
+     "conf": "high"
+    },
+    {
+     "i": 6,
+     "syl": "dug",
+     "t": 5.09,
+     "conf": "high"
+    },
+    {
+     "i": 7,
+     "syl": "dhaṃ",
+     "t": 5.53,
+     "conf": "high"
+    },
+    {
+     "i": 8,
+     "syl": "ba",
+     "t": 6.78,
+     "conf": "high"
+    },
+    {
+     "i": 9,
+     "syl": "hu",
+     "t": 7.25,
+     "conf": "low"
+    },
+    {
+     "i": 10,
+     "syl": "var",
+     "t": 7.52,
+     "conf": "high"
+    },
+    {
+     "i": 11,
+     "syl": "ṇā",
+     "t": 7.89,
+     "conf": "high"
+    },
+    {
+     "i": 12,
+     "syl": "su",
+     "t": 8.4,
+     "conf": "high"
+    },
+    {
+     "i": 13,
+     "syl": "dhe",
+     "t": 8.67,
+     "conf": "high"
+    },
+    {
+     "i": 14,
+     "syl": "nu",
+     "t": 9.05,
+     "conf": "high"
+    },
+    {
+     "i": 15,
+     "syl": "ṣu",
+     "t": 9.44,
+     "conf": "high"
+    },
+    {
+     "i": 16,
+     "syl": "ta",
+     "t": 10.6,
+     "conf": "high"
+    },
+    {
+     "i": 17,
+     "syl": "thā",
+     "t": 10.86,
+     "conf": "high"
+    },
+    {
+     "i": 18,
+     "syl": "dhar",
+     "t": 11.29,
+     "conf": "low"
+    },
+    {
+     "i": 19,
+     "syl": "mas",
+     "t": 11.53,
+     "conf": "low"
+    },
+    {
+     "i": 20,
+     "syl": "ya",
+     "t": 11.88,
+     "conf": "low"
+    },
+    {
+     "i": 21,
+     "syl": "vai",
+     "t": 12.21,
+     "conf": "high"
+    },
+    {
+     "i": 22,
+     "syl": "cit",
+     "t": 12.66,
+     "conf": "high"
+    },
+    {
+     "i": 23,
+     "syl": "rye",
+     "t": 13.07,
+     "conf": "high"
+    },
+    {
+     "i": 24,
+     "syl": "tat",
+     "t": 14.43,
+     "conf": "high"
+    },
+    {
+     "i": 25,
+     "syl": "tva",
+     "t": 14.83,
+     "conf": "high"
+    },
+    {
+     "i": 26,
+     "syl": "me",
+     "t": 15.13,
+     "conf": "high"
+    },
+    {
+     "i": 27,
+     "syl": "kaṃ",
+     "t": 15.6,
+     "conf": "high"
+    },
+    {
+     "i": 28,
+     "syl": "pa",
+     "t": 16.07,
+     "conf": "high"
+    },
+    {
+     "i": 29,
+     "syl": "raṃ",
+     "t": 16.35,
+     "conf": "high"
+    },
+    {
+     "i": 30,
+     "syl": "pu",
+     "t": 16.87,
+     "conf": "high"
+    },
+    {
+     "i": 31,
+     "syl": "naḥ",
+     "t": 17.18,
+     "conf": "high"
+    }
+   ]
+  },
+  "subh_4488": {
+   "audio": "subh_4488.mp3",
+   "labels": [
+    {
+     "i": 0,
+     "syl": "bo",
+     "t": 2.62,
+     "conf": "high"
+    },
+    {
+     "i": 1,
+     "syl": "ddhā",
+     "t": 3.03,
+     "conf": "high"
+    },
+    {
+     "i": 2,
+     "syl": "ro",
+     "t": 3.5,
+     "conf": "high"
+    },
+    {
+     "i": 3,
+     "syl": "mat",
+     "t": 3.88,
+     "conf": "high"
+    },
+    {
+     "i": 4,
+     "syl": "sa",
+     "t": 4.33,
+     "conf": "high"
+    },
+    {
+     "i": 5,
+     "syl": "rag",
+     "t": 4.53,
+     "conf": "high"
+    },
+    {
+     "i": 6,
+     "syl": "ras",
+     "t": 4.97,
+     "conf": "high"
+    },
+    {
+     "i": 7,
+     "syl": "tāḥ",
+     "t": 5.33,
+     "conf": "high"
+    },
+    {
+     "i": 8,
+     "syl": "pra",
+     "t": 6.47,
+     "conf": "high"
+    },
+    {
+     "i": 9,
+     "syl": "bha",
+     "t": 6.72,
+     "conf": "high"
+    },
+    {
+     "i": 10,
+     "syl": "vaḥ",
+     "t": 6.93,
+     "conf": "high"
+    },
+    {
+     "i": 11,
+     "syl": "sma",
+     "t": 7.36,
+     "conf": "high"
+    },
+    {
+     "i": 12,
+     "syl": "ya",
+     "t": 7.57,
+     "conf": "high"
+    },
+    {
+     "i": 13,
+     "syl": "dū",
+     "t": 7.83,
+     "conf": "high"
+    },
+    {
+     "i": 14,
+     "syl": "ṣi",
+     "t": 8.23,
+     "conf": "high"
+    },
+    {
+     "i": 15,
+     "syl": "tāḥ",
+     "t": 8.42,
+     "conf": "high"
+    },
+    {
+     "i": 16,
+     "syl": "a",
+     "t": 9.72,
+     "conf": "high"
+    },
+    {
+     "i": 17,
+     "syl": "bo",
+     "t": 9.94,
+     "conf": "high"
+    },
+    {
+     "i": 18,
+     "syl": "dho",
+     "t": 10.37,
+     "conf": "high"
+    },
+    {
+     "i": 19,
+     "syl": "pa",
+     "t": 10.78,
+     "conf": "high"
+    },
+    {
+     "i": 20,
+     "syl": "ha",
+     "t": 10.96,
+     "conf": "high"
+    },
+    {
+     "i": 21,
+     "syl": "tā",
+     "t": 11.18,
+     "conf": "high"
+    },
+    {
+     "i": 22,
+     "syl": "ścā",
+     "t": 11.62,
+     "conf": "high"
+    },
+    {
+     "i": 23,
+     "syl": "nye",
+     "t": 12.12,
+     "conf": "high"
+    },
+    {
+     "i": 24,
+     "syl": "jī",
+     "t": 13.24,
+     "conf": "high"
+    },
+    {
+     "i": 25,
+     "syl": "rṇa",
+     "t": 13.7,
+     "conf": "low"
+    },
+    {
+     "i": 26,
+     "syl": "maṅ",
+     "t": 14.04,
+     "conf": "high"
+    },
+    {
+     "i": 27,
+     "syl": "ge",
+     "t": 14.44,
+     "conf": "high"
+    },
+    {
+     "i": 28,
+     "syl": "su",
+     "t": 14.88,
+     "conf": "high"
+    },
+    {
+     "i": 29,
+     "syl": "bhā",
+     "t": 15.12,
+     "conf": "high"
+    },
+    {
+     "i": 30,
+     "syl": "ṣi",
+     "t": 15.55,
+     "conf": "high"
+    },
+    {
+     "i": 31,
+     "syl": "tam",
+     "t": 15.75,
+     "conf": "high"
+    }
+   ]
+  },
+  "subh_6114": {
+   "audio": "subh_6114.mp3",
+   "labels": [
+    {
+     "i": 0,
+     "syl": "vid",
+     "t": 3.07,
+     "conf": "high"
+    },
+    {
+     "i": 1,
+     "syl": "vā",
+     "t": 3.51,
+     "conf": "high"
+    },
+    {
+     "i": 2,
+     "syl": "ne",
+     "t": 4.08,
+     "conf": "high"
+    },
+    {
+     "i": 3,
+     "syl": "va",
+     "t": 4.66,
+     "conf": "high"
+    },
+    {
+     "i": 4,
+     "syl": "vi",
+     "t": 4.92,
+     "conf": "high"
+    },
+    {
+     "i": 5,
+     "syl": "jā",
+     "t": 5.2,
+     "conf": "high"
+    },
+    {
+     "i": 6,
+     "syl": "nā",
+     "t": 5.66,
+     "conf": "high"
+    },
+    {
+     "i": 7,
+     "syl": "ti",
+     "t": 6.23,
+     "conf": "high"
+    },
+    {
+     "i": 8,
+     "syl": "vid",
+     "t": 7.35,
+     "conf": "high"
+    },
+    {
+     "i": 9,
+     "syl": "vaj",
+     "t": 7.73,
+     "conf": "low"
+    },
+    {
+     "i": 10,
+     "syl": "ja",
+     "t": 8.31,
+     "conf": "high"
+    },
+    {
+     "i": 11,
+     "syl": "na",
+     "t": 8.61,
+     "conf": "low"
+    },
+    {
+     "i": 12,
+     "syl": "pa",
+     "t": 8.9,
+     "conf": "high"
+    },
+    {
+     "i": 13,
+     "syl": "riś",
+     "t": 9.18,
+     "conf": "low"
+    },
+    {
+     "i": 14,
+     "syl": "ra",
+     "t": 9.6,
+     "conf": "high"
+    },
+    {
+     "i": 15,
+     "syl": "mam",
+     "t": 9.89,
+     "conf": "high"
+    },
+    {
+     "i": 16,
+     "syl": "na",
+     "t": 11.45,
+     "conf": "high"
+    },
+    {
+     "i": 17,
+     "syl": "hi",
+     "t": 11.77,
+     "conf": "high"
+    },
+    {
+     "i": 18,
+     "syl": "van",
+     "t": 11.95,
+     "conf": "high"
+    },
+    {
+     "i": 19,
+     "syl": "dhyā",
+     "t": 12.55,
+     "conf": "high"
+    },
+    {
+     "i": 20,
+     "syl": "vi",
+     "t": 13.04,
+     "conf": "high"
+    },
+    {
+     "i": 21,
+     "syl": "jā",
+     "t": 13.31,
+     "conf": "high"
+    },
+    {
+     "i": 22,
+     "syl": "nā",
+     "t": 13.8,
+     "conf": "high"
+    },
+    {
+     "i": 23,
+     "syl": "ti",
+     "t": 14.33,
+     "conf": "high"
+    },
+    {
+     "i": 24,
+     "syl": "gur",
+     "t": 15.28,
+     "conf": "high"
+    },
+    {
+     "i": 25,
+     "syl": "vīṃ",
+     "t": 15.4,
+     "conf": "high"
+    },
+    {
+     "i": 26,
+     "syl": "pra",
+     "t": 16.58,
+     "conf": "high"
+    },
+    {
+     "i": 27,
+     "syl": "sa",
+     "t": 16.84,
+     "conf": "high"
+    },
+    {
+     "i": 28,
+     "syl": "va",
+     "t": 17.05,
+     "conf": "high"
+    },
+    {
+     "i": 29,
+     "syl": "ve",
+     "t": 17.32,
+     "conf": "high"
+    },
+    {
+     "i": 30,
+     "syl": "da",
+     "t": 17.77,
+     "conf": "high"
+    },
+    {
+     "i": 31,
+     "syl": "nām",
+     "t": 18.0,
+     "conf": "high"
+    }
+   ]
+  }
+ }
+}
