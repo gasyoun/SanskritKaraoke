@@ -147,8 +147,9 @@ class VerseAgent:
         )
         try:
             message = self.claude.messages.create(
-                model="claude-3-5-sonnet-20240620",
-                max_tokens=50,
+                model="claude-sonnet-5",
+                max_tokens=1024,
+                output_config={"effort": "low"},
                 messages=[{"role": "user", "content": prompt}],
             )
             return message.content[0].text.strip().lower()

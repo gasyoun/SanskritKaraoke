@@ -19,7 +19,7 @@ def log_cost(provider: str, model: str, prompt_tokens: int, completion_tokens: i
     # Cost per 1M tokens (Input, Output)
     rates = {
         "gemini-1.5-flash": (0.075, 0.30),
-        "claude-3-5-sonnet-20241022": (3.00, 15.00),
+        "claude-sonnet-5": (2.00, 10.00),
         "google/gemma-2-27b-it": (0.03, 0.03),
         "google/gemini-flash-1.5": (0.075, 0.30), # OpenRouter fallback
     }
@@ -86,10 +86,10 @@ def call_llm(prompt: str, provider_preference: Optional[List[str]] = None, metad
                         _clients["anthropic"] = Anthropic(api_key=api_key)
                     
                     client = _clients["anthropic"]
-                    model_name = "claude-3-5-sonnet-20241022"
+                    model_name = "claude-sonnet-5"
                     message = client.messages.create(
                         model=model_name,
-                        max_tokens=1024,
+                        max_tokens=16000,
                         messages=[{"role": "user", "content": prompt}]
                     )
                     
