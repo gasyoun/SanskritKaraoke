@@ -8,7 +8,7 @@
 #   psycopg2-binary               ← v2, sync-only fallback (already listed below)
 
 # LangGraph + LangChain
-langgraph>=1.2.11
+langgraph>=1.2.12
 langchain>=1.4.2
 langchain-anthropic>=1.7.2
 langchain-google-genai>=4.4.0
