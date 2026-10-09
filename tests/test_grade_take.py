@@ -112,13 +112,14 @@ def test_uniform_tempo_drift_is_normalised(tmp_path, bhg_ref):
     assert res['rhythm_percent'] >= 75.0, f"rhythm={res['rhythm_percent']}"
 
 
-def test_subh_verse_with_real_reference(tmp_path):
-    """'On our data': subh verse carrying real Uṣā Saṅkā-aligned verse.timing."""
-    verse = load_verse('subh_2745')
+@pytest.mark.parametrize('verse_id', ['subh_2745', 'subh_1919'])
+def test_subh_verse_with_real_reference(tmp_path, verse_id):
+    """'On our data': subh verses carrying real Uṣā Saṅkā-aligned verse.timing."""
+    verse = load_verse(verse_id)
     timing, source = load_reference_timing(verse)
     assert source == 'verse.timing'
     wav = synth_take_wav(tmp_path / 'subh.wav', _flat_onsets(timing))
-    res = grade_take(str(wav), 'subh_2745')
+    res = grade_take(str(wav), verse_id)
     assert res['reference_source'] == 'verse.timing'
     assert len(res['per_syllable']['s1']) == len(timing['s1'])
     assert len(res['per_syllable']['s2']) == len(timing['s2'])
