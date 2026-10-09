@@ -121,8 +121,8 @@ nothing in this teardown argues for changing lever order (C now, B parallel, A a
 
 - **Changed:** new [docs/ANUKRITI_TEARDOWN_REPLICATION_MAP_2026-10-09.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/ANUKRITI_TEARDOWN_REPLICATION_MAP_2026-10-09.md) + sibling metadoc + changelog_queue entry; no code touched.
 - **Unchanged:** roadmap, levers and their order (§5/§7 of the TonePerfect doc stand), all code.
-- **Checks:** every factual row carries its probe URL (§8); re-run probe 1 (`curl https://itunes.apple.com/lookup?id=6757836905`) to spot-check identity/pricing claims against the live API — PASS = the $2.99/$24.99 and 4.83/6 figures still match.
-- **Risks:** store pages drift (prices/versions are a 09-10 snapshot); «how they do it» is fingerprint-level — their internals could differ behind the privacy-policy wording; Play review count and paid-spend remain unknown.
+- **Checks:** every factual row carries its probe URL (§8); re-run probe 1 (`curl https://itunes.apple.com/lookup?id=6757836905`) to spot-check the identity/rating rows (v1.8.2, 4.83★/6, Free app price) — the $2.99/$24.99 IAP prices are NOT in the lookup API, they spot-check against probe 7 (App Store web page, In-App Purchases section).
+- **Risks:** store pages drift (prices/versions are a 09-10 snapshot); «how they do it» is fingerprint-level — their internals could differ behind the privacy-policy wording; Play review count and paid-spend remain unknown, and the Wayback timeline + «Parikrama» utm meaning stayed INCONCLUSIVE (§8 rows 9–10).
 - **Inspect:** §3 (the transcript-LLM vs acoustic-timing distinction) and §7 (verdict map) first.
 
 _Dr. Mārcis Gasūns_
