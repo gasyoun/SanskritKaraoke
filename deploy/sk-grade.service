@@ -1,0 +1,21 @@
+[Unit]
+Description=sk-grade — SanskritKaraoke student-take scoring endpoint (H6317)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=deploy
+Group=deploy
+UMask=0077
+WorkingDirectory=/opt/sk-grade/SanskritKaraoke
+Environment=SK_GRADE_HOST=127.0.0.1
+Environment=SK_GRADE_PORT=8791
+# faster_whisper is optional; enable after `venv/bin/pip install faster_whisper`
+Environment=SK_GRADE_WHISPER=0
+ExecStart=/opt/sk-grade/venv/bin/python3 tools/serve_grade.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
