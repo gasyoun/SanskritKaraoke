@@ -37,7 +37,7 @@ jobs:
           mkdir -p _site
           cp index.html catalogue.html student.html progress.html mastery.html manifest.json sw.js _site/
           cp README.md README.ru.md LICENSE CHANGELOG.md _site/
-          cp -R docs src verses _site/
+          cp -R docs src verses site _site/
           # Draft license agreements (personal data) must not ship publicly
           rm -rf _site/docs/legal
 
