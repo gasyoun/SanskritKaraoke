@@ -11,8 +11,8 @@ from test_grade_take import synth_take_wav  # noqa: E402
 
 t = load_reference_timing(load_verse('subh_2745'))[0]
 onsets = [x * 1.06 + 0.3 for x in (list(t['s1']) + list(t['s2']))]
-onsets[9] += 0.19   # one syllable clearly late
-onsets[24] -= 0.16  # one clearly early
+onsets[9] += 0.26   # one syllable clearly late
+onsets[24] -= 0.24 # one clearly early
 wav = synth_take_wav(ROOT.parent / 'tests' / '_tmp_sample_take.wav', onsets)
 res = grade_take(str(wav), 'subh_2745')
 res['comment'] = (

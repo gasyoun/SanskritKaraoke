@@ -20,6 +20,7 @@
     warn: '#F9A825',
     bad:  '#EF6C00',
     miss: '#C62828',
+    off:  '#9E9E9E',
   };
 
   const gradeEndpoint = () =>
@@ -78,6 +79,9 @@
   };
 
   function verdict(rhythm) {
+    if (rhythm === null || rhythm === undefined) {
+      return 'Слишком мало услышано — прочитай стих вслух и запиши снова.';
+    }
     if (rhythm >= 85) return 'Отличный ритм!';
     if (rhythm >= 70) return 'Хороший ритм, есть куда расти.';
     return 'Ритм плывёт — отработай слабые слоги ниже.';
@@ -86,6 +90,15 @@
   function renderResult(res) {
     const box = document.getElementById('rg-result');
     if (!box) return;
+    const quiet = res.too_quiet || res.rhythm_percent === null ||
+                  res.rhythm_percent === undefined;
+    const attempted = res.attempted;
+    const total = res.total_syllables;
+    const coverage = (typeof attempted === 'number' &&
+                      typeof total === 'number' && attempted < total)
+      ? `<span style="font-size:.72rem;color:var(--ink2)">Прозвучало и оценено:
+         <b>${attempted}</b> из ${total} слогов — непрозвучавшие не оценены
+         (серое «—»)</span>` : '';
     const chips = (res.weakest3 || []).map((w) =>
       `<span title="пада ${w.pada === 's1' ? '1' : '2'}, слог №${w.index + 1} (${w.grade} баллов)"
         style="display:inline-block;margin:2px 6px 2px 0;padding:3px 10px;
@@ -97,13 +110,14 @@
     box.innerHTML = `
       <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
         <span style="font-size:1.7rem;font-weight:700;color:var(--gold)">
-          ${Math.round(res.rhythm_percent)}%</span>
-        <span style="font-size:.85rem">${verdict(res.rhythm_percent)}</span>
+          ${quiet ? '—' : Math.round(res.rhythm_percent) + '%'}</span>
+        <span style="font-size:.85rem">${verdict(quiet ? null : res.rhythm_percent)}</span>
         <span style="font-size:.65rem;color:var(--ink2);
               font-family:'JetBrains Mono',monospace">
           ритм · эталон: ${res.reference_source === 'verse.timing'
             ? 'звуковая дорожка Уши Санка' : 'dev-фикстура'}</span>
       </div>
+      ${coverage}
       ${res.weakest3 && res.weakest3.length ? `
         <div style="margin-top:6px;font-size:.72rem;color:var(--ink2)">
           Отработай три самых слабых слога:</div>
@@ -112,7 +126,8 @@
         Кольца на диаграмме: <span style="color:${HEAT.ok}">зелёный ≥80</span>
         · <span style="color:${HEAT.warn}">жёлтый ≥60</span>
         · <span style="color:${HEAT.bad}">оранжевый ≥40</span>
-        · <span style="color:${HEAT.miss}">красный &lt;40 / не услышан</span>
+        · <span style="color:${HEAT.miss}">красный &lt;40</span>
+        · <span style="color:${HEAT.off}">серое «—» — не звучало, не оценено</span>
       </div>`;
     box.style.display = '';
   }
@@ -123,6 +138,7 @@
   }
 
   function heatClass(grade) {
+    if (grade === null || grade === undefined) return 'off';
     if (grade >= 80) return 'ok';
     if (grade >= 60) return 'warn';
     if (grade >= 40) return 'bad';
@@ -136,6 +152,7 @@
       if (!rows.length) return;
 
       rows.forEach((row) => {
+        if (row.grade === null || row.grade === undefined) return; // not sounded — no ring
         const node = document.querySelector(
           `g.syl-node[data-key="${key}"][data-col="${row.index}"]`);
         if (!node) return;
@@ -155,9 +172,7 @@
         const sign = row.delta_ms === null ? ''
           : (row.delta_ms > 0 ? '+' : '') + row.delta_ms + ' мс';
         const title = document.createElementNS(ns, 'title');
-        title.textContent = row.snapped
-          ? `${row.syl} — ${row.grade} баллов (${sign})`
-          : `${row.syl} — не услышан`;
+        title.textContent = `${row.syl} — ${row.grade} баллов (${sign})`;
         ring.appendChild(title);
         node.appendChild(ring);
       });
@@ -172,12 +187,13 @@
         "font-family:'JetBrains Mono',monospace";
       strip.innerHTML = rows.map((row) => {
         const cls = heatClass(row.grade);
-        return `<span title="${row.syl} ${row.snapped
-          ? (row.delta_ms > 0 ? '+' : '') + row.delta_ms + ' мс'
-          : 'не услышан'}"
+        const off = cls === 'off';
+        return `<span title="${row.syl} ${off ? 'не звучало — не оценено'
+          : (row.delta_ms > 0 ? '+' : '') + row.delta_ms + ' мс'}"
           style="min-width:2.1em;text-align:center;padding:1px 2px;
-                 border-radius:2px;color:#fff;background:${HEAT[cls]}">
-          ${row.grade}</span>`;
+                 border-radius:2px;color:${off ? '#9E9E9E' : '#fff'};
+                 background:${HEAT[cls]}">
+          ${off ? '—' : row.grade}</span>`;
       }).join('');
       wave.insertAdjacentElement('afterend', strip);
     });
@@ -274,7 +290,15 @@
       }
       renderResult(data);
       paintHeat(data);
-      status(`Готово: ритм ${Math.round(data.rhythm_percent)}%`, 'ok');
+      if (data.too_quiet || data.rhythm_percent === null ||
+          data.rhythm_percent === undefined) {
+        status('Услышано слишком мало — прочитай стих вслух', 'err');
+      } else if (data.attempted < data.total_syllables) {
+        status(`Готово: ритм ${Math.round(data.rhythm_percent)}% `
+          + `(оценено ${data.attempted} из ${data.total_syllables} слогов)`, 'ok');
+      } else {
+        status(`Готово: ритм ${Math.round(data.rhythm_percent)}%`, 'ok');
+      }
     } catch (e) {
       status('Сеть недоступна — сервер оценки не отвечает', 'err');
     } finally {

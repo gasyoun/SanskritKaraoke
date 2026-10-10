@@ -62,27 +62,33 @@ const GRADE = 'http://127.0.0.1:8791/api/grade';
     if (b && b.dataset.recording === '1') b.click();
   });
 
-  // wait for the grade round-trip to finish rendering
+  // wait for the grade round-trip to finish rendering (a steady fake-mic
+  // tone has no onsets -> the too_quiet path is the expected outcome)
   await page.waitForFunction(
     () => {
       const s = document.getElementById('rg-status');
       return s && (s.textContent.includes('Готово') ||
+                   s.textContent.includes('слишком мало') ||
                    s.textContent.includes('Ошибка') ||
                    s.textContent.includes('недоступна'));
     }, { timeout: 60000 });
 
   const status = await page.$eval('#rg-status', (e) => e.textContent);
   const resultVisible = await page.$eval('#rg-result',
-    (el) => el.style.display !== 'none' && /\d+%/.test(el.textContent));
+    (el) => el.style.display !== 'none' &&
+            (/\d+%/.test(el.textContent) ||
+             el.textContent.includes('Слишком мало услышано')));
   const resultText = await page.$eval('#rg-result',
     (el) => el.textContent.replace(/\s+/g, ' ').trim().slice(0, 160));
   const rings = (await page.$$('.rg-ring')).length;
+  const greyCells = await page.$$eval('.rg-strip span',
+    (spans) => spans.filter((s) => s.textContent.trim() === '—').length);
   console.log('status:', status);
   console.log('POST seen:', netlog.length, netlog[0] || '-');
   console.log('result card rendered:', resultVisible, '|', resultText);
-  console.log('heat rings painted:', rings);
+  console.log('heat rings painted:', rings, '| grey not-sounded cells:', greyCells);
 
-  const pass = status.includes('Готово') && resultVisible && netlog.length === 1;
+  const pass = resultVisible && netlog.length === 1;
 
   // re-record regression (user report 10-10-2026): after one graded take the
   // button must start a NEW recording, not no-op
