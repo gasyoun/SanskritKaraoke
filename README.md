@@ -1,10 +1,10 @@
 # Sanskrit Karaoke
 
-_Created: 12-05-2026 · Last updated: 27-08-2026_
+_Created: 12-05-2026 · Last updated: 10-10-2026_
 
 ## Wave-notation visualiser and karaoke exporter for Sanskrit verse
 
-[**Live app →**](https://gasyoun.github.io/SanskritKaraoke/) · [v1.4.6](https://gasyoun.github.io/SanskritKaraoke/) · [changelog](https://github.com/gasyoun/SanskritKaraoke/blob/main/CHANGELOG.md)
+[**Live app →**](https://gasyoun.github.io/SanskritKaraoke/) · [v1.5.5](https://gasyoun.github.io/SanskritKaraoke/) · [changelog](https://github.com/gasyoun/SanskritKaraoke/blob/main/CHANGELOG.md)
 
 > **If the app doesn't reflect the latest version after an update, do a hard refresh to clear the cache:**
 > Edge, Firefox, Opera — `Ctrl+F5` · Chrome — `Ctrl+Shift+R` · Safari (Mac) — `Cmd+Shift+R` or `Cmd+Option+R`
@@ -201,7 +201,7 @@ A structured file-based catalogue (`verses/data/*.json`) with metadata per verse
 
 ### ~~Student player page~~ ✓ shipped
 
-A separate read-only page (`student.html?id=…`) that loads a verse from the catalogue, renders the wave diagram, and plays the karaoke — without any authoring controls. Students land here from Telegram or course links.
+A separate read-only page (`student.html?id=…`) that loads a verse from the catalogue, renders the wave diagram, and plays the karaoke — without any authoring controls. Students land here from Telegram or course links. Record-and-score (✓ shipped 10-10-2026): a «🎙 Записать себя» button records the student's take, POSTs it to the grading endpoint (`https://samskrte.ru/sk-grade/api/grade`, served by `tools/serve_grade.py`), and overlays the result on the wave diagram — per-syllable heat rings, a rhythm score, and three drill hints for the weakest syllables; only sounded syllables are graded.
 
 ### ~~Progressive reveal mode~~ ✓ shipped
 
