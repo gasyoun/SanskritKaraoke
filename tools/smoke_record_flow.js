@@ -44,8 +44,10 @@ const GRADE = 'http://127.0.0.1:8791/api/grade';
   // real click -> getUserMedia(fake mic) -> MediaRecorder
   await page.click('#rg-record-btn');
   const recording = await page.waitForFunction(
-    () => document.getElementById('rg-status') &&
-          document.getElementById('rg-status').textContent.includes('Идёт запись'),
+    () => {
+      const el = document.getElementById('rg-status');
+      return el && /идёт запись/i.test(el.textContent);
+    },
     { timeout: 15000 }).then(() => true).catch(() => false);
   console.log('recording started (fake mic):', recording);
   if (!recording) {
@@ -57,7 +59,7 @@ const GRADE = 'http://127.0.0.1:8791/api/grade';
   await new Promise((r) => setTimeout(r, 4000)); // ~4 s take
   await page.evaluate(() => {
     const b = document.getElementById('rg-record-btn');
-    if (b && b.textContent.includes('Остановить')) b.click();
+    if (b && b.dataset.recording === '1') b.click();
   });
 
   // wait for the grade round-trip to finish rendering
@@ -81,9 +83,29 @@ const GRADE = 'http://127.0.0.1:8791/api/grade';
   console.log('heat rings painted:', rings);
 
   const pass = status.includes('Готово') && resultVisible && netlog.length === 1;
-  console.log(pass ? 'RECORD-FLOW SMOKE PASS' : 'RECORD-FLOW SMOKE FAIL');
+
+  // re-record regression (user report 10-10-2026): after one graded take the
+  // button must start a NEW recording, not no-op
+  let reRecord = false;
+  if (pass) {
+    await page.click('#rg-record-btn');
+    reRecord = await page.waitForFunction(
+      () => {
+        const el = document.getElementById('rg-status');
+        return el && /идёт запись/i.test(el.textContent);
+      },
+      { timeout: 15000 }).then(() => true).catch(() => false);
+    console.log('second recording starts:', reRecord);
+    await page.evaluate(() => {
+      const b = document.getElementById('rg-record-btn');
+      if (b && b.dataset.recording === '1') b.click();
+    });
+    await new Promise((r) => setTimeout(r, 1500));
+  }
+
+  console.log(pass && reRecord ? 'RECORD-FLOW SMOKE PASS' : 'RECORD-FLOW SMOKE FAIL');
   const card = await page.$('#record-grade-card');
   if (card) await card.screenshot({ path: '/tmp/h6317_record_flow.png' });
   await browser.close();
-  process.exit(pass ? 0 : 1);
+  process.exit(pass && reRecord ? 0 : 1);
 })();

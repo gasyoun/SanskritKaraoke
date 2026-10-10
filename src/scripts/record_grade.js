@@ -50,6 +50,19 @@
               font-family:'JetBrains Mono',monospace"></span>
       </div>
       <div id="rg-result" style="display:none;margin-top:10px"></div>`;
+    const style = document.createElement('style');
+    style.textContent = `
+      #rg-record-btn.rg-rec-live {
+        background: #C62828 !important;
+        border-color: #C62828 !important;
+        color: #fff !important;
+        animation: rg-pulse 1.2s ease-in-out infinite;
+      }
+      @keyframes rg-pulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(198, 40, 40, .45); }
+        50% { box-shadow: 0 0 0 7px rgba(198, 40, 40, 0); }
+      }`;
+    card.appendChild(style);
     return card;
   }
 
@@ -58,7 +71,10 @@
     if (!el) return;
     el.textContent = msg || '';
     el.style.color = cls === 'err' ? '#C62828'
-      : cls === 'ok' ? '#2E7D32' : 'var(--ink2)';
+      : cls === 'ok' ? '#2E7D32'
+      : cls === 'rec' ? '#C62828'
+      : 'var(--ink2)';
+    el.style.fontWeight = cls === 'rec' ? '700' : '400';
   };
 
   function verdict(rhythm) {
@@ -170,6 +186,7 @@
   // ── record + grade ───────────────────────────────────────────────────────
   let recorder = null;
   let recordTimer = null;
+  let busy = false;
 
   function stopRecorder() {
     if (recorder && recorder.state !== 'inactive') recorder.stop();
@@ -185,10 +202,12 @@
       status('Браузер не поддерживает запись звука', 'err');
       return;
     }
+    busy = true;
     let stream;
     try {
       stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     } catch (e) {
+      busy = false;
       status('Микрофон недоступен: ' + e.message, 'err');
       return;
     }
@@ -206,6 +225,9 @@
     const chunks = [];
     recorder.ondataavailable = (e) => { if (e.data.size) chunks.push(e.data); };
     recorder.onstop = async () => {
+      busy = false;
+      delete btn.dataset.recording;
+      btn.classList.remove('rg-rec-live');
       stream.getTracks().forEach((t) => t.stop());
       clearInterval(recordTimer);
       btn.textContent = '🎙 Записать себя';
@@ -218,21 +240,23 @@
       await gradeBlob(blob, btn);
     };
 
-    btn.disabled = true;
-    btn.textContent = '⏹ Остановить и оценить';
-    status('Идёт запись… прочитай стих и нажми остановить', '');
+    // The button shows the recording state itself: red, pulsing dot, live
+    // seconds — no way to miss that the take is under way.
+    btn.classList.add('rg-rec-live');
+    btn.dataset.recording = '1';
+    btn.textContent = '⏹ 0 с — остановить и оценить';
+    status('● ИДЁТ ЗАПИСЬ — прочитай стих вслух, затем нажми остановить', 'rec');
     const t0 = Date.now();
     recordTimer = setInterval(() => {
       const s = Math.round((Date.now() - t0) / 1000);
-      status(`Идёт запись… ${s} с (максимум ${MAX_RECORD_S})`, '');
+      btn.textContent = `⏹ ${s} с — остановить и оценить`;
+      status(`● ИДЁТ ЗАПИСЬ… ${s} с (максимум ${MAX_RECORD_S})`, 'rec');
       if (s >= MAX_RECORD_S) stopRecorder();
     }, 500);
 
     recorder.onerror = () => stopRecorder();
     recorder.start(500);
-    // second click stops
-    btn.disabled = false;
-    btn.onclick = () => stopRecorder();
+    busy = false;
   }
 
   async function gradeBlob(blob, btn) {
@@ -266,7 +290,12 @@
     const card = buildCard();
     anchor.insertAdjacentElement('afterend', card);
     const btn = document.getElementById('rg-record-btn');
+    // ONE permanent handler for the button's whole life: stop while recording,
+    // start otherwise. startRecording used to overwrite onclick with a bare
+    // stop-recorder — after one graded take the button no-op'd (user report
+    // 10-10-2026). The busy flag guards the async getUserMedia window.
     btn.onclick = () => {
+      if (busy) return;
       if (recorder && recorder.state === 'recording') stopRecorder();
       else startRecording(btn);
     };
