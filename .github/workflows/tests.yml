@@ -7,7 +7,10 @@ name: Tests
 # Dependencies are only what tests/ and tools/validate_library.py import
 # (numpy, jsonschema); the full requirements.txt pulls the LangGraph teaching
 # pipeline, which no test touches. test_export_captions.py shells out to the
-# runner's preinstalled node.
+# runner's preinstalled node; the H6317 grade tests (test_grade_take.py,
+# test_grade_server_e2e.py) shell out to ffmpeg via tools/align_chapter.py
+# (decode_audio_ffmpeg), so the binary is installed below — ubuntu-24.04
+# runner images no longer ship it (H6379).
 
 on:
   push:
@@ -34,6 +37,8 @@ jobs:
           python-version: "3.13"
       - name: Install test dependencies
         run: python -m pip install pytest numpy jsonschema
+      - name: Install ffmpeg for grade tests
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - name: Run pytest
         run: python -m pytest -q -m "not integration"
       - name: Validate verse library
