@@ -1,9 +1,12 @@
 {
   "verse_id": "subh_2745",
-  "rhythm_percent": 92.8,
-  "tempo_scale": 1.0574,
-  "tempo_shift_s": 0.525,
+  "tempo_scale": 1.0,
+  "tempo_shift_s": 0.0,
   "reference_source": "verse.timing",
+  "rhythm_percent": 89.3,
+  "attempted": 15,
+  "total_syllables": 32,
+  "too_quiet": false,
   "per_syllable": {
     "s1": [
       {
@@ -11,164 +14,164 @@
         "syl": "a",
         "type": "laghu",
         "ref_s": 2.516,
-        "student_s": 3.165,
-        "snapped": true,
-        "delta_ms": -21,
-        "grade": 93,
-        "heat": "ok"
+        "student_s": null,
+        "snapped": false,
+        "delta_ms": null,
+        "grade": null,
+        "heat": "off"
       },
       {
         "index": 1,
         "syl": "dā",
         "type": "guru",
         "ref_s": 2.67,
-        "student_s": 3.328,
-        "snapped": true,
-        "delta_ms": -21,
-        "grade": 93,
-        "heat": "ok"
+        "student_s": null,
+        "snapped": false,
+        "delta_ms": null,
+        "grade": null,
+        "heat": "off"
       },
       {
         "index": 2,
         "syl": "tā",
         "type": "guru",
         "ref_s": 3.067,
-        "student_s": 3.749,
-        "snapped": true,
-        "delta_ms": -19,
-        "grade": 94,
-        "heat": "ok"
+        "student_s": null,
+        "snapped": false,
+        "delta_ms": null,
+        "grade": null,
+        "heat": "off"
       },
       {
         "index": 3,
         "syl": "pu",
         "type": "laghu",
         "ref_s": 3.68,
-        "student_s": 4.398,
-        "snapped": true,
-        "delta_ms": -19,
-        "grade": 94,
-        "heat": "ok"
+        "student_s": null,
+        "snapped": false,
+        "delta_ms": null,
+        "grade": null,
+        "heat": "off"
       },
       {
         "index": 4,
         "syl": "ru",
         "type": "laghu",
         "ref_s": 3.734,
-        "student_s": 4.46,
-        "snapped": true,
-        "delta_ms": -14,
-        "grade": 95,
-        "heat": "ok"
+        "student_s": null,
+        "snapped": false,
+        "delta_ms": null,
+        "grade": null,
+        "heat": "off"
       },
       {
         "index": 5,
         "syl": "ṣas",
         "type": "guru",
         "ref_s": 4.001,
-        "student_s": 4.739,
-        "snapped": true,
-        "delta_ms": -17,
-        "grade": 94,
-        "heat": "ok"
+        "student_s": null,
+        "snapped": false,
+        "delta_ms": null,
+        "grade": null,
+        "heat": "off"
       },
       {
         "index": 6,
         "syl": "tyā",
         "type": "guru",
         "ref_s": 4.594,
-        "student_s": 5.368,
-        "snapped": true,
-        "delta_ms": -15,
-        "grade": 95,
-        "heat": "ok"
+        "student_s": null,
+        "snapped": false,
+        "delta_ms": null,
+        "grade": null,
+        "heat": "off"
       },
       {
         "index": 7,
         "syl": "gī",
         "type": "guru",
         "ref_s": 5.035,
-        "student_s": 5.835,
-        "snapped": true,
-        "delta_ms": -14,
-        "grade": 95,
-        "heat": "ok"
+        "student_s": null,
+        "snapped": false,
+        "delta_ms": null,
+        "grade": null,
+        "heat": "off"
       },
       {
         "index": 8,
         "syl": "sva",
         "type": "laghu",
         "ref_s": 6.026,
-        "student_s": 6.886,
-        "snapped": true,
-        "delta_ms": -11,
-        "grade": 96,
-        "heat": "ok"
+        "student_s": null,
+        "snapped": false,
+        "delta_ms": null,
+        "grade": null,
+        "heat": "off"
       },
       {
         "index": 9,
         "syl": "dha",
         "type": "laghu",
         "ref_s": 6.1,
-        "student_s": 7.154,
-        "snapped": true,
-        "delta_ms": 178,
-        "grade": 41,
-        "heat": "bad"
+        "student_s": null,
+        "snapped": false,
+        "delta_ms": null,
+        "grade": null,
+        "heat": "off"
       },
       {
         "index": 10,
         "syl": "naṃ",
         "type": "guru",
         "ref_s": 6.285,
-        "student_s": 7.238,
-        "snapped": true,
-        "delta_ms": 67,
-        "grade": 78,
-        "heat": "warn"
+        "student_s": null,
+        "snapped": false,
+        "delta_ms": null,
+        "grade": null,
+        "heat": "off"
       },
       {
         "index": 11,
         "syl": "tyaj",
         "type": "guru",
         "ref_s": 6.713,
-        "student_s": 7.615,
-        "snapped": true,
-        "delta_ms": -9,
-        "grade": 97,
-        "heat": "ok"
+        "student_s": null,
+        "snapped": false,
+        "delta_ms": null,
+        "grade": null,
+        "heat": "off"
       },
       {
         "index": 12,
         "syl": "ya",
         "type": "laghu",
         "ref_s": 7.325,
-        "student_s": 8.263,
-        "snapped": true,
-        "delta_ms": -8,
-        "grade": 97,
-        "heat": "ok"
+        "student_s": null,
+        "snapped": false,
+        "delta_ms": null,
+        "grade": null,
+        "heat": "off"
       },
       {
         "index": 13,
         "syl": "gac",
         "type": "guru",
         "ref_s": 7.756,
-        "student_s": 8.72,
-        "snapped": true,
-        "delta_ms": -7,
-        "grade": 98,
-        "heat": "ok"
+        "student_s": null,
+        "snapped": false,
+        "delta_ms": null,
+        "grade": null,
+        "heat": "off"
       },
       {
         "index": 14,
         "syl": "cha",
         "type": "laghu",
         "ref_s": 8.435,
-        "student_s": 9.439,
+        "student_s": 3.165,
         "snapped": true,
-        "delta_ms": -6,
-        "grade": 98,
+        "delta_ms": 0,
+        "grade": 100,
         "heat": "ok"
       },
       {
@@ -176,10 +179,10 @@
         "syl": "ti",
         "type": "laghu",
         "ref_s": 8.61,
-        "student_s": 9.626,
+        "student_s": 3.328,
         "snapped": true,
-        "delta_ms": -4,
-        "grade": 99,
+        "delta_ms": 0,
+        "grade": 100,
         "heat": "ok"
       }
     ],
@@ -189,10 +192,10 @@
         "syl": "dā",
         "type": "guru",
         "ref_s": 9.774,
-        "student_s": 10.859,
+        "student_s": 4.398,
         "snapped": true,
-        "delta_ms": -2,
-        "grade": 99,
+        "delta_ms": 0,
+        "grade": 100,
         "heat": "ok"
       },
       {
@@ -200,7 +203,7 @@
         "syl": "tā",
         "type": "guru",
         "ref_s": 10.015,
-        "student_s": 11.115,
+        "student_s": 4.739,
         "snapped": true,
         "delta_ms": 0,
         "grade": 100,
@@ -211,20 +214,20 @@
         "syl": "raṃ",
         "type": "guru",
         "ref_s": 10.331,
-        "student_s": 11.448,
-        "snapped": true,
-        "delta_ms": -2,
-        "grade": 99,
-        "heat": "ok"
+        "student_s": null,
+        "snapped": false,
+        "delta_ms": null,
+        "grade": null,
+        "heat": "off"
       },
       {
         "index": 3,
         "syl": "kṛ",
         "type": "laghu",
         "ref_s": 10.666,
-        "student_s": 11.805,
+        "student_s": 5.368,
         "snapped": true,
-        "delta_ms": 1,
+        "delta_ms": 0,
         "grade": 100,
         "heat": "ok"
       },
@@ -233,21 +236,21 @@
         "syl": "pa",
         "type": "laghu",
         "ref_s": 10.877,
-        "student_s": 12.029,
+        "student_s": 5.835,
         "snapped": true,
-        "delta_ms": 2,
-        "grade": 99,
-        "heat": "ok"
+        "delta_ms": 240,
+        "grade": 20,
+        "heat": "miss"
       },
       {
         "index": 5,
         "syl": "ṇaṃ",
         "type": "guru",
         "ref_s": 11.326,
-        "student_s": 12.504,
+        "student_s": 6.886,
         "snapped": true,
-        "delta_ms": 2,
-        "grade": 99,
+        "delta_ms": 0,
+        "grade": 100,
         "heat": "ok"
       },
       {
@@ -255,10 +258,10 @@
         "syl": "man",
         "type": "guru",
         "ref_s": 12.066,
-        "student_s": 13.288,
+        "student_s": 7.615,
         "snapped": true,
-        "delta_ms": 4,
-        "grade": 99,
+        "delta_ms": 0,
+        "grade": 100,
         "heat": "ok"
       },
       {
@@ -266,10 +269,10 @@
         "syl": "ye",
         "type": "guru",
         "ref_s": 12.681,
-        "student_s": 13.94,
+        "student_s": 8.263,
         "snapped": true,
-        "delta_ms": 5,
-        "grade": 98,
+        "delta_ms": 0,
+        "grade": 100,
         "heat": "ok"
       },
       {
@@ -277,32 +280,32 @@
         "syl": "mṛ",
         "type": "laghu",
         "ref_s": 13.401,
-        "student_s": 14.543,
+        "student_s": 8.72,
         "snapped": true,
-        "delta_ms": -153,
-        "grade": 49,
-        "heat": "bad"
+        "delta_ms": -241,
+        "grade": 20,
+        "heat": "miss"
       },
       {
         "index": 9,
         "syl": "to",
         "type": "guru",
         "ref_s": 13.481,
-        "student_s": 14.788,
-        "snapped": true,
-        "delta_ms": 8,
-        "grade": 97,
-        "heat": "ok"
+        "student_s": null,
+        "snapped": false,
+        "delta_ms": null,
+        "grade": null,
+        "heat": "off"
       },
       {
         "index": 10,
         "syl": "pyar",
         "type": "guru",
         "ref_s": 13.974,
-        "student_s": 15.311,
+        "student_s": 9.439,
         "snapped": true,
-        "delta_ms": 9,
-        "grade": 97,
+        "delta_ms": 0,
+        "grade": 100,
         "heat": "ok"
       },
       {
@@ -310,21 +313,21 @@
         "syl": "thaṃ",
         "type": "guru",
         "ref_s": 14.479,
-        "student_s": 15.846,
-        "snapped": true,
-        "delta_ms": 10,
-        "grade": 97,
-        "heat": "ok"
+        "student_s": null,
+        "snapped": false,
+        "delta_ms": null,
+        "grade": null,
+        "heat": "off"
       },
       {
         "index": 12,
         "syl": "na",
         "type": "laghu",
         "ref_s": 15.143,
-        "student_s": 16.55,
+        "student_s": 10.859,
         "snapped": true,
-        "delta_ms": 12,
-        "grade": 96,
+        "delta_ms": 0,
+        "grade": 100,
         "heat": "ok"
       },
       {
@@ -332,10 +335,10 @@
         "syl": "muñ",
         "type": "guru",
         "ref_s": 15.327,
-        "student_s": 16.746,
+        "student_s": 11.115,
         "snapped": true,
-        "delta_ms": 14,
-        "grade": 95,
+        "delta_ms": 0,
+        "grade": 100,
         "heat": "ok"
       },
       {
@@ -343,10 +346,10 @@
         "syl": "ca",
         "type": "laghu",
         "ref_s": 15.844,
-        "student_s": 17.293,
+        "student_s": 11.448,
         "snapped": true,
-        "delta_ms": 14,
-        "grade": 95,
+        "delta_ms": 0,
+        "grade": 100,
         "heat": "ok"
       },
       {
@@ -354,38 +357,30 @@
         "syl": "ti",
         "type": "laghu",
         "ref_s": 16.083,
-        "student_s": 17.546,
+        "student_s": 11.805,
         "snapped": true,
-        "delta_ms": 14,
-        "grade": 95,
+        "delta_ms": 0,
+        "grade": 100,
         "heat": "ok"
       }
     ]
   },
   "weakest3": [
     {
-      "pada": "s1",
-      "index": 9,
-      "syl": "dha",
-      "delta_ms": 178,
-      "grade": 41,
-      "hint": "слог «dha» позже эталона на 178 мс — не тяни предыдущий"
-    },
-    {
       "pada": "s2",
       "index": 8,
       "syl": "mṛ",
-      "delta_ms": -153,
-      "grade": 49,
-      "hint": "слог «mṛ» раньше эталона на 153 мс — дай предыдущему прозвучать"
+      "delta_ms": -241,
+      "grade": 20,
+      "hint": "слог «mṛ» раньше эталона на 241 мс — дай предыдущему прозвучать"
     },
     {
-      "pada": "s1",
-      "index": 10,
-      "syl": "naṃ",
-      "delta_ms": 67,
-      "grade": 78,
-      "hint": "слог «naṃ» позже эталона на 67 мс — не тяни предыдущий"
+      "pada": "s2",
+      "index": 4,
+      "syl": "pa",
+      "delta_ms": 240,
+      "grade": 20,
+      "hint": "слог «pa» позже эталона на 240 мс — не тяни предыдущий"
     }
   ],
   "meta": {

@@ -181,6 +181,16 @@ def _heat_class(grade):
     return 'miss'
 
 
+GOOD_MATCH_S = 0.22       # within: match cost = |delta|
+BAD_MATCH_PENALTY = 0.35  # a 0.22-0.30 s match costs MORE than leaving the
+                          # syllable unmatched (0.30) — wrong-pada substitution
+                          # must never pay off (user report 10-10-2026)
+
+
+def _match_cost(delta_abs):
+    return delta_abs if delta_abs <= GOOD_MATCH_S else BAD_MATCH_PENALTY
+
+
 def _monotonic_assign(refs_norm, onsets, cap=0.30, unmatched_penalty=0.30):
     """Match each reference onset to at most one detected onset (strictly
     increasing, |onset - ref| <= cap), minimising total deviation + penalty
@@ -200,8 +210,8 @@ def _monotonic_assign(refs_norm, onsets, cap=0.30, unmatched_penalty=0.30):
             if dp[i][j - 1] < best:                               # onset unused
                 best, choice = dp[i][j - 1], 2
             c = abs(onsets[j - 1] - refs_norm[i - 1])
-            if c <= cap and dp[i - 1][j - 1] + c < best:          # match
-                best, choice = dp[i - 1][j - 1] + c, 1
+            if c <= cap and dp[i - 1][j - 1] + _match_cost(c) < best:  # match
+                best, choice = dp[i - 1][j - 1] + _match_cost(c), 1
             dp[i][j], pick[i][j] = best, choice
     pairs = [None] * n
     i, j = n, m
@@ -215,6 +225,125 @@ def _monotonic_assign(refs_norm, onsets, cap=0.30, unmatched_penalty=0.30):
         else:
             i -= 1
     return pairs
+
+
+def _greedy_match(refs, onsets, b, cap=0.22):
+    """Monotonic greedy match of refs (shifted by b) to onsets; O(n+m).
+    Returns (cost, [(ref_idx, onset_idx), ...])."""
+    i = j = 0
+    cost, matches = 0.0, []
+    while i < len(refs) and j < len(onsets):
+        d = onsets[j] - (refs[i] + b)
+        if abs(d) <= cap:
+            cost += abs(d)
+            matches.append((i, j))
+            i += 1
+            j += 1
+        elif d < 0:  # onset too early for this ref
+            j += 1
+        else:        # ref has no onset near it
+            i += 1
+    return cost, matches
+
+
+def _run_hypothesis(a, b, gradable, onsets, rounds=2):
+    """EM for one tempo hypothesis: DP assign -> outlier-trimmed refit.
+    Returns (a, b, pairs) with pairs aligned to gradable."""
+    pairs = [None] * len(gradable)
+    for _ in range(rounds):
+        refs_norm = [a * r['ref_s'] + b for r in gradable]
+        pairs = _monotonic_assign(refs_norm, onsets)
+        matched = [(r['ref_s'], onsets[oi])
+                   for r, oi in zip(gradable, pairs) if oi is not None]
+        if len(matched) < 2:
+            break
+        a, b = _tempo_fit([m[0] for m in matched], [m[1] for m in matched])
+        inliers = [(rf, st) for rf, st in matched
+                   if abs(st - (a * rf + b)) <= 0.25]
+        if len(inliers) >= 2:
+            a, b = _tempo_fit([m[0] for m in inliers], [m[1] for m in inliers])
+    return a, b, pairs
+
+
+def _hypotheses(gradable, onsets):
+    """Tempo hypotheses: (a) the take spans the WHOLE verse (full recitation),
+    (b) natural tempo anchored at the verse start / second half start — a
+    PARTIAL take (first padas only) must not have its tempo stretched onto
+    the full reference span (user report 10-10-2026: syllables that never
+    sounded were graded green)."""
+    refs = [r['ref_s'] for r in gradable]
+    hyps = []
+    span = refs[-1] - refs[0]
+    if span > 1e-6:
+        a = min(4.0, max(0.25, (onsets[-1] - onsets[0]) / span))
+        hyps.append((a, onsets[0] - a * refs[0]))
+    for a2 in (0.9, 1.0, 1.1):
+        for anchor in (refs[0], refs[len(refs) // 2]):
+            hyps.append((a2, onsets[0] - a2 * anchor))
+    out, seen = [], set()
+    for a, b in hyps:
+        key = (round(a, 3), round(b, 3))
+        if key not in seen:
+            seen.add(key)
+            out.append((a, b))
+    return out
+
+
+def _island_pass(gradable, pairs, onsets, min_island=4):
+    """A take can contain several voiced islands (e.g. pada 1 of each half,
+    with the other padas skipped): after the winning hypothesis consumes its
+    matches, anchor the REMAINING onsets to the remaining reference slots at
+    natural tempo. Returns extra {(gradable_index, onset_index)} matches."""
+    used = {oi for oi in pairs if oi is not None}
+    res_onset_idx = [i for i in range(len(onsets)) if i not in used]
+    res_rows = [idx for idx, oi in enumerate(pairs) if oi is None]
+    if len(res_onset_idx) < min_island or len(res_rows) < min_island:
+        return {}
+    res_onsets = [onsets[i] for i in res_onset_idx]
+    res_refs = [gradable[idx]['ref_s'] for idx in res_rows]
+    best = None
+    for j in range(len(res_refs)):
+        b = res_onsets[0] - res_refs[j]
+        cost, matches = _greedy_match(res_refs, res_onsets, b)
+        if len(matches) >= min_island and (best is None or
+                                           (cost / len(matches)) < best[0]):
+            best = (cost / len(matches), j, matches)
+    if not best:
+        return {}
+    extra = {}
+    for ri, oj in best[2]:
+        extra[res_rows[ri]] = res_onset_idx[oj]
+    return extra
+
+
+def _segments(onsets, gap=0.9):
+    """Split detected onsets into voiced segments at pauses > gap seconds —
+    a take that skips padas has islands separated by long silences."""
+    segs, cur = [], [0]
+    for i in range(1, len(onsets)):
+        if onsets[i] - onsets[i - 1] > gap:
+            segs.append(cur)
+            cur = []
+        cur.append(i)
+    segs.append(cur)
+    return segs
+
+
+def _anchor_segment(refs, seg_onsets, min_match=4):
+    """Anchor one voiced segment to its best reference window: scan every
+    ref position x tempo {0.9, 1.0, 1.1}, greedy-match, keep the window with
+    the best cost-per-match. Returns {(ref_idx, onset_time)} or {}."""
+    best = None
+    for a2 in (0.9, 1.0, 1.1):
+        for j in range(len(refs)):
+            b = seg_onsets[0] - a2 * refs[j]
+            cost, matches = _greedy_match(refs, seg_onsets, b, cap=GOOD_MATCH_S)
+            if len(matches) >= min_match and (best is None or
+                                              cost / len(matches) < best[0]):
+                best = (cost / len(matches), matches)
+    if not best:
+        return {}
+    return {(ri, seg_onsets[oj]) for ri, oj in best[1]}
 
 
 def grade_take(audio_path, verse_id, verses_dir=None, use_whisper=None):
@@ -268,73 +397,154 @@ def grade_take(audio_path, verse_id, verses_dir=None, use_whisper=None):
     gradable = [r for key in ('s1', 's2')
                 for r in per_syllable[key] if r['ref_s'] is not None]
 
-    # Seed tempo from span alignment: a student take starts at the first
-    # syllable and ends at the last, so first/last detected onsets bracket the
-    # reference span regardless of lead-in silence in the reference clip
-    # (subh verse.timing is clip-relative and starts seconds in). The mora+snap
-    # anchors are too noisy to seed this (double-claims, missed windows).
-    ref_span = [r['ref_s'] for r in gradable]
-    if onsets and len(ref_span) >= 2 and ref_span[-1] - ref_span[0] > 1e-6:
-        a = (onsets[-1] - onsets[0]) / (ref_span[-1] - ref_span[0])
-        a = min(4.0, max(0.25, a))
-        b = onsets[0] - a * ref_span[0]
+    # Alignment: a partial take (first padas voiced, the rest not) must not
+    # have its tempo stretched over the whole reference span — that graded
+    # never-sounded syllables green (user report 10-10-2026). Takes split
+    # into voiced segments at pauses; each segment anchors to its own
+    # reference window; only sounded syllables get graded.
+    row_frame = {}
+    for r in gradable:  # stale mora+snap flags must not leak into attempts
+        r['snapped'] = False
+        r['student_s'] = None
+
+    if len(onsets) >= 4 and gradable:
+        segs = _segments(onsets)
+        if len(segs) == 1:
+            best = None
+            for ha, hb in _hypotheses(gradable, onsets):
+                a, b, pairs = _run_hypothesis(ha, hb, gradable, onsets)
+                extra = _island_pass(gradable, pairs, onsets)
+                cost = 0.0
+                for idx, oi in enumerate(pairs):
+                    if oi is not None:
+                        cost += _match_cost(
+                            abs(onsets[oi] - (a * gradable[idx]['ref_s'] + b)))
+                    elif idx in extra:
+                        cost += abs(onsets[extra[idx]] - gradable[idx]['ref_s'])
+                    else:
+                        cost += 0.30
+                if best is None or cost < best[0]:
+                    best = (cost, a, b, pairs, extra)
+            _, a, b, pairs, extra = best
+            for idx, oi in enumerate(pairs):
+                if oi is not None:
+                    gradable[idx]['snapped'] = True
+                    gradable[idx]['student_s'] = round(onsets[oi], 3)
+                    row_frame[id(gradable[idx])] = (a, b)
+            for idx, oi in extra.items():
+                gradable[idx]['snapped'] = True
+                gradable[idx]['student_s'] = round(onsets[oi], 3)
+                row_frame[id(gradable[idx])] = (
+                    1.0, onsets[oi] - gradable[idx]['ref_s'])
+            # loose completion: a syllable voiced but >GOOD_MATCH_S off its
+            # predicted spot (e.g. one dragged syllable) still grades low
+            # instead of reading as never-sounded
+            used = {oi for oi in pairs if oi is not None}
+            used |= set(extra.values())
+            for idx, r in enumerate(gradable):
+                if r['snapped']:
+                    continue
+                predicted = a * r['ref_s'] + b
+                cands = [(abs(onsets[i] - predicted), i)
+                         for i in range(len(onsets)) if i not in used
+                         and abs(onsets[i] - predicted) <= 0.30]
+                if cands:
+                    _d, oi = min(cands)
+                    used.add(oi)
+                    r['snapped'] = True
+                    r['student_s'] = round(onsets[oi], 3)
+                    row_frame[id(r)] = (a, b)
+        else:
+            # multi-island take (skipped padas): anchor each voiced segment
+            # to its own reference window at natural-ish tempo
+            a, b = 1.0, 0.0
+            ref_span = [r['ref_s'] for r in gradable]
+            claimed_refs = set()
+            used_onsets = set()
+            for seg in segs:
+                if len(seg) < 4:
+                    continue
+                seg_onsets = [onsets[i] for i in seg]
+                for ref_idx, onset_t in _anchor_segment(ref_span, seg_onsets):
+                    if ref_idx in claimed_refs:
+                        continue
+                    row = gradable[ref_idx]
+                    claimed_refs.add(ref_idx)
+                    row['snapped'] = True
+                    row['student_s'] = round(onset_t, 3)
+                    row_frame[id(row)] = (1.0, onset_t - row['ref_s'])
+                    used_onsets.add(round(onset_t, 3))
+            # loose completion per segment: a voiced-but-off syllable inside
+            # an anchored segment grades low instead of reading as unsounded
+            for seg in segs:
+                seg_set = {round(onsets[i], 3) for i in seg}
+                seg_used = seg_set & used_onsets
+                if not seg_used:
+                    continue
+                # this segment's shared shift: median (onset - ref) of matches
+                deltas = sorted(
+                    row['student_s'] - row['ref_s']
+                    for row in gradable if row['snapped']
+                    and row['student_s'] in seg_used)
+                if not deltas:
+                    continue
+                b_seg = deltas[len(deltas) // 2]
+                for idx, r in enumerate(gradable):
+                    if r['snapped'] or r['ref_s'] is None:
+                        continue
+                    predicted = r['ref_s'] + b_seg
+                    cands = [(abs(onsets[i] - predicted), i)
+                             for i in seg
+                             if round(onsets[i], 3) not in used_onsets
+                             and abs(onsets[i] - predicted) <= 0.30]
+                    if cands:
+                        _d, oi = min(cands)
+                        used_onsets.add(round(onsets[oi], 3))
+                        r['snapped'] = True
+                        r['student_s'] = round(onsets[oi], 3)
+                        row_frame[id(r)] = (1.0, b_seg)
+        attempted = sum(1 for r in gradable if r['snapped'])
     else:
         a, b = 1.0, 0.0
+        attempted = 0
 
-    # Assignment pass: nearest-snapping double-claims onsets (two syllables
-    # grab the same attack) — for SCORING the reference itself is the prior.
-    # Match detected onsets to tempo-normalised reference positions by
-    # monotonic one-to-one DP, refit tempo on inliers, repeat.
-    for _iteration in range(3):
-        refs_norm = [a * r['ref_s'] + b for r in gradable]
-        pairs = _monotonic_assign(refs_norm, onsets, cap=0.30)
-        for r, oi in zip(gradable, pairs):
-            if oi is None:
-                r['snapped'] = False
-                r['student_s'] = None
-            else:
-                r['snapped'] = True
-                r['student_s'] = round(onsets[oi], 3)
-        matched = [(r['ref_s'], r['student_s']) for r in gradable if r['snapped']]
-        if len(matched) < 2:
-            break
-        a, b = _tempo_fit([m[0] for m in matched], [m[1] for m in matched])
-        # outlier-trimmed refit: one pass dropping |delta| outliers
-        inliers = [(rf, st) for rf, st in matched
-                   if abs(st - (a * rf + b)) <= 0.25]
-        if len(inliers) >= 2:
-            a, b = _tempo_fit([m[0] for m in inliers], [m[1] for m in inliers])
-
-    all_grades = []
+    attempted_rows = [r for r in gradable if r['snapped']]
     for key in ('s1', 's2'):
         for row in per_syllable[key]:
-            if row['ref_s'] is None or row['student_s'] is None:
-                row['grade'] = 0
-                row['snapped'] = False
-                all_grades.append(row['grade'])
-                continue
             if row['snapped']:
-                delta = row['student_s'] - (a * row['ref_s'] + b)
+                fa, fb = row_frame.get(id(row), (a, b))
+                delta = row['student_s'] - (fa * row['ref_s'] + fb)
                 row['delta_ms'] = round(delta * 1000.0)
                 row['grade'] = max(
                     0, round(100.0 * (1.0 - abs(delta) / GRADE_ZERO_S)))
-            all_grades.append(row['grade'])
-            row['heat'] = _heat_class(row['grade'])
+                row['heat'] = _heat_class(row['grade'])
+            else:
+                # not sounded in this take: NOT graded, excluded from rhythm
+                row['grade'] = None
+                row['snapped'] = False
+                row['student_s'] = None
+                row['heat'] = 'off'
 
-    rhythm = round(sum(all_grades) / len(all_grades), 1) if all_grades else 0.0
+    too_quiet = attempted < 4
+    rhythm = None
+    if attempted:
+        rhythm = round(sum(r['grade'] for r in attempted_rows) / attempted, 1)
 
     flat = [dict(r, pada=key) for key in ('s1', 's2') for r in per_syllable[key]]
     weakest = sorted(
-        (r for r in flat if r['grade'] < 100),
+        (r for r in flat if r['grade'] is not None and r['grade'] < 100),
         key=lambda r: (r['grade'], -(abs(r['delta_ms']) if r['delta_ms'] is not None else 0))
     )[:3]
 
     return {
         'verse_id': verse.get('id', verse_id),
-        'rhythm_percent': rhythm,
         'tempo_scale': round(a, 4),
         'tempo_shift_s': round(b, 3),
         'reference_source': ref_source,
+        'rhythm_percent': rhythm,
+        'attempted': attempted,
+        'total_syllables': len(gradable),
+        'too_quiet': too_quiet,
         'per_syllable': per_syllable,
         'weakest3': [
             {
