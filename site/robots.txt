@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://gasyoun.github.io/SanskritKaraoke/sitemap.xml
+Sitemap: https://tools.samskrte.ru/sitemap.xml

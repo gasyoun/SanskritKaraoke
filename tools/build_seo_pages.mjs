@@ -27,7 +27,7 @@ import { devToIast, syllabifyIast } from '../src/core/translit.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = join(ROOT, 'site');
-const BASE = 'https://gasyoun.github.io/SanskritKaraoke';
+const BASE = 'https://tools.samskrte.ru';
 const TODAY_ISO = '2026-10-09';
 
 // ── brace-matching extraction from app.js ────────────────────────────────────
