@@ -1,0 +1,49 @@
+# H6375 — trajectory-лог живого прогона: fetch → align → eval (11-10-2026, OxAlpha glm-5.3-flash)
+
+_Каждая ступень с командой, временем и исходом. Аудио реальное (H4474 WebDAV-маршрут), не синтетика._
+
+## T0 · Ориентация (21:19–21:24 +03)
+
+- Ворктри `SanskritKaraoke-h6375-drain`, база `origin/main b1e2c74`, дерево чистое, 0/0 с origin.
+- `eval_alignment.py` чит-проверка: `load_references()` требует `timing.auto_generated != true` → в `verses/data/` таких **0/58** (литера `"auto_generated": false` встречается в 10 JSON вне поля `timing` — ложный grep-след).
+- H5227 gold (`tests/fixtures/h5227_gold_attacks.json`): 10 стихов × 32 метки (26–31 `conf=high`); `_audio` = «faster_whisper audio batch, H5223 /tmp/opencode/h5223check/audio_batch/<id>.mp3».
+- Маппинг по `audio_manifest.tsv` (Systema-Sanscriticum docs/H4474): `Su23-Adata.mp3 → Saying 192 → реидентиф. subh_2745`; `Su33-Utsave.mp3 → Saying 1221` (оба `match_method=high`).
+
+## T1 · Fetch по H4474 (21:24–21:31)
+
+- `ssh root@193.232.229.92 "grep -E '^YANDEX_DISK_(LOGIN|APP_PASSWORD)=' /var/www/html/.env | base64 -w0"` → креды в переменные, **не эхом**. PROPFIND `Depth:1` — оба целевых файла на месте.
+- `Su33-Utsave.mp3` → `subh_1221.mp3`: **301 799 B — побайтно совпало с манифестом** ✓; `file`: ID3v2.4 MPEG L3 128 kbps 44.1 kHz stereo; ffprobe 18.834 s.
+- `Su23-Adata.mp3` → 503 ×5 (три ретрая с backoff 5/10/15 s + альт-копия `Subhashitas-Systematic (1)/23 (22)…Ада́та…mp3` — PROPFIND показал те же 299 291 B, скачивание тоже 503). Объектная флака Яндекса; маршрут жив (1221 скачался тем же маршрутом секунды спустя). **Не подменено** — Named в отчёте.
+
+## T2 · Живой alignment на реальном аудио (21:33)
+
+```
+$ time python3 tools/align_chapter.py /tmp/usha_h6375_audio --only subh_1221 --verbose
+subh_1221 …
+  audio: 18.83s  (415296 samples @ 22050 Hz)
+  WARNING: pada detection failed, using uniform fallback over the verse span
+  onsets: 121  peaks: 566
+  wrote sidecar /tmp/usha_h6375_audio/subh_1221_timing.json
+conf=0.75  uncertain=8/32  FALLBACK
+Done: 1 aligned, 1 failed/fallback.
+real 0m0.203s
+```
+
+- Ветка пайплайна: **fallback cli-v1** — `faster-whisper` на этой box отсутствует (Python 3.13), `whisper_word_times` вернул None → морa/onset-фолбэк по документированной цепочке.
+- Замечено: verse-span включил лид «subhāṣitam» (s1 от 0.0 s против золотых 2.93 s) — лид-стрип/пада-детекция держатся на whisper-ветке (см. Run C отчёта).
+- Сайдкар: `/tmp/usha_h6375_audio/subh_1221_timing.json` (generator `cli-v1`; conf-вектор 32 значений: 0.15–1.0, средняя 0.75).
+
+## T3 · Три eval-прогона (21:34–21:36)
+
+1. **Run A** `python3 tools/eval_alignment.py --audio /tmp/usha_h6375_audio -v` → exit 0, «No hand-timed reference verses found.» (ADR-0003-золото не заведено; см. отчёт).
+2. **Run B** `python3 tools/eval_gold_attacks.py` (закоммиченные тайминги H5223-whisper по 10 gold-стихам) → pooled mean|Δ| 607.2 ms, ≤100 ms 86/283; subh_1221: 202.7 ms.
+3. **Run C** scoring свежего сайдкара (тот же `score()` из `eval_gold_attacks`, безопасный цикл с пропуском отсутствующих) → subh_1221 fresh cli-v1: **1066.9 ms** — whisper-калибровка несущая (×5 хуже без неё).
+
+## T4 · Judge-прогон
+
+- Построчная оценка по `conf=high` меткам: committed s1 mean 277.6 ms / s2 132.5 ms; fresh s1 1387.7 ms / s2 766.1 ms — полный разбор в `logs/judge_assessment_h6375_subh_1221_2026-10-11.md`.
+
+## Исход траектории
+
+- Пайплайн реального прогона воспроизводим: fetch → align → sidecar → gold-скора, все шаги exit 0.
+- Открытые хвосты: subh_2745-аудио (объект 503), faster-whisper на Mac-box, заведение рук-референсов ADR-0003 (ADR-0004 gold v2, ждёт MG-визы) — не блокеры этого бокса.
