@@ -1,0 +1,10 @@
+[Unit]
+Description=sk-grade healthz uptime probe -> hermes TG alert (H6502)
+Documentation=file:///opt/sk-grade/SanskritKaraoke/deploy/sk-grade-healthz-monitor.README
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/sk-grade-healthz-monitor.sh
+TimeoutStartSec=60
