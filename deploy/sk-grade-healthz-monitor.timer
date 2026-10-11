@@ -1,0 +1,12 @@
+[Unit]
+Description=Probe samskrte.ru/sk-grade/healthz every 5 min (H6502)
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=300s
+RandomizedDelaySec=15s
+Persistent=true
+Unit=sk-grade-healthz-monitor.service
+
+[Install]
+WantedBy=timers.target

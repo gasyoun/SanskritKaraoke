@@ -1,6 +1,6 @@
 # Record-and-score MVP — the student speaks (H6317 runbook)
 
-_Created: 10-10-2026 · Last updated: 10-10-2026_
+_Created: 10-10-2026 · Last updated: 11-10-2026_
 
 The listen-repeat-score loop: the student presses «🎙 Записать себя» on
 [student.html](https://github.com/gasyoun/SanskritKaraoke/blob/main/student.html),
@@ -71,6 +71,32 @@ systemctl daemon-reload && systemctl enable --now sk-grade
 nginx -t && systemctl reload nginx
 curl -s https://samskrte.ru/sk-grade/healthz        # {"ok": true}
 ```
+
+## Observability — healthz uptime timer (H6502, 11-10-2026)
+
+A systemd timer on vps92 probes `https://samskrte.ru/sk-grade/healthz` every
+5 min (`OnUnitActiveSec=300s`) and alerts on non-200 through the hermes
+Telegram sink (`/home/hermes/bin/hermes_notify.sh page`, the H6320 backrest
+pattern): one page on the first failure, a reminder every 12th failure
+(≈hourly), and a RECOVERED page after any failure run. The probe is a
+read-only GET; state lives in `/var/lib/sk-grade-healthz/consecutive_failures`,
+outcomes in `/var/log/sk-grade-healthz.log` (both directions witnessed live
+20:47Z 11-10-2026: OK 200 → synthetic FAIL 000 → RECOVERED 200).
+
+```bash
+# install (files are byte-equal to deploy/ copies)
+cp SanskritKaraoke/deploy/sk-grade-healthz-monitor.sh /usr/local/sbin/
+cp SanskritKaraoke/deploy/sk-grade-healthz-monitor.{service,timer} /etc/systemd/system/
+cp SanskritKaraoke/deploy/sk-grade-healthz-monitor.default /etc/default/sk-grade-healthz-monitor
+systemctl daemon-reload && systemctl enable --now sk-grade-healthz-monitor.timer
+systemctl list-timers sk-grade-healthz-monitor.timer          # NEXT ≈ +5 min
+journalctl -u sk-grade-healthz-monitor.service -n 2           # the OK/FAIL lines
+```
+
+Residual (MG): a dedicated Better Stack heartbeat URL can be dropped into
+`SK_GRADE_HEARTBEAT_URL` in `/etc/default/sk-grade-healthz-monitor` — the
+script then also pings it ok//fail, mirroring `samskrte-internals-heartbeat`
+(dead-man's-switch). Left empty until MG mints one.
 
 ## Limits / residuals
 

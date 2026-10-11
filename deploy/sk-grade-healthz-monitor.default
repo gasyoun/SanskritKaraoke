@@ -1,0 +1,3 @@
+# Optional Better Stack heartbeat (dead-man switch), mirrors samskrte-internals-heartbeat.
+# Empty until MG mints a dedicated sk-grade heartbeat URL (H6502 residual).
+SK_GRADE_HEARTBEAT_URL=
