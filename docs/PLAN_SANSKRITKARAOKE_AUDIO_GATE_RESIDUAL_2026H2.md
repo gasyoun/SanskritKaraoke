@@ -9,7 +9,7 @@ Implementation: [IMPLEMENTATION_SANSKRITKARAOKE_AUDIO_GATE_RESIDUAL.md](https://
 Verification: [VERIFICATION_SANSKRITKARAOKE_AUDIO_GATE_RESIDUAL.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/VERIFICATION_SANSKRITKARAOKE_AUDIO_GATE_RESIDUAL.md) ·
 Metadoc: [PLAN_SANSKRITKARAOKE_AUDIO_GATE_RESIDUAL_2026H2.meta.md](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/PLAN_SANSKRITKARAOKE_AUDIO_GATE_RESIDUAL_2026H2.meta.md)
 
-Programme parent: [H3000 (Opus 5) — Stale-roadmap slice 2: full /ask replan of stale Tier-0 roadmaps](https://github.com/gasyoun/Uprava/blob/main/handoffs/H3000-Opus_multi_stale-roadmap-s2-tier0-ask-replan_17.08.26.md),
+Programme parent: [H3000 (Opus 5) — Stale-roadmap slice 2: full /ask replan of stale Tier-0 roadmaps](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H3000-Opus_multi_stale-roadmap-s2-tier0-ask-replan_17.08.26.md),
 under [PLAN_UPRAVA_STALE_ROADMAP_ASK_BATCH_2026-08.md](https://github.com/gasyoun/Uprava/blob/main/docs/PLAN_UPRAVA_STALE_ROADMAP_ASK_BATCH_2026-08.md).
 
 ## Why this document exists

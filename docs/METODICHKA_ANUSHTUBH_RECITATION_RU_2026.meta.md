@@ -14,7 +14,7 @@ _Created: 05-08-2026 · Last updated: 05-08-2026_
 
 ## Провенанс
 
-- Хэндофф: [H1869](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1869-Fable_SanskritKaraoke_anushtubh-recitation-guidance-ru-methodichka_29.07.26.md)
+- Хэндофф: [H1869](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1869-Fable_SanskritKaraoke_anushtubh-recitation-guidance-ru-methodichka_29.07.26.md)
   (Fable-лейн, заминчен Opus 5 1M `claude-opus-5[1m]` через `/ask-batch` 29-07-2026).
 - Автор прогона: Fable 5 (`claude-fable-5`), 05-08-2026.
 - Данные: веса слогов и классификация каденций вычислены кодом самого приложения —

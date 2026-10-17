@@ -3,7 +3,7 @@ _Created: 06-08-2026 · Last updated: 06-08-2026_
 # Week-4 metre-only quiz path («Старт чтения» residual, H2114)
 
 Parent curriculum: [SanskritGrammar `docs/CURRICULUM_START_CHTENIYA_W1_W5.md`](https://github.com/gasyoun/SanskritGrammar/blob/main/docs/CURRICULUM_START_CHTENIYA_W1_W5.md) §Week 4 (already names the pinned verse set below and the fence — this doc is the Karaoke-side technical companion, not a replacement).
-Handoff: [H2114](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2114-Sonnet_SanskritKaraoke_start-chteniya-week4-metre_01.08.26.md).
+Handoff: [H2114](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H2114-Sonnet_SanskritKaraoke_start-chteniya-week4-metre_01.08.26.md).
 
 ## Goal
 

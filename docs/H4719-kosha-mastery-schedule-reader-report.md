@@ -2,7 +2,7 @@
 
 _Created: 15-09-2026 · Last updated: 15-09-2026_
 
-_Handoff: [H4719](https://github.com/gasyoun/Uprava/blob/main/handoffs/H4719-OxAlpha_SanskritKaraoke_xwalk-a15-mastery-schedule-reader_14.09.26.md) · Executor: OxAlpha (opencode/zai-coding-plan/glm-5.3-flash) · Effort: trivial_
+_Handoff: [H4719](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H4719-OxAlpha_SanskritKaraoke_xwalk-a15-mastery-schedule-reader_14.09.26.md) · Executor: OxAlpha (opencode/zai-coding-plan/glm-5.3-flash) · Effort: trivial_
 
 ## GATE 0 — data probe verdict
 
