@@ -525,7 +525,7 @@ def grade_take(audio_path, verse_id, verses_dir=None, use_whisper=None):
                 row['student_s'] = None
                 row['heat'] = 'off'
 
-    too_quiet = attempted < 4
+    too_quiet = (attempted < min(4, len(gradable))) if gradable else True
     rhythm = None
     if attempted:
         rhythm = round(sum(r['grade'] for r in attempted_rows) / attempted, 1)

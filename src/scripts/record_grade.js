@@ -234,9 +234,17 @@
         : MediaRecorder.isTypeSupported('audio/mp4')
         ? 'audio/mp4'
         : '';
-    recorder = mimeType
-      ? new MediaRecorder(stream, { mimeType })
-      : new MediaRecorder(stream);
+    try {
+      recorder = mimeType
+        ? new MediaRecorder(stream, { mimeType })
+        : new MediaRecorder(stream);
+    } catch (e) {
+      // bughunt 11.10 M4: never leave busy=true with a live mic stream.
+      busy = false;
+      stream.getTracks().forEach(t => t.stop());
+      status('Не удалось начать запись: ' + e.message, 'err');
+      return;
+    }
 
     const chunks = [];
     recorder.ondataavailable = (e) => { if (e.data.size) chunks.push(e.data); };
@@ -293,7 +301,8 @@
       if (data.too_quiet || data.rhythm_percent === null ||
           data.rhythm_percent === undefined) {
         status('Услышано слишком мало — прочитай стих вслух', 'err');
-      } else if (data.attempted < data.total_syllables) {
+      } else if (data.attempted != null && data.total_syllables != null &&
+                 data.attempted < data.total_syllables) {
         status(`Готово: ритм ${Math.round(data.rhythm_percent)}% `
           + `(оценено ${data.attempted} из ${data.total_syllables} слогов)`, 'ok');
       } else {
