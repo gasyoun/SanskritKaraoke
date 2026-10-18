@@ -117,7 +117,12 @@ class GradeHandler(BaseHTTPRequestHandler):
             self._json(400, {'error': 'пустой параметр verse (id стиха)'})
             return
 
-        length = int(self.headers.get('Content-Length') or 0)
+        try:
+            length = int(self.headers.get('Content-Length') or 0)
+        except (TypeError, ValueError):
+            # a non-numeric Content-Length must not escape do_POST (bughunt 11.10 M2)
+            self._json(400, {'error': 'некорректный Content-Length'})
+            return
         if length <= 0:
             self._json(400, {'error': 'пустое тело — аудио записи обязательно'})
             return
@@ -146,8 +151,10 @@ class GradeHandler(BaseHTTPRequestHandler):
             self._json(422, {'error': str(e)})
         except RuntimeError as e:
             self._json(422, {'error': f'аудио не разобрано: {e}'})
-        except Exception as e:  # noqa: BLE001 — surfaced to the client as JSON
-            self._json(500, {'error': f'internal: {e}'})
+        except Exception as e:  # noqa: BLE001 — generic to the client, full detail server-side
+            # bughunt 11.10 M3: ffmpeg stderr / temp paths are not public API.
+            sys.stderr.write(f'grade failed: {e}\n')
+            self._json(500, {'error': 'внутренняя ошибка сервера'})
         finally:
             if fd:
                 try:
