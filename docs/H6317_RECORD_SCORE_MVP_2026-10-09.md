@@ -60,6 +60,46 @@ endpoint: `https://samskrte.ru/sk-grade/api/grade` (override:
 
 ## Deploy (vps92, alongside Systema)
 
+**One command** (H6501). Before this script the merge-to-prod path was 8
+hand-typed shell commands (the H6317 record below) with an undocumented
+rollback; the deploy path is now
+`git fetch → checkout origin/main → install the unit → restart → healthz gate
+→ auto-rollback`:
+
+```bash
+# one-time bootstrap on the box: the script must live OUTSIDE the prod clone,
+# because a deploy checks out a new revision under the script's own feet
+install -m 0755 /opt/sk-grade/SanskritKaraoke/deploy/deploy_sk_grade.sh /usr/local/sbin/sk-grade-deploy
+
+# every deploy after that — one command
+/usr/local/sbin/sk-grade-deploy
+```
+
+The script ([deploy/deploy_sk_grade.sh](https://github.com/gasyoun/SanskritKaraoke/blob/main/deploy/deploy_sk_grade.sh)):
+
+1. `git fetch --prune --tags origin` in `/opt/sk-grade/SanskritKaraoke`
+   (unshallows the `--depth 1` clone first, so the previous revision stays
+   rollback-able);
+2. `git checkout -B main origin/main` — refuses to run on a dirty tree;
+3. installs `deploy/sk-grade.service` over `/etc/systemd/system/sk-grade.service`
+   (byte-equal to the repo copy; the previous unit is kept as
+   `sk-grade.service.bak-<ts>`) + `systemctl daemon-reload`;
+4. `systemctl restart sk-grade`;
+5. **healthz gate** — `GET http://127.0.0.1:8791/healthz` must answer `200`
+   (10 attempts × 3 s; the public URL is probed afterwards as a warning only,
+   because nginx is not part of the deploy);
+6. **auto-rollback** on a failed gate — checkout the previous revision, restore
+   the previous unit, restart, re-probe.
+
+Exit codes: `0` deploy ok · `1` preflight error (dirty tree, missing clone,
+not root) · `3` deploy failed but the rollback restored a healthy service (the
+new revision is suspect) · `4` deploy failed **and** the rollback did not
+restore health (a human is needed). A deploy log is appended to
+`/var/log/sk-grade-deploy.log`.
+
+The manual path this replaces (H6317 record, kept for the first deploy of a
+fresh box):
+
 ```bash
 ssh root@100.85.73.83
 mkdir -p /opt/sk-grade && cd /opt/sk-grade
@@ -71,6 +111,22 @@ systemctl daemon-reload && systemctl enable --now sk-grade
 nginx -t && systemctl reload nginx
 curl -s https://samskrte.ru/sk-grade/healthz        # {"ok": true}
 ```
+
+### Rollback (H6501)
+
+Automatic — the deploy script rolls back by itself when the healthz gate
+fails. Manual rollback (if the service is already unhealthy):
+
+```bash
+cd /opt/sk-grade/SanskritKaraoke
+git checkout --detach <last-good-rev>     # or: git log --oneline -5
+systemctl restart sk-grade
+curl -s http://127.0.0.1:8791/healthz    # {"ok": true}
+```
+
+If the unit changed with the deploy, restore it from the backup the script
+kept: `ls -t /etc/systemd/system/sk-grade.service.bak-*` → `cp` the newest
+over the live unit → `systemctl daemon-reload && systemctl restart sk-grade`.
 
 ## Observability — healthz uptime timer (H6502, 11-10-2026)
 
@@ -102,9 +158,14 @@ script then also pings it ok//fail, mirroring `samskrte-internals-heartbeat`
 
 - No lead-strip: a student saying «subhāṣitam…» before the verse shifts the
   first pada (the span-seeded tempo fit absorbs much of it).
-- Whisper warp off by default (latency + venv weight); `SK_GRADE_WHISPER=1`
-  after `venv/bin/pip install faster_whisper` enables the H5223 word-times
-  path over the student take.
+- Whisper warp is **ON in prod** — `SK_GRADE_WHISPER=1` in the live unit since
+  the H6333 venv install, and the committed
+  [deploy/sk-grade.service](https://github.com/gasyoun/SanskritKaraoke/blob/main/deploy/sk-grade.service)
+  now says the same (H6501 back-ported the live truth; the H6398 audit row
+  R-2 recorded the drift). The flag is the one-line switch to turn it off
+  again; `faster_whisper` must be present in the prod venv
+  (`venv/bin/pip install faster_whisper`) or the service must not be started
+  with the flag on.
 - bhg_2_47 grades against the synthetic H3261 fixture (`auto_generated: true`)
   — dev-only stand-in until the G1 rights gate ships real reference audio.
   NO reference audio is published by this feature (timing JSON only).
