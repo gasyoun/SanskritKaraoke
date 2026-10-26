@@ -16,8 +16,17 @@ the endpoint carries no auth and no PII — audio only, never stored;
 the sentiment store holds verse ids + votes, never names or contacts).
 
 Env: SK_GRADE_HOST (127.0.0.1), SK_GRADE_PORT (8791), SK_GRADE_WHISPER (0|1),
-SK_GRADE_SENTIMENT_DB (data/sentiment/sentiment.db).
+SK_GRADE_SENTIMENT_DB (data/sentiment/sentiment.db),
+SK_GRADE_MAX_CONCURRENCY (2), SK_GRADE_QUEUE_TIMEOUT (0 seconds).
 Run: python3 tools/serve_grade.py   (systemd unit: deploy/sk-grade.service)
+
+Concurrency (H6500): every /api/grade POST must hold one of
+SK_GRADE_MAX_CONCURRENCY slots (bounded semaphore) from body read to response,
+so an unbounded ThreadingHTTPServer cannot fan out into N whisper jobs and
+N x 12 MB buffers. Saturation answers 429 + Retry-After instead of queueing;
+/healthz and /api/feedback never touch the gate, so the uptime probe and the
+sentiment write stay responsive while the grader is busy. The edge throttle
+that pairs with this lives in deploy/nginx-sk-grade.conf.
 """
 from __future__ import annotations
 
@@ -25,6 +34,7 @@ import json
 import os
 import sys
 import tempfile
+import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs
 
@@ -34,6 +44,8 @@ from grade_take import GradeError, ReferenceTimingError, grade_take  # noqa: E40
 import sentiment_store  # noqa: E402
 
 MAX_BODY = 12 * 1024 * 1024  # 12 MB ~ 2 min of opus
+DEFAULT_MAX_CONCURRENCY = 2
+DEFAULT_QUEUE_TIMEOUT = 0.0
 CT_TO_EXT = {
     'audio/webm': '.webm',
     'audio/ogg': '.ogg',
@@ -43,6 +55,53 @@ CT_TO_EXT = {
     'audio/mp4': '.m4a',
     'audio/aac': '.aac',
 }
+GRADING_BUSY_ERROR = (
+    'слишком много одновременных записей — подожди пару секунд и повтори')
+
+
+def _env_int(name, default, minimum=1):
+    """Env int with a floor — a mis-set 0 must not wedge the grader shut."""
+    try:
+        value = int(os.environ.get(name, default))
+    except (TypeError, ValueError):
+        return default
+    return max(minimum, value)
+
+
+def _env_float(name, default, minimum=0.0):
+    try:
+        value = float(os.environ.get(name, default))
+    except (TypeError, ValueError):
+        return default
+    return max(minimum, value)
+
+
+class ConcurrencyGate:
+    """Bounded slot pool: at most `limit` grading jobs in flight (H6500)."""
+
+    def __init__(self, limit, queue_timeout=0.0):
+        self.limit = max(1, int(limit))
+        self.queue_timeout = max(0.0, float(queue_timeout))
+        self._slots = threading.BoundedSemaphore(self.limit)
+
+    @classmethod
+    def from_env(cls):
+        return cls(
+            _env_int('SK_GRADE_MAX_CONCURRENCY', DEFAULT_MAX_CONCURRENCY),
+            _env_float('SK_GRADE_QUEUE_TIMEOUT', DEFAULT_QUEUE_TIMEOUT),
+        )
+
+    def try_acquire(self):
+        """True when a slot was taken; False when saturated (no unbounded wait)."""
+        if self.queue_timeout <= 0:
+            return self._slots.acquire(blocking=False)
+        return self._slots.acquire(timeout=self.queue_timeout)
+
+    def release(self):
+        self._slots.release()
+
+
+GRADE_GATE = ConcurrencyGate.from_env()
 
 
 class GradeHandler(BaseHTTPRequestHandler):
@@ -53,10 +112,12 @@ class GradeHandler(BaseHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
 
-    def _json(self, code, payload):
+    def _json(self, code, payload, extra_headers=None):
         body = json.dumps(payload, ensure_ascii=False).encode('utf-8')
         self.send_response(code)
         self._cors()
+        for name, value in (extra_headers or {}).items():
+            self.send_header(name, value)
         self.send_header('Content-Type', 'application/json; charset=utf-8')
         self.send_header('Content-Length', str(len(body)))
         self.end_headers()
@@ -117,6 +178,19 @@ class GradeHandler(BaseHTTPRequestHandler):
             self._json(400, {'error': 'пустой параметр verse (id стиха)'})
             return
 
+        # H6500: bound concurrent grading jobs *before* the 12 MB body read, so
+        # a burst cannot pin N buffers + N whisper processes. Saturated -> 429
+        # with Retry-After; /healthz stays outside the gate on purpose.
+        if not GRADE_GATE.try_acquire():
+            self._json(429, {'error': GRADING_BUSY_ERROR},
+                       {'Retry-After': '2'})
+            return
+        try:
+            self._grade(verse)
+        finally:
+            GRADE_GATE.release()
+
+    def _grade(self, verse):
         try:
             length = int(self.headers.get('Content-Length') or 0)
         except (TypeError, ValueError):
@@ -178,7 +252,8 @@ def main():
         print(f'sentiment store init failed: {e}', flush=True)
     server = ThreadingHTTPServer((host, port), GradeHandler)
     print(f'sk-grade listening on http://{host}:{port} '
-          f'(whisper={os.environ.get("SK_GRADE_WHISPER", "0")})', flush=True)
+          f'(whisper={os.environ.get("SK_GRADE_WHISPER", "0")}, '
+          f'max_concurrency={GRADE_GATE.limit})', flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
