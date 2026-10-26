@@ -130,11 +130,27 @@ def test_second_post_gets_429_and_healthz_stays_up(live_server):
     assert payload['verse_id'] == 'bhg_2_47'
 
 
-def test_slot_released_after_4xx(live_server):
+def test_slot_released_after_gated_4xx(live_server, monkeypatch):
+    """A request that *takes* the slot and then fails must give it back."""
     base, take = live_server
     take.release.set()  # grading stub returns immediately here
-    status, _, payload = _post(base, '/api/grade', b'', timeout=10)
-    assert status == 400 and 'verse' in payload['error']
+    # verse present, empty body -> 400 is raised inside _grade, i.e. after the
+    # gate was acquired; a leaked slot would 429 the next graded request.
+    status, _, payload = _post(base, '/api/grade?verse=bhg_2_47', b'', timeout=10)
+    assert status == 400 and 'пустое тело' in payload['error']
+    status, _, payload = _post(
+        base, '/api/grade?verse=bhg_2_47', b'\0' * 8, timeout=10)
+    assert status == 200, payload
+
+    # exception path: GradeError -> 422, again after the gate was taken
+    def raiser(path, verse):
+        raise serve_grade.GradeError('stub failure')
+
+    monkeypatch.setattr(serve_grade, 'grade_take', raiser)
+    status, _, payload = _post(
+        base, '/api/grade?verse=bhg_2_47', b'\0' * 8, timeout=10)
+    assert status == 422 and 'stub failure' in payload['error']
+    monkeypatch.setattr(serve_grade, 'grade_take', take)
     status, _, payload = _post(
         base, '/api/grade?verse=bhg_2_47', b'\0' * 8, timeout=10)
     assert status == 200, payload
