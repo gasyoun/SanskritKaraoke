@@ -14,7 +14,7 @@ langchain-anthropic>=1.7.6
 langchain-google-genai>=4.4.2
 
 # LLM Providers
-anthropic>=1.15.0
+anthropic>=2.1.0
 google-generativeai>=0.8.6
 requests>=2.34.2
 
