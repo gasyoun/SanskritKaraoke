@@ -11,8 +11,13 @@ UMask=0077
 WorkingDirectory=/opt/sk-grade/SanskritKaraoke
 Environment=SK_GRADE_HOST=127.0.0.1
 Environment=SK_GRADE_PORT=8791
-# faster_whisper is optional; enable after `venv/bin/pip install faster_whisper`
-Environment=SK_GRADE_WHISPER=0
+# faster_whisper lives in the prod venv (faster-whisper 1.2.1, H6398 probe
+# 11-10-2026). The H6317 unit shipped with the flag off; prod has been running
+# SK_GRADE_WHISPER=1 since the H6333 whisper install, so the committed unit was
+# drifting from the live one (H6398 row R-2). Back-ported to the live truth in
+# H6501 — the flag is now ON, and the unit in the repo is the unit on the box
+# (deploy/deploy_sk_grade.sh installs this file byte-for-byte).
+Environment=SK_GRADE_WHISPER=1
 ExecStart=/opt/sk-grade/venv/bin/python3 tools/serve_grade.py
 Restart=always
 RestartSec=3
