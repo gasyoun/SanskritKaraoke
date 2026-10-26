@@ -47,7 +47,7 @@ curl -s -X POST "https://samskrte.ru/sk-grade/api/feedback?event=canary-$(date +
 ## Остатки
 
 - @DO: кнопки 👍/👎 в `student.html` → `POST /api/feedback` (UI-захват; эндпоинт жив, фронт не шлёт) — зарегистрировано GTD-строкой при закрытии H6455.
-- TG-майнинг остаётся **выключенным до H6473** (приват-гейт; карта К7 — by design, не дефект).
+- TG-майнинг остаётся **выключенным до H6473** (приват-гейт; карта К7 — by design, не дефект). Гейт-документация H6473 готова 26-10-2026: политика [docs/security/TG_SENTIMENT_PRIVACY_GATE_H6473_2026-10-26.md](../docs/security/TG_SENTIMENT_PRIVACY_GATE_H6473_2026-10-26.md) (аудит-доступа, ретеншен, 152-ФЗ ≥k) + чеклист-виза включения [docs/security/TG_SENTIMENT_ENABLE_CHECKLIST_H6473_2026-10-26.md](../docs/security/TG_SENTIMENT_ENABLE_CHECKLIST_H6473_2026-10-26.md); пункт TG-майнинга остаётся **gated-before-enable** до финальной визы MG по чеклисту (A–C) и операционного включения на .92 (D).
 - Пилот локальной RU-модели — H6474 против этого LLM-судьи на одном обезличенном наборе; адопция только через @DECIDE.
 
 _Исполнитель: OxAlpha (opencode/z-ai/glm-5.3-flash), PR #184 (merge 12-10-2026T13:30Z), канарейка .92 12-10-2026 13:36Z._
