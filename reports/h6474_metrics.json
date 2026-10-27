@@ -1,0 +1,84 @@
+{
+  "fixture": "data/sentiment/fixtures/tg_extracts_synthetic_h6474.jsonl",
+  "n_items": 24,
+  "judge_model": "google/gemini-3.6-flash",
+  "models": {
+    "blanchefort/rubert-base-cased-sentiment": {
+      "n": 24,
+      "raw_agreement": 0.458,
+      "cohen_kappa_vs_judge": 0.254,
+      "confusion_local_to_judge": {
+        "up->up": 6,
+        "neutral->down": 8,
+        "neutral->neutral": 4,
+        "down->down": 1,
+        "neutral->up": 4,
+        "down->neutral": 1
+      },
+      "mean_latency_s_local": 0.026,
+      "mean_latency_s_judge": 2.951,
+      "model_id": "blanchefort/rubert-base-cased-sentiment",
+      "labels_dist": {
+        "up": 6,
+        "neutral": 16,
+        "down": 2
+      }
+    },
+    "cointegrated/rubert-tiny-sentiment-balanced": {
+      "n": 24,
+      "raw_agreement": 0.542,
+      "cohen_kappa_vs_judge": 0.316,
+      "confusion_local_to_judge": {
+        "down->up": 1,
+        "down->down": 6,
+        "up->up": 5,
+        "up->down": 1,
+        "down->neutral": 3,
+        "neutral->up": 4,
+        "neutral->neutral": 2,
+        "neutral->down": 2
+      },
+      "mean_latency_s_local": 0.004,
+      "mean_latency_s_judge": 2.951,
+      "model_id": "cointegrated/rubert-tiny-sentiment-balanced",
+      "labels_dist": {
+        "down": 10,
+        "up": 6,
+        "neutral": 8
+      }
+    },
+    "seara/rubert-tiny2-russian-sentiment": {
+      "n": 24,
+      "raw_agreement": 0.583,
+      "cohen_kappa_vs_judge": 0.406,
+      "confusion_local_to_judge": {
+        "up->up": 8,
+        "down->down": 2,
+        "neutral->down": 7,
+        "neutral->neutral": 4,
+        "neutral->up": 2,
+        "down->neutral": 1
+      },
+      "mean_latency_s_local": 0.003,
+      "mean_latency_s_judge": 2.951,
+      "model_id": "seara/rubert-tiny2-russian-sentiment",
+      "labels_dist": {
+        "up": 8,
+        "down": 3,
+        "neutral": 13
+      }
+    }
+  },
+  "cost": {
+    "tokens_in": 1748,
+    "tokens_out": 8058,
+    "usd_est": 0.0051,
+    "local_model_usd_est": 0.0,
+    "mean_latency_s_judge": 2.951
+  },
+  "judge_labels_dist": {
+    "up": 10,
+    "down": 9,
+    "neutral": 5
+  }
+}
