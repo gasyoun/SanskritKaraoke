@@ -1,6 +1,6 @@
 # Sanskrit Karaoke — Product Roadmap
 
-_Created: 14-05-2026 · Last updated: 28-08-2026_
+_Created: 14-05-2026 · Last updated: 30-10-2026_
 
 > **Truth-pass 18-08-2026 (H3000).** This file is a *product vision* roadmap and
 > its phases stay as written. What it cannot show is that the product is not
@@ -44,8 +44,10 @@ cross-page auth-wiring консолидация (три страницы по-р
 
 Сейчас каждая шлока требует ручной разметки тайминга в Timing Editor. Это узкое горлышко роста контента.
 
-- [ ] Интеграция TTS (Google Cloud TTS Sanskrit / ElevenLabs) для генерации аудио
-  (см. баннер выше — deliberately not scheduled, K5)
+- [~] ~~Интеграция TTS (Google Cloud TTS Sanskrit / ElevenLabs) для генерации аудио~~
+  — реклассифицировано 30-10-2026 (М.Г., дрен-ревизия гейтов, `/drain`): осознанно не
+  планируется (K5, см. баннер выше), не блокер и не backlog. Вне пула batch-дрена; чекбокс
+  восстановить в `- [ ]`, если решение о планировании TTS изменится.
 - [x] Forced-alignment pipeline: text + audio → per-syllable timestamps автоматически
   (уже реализовано, verified 28-08-2026: [tools/align_chapter.py](https://github.com/gasyoun/SanskritKaraoke/blob/main/tools/align_chapter.py) —
   CLI-порт проверенного браузерного алгоритма по [ADR-0003](https://github.com/gasyoun/SanskritKaraoke/blob/main/docs/adr/0003-auto-alignment-cli.md)
