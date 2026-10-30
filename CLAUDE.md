@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-_Created: 12-05-2026 · Last updated: 15-09-2026_
+_Created: 12-05-2026 · Last updated: 30-10-2026_
 
 This repo is **Sanskrit Karaoke** (Волновая нотация санскрита) — a
 single-page web app that visualises the metrical structure of Sanskrit
@@ -35,7 +35,9 @@ No bundler. QA is scripted — the verse validators, `pytest
 tests/test_export_captions.py`, `node tools/test_core_modules.mjs` — plus
 in-browser review. CI on `main`: verse-library validation + `verses/index.json`
 rebuild (`verses.yml`), student-page generator (`student.yml`),
-teaching-pipeline evals (`evals.yml`), Pages deploy (`pages.yml`). A flaky
+teaching-pipeline evals (`evals.yml`), Pages deploy (`pages.yml`), plus the
+pytest suite and the F821 undefined-name gate (`tests.yml` +
+`f821-gate.yml`, H7243). A flaky
 Pages deploy is re-dispatched with `gh workflow run pages.yml` — never rerun
 only the failed job. Evals (`python evals/judge.py`) need API keys in a root
 `.env` (`ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, optional `OPENROUTER_API_KEY`).
