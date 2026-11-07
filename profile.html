@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanskrit Karaoke — v1.5.11 — Профиль студента</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="stylesheet" href="src/style.css">
+<style>
+  body { padding: clamp(12px, 4vw, 40px); }
+  .container { max-width: 960px; margin: 0 auto; background: var(--card); padding: clamp(18px, 4vw, 30px); border-radius: 8px; border: 1px solid var(--border); }
+  .header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; border-bottom: 2px solid var(--gold); padding-bottom: 14px; margin-bottom: 20px; }
+  .header-main { display:flex; align-items:center; gap:15px; flex-wrap:wrap; min-width:0; }
+  .header h1 { margin: 0; overflow-wrap: anywhere; }
+  .version-badge { font-size:.75rem; font-weight:400; color:#aaa; letter-spacing:0; text-transform:none; font-family:'JetBrains Mono',monospace; }
+  .streak-badge { background: var(--gold); color: #fff; padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 1rem; white-space: nowrap; }
+  .profile-card { display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-bottom:24px; padding:18px; background:var(--bg2); border:1px solid var(--border); border-radius:8px; }
+  .avatar-btn { width:72px; height:72px; border-radius:50%; border:2px solid var(--gold); background:var(--card); font-size:2.2rem; line-height:1; cursor:pointer; padding:0; display:flex; align-items:center; justify-content:center; }
+  .avatar-btn:hover { transform: scale(1.05); }
+  .avatar-picker { display:none; gap:8px; flex-wrap:wrap; width:100%; padding-top:6px; }
+  .avatar-picker.open { display:flex; }
+  .avatar-option { width:44px; height:44px; border-radius:50%; border:1px solid var(--border); background:var(--card); font-size:1.4rem; cursor:pointer; padding:0; display:flex; align-items:center; justify-content:center; }
+  .avatar-option.selected { border:2px solid var(--gold); }
+  .profile-name { font-size:1.2rem; font-weight:bold; color:var(--ink); background:transparent; border:0; border-bottom:1px dashed var(--border); padding:4px 2px; min-width:200px; }
+  .profile-name:focus { outline:none; border-bottom-color: var(--gold); }
+  .avatar-hint { display:block; width:100%; margin-top:4px; font-size:.7rem; font-family:'JetBrains Mono',monospace; color:var(--ink2); }
+  .summary-grid { display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border:1px solid var(--border); border-radius:8px; overflow:hidden; margin: 0 0 24px; }
+  .summary-grid div { padding:12px; border-right:1px solid var(--border); background:var(--bg2); }
+  .summary-grid div:last-child { border-right:0; }
+  .summary-grid strong { display:block; font-size:1.25rem; color:var(--ink); }
+  .summary-grid span { display:block; margin-top:2px; font-size:.68rem; font-family:'JetBrains Mono',monospace; text-transform:uppercase; color:var(--ink2); letter-spacing:0; }
+  .table-wrap { width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; min-width: 720px; }
+  th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); color: var(--ink); }
+  th { font-family: 'JetBrains Mono', monospace; font-size: .8rem; text-transform: uppercase; color: var(--ink2); }
+  .status-chip { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: .75rem; font-weight: bold; }
+  .status-learning { background: rgba(53, 123, 221, 0.15); color: #357bdd; }
+  .status-mastered { background: rgba(44, 74, 30, 0.15); color: var(--laghu); }
+  .btn-study { display: inline-block; padding: 6px 14px; background: var(--accent, #357bdd); color: #fff; text-decoration: none; border-radius: 4px; font-size: .8rem; font-weight: bold; }
+  .btn-study:hover { opacity: 0.9; }
+  .empty-msg { margin: 12px 0 8px; color: var(--ink2); }
+  @media (max-width: 720px) {
+    body { padding: 0; }
+    .container { min-height: 100dvh; border: 0; border-radius: 0; padding: 16px; }
+    .header { display:block; }
+    .header-main { align-items:flex-start; gap:10px; }
+    .streak-badge { display:inline-block; margin-top:12px; }
+    .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .summary-grid div:nth-child(2) { border-right:0; }
+    .summary-grid div:nth-child(-n+2) { border-bottom:1px solid var(--border); }
+    .table-wrap { overflow:visible; }
+    table { min-width:0; display:block; }
+    thead { display:none; }
+    tbody { display:block; }
+    tr { display:block; border:1px solid var(--border); border-radius:8px; margin:0 0 12px; padding:8px 10px; background:var(--bg2); }
+    td { display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px solid var(--border); text-align:right; }
+    td:last-child { border-bottom:0; }
+    td::before { content:attr(data-label); flex:0 0 38%; text-align:left; color:var(--ink2); font-family:'JetBrains Mono',monospace; font-size:.72rem; text-transform:uppercase; }
+    td:first-child { display:block; text-align:left; }
+    td:first-child::before { display:block; margin-bottom:4px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="header-main">
+      <h1 data-i18n="profileHeading">Профиль студента</h1>
+      <span class="version-badge">v1.5.11</span>
+      <a href="index.html" style="font-size:.65rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);text-decoration:none;border:1px solid var(--border);border-radius:4px;padding:3px 9px;white-space:nowrap" title="Открыть редактор">✎ Редактор</a>
+      <a href="catalogue.html" style="font-size:.65rem;font-family:'JetBrains Mono',monospace;color:var(--ink2);text-decoration:none;border:1px solid var(--border);border-radius:4px;padding:3px 9px;white-space:nowrap" title="Каталог шлок">📚 Каталог</a>
+    </div>
+    <div class="streak-badge">🔥 <span id="streak-count">0</span> <span data-i18n="streakDays">дней подряд</span></div>
+  </div>
+
+  <div class="profile-card">
+    <button id="avatar-btn" class="avatar-btn" onclick="toggleAvatarPicker()" aria-label="avatar">🪷</button>
+    <div>
+      <input id="profile-name" class="profile-name" data-i18n-placeholder="profileNamePlaceholder" value="Студент" maxlength="40" onchange="saveProfile()" oninput="saveProfileDebounced()">
+    </div>
+    <div id="avatar-picker" class="avatar-picker"></div>
+    <span class="avatar-hint" data-i18n="profileAvatarHint">Нажмите на аватар, чтобы сменить</span>
+  </div>
+
+  <div class="summary-grid" aria-live="polite">
+    <div><strong id="stat-streak">0</strong><span data-i18n="statStreakDays">Streak (дней)</span></div>
+    <div><strong id="stat-mastered">0</strong><span data-i18n="statMastered">Освоено</span></div>
+    <div><strong id="stat-studied">0</strong><span data-i18n="statStudied">Изучено</span></div>
+    <div><strong id="stat-total">0</strong><span data-i18n="statTotal">Всего</span></div>
+  </div>
+
+  <h2 data-i18n="profileStudiedHeading">Изученные шлоки</h2>
+  <div id="studied-wrap" class="table-wrap" style="display:none">
+  <table id="studied-table">
+    <thead>
+      <tr>
+        <th data-i18n="profileColVerse">Шлока</th>
+        <th data-i18n="profileColMeter">Метр</th>
+        <th data-i18n="profileColStatus">Статус</th>
+        <th data-i18n="profileColDue">Следующее повт.</th>
+        <th data-i18n="profileColAction">Действие</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  </div>
+  <p id="empty-msg" class="empty-msg" style="display:none" data-i18n="profileEmpty">Пока ничего не изучено. Начните с каталога!</p>
+  <p id="empty-cta" style="display:none"><a href="catalogue.html" class="btn-study" data-i18n="profileEmptyCta">Открыть каталог</a></p>
+</div>
+
+<script src="src/scripts/strings.js"></script>
+<script src="src/scripts/srs.js"></script>
+<script>
+const AVATARS = ['🪷', '🕉', '📿', '🐚', '🌺', '⭐', '🎵', '🧘', '📖', '🔥'];
+const PROFILE_KEY = 'shloka_profile';
+
+function loadProfile() {
+  try {
+    return JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}') || {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveProfile() {
+  const avatar = document.getElementById('avatar-btn').textContent.trim();
+  const name = document.getElementById('profile-name').value.trim() || ((typeof t === 'function') ? t('profileDefaultName') : 'Студент');
+  localStorage.setItem(PROFILE_KEY, JSON.stringify({ avatar: avatar, name: name }));
+}
+
+let _saveTimer = null;
+function saveProfileDebounced() {
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(saveProfile, 400);
+}
+
+function toggleAvatarPicker() {
+  document.getElementById('avatar-picker').classList.toggle('open');
+}
+
+function pickAvatar(emoji) {
+  const btn = document.getElementById('avatar-btn');
+  btn.textContent = emoji;
+  document.querySelectorAll('.avatar-option').forEach(el => {
+    el.classList.toggle('selected', el.textContent === emoji);
+  });
+  saveProfile();
+}
+
+function buildAvatarPicker(selected) {
+  const picker = document.getElementById('avatar-picker');
+  picker.innerHTML = '';
+  AVATARS.forEach(emoji => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'avatar-option' + (emoji === selected ? ' selected' : '');
+    b.textContent = emoji;
+    b.onclick = () => pickAvatar(emoji);
+    picker.appendChild(b);
+  });
+}
+
+async function loadProfilePage() {
+  // Telegram Web App Support
+  if (window.Telegram && window.Telegram.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+    if (tg.colorScheme === 'dark') document.body.classList.add('tg-dark');
+    const canUseBackButton = tg.BackButton && typeof tg.isVersionAtLeast === 'function' && tg.isVersionAtLeast('6.1');
+    if (canUseBackButton) {
+      tg.BackButton.show();
+      tg.BackButton.onClick(() => { window.location.href = 'catalogue.html'; });
+    }
+  }
+
+  const prof = loadProfile();
+  const avatar = AVATARS.includes(prof.avatar) ? prof.avatar : AVATARS[0];
+  document.getElementById('avatar-btn').textContent = avatar;
+  document.getElementById('profile-name').value = prof.name || ((typeof t === 'function') ? t('profileDefaultName') : 'Студент');
+  buildAvatarPicker(avatar);
+
+  document.getElementById('streak-count').textContent = getStreak();
+  document.getElementById('stat-streak').textContent = getStreak();
+
+  const res = await fetch('verses/index.json');
+  if (!res.ok) return;
+  const indexData = await res.json();
+  const srsData = getSrsData();
+  const today = getTodayStr();
+
+  const studied = [];
+  let masteredCount = 0;
+  indexData.verses.forEach(verse => {
+    const srs = srsData.find(r => r.id === verse.id);
+    if (!srs) return;
+    const mastered = srs.interval >= 21;
+    if (mastered) masteredCount++;
+    studied.push({ verse: verse, srs: srs, mastered: mastered });
+  });
+
+  studied.sort((a, b) => (b.mastered - a.mastered) || a.verse.title.ru.localeCompare(b.verse.title.ru));
+
+  const tbody = document.querySelector('#studied-table tbody');
+  tbody.innerHTML = '';
+  studied.forEach(item => {
+    const statusClass = item.mastered ? 'status-mastered' : 'status-learning';
+    const statusText = item.mastered
+      ? ((typeof t === 'function') ? t('statusMastered') : 'Mastered')
+      : ((typeof t === 'function') ? t('statusLearning') : 'Learning');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><strong>${item.verse.title.ru}</strong><br><small style="color:var(--ink2)">${item.verse.id}</small></td>
+      <td>${item.verse.meter}</td>
+      <td><span class="status-chip ${statusClass}">${statusText}</span></td>
+      <td>${item.srs.due <= today ? '✅' : item.srs.due}</td>
+      <td><a href="student.html?id=${item.verse.id}" class="btn-study" style="background:var(--bg2);color:var(--ink)">Открыть</a></td>
+    `;
+    ['Verse', 'Meter', 'Status', 'Due', 'Action'].forEach((label, index) => {
+      if (tr.children[index]) tr.children[index].dataset.label = label;
+    });
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById('stat-mastered').textContent = masteredCount;
+  document.getElementById('stat-studied').textContent = studied.length;
+  document.getElementById('stat-total').textContent = indexData.verses.length;
+
+  const isEmpty = studied.length === 0;
+  document.getElementById('studied-wrap').style.display = isEmpty ? 'none' : '';
+  document.getElementById('empty-msg').style.display = isEmpty ? '' : 'none';
+  document.getElementById('empty-cta').style.display = isEmpty ? '' : 'none';
+}
+
+window.addEventListener('DOMContentLoaded', loadProfilePage);
+</script>
+
+<footer class="cta-footer">
+  <a class="cta-btn" href="https://samskrtam.ru/usha-sanka?utm_source=karaoke&amp;utm_medium=cta&amp;utm_campaign=profile" target="_blank" rel="noopener" data-i18n="ctaCourse">Записаться на курс санскрита →</a>
+  <span class="cta-hint" data-i18n="ctaCourseHint">Можно в записи и в своём темпе</span>
+  <a class="cta-link" href="https://t.me/rusamskrtam" target="_blank" rel="noopener" data-i18n="ctaTelegram">Задать вопрос в Telegram</a>
+</footer>
+</body>
+</html>

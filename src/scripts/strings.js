@@ -110,6 +110,25 @@ const STRINGS = {
     statMastered: 'Освоено',
     statTotal: 'Всего',
 
+    // Student profile page
+    profileTitle: 'Sanskrit Karaoke — Профиль',
+    profileHeading: 'Профиль студента',
+    navProfile: 'Профиль',
+    profileNamePlaceholder: 'Ваше имя',
+    profileDefaultName: 'Студент',
+    profileAvatarHint: 'Нажмите на аватар, чтобы сменить',
+    streakDays: 'дней подряд',
+    statStreakDays: 'Streak (дней)',
+    statStudied: 'Изучено',
+    profileStudiedHeading: 'Изученные шлоки',
+    profileColVerse: 'Шлока',
+    profileColMeter: 'Метр',
+    profileColStatus: 'Статус',
+    profileColDue: 'Следующее повт.',
+    profileColAction: 'Действие',
+    profileEmpty: 'Пока ничего не изучено. Начните с каталога!',
+    profileEmptyCta: 'Открыть каталог',
+
     // Teacher dashboard
     teacherHeading: 'Кабинет учителя',
     teacherRefresh: '↻ Обновить',
@@ -252,6 +271,25 @@ const STRINGS = {
     statMastered: 'Mastered',
     statTotal: 'Total',
     libDiffLabel: 'Difficulty',
+
+    // Student profile page
+    profileTitle: 'Sanskrit Karaoke — Profile',
+    profileHeading: 'Student Profile',
+    navProfile: 'Profile',
+    profileNamePlaceholder: 'Your name',
+    profileDefaultName: 'Student',
+    profileAvatarHint: 'Tap the avatar to change it',
+    streakDays: 'day streak',
+    statStreakDays: 'Streak (days)',
+    statStudied: 'Studied',
+    profileStudiedHeading: 'Studied verses',
+    profileColVerse: 'Verse',
+    profileColMeter: 'Meter',
+    profileColStatus: 'Status',
+    profileColDue: 'Next due',
+    profileColAction: 'Action',
+    profileEmpty: 'Nothing studied yet. Start with the catalog!',
+    profileEmptyCta: 'Open catalog',
 
     // Teacher dashboard
     teacherHeading: 'Teacher Dashboard',
