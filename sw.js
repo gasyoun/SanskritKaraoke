@@ -1,9 +1,10 @@
-const CACHE_NAME = 'sanskrit-karaoke-v1.5.5-html-network-first';
+const CACHE_NAME = 'sanskrit-karaoke-v1.5.12-profile-html-network-first';
 const ASSETS = [
   'catalogue.html',
   'student.html',
   'progress.html',
   'mastery.html',
+  'profile.html',
   'index.html',
   'src/style.css',
   'src/scripts/app.js',
@@ -13,7 +14,7 @@ const ASSETS = [
   'verses/index.json',
   'manifest.json'
 ];
-const HTML_ASSETS = new Set(['', 'catalogue.html', 'student.html', 'progress.html', 'mastery.html', 'index.html']);
+const HTML_ASSETS = new Set(['', 'catalogue.html', 'student.html', 'progress.html', 'mastery.html', 'profile.html', 'index.html']);
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
