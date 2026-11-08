@@ -12,6 +12,10 @@ only via @DECIDE; this module is the v1 baseline it pilots against.
 run this ONLY on output of tools/tg_mine_curators.py (or other already
 de-identified text). Nothing is stored here; output JSONL goes to stdout.
 
+Verdict parse accepts the English words AND Russian synonyms (RU answers
+observed live from reasoning-style flash models, H6474); every row carries
+the raw model answer ('raw') so a neutral fallback is auditable, not silent.
+
 Env: OPENROUTER_API_KEY, SK_SENTIMENT_MODEL (default google/gemini-flash-1.5).
 Usage: python3 tools/sentiment_judge.py in.jsonl -o out.jsonl
 """
@@ -25,10 +29,34 @@ import urllib.request
 OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
 DEFAULT_MODEL = 'google/gemini-flash-1.5'
 _VALID = ('up', 'down', 'neutral')
+# RU synonym prefixes: reasoning-style flash models (gemini-3.x, observed
+# live in the H6474 pilot) sometimes answer in Russian despite the strict
+# one-word EN prompt; the v1 EN-only parse silently dropped those to
+# neutral. Upstreamed from tools/sentiment_pilot_h6474.py RU_SYNONYMS
+# (H6474 residual, Y23). «нейтрал» covers «нейтрально»/«нейтральный» etc.
+_RU_SYNONYMS = (('положит', 'up'), ('позитив', 'up'),
+                ('отрицат', 'down'), ('негатив', 'down'),
+                ('нейтрал', 'neutral'))
 PROMPT = (
     'Ты судья тональности. Оцени ОТНОШЕНИЕ автора текста к AI-функциям '
     'обучения санскриту (оценка произношения, боты, автопроверки). '
     'Ответь строго одним словом: up, down или neutral. Текст:')
+
+
+def parse_label(content):
+    """Verdict parse: EN word first, then RU synonym prefixes.
+
+    Returns 'neutral' only as an explicit fallback — callers get the raw
+    content alongside (judge_one puts it in the row), so a fallback is
+    visible, not silent."""
+    low = str(content).strip().lower() if content is not None else ''
+    for v in _VALID:
+        if v in low:
+            return v
+    for needle, v in _RU_SYNONYMS:
+        if needle in low:
+            return v
+    return 'neutral'
 
 
 def judge_one(text, transport=None, model=None):
@@ -56,9 +84,8 @@ def judge_one(text, transport=None, model=None):
                 return json.loads(r.read().decode('utf-8'))
         transport = default_transport
     resp = transport(PROMPT, text)
-    label = str(resp['choices'][0]['message']['content']).strip().lower()
-    label = next((v for v in _VALID if v in label), 'neutral')
-    return {'sentiment': label, 'model': model}
+    raw = resp['choices'][0]['message']['content']
+    return {'sentiment': parse_label(raw), 'model': model, 'raw': raw}
 
 
 def judge_stream(inp, out, transport=None, model=None):
