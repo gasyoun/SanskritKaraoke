@@ -16,7 +16,7 @@ Verdict parse accepts the English words AND Russian synonyms (RU answers
 observed live from reasoning-style flash models, H6474); every row carries
 the raw model answer ('raw') so a neutral fallback is auditable, not silent.
 
-Env: OPENROUTER_API_KEY, SK_SENTIMENT_MODEL (default google/gemini-flash-1.5).
+Env: OPENROUTER_API_KEY, SK_SENTIMENT_MODEL (default google/gemini-2.5-flash).
 Usage: python3 tools/sentiment_judge.py in.jsonl -o out.jsonl
 """
 from __future__ import annotations
@@ -27,7 +27,12 @@ import sys
 import urllib.request
 
 OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
-DEFAULT_MODEL = 'google/gemini-flash-1.5'
+# @DECIDE visa pending (MG, owner H6455): live-probed 08-11-2026 — the only
+# probed slug returning a valid verdict under v1 params (max_tokens=8);
+# google/gemini-flash-1.5 is retired (404), gemini-3.6-flash returns
+# content=null at this budget (reasoning burn). Override anytime via
+# SK_SENTIMENT_MODEL. Evidence: reports/SENTIMENT_JUDGE_MODEL_PROBE_2026-11-08.md
+DEFAULT_MODEL = 'google/gemini-2.5-flash'
 _VALID = ('up', 'down', 'neutral')
 # RU synonym prefixes: reasoning-style flash models (gemini-3.x, observed
 # live in the H6474 pilot) sometimes answer in Russian despite the strict
