@@ -11,7 +11,7 @@
 langgraph>=1.2.20
 langchain>=1.4.7
 langchain-anthropic>=1.7.10
-langchain-google-genai>=4.4.2
+langchain-google-genai>=4.4.3
 
 # LLM Providers
 anthropic>=2.3.0
