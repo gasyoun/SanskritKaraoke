@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-_Created: 12-05-2026 · Last updated: 30-10-2026_
+_Created: 12-05-2026 · Last updated: 14-11-2026 (YE4 truth refresh: profile.html documented as the sixth version locus + observed drift recorded; QA lines updated)_
 
 This repo is **Sanskrit Karaoke** (Волновая нотация санскрита) — a
 single-page web app that visualises the metrical structure of Sanskrit
@@ -28,12 +28,12 @@ python tools/build_index.py
 python tools/make_student.py
 node tools/export_captions.mjs verses/data/bhg_2_47.json --timing tools/fixtures/bhg_2_47_timing.json --out dist
 node tools/test_core_modules.mjs
-pytest tests/test_export_captions.py
+pytest tests/test_export_captions.py tests/test_profile_page.py
 ```
 
 No bundler. QA is scripted — the verse validators, `pytest
-tests/test_export_captions.py`, `node tools/test_core_modules.mjs` — plus
-in-browser review. CI on `main`: verse-library validation + `verses/index.json`
+tests/test_export_captions.py tests/test_profile_page.py`, `node
+tools/test_core_modules.mjs` — plus in-browser review. CI on `main`: verse-library validation + `verses/index.json`
 rebuild (`verses.yml`), student-page generator (`student.yml`),
 teaching-pipeline evals (`evals.yml`), Pages deploy (`pages.yml`), plus the
 pytest suite and the F821 undefined-name gate (`tests.yml` +
@@ -42,7 +42,7 @@ Pages deploy is re-dispatched with `gh workflow run pages.yml` — never rerun
 only the failed job. Evals (`python evals/judge.py`) need API keys in a root
 `.env` (`ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, optional `OPENROUTER_API_KEY`).
 
-## Version string — five places
+## Version string — six places
 
 Bump **all** of these together:
 
@@ -55,6 +55,14 @@ Bump **all** of these together:
 4. [`CHANGELOG.md`](https://github.com/gasyoun/SanskritKaraoke/blob/main/CHANGELOG.md)
    — `[Unreleased]`.
 5. Syntax-check `app.js`.
+6. [`profile.html`](https://github.com/gasyoun/SanskritKaraoke/blob/main/profile.html)
+   — `<title>` and the header `v1.N.N` badge (student profile, #216, 07-11-2026).
+
+**Observed drift (14-11-2026):** loci 1–2 still read `v1.5.5` while the
+changelog released through `[1.5.11]` (21-09) and `sw.js` CACHE_NAME carries
+suffixed cache-bust labels (`v1.5.12-profile-html-network-first`) that no
+longer track the release series. Do not compound the drift on new pages; the
+re-sync is queued (Uprava GTD, YE4 residuals).
 
 ## Key files
 
@@ -63,6 +71,7 @@ Bump **all** of these together:
 | `index.html` | Teacher UI |
 | `tools/templates/student.html` | Source of the student player |
 | `student.html` | **Generated** by `tools/make_student.py` |
+| `profile.html` | Student public profile — avatar, streak, mastered count, studied list (#216) |
 | `src/scripts/app.js` | Application logic (UTF-8; open/write with explicit encoding) |
 | `src/core/*.js` | ADR-0001 strangler-fig modules — no DOM/globals |
 | `src/scripts/srs.js` · `quizzes.js` · `strings.js` | Student SRS / quizzes / i18n |
