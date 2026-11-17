@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanskrit Karaoke — v1.5.6 — Лидерборд</title>
+<link rel="stylesheet" href="src/style.css">
+<style>
+  body { padding: clamp(12px, 4vw, 40px); }
+  .container { max-width: 960px; margin: 0 auto; background: var(--card); padding: clamp(18px, 4vw, 30px); border-radius: 8px; border: 1px solid var(--border); }
+  .header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; border-bottom: 2px solid var(--gold); padding-bottom: 14px; margin-bottom: 20px; flex-wrap: wrap; }
+  .header h1 { margin: 0; overflow-wrap: anywhere; }
+  .version-badge { font-size:.75rem; font-weight:400; color:#aaa; letter-spacing:0; text-transform:none; font-family:'JetBrains Mono',monospace; }
+  .nav-pills { display:flex; gap:8px; flex-wrap:wrap; }
+  .nav-pills a { font-size:.65rem; font-family:'JetBrains Mono',monospace; color:var(--ink2); text-decoration:none; border:1px solid var(--border); border-radius:4px; padding:3px 9px; white-space:nowrap; }
+  .boards { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px; }
+  .board h2 { margin:0 0 10px; font-size:1.05rem; color:var(--ink); }
+  ol.board-list { list-style:none; margin:0; padding:0; }
+  ol.board-list li { display:flex; align-items:center; gap:10px; padding:9px 10px; border-bottom:1px solid var(--border); }
+  ol.board-list li:last-child { border-bottom:0; }
+  ol.board-list li.me { background:var(--bg2); border-radius:6px; }
+  .rank { flex:0 0 2em; font-family:'JetBrains Mono',monospace; color:var(--ink2); font-size:.85rem; }
+  .name { flex:1 1 auto; overflow-wrap:anywhere; color:var(--ink); }
+  .score { flex:0 0 auto; font-weight:bold; color:var(--ink); white-space:nowrap; }
+  .empty-msg, .gate-msg { color: var(--ink2); padding: 30px 0; text-align: center; }
+  .gate-msg strong { color: var(--ink); }
+  .footnote { margin-top:18px; font-size:.72rem; color:var(--ink2); font-family:'JetBrains Mono',monospace; }
+  @media (max-width: 720px) {
+    body { padding: 0; }
+    .container { min-height: 100dvh; border: 0; border-radius: 0; padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🏆 Лидерборд</h1>
+    <span class="version-badge">v1.5.6</span>
+    <div class="nav-pills">
+      <a href="catalogue.html" title="Каталог шлок">📚 Каталог</a>
+      <a href="progress.html" title="Мой прогресс">📈 Прогресс</a>
+      <a href="profile.html" title="Профиль студента">🪷 Профиль</a>
+    </div>
+  </div>
+
+  <div id="board-state" class="empty-msg">Загрузка…</div>
+
+  <div id="boards" class="boards" style="display:none">
+    <div class="board">
+      <h2>🔥 Дней подряд</h2>
+      <ol class="board-list" id="board-streak"></ol>
+    </div>
+    <div class="board">
+      <h2>📿 Освоено шлок</h2>
+      <ol class="board-list" id="board-mastered"></ol>
+    </div>
+  </div>
+
+  <p class="footnote">В таблицу попадают только сводки (имя, освоено, streak) — списки шлок и телеметрия остаются приватными. Строка обновляется при каждом облачном сохранении прогресса.</p>
+</div>
+
+<script type="module">
+  import './src/scripts/cloud_sync.js';
+
+  const stateEl = document.getElementById('board-state');
+  const boardsEl = document.getElementById('boards');
+  let rows = [];
+  let masteredRows = [];
+
+  function renderBoard(listEl, boardRows, scoreKey, scoreLabel) {
+    listEl.innerHTML = '';
+    const uid = (window.currentUser && window.currentUser.uid) || null;
+    boardRows.slice(0, 20).forEach((row, i) => {
+      const li = document.createElement('li');
+      if (row.id === uid) li.className = 'me';
+      const rank = document.createElement('span');
+      rank.className = 'rank'; rank.textContent = String(i + 1);
+      const name = document.createElement('span');
+      name.className = 'name';
+      name.textContent = row.displayName || 'Без имени';
+      const score = document.createElement('span');
+      score.className = 'score';
+      score.textContent = `${row[scoreKey]} ${scoreLabel}`;
+      li.append(rank, name, score);
+      listEl.appendChild(li);
+    });
+  }
+
+  function renderBoards() {
+    if (!rows.length) return;
+    renderBoard(document.getElementById('board-streak'), rows, 'streak_days', 'дн.');
+    renderBoard(document.getElementById('board-mastered'), masteredRows, 'mastered_count', 'шлок');
+  }
+
+  // cloud_sync resolves auth asynchronously; re-render once the current user
+  // is known so the signed-in student's row gets its highlight.
+  window.onAuthUpdate = () => renderBoards();
+
+  try {
+    const [appMod, firestoreMod] = await Promise.all([
+      import('https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js'),
+      import('https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js')
+    ]);
+    const app = appMod.initializeApp(window.FIREBASE_CONFIG);
+    const db = firestoreMod.getFirestore(app);
+    const snap = await firestoreMod.getDocs(firestoreMod.collection(db, 'leaderboard'));
+    rows = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    rows.sort((a, b) => (Number(b.streak_days) || 0) - (Number(a.streak_days) || 0));
+    masteredRows = [...rows].sort((a, b) => (Number(b.mastered_count) || 0) - (Number(a.mastered_count) || 0));
+
+    if (!rows.length) {
+      stateEl.textContent = 'Пока пусто — войдите в прогресс и сохраните результаты, чтобы попасть в таблицу.';
+    } else {
+      stateEl.style.display = 'none';
+      boardsEl.style.display = '';
+      renderBoards();
+    }
+  } catch (e) {
+    console.error('Leaderboard load failed:', e);
+    stateEl.innerHTML = '<span class="gate-msg">Не удалось загрузить лидерборд. <strong>' +
+      String(e && e.message ? e.message : e).replace(/[<>&]/g, '') + '</strong></span>';
+  }
+</script>
+</body>
+</html>

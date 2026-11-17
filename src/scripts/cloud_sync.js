@@ -1,6 +1,8 @@
 // Firebase Cloud Sync for SRS, streak metadata, and telemetry.
 // Uses Firebase Modular SDK (v11+) once a real Firebase config is present.
 
+import { buildLeaderboardEntry } from './leaderboard.js';
+
 const CLOUD_DATA_TYPES = ['srs_v1', 'telemetry', 'progress_meta'];
 const PLACEHOLDER_RE = /^YOUR_|YOUR_/;
 
@@ -258,10 +260,36 @@ async function startAuthListener() {
     if (user) {
       await syncUserProfile(user);
       await migrateLocalDataToCloud(user.uid);
+      syncLeaderboardRow();
     } else {
       emitCloudSyncStatus('signed-out');
     }
   });
+}
+
+// Public leaderboard row (leaderboard/{uid}): aggregated stats only —
+// display name, mastered count, streak days. Refreshed after every
+// successful srs_v1 cloud write and on login; failures are logged,
+// never fatal (the private SRS docs are already written by then).
+async function syncLeaderboardRow(srsPayload) {
+  if (!cloudEnabled || !window.currentUser) return;
+  const payload = srsPayload !== undefined ? srsPayload : getLocalPayload('srs_v1');
+  const streakDays = typeof getStreak === 'function'
+    ? getStreak()
+    : parseInt(localStorage.getItem('shloka_streak') || '0', 10) || 0;
+  const entry = buildLeaderboardEntry(
+    payload,
+    (window.currentUser && window.currentUser.displayName) || '',
+    streakDays,
+    new Date().toISOString()
+  );
+  try {
+    const runtime = await loadFirebaseRuntime();
+    const docRef = runtime.doc(runtime.db, 'leaderboard', window.currentUser.uid);
+    await runtime.setDoc(docRef, entry, { merge: true });
+  } catch (e) {
+    console.warn('Leaderboard sync failed:', e);
+  }
 }
 
 window.currentUser = null;
@@ -323,6 +351,7 @@ export async function syncToCloud(dataType, payload) {
       updated_at: new Date().toISOString()
     }, { merge: true });
     console.log(`Cloud sync success: ${dataType}`);
+    if (dataType === 'srs_v1') syncLeaderboardRow(payload);
   } catch (e) {
     emitCloudSyncStatus('error', { dataType, message: e.message });
     console.error(`Cloud sync failed: ${dataType}`, e);
