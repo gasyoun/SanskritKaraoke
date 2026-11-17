@@ -1,0 +1,11 @@
+# Sanskrit Karaoke — v1.5.6
+
+> Sing-along practice app for Sanskrit texts: catalogue of tracks, teacher mode, and an installable manifest (PWA).
+
+## Pages
+
+- [Karaoke home](https://gasyoun.github.io/SanskritKaraoke/): track selection and player.
+- [Catalogue](https://gasyoun.github.io/SanskritKaraoke/catalogue.html): full track catalogue.
+- [Web-app manifest](https://gasyoun.github.io/SanskritKaraoke/manifest.json): PWA manifest.
+
+Source: https://github.com/gasyoun/SanskritKaraoke
