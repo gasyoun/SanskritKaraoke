@@ -31,6 +31,22 @@ service cloud.firestore {
         && request.resource.data.updated_at is string;
     }
 
+    // Public leaderboard row: aggregated stats ONLY (name, mastered count,
+    // streak days). Public read so every student can see the board without
+    // gaining access to anyone's private SRS docs; each student writes only
+    // their own row.
+    function hasLeaderboardShape() {
+      return request.resource.data.keys().hasAll(['displayName', 'mastered_count', 'streak_days', 'updated_at'])
+        && request.resource.data.keys().hasOnly(['displayName', 'mastered_count', 'streak_days', 'updated_at'])
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() <= 120
+        && request.resource.data.mastered_count is number
+        && request.resource.data.mastered_count >= 0
+        && request.resource.data.streak_days is number
+        && request.resource.data.streak_days >= 0
+        && request.resource.data.updated_at is string;
+    }
+
     // Top-level per-student profile (email/displayName) — lets a teacher
     // enumerate students via collection(db, 'users'); the per-datatype SRS
     // documents stay nested below.
@@ -43,6 +59,12 @@ service cloud.firestore {
     match /users/{uid}/data/{docId} {
       allow read: if (isOwner(uid) || isTeacher()) && isCloudSyncDoc(docId);
       allow create, update: if isOwner(uid) && isCloudSyncDoc(docId) && hasCloudSyncShape();
+      allow delete: if false;
+    }
+
+    match /leaderboard/{uid} {
+      allow read: if true;
+      allow create, update: if isOwner(uid) && hasLeaderboardShape();
       allow delete: if false;
     }
   }

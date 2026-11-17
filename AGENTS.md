@@ -27,7 +27,7 @@ blocker; resume opportunistically.
 ## Platform context
 
 - **Live URL:** https://gasyoun.github.io/SanskritKaraoke/
-- **Version:** v1.5.5
+- **Version:** v1.5.6
 - **LLM Stack:** Anthropic (Sonnet 3.5), Gemini (Flash 1.5), OpenRouter (Fallback)
 - **Student flow:** `catalogue.html` → `student.html?id=X` → `progress.html`
 - **Student page source:** edit `tools/templates/student.html`, then run `python tools/make_student.py`
