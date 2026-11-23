@@ -9,7 +9,7 @@
 
 # LangGraph + LangChain
 langgraph>=1.2.21
-langchain>=1.5.0
+langchain>=1.5.2
 langchain-anthropic>=1.7.12
 langchain-google-genai>=4.5.0
 
