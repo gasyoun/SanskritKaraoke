@@ -110,6 +110,19 @@ def test_rules_groups_fn_wired():
         "groups block sits beside (after) the leaderboard block in firestore.rules"
 
 
+def test_rules_teacher_gate_pinned():
+    """Council finding (H8416 verify): isTeacher() must stay a real email
+    allowlist — if it ever drifted to `request.auth != null`, group writes
+    would open to any authenticated user while every other guard still passed."""
+    rules = RULES.read_text(encoding="utf-8")
+    fn = re.search(r"function isTeacher\(\) \{(.*?)\n    \}", rules, re.S)
+    assert fn, "isTeacher() must be defined"
+    body = fn.group(1)
+    assert "request.auth != null" in body, "teacher gate requires an authenticated user"
+    assert "request.auth.token.email" in body, "teacher gate must check the verified email"
+    assert "'gasyoun@gmail.com'" in body, "teacher allowlist must pin the actual email"
+
+
 def test_global_leaderboard_unchanged():
     """H8416 step 3 second half: global boards must stay exactly as PR #232 shipped."""
     rules = RULES.read_text(encoding="utf-8")
