@@ -47,6 +47,29 @@ service cloud.firestore {
         && request.resource.data.updated_at is string;
     }
 
+    // Groups (H8416, MG ruling 18-11-2026) — teacher-managed cohort docs.
+    // Doc: groups/{groupId} = { name, members: [uid...], updated_at }. The
+    // members list IS the membership wiring: a signed-in student may read
+    // only groups they belong to, so the group-scoped board (follow-up UI
+    // unit) filters the already-public leaderboard rows by that member list
+    // client-side. Writes are teacher-only; deletes stay closed. Global
+    // leaderboard/{uid} behaviour is untouched — still publicly readable,
+    // owner-writable, exact 4-key shape.
+    function hasGroupShape() {
+      return request.resource.data.keys().hasAll(['name', 'members', 'updated_at'])
+        && request.resource.data.keys().hasOnly(['name', 'members', 'updated_at'])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 120
+        && request.resource.data.members is list
+        && request.resource.data.members.size() <= 500
+        && request.resource.data.updated_at is string;
+    }
+
+    function isGroupMember() {
+      return request.auth != null && request.auth.uid in resource.data.members;
+    }
+
     // Top-level per-student profile (email/displayName) — lets a teacher
     // enumerate students via collection(db, 'users'); the per-datatype SRS
     // documents stay nested below.
@@ -65,6 +88,12 @@ service cloud.firestore {
     match /leaderboard/{uid} {
       allow read: if true;
       allow create, update: if isOwner(uid) && hasLeaderboardShape();
+      allow delete: if false;
+    }
+
+    match /groups/{groupId} {
+      allow read: if isTeacher() || isGroupMember();
+      allow create, update: if isTeacher() && hasGroupShape();
       allow delete: if false;
     }
   }
